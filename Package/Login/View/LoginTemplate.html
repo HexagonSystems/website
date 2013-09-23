@@ -1,0 +1,21 @@
+<article>
+	<div class="newSection">
+		<?php
+		if (isset($_SESSION['errorCheck']) != null)
+		{
+			echo $_SESSION['errorCheck'];
+		}else 
+		{
+			echo "";
+		}
+		?>
+		<form action="index.php?location=login&action=proccessLogin" method="post" id="login" class="jqlogin">
+			<label for="usernameInput">* Username</label><p>
+			<input class="loginField" type="text" name="usernameInput" id="usernameInput" placeholder="Please Enter Your Username" required/><p>
+			<label for="passwordInput">* Password</label></p>
+			<input class="loginField" type="password" name="passwordInput" id="passwordInput" placeholder="Please Enter Your Password" required/><p>
+			<p class="floatLeft">* Indicates required fields</p>
+			<input class="formBtn orange" type="submit" name="submit" value="Login"/>
+		</form>
+	<div>
+</article>

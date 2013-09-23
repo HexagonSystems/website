@@ -1,0 +1,312 @@
+/* CSS Document */
+body, div, h1, h2, h3, h4, h5, h6, p, ul, ol, li, dl, dt, dd, img, form, fieldset, input, textarea, blockquote
+{
+    padding:0;
+    margin:0;
+    border:0;
+}
+body
+{
+    font-size:13px;
+    font-family: Helvetica, sans-serif;
+}
+/* Navigation Bar
+   Main Navigation */
+nav ul ul
+{
+    display:none;
+}
+nav ul li:hover > ul
+{
+    display:block;
+}
+
+nav
+{
+    height:30px;
+    background-color:#184a7d;
+    /* Firefox 3.6+ */
+    background-image:-moz-linear-gradient(top,#17568c,#1a3867);
+    /* Safari 4-5, Chrome 1-9 */
+    background-image:-webkit-gradient(linear,0 0,0 100%,from(#17568c),to(#1a3867));
+    /* Safari 5.1, Chrome 10+ */
+    background-image:-webkit-linear-gradient(top,#17568c,#1a3867);
+    /* Opera 11.10+ */
+    background-image:-o-linear-gradient(top,#17568c,#1a3867);
+
+    background-image:linear-gradient(to bottom,#17568c,#1a3867);
+    /* IE 10 */
+    background:-ms-linear-gradient(top, #17568c, #1a3867);
+    /* Repeat the background */
+    background-repeat:repeat-x;
+    border-top:1px solid rgba(255,255,255,0.2);
+    text-align:center;
+}
+nav ul
+{
+    padding:0px;
+    list-style:none;
+    position:relative;
+    display:inline-table;
+}
+nav ul:after
+{
+    content:"";
+    clear:both;
+    display:block;
+}
+nav ul li
+{
+    float:left;
+}
+nav ul li:hover a
+{
+    color:black;
+}
+nav ul li a
+{
+    display:block;
+    padding:7px 15px;
+    text-decoration:none;
+    color:#25acd0;
+    font-weight:bold;
+    line-height:12px;
+}
+.activeLink
+{
+    color:#fff;
+}
+nav ul ul
+{
+    opacity:.25;
+    background:#575f6a;
+    border-radius:0px;
+    padding:0;
+    position:absolute;
+    top:100%;
+}
+nav ul ul li
+{
+    float:none;
+    border-top:1px solid #6b727c;
+    border-bottom:1px solid #575f6a;
+    position:relative;
+}
+nav ul ul li a
+{
+    padding:7.0px 15px;
+    color:#000;
+}
+nav ul ul li a:hover
+{
+    background:#25acd0;
+    color:#000;
+}
+nav ul ul ul
+{
+    position:absolute;
+    left:100%;
+    top:0;
+}
+#mainNav
+{
+    width:80%;
+    float:left;
+    margin:0 auto;
+}
+/* Account Navigation */
+#accountNav
+{
+    width:20%;
+    float:left;
+    margin:0 auto;
+}
+.accountNavUl
+{
+
+}
+.accountNavUl ul
+{
+  
+}
+/* Header */
+header
+{
+    position:relative;
+    height:140px;
+    width:100%;
+    display:block;
+    overflow:auto;
+}
+#pageNavigation
+{
+    margin:0 auto;
+    width:70%;
+}
+
+/* Login form layout */
+#loginCol
+{
+    display:block;
+    border:1px solid #9c9d9d;
+    border-color:rgba(63,65,67,.5);
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    -khtml-border-radius:5px;
+    box-shadow:0 6px 10px -2px #3f4143;
+    position:relative;
+    width:345px;
+    margin:10% auto;
+    padding-bottom:10px;
+}
+#loginColHeader
+{
+    border-radius:5px 5px 0 0;
+    -moz-border-radius:5px 5px 0 0;
+    -webkit-border-radius:5px 5px 0 0;
+    -khtml-border-radius:5px 5px 0 0;
+    height:65px;
+    padding:10px 0 0;
+    text-align:center;
+    background:#e5e5e5;
+    background:-moz-linear-gradient(top,#e5e5e5 0,#d4d4d4 100%);
+    background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#e5e5e5),color-stop(100%,#d4d4d4));
+    background:-webkit-linear-gradient(top,#e5e5e5 0,#d4d4d4 100%);
+    background:-o-linear-gradient(top,#e5e5e5 0,#d4d4d4 100%);
+    background:-ms-linear-gradient(top,#e5e5e5 0,#d4d4d4 100%);
+    background:linear-gradient(to bottom,#e5e5e5 0,#d4d4d4 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#e5e5e5',endColorstr='#D4D4D4',GradientType=0);
+    border-top:0;
+    border-right:0;
+    border-bottom:1px solid #a1a1a1;
+    border-left:none;
+    position:relative;
+}
+#loginColMain
+{
+    background-color:#eaeaea;
+    border-radius:0 0 5px 5px;
+    -moz-border-radius:0 0 5px 5px;
+    -webkit-border-radius:0 0 5px 5px;
+    -khtml-border-radius:0 0 5px 5px;
+    border-top:1px solid #fff;
+    height:212px;
+    padding-right:5px;
+    padding-left:30px;
+    padding-top:60px;
+    color:#4c4c4c;
+    font-size:12px;
+    position:relative;
+    display:block;
+}
+.adminLogin
+{
+    margin:0 20px;
+    top:0;
+}
+.adminLogin input
+{
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    border-radius:5px;
+    height:30px;
+    width:305px;
+    padding:5px 20px;
+    font-family:helvetica;
+}
+#username
+{
+    background: url(../../../images/icons/users.png) left no-repeat;
+}
+#password
+{
+    background: url(../../../images/icons/lock.png) left no-repeat;
+}
+.adminLogin Label
+{
+    color:#4c4c4c;
+    font-size:12px;
+    font-weight:bold;
+    padding-bottom:4px;
+    padding-left:10px;
+    padding-top:8px;
+    width:100%;
+    display:block;
+}
+.adminLogin button
+{
+    background-color:#1666ca;
+    background-image:-moz-linear-gradient(#3e9ee5,#1666ca);
+    background-image:-o-linear-gradient(#3e9ee5,#1666ca);
+    background-image:-ms-linear-gradient(#3e9ee5,#1666ca);
+    background-image:linear-gradient(#3e9ee5,#1666ca);
+    background-image:-webkit-gradient(linear,left top,left bottom,from(#3e9ee5),to(#1666ca));
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    border-radius:3px;
+    border:1px solid #1666ca;
+    cursor:pointer;
+    font-weight:bold;
+    padding:5px 25px;
+    margin:8px 0px;
+    width:auto;
+    color:#fff;
+}
+.adminLogin button:hover {
+    opacity:.85;
+    cursor:pointer;
+}
+
+.adminLogin button:active {
+    border:1px solid #1666ca;
+    box-shadow:0 0 10px 5px #1666ca inset;
+    -webkit-box-shadow:0 0 10px 5px #1666ca inset ;
+    -moz-box-shadow:0 0 10px 5px #1666ca inset;
+    -ms-box-shadow:0 0 10px 5px #1666ca inset;
+    -o-box-shadow:0 0 10px 5px #1666ca inset;
+}
+
+/*Main layout stuff for all pages */
+#mainContent
+{
+    width:100%;
+}
+#mainCol
+{
+    position:relative;
+    width:70%;
+    margin:0 auto;
+}
+/*Headings*/
+h2
+{
+    page-break-before:always;
+    color:#25acd0;
+}
+/* Footer */
+#footer
+{
+    position:relative;
+    height:100px;
+    width:100%;
+    clear:both;
+    display:block;
+    overflow:auto;
+    text-align:center;
+}
+
+/* Clear Fix */
+.clearfix:after
+{
+    content:".";
+    display:block;
+    height:0;
+    clear:both;
+    visibility:hidden;
+}
+.clearfix
+{
+    display: inline-block;
+
+}
