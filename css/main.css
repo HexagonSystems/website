@@ -1,0 +1,510 @@
+/**
+ * Desktop
+ **/
+.hexagon-desktop {
+	display: block;
+}
+
+/**
+ * Mobile
+ **/
+.hexagon-mobile {
+	display: none;
+}
+
+.hexagon-mobile-dropdown {
+	background-color: white;
+	width: 100%;
+	text-align: center;
+}
+
+.hexagon-responsive-menu {
+	z-index:2 !important;
+}
+
+/**
+ * General
+ **/
+.makevisible {
+	visibility: visible !important;
+	top: 0px !important;
+	left: 0px !important;
+	z-index: 1 !important;
+}
+
+.hexagon-block {
+	display: block;
+}
+
+.hexagon-displayNone {
+	display: none;
+}
+
+.hexagon-displayInline {
+	display: inline;
+}
+
+.hexagon-fillWidth {
+	width: 100%;
+}
+
+.hexagon-float-right {
+	float: right;
+}
+
+.hexagon-textCenter {
+	text-align: center;
+}
+
+.hexagon-textLeft {
+	text-align: left;
+}
+
+.hexagon-textRight {
+	text-align: right;
+}
+
+.hexagon-displayBlock {
+	display: block;
+}
+
+.hexagon-marginMedium {
+	margin: 1.5em;
+}
+
+.hexagon-fillTop {
+	position: absolute;
+	width: 100%;
+}
+
+.hexagon-colorGrey {
+	background-color: #f5f5f5;
+}
+
+.paddingMedium {
+	padding: 1.5em;
+}
+
+/**
+ * Select Boxes
+ */
+.hexagon-select
+{
+	padding:.2em;
+	min-width:15%;
+	max-width:80%;
+	margin:auto;
+}
+
+/**
+ * Comment/post block
+ */
+.hexagon-solidTabBlockMedium {
+	border: 3px solid #b7b7b7;
+	border-radius: 7.5px;
+	padding: 0px;
+	min-height: 20em;
+}
+
+.hexagon-solidTabBlockMedium section {
+	margin: .75em;
+}
+
+.hexagon-solidTabBlockMedium section article {
+	border-bottom: 1px solid black;
+	padding: .4em .5em .4em .5em;
+}
+
+.hexagon-solidTabBlockMedium section article header {
+	font-size: 18px;
+	display: inline;
+}
+
+.hexagon-solidTabBlockMedium section article span {
+	font-size: 14px;
+	color: #b5b5b5;
+	margin: 0px 10px;
+	position: relative;
+}
+
+.hexagon-solidTabBlockMedium section article p {
+	font-size: 14px;
+	padding: 0px 5px;
+}
+
+.hexagon-solidTabBlockMedium section article footer {
+	font-size: 10px;
+	text-align: right;
+}
+
+.hexagon-solidTabBlockMedium.hexagon-clickable article:hover {
+	cursor:pointer;
+	background-color:#f5f5f5;
+}
+/**
+ * Menu
+ */
+.hexagon-absoluteRight5 {
+	top: 5px;
+	right: 5px;
+}
+
+.hexagon-hamburger {
+	padding: 5px;
+}
+
+.hexagon-hamburger:hover {
+	cursor: pointer;
+	background: #f5f5f5;
+}
+
+/**
+ * Side note
+ */
+.hexagon-sideNote {
+	position: fixed;
+	left: -1px;
+	top: 30%;
+	border: 1px solid black;
+	padding: .8em 1.4em;
+	box-shadow: 5px 5px 5px #888888;
+	width: 10%;
+}
+
+.hexagon-sideNote ul {
+	padding: 1em;
+}
+
+.hexagon-sideNote header {
+	font-size: 18px;
+}
+
+/**
+ * Grids
+ **/
+.responsive.gridSpaceMedium {
+	padding: .75em;
+}
+
+.pure-g-r image {
+	text-align: center;
+}
+
+article {
+	text-align: left;
+}
+
+/**
+ * Buttons
+ */
+.hexagon-smallFunctionButton {
+	font-size: .8em;
+	padding: .3em 1em .3em 1em;
+	background-color: #f5f5f5;
+	border-radius: 15px;
+}
+
+/**
+ * Table
+ */
+.hexagon-table {
+	border: 1px solid #b5b5b5;
+	width:100%;
+	border-collapse: collapse;
+}
+
+.hexagon-table td,.hexagon-table th {
+	padding: 1em;
+	border: 1px solid #b5b5b5;
+}
+
+.hexagon-table tr:nth-of-type(odd)
+{
+	background: #eee;
+}
+
+.hexagon-table th
+{
+	background: #333;
+	color: white;
+	font-weight: bold;
+}
+
+.hexagon-table td, .hexagon-table th
+{
+	padding:6px;
+	border: 1px solid #ccc;
+	text-align: left;
+}
+
+/**
+ * Info Block
+ */
+.hexagon-infoBlock {
+	
+}
+
+.hexagon-infoBlock:hover {
+	background-color: #f5f5f5;
+	cursor: pointer;
+}
+
+.hexagon-infoBlock-view {
+	z-index: 1;
+	background-color: white;
+	left: -100px;
+	position: absolute; top : 0px; height : 500px;
+	width: 500px;
+	-webkit-transition: all 2s;
+	height: 500px;
+	top: 0px;
+}
+
+.hexagon-infoBlock-view:hover {
+	left: -100px;
+}
+
+.hexagon-absolute00 {
+	top: 0px;
+	left: 0px;
+}
+
+.hexagon-positionAbsolute {
+	position: absolute;
+}
+
+.hexagon-opacity0 {
+	opacity: 0;
+}
+
+.hexagon-infoBlock {
+	display: inline-block;
+	zoom: 1;
+	letter-spacing: normal;
+	word-spacing: normal;
+	vertical-align: top;
+	text-rendering: auto;
+}
+
+@media ( max-width : 75em) {
+	.responsive.gridSpaceMedium {
+		padding: 0px;
+	}
+}
+
+/**
+ * Search
+ */
+.hexagon-searchBox {
+	margin:auto;
+	width:auto;
+	text-align:center;
+}
+.hexagon-searchBox input[type=text] {
+	width:40%;
+	padding:.5em;
+	text-align:left;
+	margin:.2em;
+}
+.hexagon-searchBox img {
+	display:none;
+	width:25px;
+	height:25px;
+}
+.hexagon-searchBox img:hover {
+	cursor:pointer;
+}
+
+/* MOBILE */
+@media screen and ( max-width : 48em) {
+	/**
+	 * POSITION SCREEN
+	 */
+	#content {
+		padding: 15px;
+	}
+	/**
+	 * MENU
+	 */
+	.hexagon-desktop {
+		display: none;
+	}
+	.hexagon-mobile {
+		display: block;
+	}
+	
+	nav img {
+		max-height:25px;
+		max-width:25px;
+		margin:0em 1em;
+	}
+
+	/**
+	 * Tables
+	 */
+	/* Force table to not be like tables anymore */
+	.hexagon-table table, .hexagon-table thead, .hexagon-table tbody, .hexagon-table th,
+	.hexagon-table td, .hexagon-table tr
+	{
+		display: block;
+	}
+
+	/* Hide table headers (but not display: none;, for accessibility) */
+	.hexagon-table thead tr {
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	.hexagon-table tr {
+		border: 1px solid #ccc;
+	}
+	.hexagon-table td {
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee;
+		position: relative;
+		padding-left: 50%;
+		white-space: normal;
+		text-align: left;
+	}
+	.hexagon-table td:before {
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%;
+		padding-right: 10px;
+		white-space: nowrap;
+		text-align: left;
+		font-weight: bold;
+	}
+
+	/*
+	Label the data
+	*/
+	.hexagon-table td:before {
+		content: attr(data-title);
+	}
+	
+	/**
+	 * INFO BLOCK
+	 */
+	.hexagon-infoBlock
+	{
+		width: 100%;
+	}
+	
+	/*
+	 * IMAGES
+	 */
+	 #hexagon-image-logo
+	 {
+	 	background-image: url('../img/hexagon_logo_small.png');
+	 	height:500px;
+	 }
+	 
+	 /**
+	 * Side information box/side note
+	 */
+	.hexagon-sideNote {
+		position: relative;
+		width: auto;
+		border: 1px solid black;
+		padding: .4em;
+		box-shadow: 5px 5px 5px #888888;
+		margin: 1em;
+	}
+	/**
+	 * Search
+	 */
+	.hexagon-searchBox {
+		
+	}
+	.hexagon-searchBox input[type=text] {
+		display:none;
+	}
+	.hexagon-searchBox button {
+		display:none;
+	}
+	
+	.hexagon-searchBox img {
+		display:block;
+		margin:auto;
+	}
+}
+
+/* TABLET */
+@media screen and (min-width : 48em) and ( max-width : 75em)
+{
+	/**
+	 * POSITION SCREEN
+	 */
+	#content {
+		padding: 15px;
+	}
+	/**
+	 * Side information box/side note
+	 */
+	.hexagon-sideNote {
+		position: relative;
+		width: auto;
+		border: 1px solid black;
+		padding: .4em;
+		box-shadow: 5px 5px 5px #888888;
+		margin: 1em;
+	}
+	
+	/**
+	 * INFO BLOCK
+	 */
+	.hexagon-infoBlock
+	{
+		width: 50%;
+	}
+	
+	/*
+	 * IMAGES
+	 */
+	 #hexagon-image-logo
+	 {
+	 	background-image: url('../img/hexagon_logo_small.png');
+	 	height:500px;
+	 }
+}
+
+/* DESKTOP */
+@media screen and ( min-width : 75em) {
+	/**
+	 * POSITION SCREEN
+	 */
+	 .hexagon-sizeForDesktop {
+		position: relative;
+		width: 70%;
+		margin: auto;
+		top: 5em;
+	}
+	
+	/**
+	 * INFO BLOCK
+	 */
+	.hexagon-infoBlock
+	{
+		width: 33%;
+	}
+	
+	/*
+	 * IMAGES
+	 */
+	 #hexagon-image-logo
+	 {
+	 	background-image: url('../img/hexagon_logo_large.png');
+	 	height:500px;
+	 }
+}
+
+#hexagon-image-logo
+{
+	background-repeat:no-repeat;
+	background-position:center;
+}
