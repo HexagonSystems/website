@@ -478,7 +478,7 @@ article {
 	/**
 	 * POSITION SCREEN
 	 */
-	 .hexagon-sizeForDesktop {
+	 #content {
 		position: relative;
 		width: 70%;
 		margin: auto;
