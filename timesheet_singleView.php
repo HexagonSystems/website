@@ -29,32 +29,32 @@
 				</ul>
 				<section id="tabs-1">
 					<article>
-					<header>Updated time</header> <span>Automatically posted</span>
-					<p>Alex has added 2hrs to the project.</p>
-					<footer>Posted at 2:20pm 17/09/2013</footer>
+						<header>Updated time</header> <span>Automatically posted</span>
+						<p>Alex has added 2hrs to the project.</p>
+						<footer>Posted at 2:20pm 17/09/2013</footer>
 					</article>
 					<article>
-					<header>Updated Git</header> <span>Alex</span>
-					<p>Just finished the menu, about to start the time sheets</p>
-					<footer>Posted at 1:05pm 15/09/2013</footer>
+						<header>Updated Git</header> <span>Alex</span>
+						<p>Just finished the menu, about to start the time sheets</p>
+						<footer>Posted at 1:05pm 15/09/2013</footer>
 					</article>
 					<article>
-					<header>Updated time</header> <span>Automatically posted</span>
-					<p>Alex has added 4hrs to the project.</p>
-					<footer>Posted at 1:05pm 15/09/2013</footer>
+						<header>Updated time</header> <span>Automatically posted</span>
+						<p>Alex has added 4hrs to the project.</p>
+						<footer>Posted at 1:05pm 15/09/2013</footer>
 					</article>
 					
 				</section>
 				<section id="tabs-2">
 					<article>
-					<header>Updated time</header> <span>Automatically posted</span>
-					<p>Alex has added 2hrs to the project.</p>
-					<footer>Posted at 2:20pm 17/09/2013</footer>
+						<header>Updated time</header> <span>Automatically posted</span>
+						<p>Alex has added 2hrs to the project.</p>
+						<footer>Posted at 2:20pm 17/09/2013</footer>
 					</article>
 					<article>
-					<header>Updated time</header> <span>Automatically posted</span>
-					<p>Alex has added 4hrs to the project.</p>
-					<footer>Posted at 1:05pm 15/09/2013</footer>
+						<header>Updated time</header> <span>Automatically posted</span>
+						<p>Alex has added 4hrs to the project.</p>
+						<footer>Posted at 1:05pm 15/09/2013</footer>
 					</article>
 				</section>
 			</div>
