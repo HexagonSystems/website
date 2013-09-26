@@ -1,6 +1,3 @@
 /designFiles/
 .project
 .settings/
-config/config.php
-index.php
-model/User.php.rej
