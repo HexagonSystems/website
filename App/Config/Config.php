@@ -34,7 +34,6 @@ function autoloadService($className) {
 //THis is a HACK
 //Change the View names
 function autoloadView($className) {
-    $className = substr($className, 0, -4);
     $filename = AppBase."/View/" . $className . ".php";
     if (is_readable($filename)) {
         require $filename;
@@ -46,15 +45,8 @@ spl_autoload_register("autoloadController");
 spl_autoload_register("autoloadService");
 spl_autoload_register("autoloadView");
 
-require_once(AppBase.'/Service/password.php');
-/**
- * Define database connection if using a database
-*/
-$host = "localhost";
-$db = "tow";
-$user = "towuser";
-$pass = "towpassword";
-$conn = new PDO("mysql:host=$host;dbname=$db",$user,$pass);
+require_once(AppBase.'/Config/Database.php');
+
 /**
  * Define any other config option you may want to use
 */
