@@ -2,7 +2,7 @@
 <html>
 <!-- the head section -->
 <head>
-<title>TOW - Blog</title>
+<title>Hexagon Systems</title>
 <link rel="stylesheet" type="text/css" href="includes/css/style.css" />
 <link rel="stylesheet" type="text/css" href="includes/css/main.css" />
 <!-- <link rel="stylesheet" type="text/css"	href="includes/css/registerView.css" />
@@ -21,4 +21,4 @@
 <body>
     <div class="container">
         <header class="topabsolute fix clearfix">
-            <h1>TOW Blog Website 02</h1>
+            <h1>Hexagon Systems</h1>
