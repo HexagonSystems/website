@@ -1,16 +1,16 @@
-<?php
-   //This is where the homepage will be. It will not be a router. It will import header/footer/nav/
-   include "/includes/head.php";
-   include "/includes/nav.php";
+<?php 
+
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+session_start();
+
+/**
+ * CHANGE THIS TO A CONFIG THAT IS YOU!
+ */
+require_once('App/Config/Config.php');
+
+require_once("App/Router.php");
+
+Router::route($conn);
+
 ?>
-   <body>
-   <div id="mainContent">
-
-   </div>
-
-
-<?php
-   include "/includes/footer.php";
-?>
-   </body>
-   </html>

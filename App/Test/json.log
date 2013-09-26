@@ -1,0 +1,153 @@
+{
+    "event": "suiteStart",
+    "suite": "model\/",
+    "tests": 7
+}{
+    "event": "suiteStart",
+    "suite": "ArrayHasKeyTest",
+    "tests": 1
+}{
+    "event": "testStart",
+    "suite": "ArrayHasKeyTest",
+    "test": "ArrayHasKeyTest::testFailure"
+}{
+    "event": "test",
+    "suite": "ArrayHasKeyTest",
+    "test": "ArrayHasKeyTest::testFailure",
+    "status": "fail",
+    "time": 0.00717997550964,
+    "trace": [
+        {
+            "file": "\/Applications\/MAMP\/htdocs\/towblog\/tests\/model\/ArrayHasKeyTest.php",
+            "line": 6,
+            "function": "assertArrayHasKey",
+            "class": "PHPUnit_Framework_Assert",
+            "type": "::",
+            "args": [
+                "foo",
+                {
+                    "bar": "baz"
+                }
+            ]
+        }
+    ],
+    "message": "Failed asserting that an array has the key 'foo'.",
+    "output": ""
+}{
+    "event": "suiteStart",
+    "suite": "UserTest",
+    "tests": 6
+}{
+    "event": "testStart",
+    "suite": "UserTest",
+    "test": "UserTest::testCheckUsername"
+}{
+    "event": "test",
+    "suite": "UserTest",
+    "test": "UserTest::testCheckUsername",
+    "status": "pass",
+    "time": 0.0119869709015,
+    "trace": [
+
+    ],
+    "message": "",
+    "output": ""
+}{
+    "event": "testStart",
+    "suite": "UserTest",
+    "test": "UserTest::testCheckEmail"
+}{
+    "event": "test",
+    "suite": "UserTest",
+    "test": "UserTest::testCheckEmail",
+    "status": "pass",
+    "time": 0.00278496742249,
+    "trace": [
+
+    ],
+    "message": "",
+    "output": ""
+}{
+    "event": "testStart",
+    "suite": "UserTest",
+    "test": "UserTest::testCheckPassword"
+}{
+    "event": "test",
+    "suite": "UserTest",
+    "test": "UserTest::testCheckPassword",
+    "status": "pass",
+    "time": 0.0026741027832,
+    "trace": [
+
+    ],
+    "message": "",
+    "output": ""
+}{
+    "event": "testStart",
+    "suite": "UserTest",
+    "test": "UserTest::testCreateUser"
+}{
+    "event": "test",
+    "suite": "UserTest",
+    "test": "UserTest::testCreateUser",
+    "status": "pass",
+    "time": 0.00294399261475,
+    "trace": [
+
+    ],
+    "message": "",
+    "output": ""
+}{
+    "event": "testStart",
+    "suite": "UserTest",
+    "test": "UserTest::testSave"
+}{
+    "event": "test",
+    "suite": "UserTest",
+    "test": "UserTest::testSave",
+    "status": "pass",
+    "time": 0.00277495384216,
+    "trace": [
+
+    ],
+    "message": "",
+    "output": ""
+}{
+    "event": "testStart",
+    "suite": "UserTest",
+    "test": "UserTest::testLoginUser"
+}{
+    "event": "test",
+    "suite": "UserTest",
+    "test": "UserTest::testLoginUser",
+    "status": "fail",
+    "time": 0.00322985649109,
+    "trace": [
+        {
+            "file": "\/Applications\/MAMP\/htdocs\/towblog\/tests\/model\/UserTest.php",
+            "line": 118,
+            "function": "assertArrayHasKey",
+            "class": "PHPUnit_Framework_Assert",
+            "type": "::",
+            "args": [
+                "password",
+                {
+                    "username": "stephen",
+                    "0": "stephen",
+                    "email": "steve@steve.com",
+                    "1": "steve@steve.com",
+                    "userPassword": "password",
+                    "2": "password",
+                    "createDate": "2013-05-17 11:34:54",
+                    "3": "2013-05-17 11:34:54",
+                    "ACL": "5",
+                    "4": "5",
+                    "lastLoginDate": "2013-05-15 15:24:26",
+                    "5": "2013-05-15 15:24:26"
+                }
+            ]
+        }
+    ],
+    "message": "Failed asserting that an array has the key 'password'.",
+    "output": ""
+}

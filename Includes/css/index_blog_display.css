@@ -1,0 +1,30 @@
+@CHARSET "ISO-8859-1";
+
+.blogBox{
+	margin:20px;
+	list-style:none;
+}
+
+.blogBox header{
+	font-size:25px;
+	font-weight:bold;
+	color: #6699B6;
+}
+.blogBox article{
+	height:100px;
+	width:150px;
+	display:inline-block;
+	border:1px solid black;
+	border-radius:5px;
+	overscroll:hidden;
+	padding:15px;
+	margin:10px;
+	background:#FFFFFF;
+	box-shadow: 2px 2px 3px #FFFFFF;
+}
+
+.blogBox article:hover{
+	position:aboslute;
+	box-shadow: 0px 0px 10px #000000;
+	cursor:pointer;
+}

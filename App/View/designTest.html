@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+    <!-- the head section -->
+    <head>
+        <title>TOW - Blog</title>
+        <link rel="stylesheet" type="text/css" href="/includes/css/main.css" />
+        <link rel="stylesheet" type="text/css" href="/includes/css/header.css" />
+        <link rel="stylesheet" type="text/css" href="/includes/css/footer.css" />
+        <link rel="stylesheet" type="text/css" href="/includes/css/loginView.css" />
+        <link rel="stylesheet" type="text/css" href="/includes/css/index_blog_display.css" />
+        <script src="includes/js/register_formValidation.js"></script>
+    </head>
+    <!-- the body section -->
+    <body>
+        <div class="left">
+            <header>
+                <h1>TOW Blog Website 02</h1>
+                <nav>
+                    <ul>
+                        <li><a href="index.php?location=indexPage">Index</a></li>
+                        <li><a href="index.php?location=loginPage">Login</a></li>
+                        <li><a href="index.php?location=registerPage">Register</a></li>
+                        <li><a href="index.php?location=accountPage">Account</a></li>
+                        <li><a href="index.php?location=adminPage">Admin</a></li>
+                    </ul>
+                </nav>
+
+            </header>
+
+            <aside>
+                <article>
+                    <span class="title">Create your account</span>
+                    <form action="index.php?location=loginPage&action=register"
+                          method="POST">
+                        <ul>
+                            <li><input type="text" placeholder="Username" name="username"
+                                       size=30 id="register_username"
+                                       onblur="formValidation(this.value, 'username')">
+                                <div id="messageAlert"></div>
+                                <div id="message_username" onclick="hideMessageBox('username')"></div>
+                            </li>
+                            <li><input type="text" placeholder="Email" name="email"
+                                       id="register_email" size=30
+                                       onblur="formValidation(this.value, 'email')">
+                                <div id="message_email" onclick="hideMessageBox('email')"></div></li>
+                            <li><input type="password" placeholder="Password" name="pass"
+                                       id="register_pass" size=30 onblur="validatePass(this.value)">
+                                <div id="message_pass" onclick="hideMessageBox('pass')"></div></li>
+                            <li><input type="submit" value="Sign me up!"></li>
+                        </ul>
+                    </form>
+                </article>
+                <!-- Footer -->
+                <footer id="footer">
+                    <p class="copyright">
+                        &copy;
+                        Team Of Win		2013
+                    </p>
+                </footer>
+            </aside>
+        </div>
+        <div id="right">
+            <div id="mainArea">
+                <ul>
+                    <li class="blogBox"><header>Top Blogs</header>
+                        <article>
+                            <header>This is a blog</header>
+                            <p>This is a brief description of whats in the article...</p>
+                        </article>
+                        <article>
+                            <header>This is a blog</header>
+                            <p>This is a brief description of whats in the article...</p>
+                        </article>
+                        <article>
+                            <header>This is a blog</header>
+                            <p>This is a brief description of whats in the article...</p>
+                        </article>
+                        <article>
+                            <header>This is a blog</header>
+                            <p>This is a brief description of whats in the article...</p>
+                        </article>
+                        <article>
+                            <header>This is a blog</header>
+                            <p>This is a brief description of whats in the article...</p>
+                        </article>
+                        <article>
+                            <header>This is a blog</header>
+                            <p>This is a brief description of whats in the article...</p>
+                        </article>
+                        <article>
+                            <header>This is a blog</header>
+                            <p>This is a brief description of whats in the article...</p>
+                        </article>
+                        <article>
+                            <header>This is a blog</header>
+                            <p>This is a brief description of whats in the article...</p>
+                        </article>
+                    </li>
+                    <li class="blogBox"><header>New Blogs</header>
+                        <article>
+                            <header>This is a blog</header>
+                            <p>This is a brief description of whats in the article...</p>
+                        </article>
+                        <article>
+                            <header>This is a blog</header>
+                            <p>This is a brief description of whats in the article...</p>
+                        </article>
+                        <article>
+                            <header>This is a blog</header>
+                            <p>This is a brief description of whats in the article...</p>
+                        </article>
+                        <article>
+                            <header>This is a blog</header>
+                            <p>This is a brief description of whats in the article...</p>
+                        </article>
+                        <article>
+                            <header>This is a blog</header>
+                            <p>This is a brief description of whats in the article...</p>
+                        </article>
+                        <article>
+                            <header>This is a blog</header>
+                            <p>This is a brief description of whats in the article...</p>
+                        </article>
+                        <article>
+                            <header>This is a blog</header>
+                            <p>This is a brief description of whats in the article...</p>
+                        </article>
+                        <article>
+                            <header>This is a blog</header>
+                            <p>This is a brief description of whats in the article...</p>
+                        </article>
+                    </li>
+                </ul>
+            </div>
+            <!-- End of content div -->
+        </div>
+
+    </div>
+    <!-- end page -->
+</body>
+</html>
