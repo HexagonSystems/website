@@ -1,0 +1,122 @@
+/* Login form layout */
+#loginCol
+{
+    display:block;
+    border:1px solid #9c9d9d;
+    border-color:rgba(63,65,67,.5);
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    -khtml-border-radius:5px;
+    box-shadow:0 6px 10px -2px #3f4143;
+    position:relative;
+    width:345px;
+    margin:10% auto;
+    padding-bottom:10px;
+}
+#loginColHeader
+{
+    border-radius:5px 5px 0 0;
+    -moz-border-radius:5px 5px 0 0;
+    -webkit-border-radius:5px 5px 0 0;
+    -khtml-border-radius:5px 5px 0 0;
+    height:65px;
+    padding:10px 0 0;
+    text-align:center;
+    background:#e5e5e5;
+    background:-moz-linear-gradient(top,#e5e5e5 0,#d4d4d4 100%);
+    background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#e5e5e5),color-stop(100%,#d4d4d4));
+    background:-webkit-linear-gradient(top,#e5e5e5 0,#d4d4d4 100%);
+    background:-o-linear-gradient(top,#e5e5e5 0,#d4d4d4 100%);
+    background:-ms-linear-gradient(top,#e5e5e5 0,#d4d4d4 100%);
+    background:linear-gradient(to bottom,#e5e5e5 0,#d4d4d4 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#e5e5e5',endColorstr='#D4D4D4',GradientType=0);
+    border-top:0;
+    border-right:0;
+    border-bottom:1px solid #a1a1a1;
+    border-left:none;
+    position:relative;
+}
+#loginColMain
+{
+    background-color:#eaeaea;
+    border-radius:0 0 5px 5px;
+    -moz-border-radius:0 0 5px 5px;
+    -webkit-border-radius:0 0 5px 5px;
+    -khtml-border-radius:0 0 5px 5px;
+    border-top:1px solid #fff;
+    height:212px;
+    padding-right:5px;
+    padding-left:30px;
+    padding-top:60px;
+    color:#4c4c4c;
+    font-size:12px;
+    position:relative;
+    display:block;
+}
+.adminLogin
+{
+    margin:0 20px;
+    top:0;
+}
+.adminLogin input
+{
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    border-radius:5px;
+    height:30px;
+    width:305px;
+    padding:5px 20px;
+    font-family:helvetica;
+}
+#username
+{
+    background: url(../../../images/icons/users.png) left no-repeat;
+}
+#password
+{
+    background: url(../../../images/icons/lock.png) left no-repeat;
+}
+.adminLogin Label
+{
+    color:#4c4c4c;
+    font-size:12px;
+    font-weight:bold;
+    padding-bottom:4px;
+    padding-left:10px;
+    padding-top:8px;
+    width:100%;
+    display:block;
+}
+.adminLogin button
+{
+    background-color:#1666ca;
+    background-image:-moz-linear-gradient(#3e9ee5,#1666ca);
+    background-image:-o-linear-gradient(#3e9ee5,#1666ca);
+    background-image:-ms-linear-gradient(#3e9ee5,#1666ca);
+    background-image:linear-gradient(#3e9ee5,#1666ca);
+    background-image:-webkit-gradient(linear,left top,left bottom,from(#3e9ee5),to(#1666ca));
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    border-radius:3px;
+    border:1px solid #1666ca;
+    cursor:pointer;
+    font-weight:bold;
+    padding:5px 25px;
+    margin:8px 0px;
+    width:auto;
+    color:#fff;
+}
+.adminLogin button:hover {
+    opacity:.85;
+    cursor:pointer;
+}
+
+.adminLogin button:active {
+    border:1px solid #1666ca;
+    box-shadow:0 0 10px 5px #1666ca inset;
+    -webkit-box-shadow:0 0 10px 5px #1666ca inset ;
+    -moz-box-shadow:0 0 10px 5px #1666ca inset;
+    -ms-box-shadow:0 0 10px 5px #1666ca inset;
+    -o-box-shadow:0 0 10px 5px #1666ca inset;
+}

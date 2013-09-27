@@ -1,0 +1,20 @@
+<div class="mainContent" class="clearfix">
+    <div class="mainCol">
+        <div class="loginCol">
+            <div class="loginColHeader">
+                <img src="../images/HSCMSlogo.png" alt="logo">
+            </div>
+            <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" class="adminLogin" name="adminLogin">
+            <label>Username</label>
+            <input class="username" type="text" name="adminId" size="20" maxlength="50" placeholder="Enter your username." tabindex="1" required/> <br />
+            <label>Password</label>
+            <input class="password" type="password" name="password" size="20" maxlength="11" placeholder="Enter your account password." tabindex="2" autocomplete="off" required/> <br />
+            <button type="submit" value="submit" name="submit" tabindex="3">Log in</button>
+            <br />
+            <a href="#">Forgot Password?</a>
+            <a href="#">Forgot Username?</a>
+            </form>
+        </div>
+    </div>
+</div>
+
