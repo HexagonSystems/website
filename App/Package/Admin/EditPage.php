@@ -81,21 +81,12 @@ class EditPage
             {
                 if($method[1] == "viewEditPage")
                 {
-                    /*echo "The page your requested is '$page[1]' Get a list off all users";
-                    echo '<br/>';
-                    $vars = print_r($getVars, TRUE);
-                    echo "The following GET vars were passed to the page:<pre>".$vars."</pre>";
-                    */
-
                     include_once("/controller/EditPageController.php");
                     $controller = new EditPageController();
-					$controller->viewEditPage();
-				}
-			}
-		}
-
-	}
-} //end class
-?>
-
+                    $controller->viewEditPage();
+                }
+            }
+        }
+    }
+}//end class
 ?>

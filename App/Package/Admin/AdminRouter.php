@@ -27,7 +27,7 @@ class AdminRouter
                 $controller = "EditPageController";
                 break;
             case "timesheetsPage":
-                $controller = "AccountController";
+                $controller = "TimeSheetsController";
                 break;
             case "logout":
                 $controller = "IndexController";
