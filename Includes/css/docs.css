@@ -11,7 +11,6 @@
  * Side navigation
  */
 
-
 /*
  * Scaffolding
  *
@@ -181,13 +180,6 @@ body {
  * Scrollspy and affixed enhanced navigation to highlight sections and secondary
  * sections of docs content.
  */
-
-/* By default it's not affixed in mobile views, so undo that */
-.sidebar-offcanvas.affix {
-  position: static;
-}
-
-
 
 /* First level of nav */
 .bs-sidenav {
