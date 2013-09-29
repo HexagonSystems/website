@@ -1,24 +1,23 @@
-<!doctype html>
-<html>
-<!-- the head section -->
-<head>
-<title>Hexagon Systems</title>
-<link rel="stylesheet" type="text/css" href="includes/css/style.css" />
-<link rel="stylesheet" type="text/css" href="includes/css/main.css" />
-<!-- <link rel="stylesheet" type="text/css"	href="includes/css/registerView.css" />
-<link rel="stylesheet" type="text/css" href="includes/css/loginView.css" />
-<link rel="stylesheet" type="text/css" href="includes/css/index_blog_display.css" /> -->
-<script	src="includes/js/register_formValidation.js"></script>
-<script	src="includes/js/register_passValidation.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="includes/ico/favicon.png">
 
-<script	src="includes/wysiwygeditor/advanced.js"></script>
-<script	src="includes/wysiwygeditor/wysihtml5-0.4.0pre.min.js"></script>
-<link rel="stylesheet" type="text/css" href="includes/wysiwygeditor/stylesheet.css" />
+    <title>Hexagon Systems</title>
 
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="includes/css/bootstrap.min.css" />
+    <link href="includes/css/hexagontheme.css" rel="stylesheet">
 
-</head>
-<!-- the body section -->
-<body>
-    <div class="container">
-        <header class="topabsolute fix clearfix">
-            <h1>Hexagon Systems</h1>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="includes/js/html5shiv.js"></script>
+      <script src="includes/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
