@@ -11,12 +11,12 @@ $(document).ready(function() {
       $sideBar.affix({
         offset: {
           top: function () {
+            //The distance from the top of the sidebar
             var offsetTop      = $sideBar.offset().top
-            var sideBarMargin  = parseInt($sideBar.children(0).css('margin-top'), 10)
-            var navOuterHeight = $('.navbar-hexagon').height()
-
-            return (this.top = offsetTop - navOuterHeight - sideBarMargin)
-          }
+            //The thickness of the navbar
+            var navOuterHeight = $('.navbar').height()
+            return (this.top = offsetTop - navOuterHeight)
+          } 
         , bottom: 0
         }
       })
