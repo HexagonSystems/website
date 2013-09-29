@@ -9,6 +9,7 @@
  * Scaffolding
  * Page headers
  * Side navigation
+ * Panels
  */
 
 /*
@@ -36,6 +37,10 @@ body {
   border-color: #563d7c;
 }
 
+/* Push everything below the nav */
+#content{
+  margin-top:14px
+}
 /* Inverted outline button (white on dark) */
 .btn-outline-inverse {
   color: #fff;
@@ -244,4 +249,15 @@ body {
     position: fixed;
     top: 40px;
   }
+}
+
+/*
+ * Panels
+ *
+ * Styling on the panels to suit being used as news article wrappers
+ */
+
+.news-article .panel-heading h1,h2,h3,h4,h5,h6 {
+  padding-top: 0;
+  margin-top: 0;
 }
