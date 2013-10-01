@@ -58,23 +58,17 @@
 <script
 	src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script>
+ajaxUrl = "<?php echo AppBaseSTRIPPED; ?>Model/TaskCommentsAJAX.php";
+	
 $(function() {
     $("#createCommentButton").click( function()
          {
-        	ajaxUrl = "<?php echo AppBaseSTRIPPED; ?>Model/TaskCommentsAJAX.php";
     		$.post( ajaxUrl, { request: "create", taskId: <?php echo $data['task']->getId(); ?>, memberId: 1, content: $("#inputTaskContent").val(),  tag: $("#inputTaskTag").val()}, 
     		function( data )
     	    {
 			    if(data == "true")
 			    {
-					$("#commentsContainer").load(ajaxUrl, { request: "load", taskId: <?php echo $data['task']->getId(); ?>, memberId: 1, pageNum: 1,  qty: 5 }, 
-					function( secondData )
-					{
-						if(!secondData)
-						{
-							alert("Fail");
-						}
-					});
+					loadComments(0);
 			    }else
 			    {
 				    alert(data);
@@ -82,5 +76,23 @@ $(function() {
 			 });
          });
 });
-    
+
+function loadComments($pageNum){
+	$("#commentsContainer").load(ajaxUrl, { request: "load", taskId: <?php echo $data['task']->getId(); ?>, memberId: 1, pageNum: $pageNum,  qty: 5 }, 
+			function( secondData )
+			{
+				if(!secondData)
+				{
+					alert("Fail");
+				}
+			});
+}
+
+$(function() {
+    $(".pagination li a").click( function()
+         {
+			loadComments($(this).text());
+         });
+});
+ 
 </script>

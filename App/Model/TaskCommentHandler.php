@@ -40,11 +40,15 @@ class TaskCommentsHandler
 			$statement = "SELECT * FROM `taskComment`
 						WHERE `taskId` = :taskId
 						ORDER BY `postedDate` DESC
-						LIMIT 0, 5";
+						LIMIT :starting, 5";
 	
 			$query = DataBase::getConnection()->prepare($statement);
 				
 			$query->bindParam(':taskId'   , $taskId , PDO::PARAM_INT);
+			
+			$starting = ($pageNum - 1) * $qty;
+			
+			$query->bindParam(':starting'   , $starting , PDO::PARAM_INT);
 	
 			$query->execute();
 	

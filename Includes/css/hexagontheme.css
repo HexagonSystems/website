@@ -292,7 +292,12 @@ body {
 	text-align:center;
 }
 
-.table-zebra tr:nth-child(even)
+.table-zebra tr:nth-child(:first-child)
+{
+	background-color:transparent;
+}
+
+.table-zebra tbody tr:nth-child(odd)
 {
 	background-color:#ddd;
 }
