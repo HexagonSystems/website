@@ -21,6 +21,7 @@
             <li><a href="#">About</a></li>
             <li><a href="#">Projects</a></li>
             <li><a href="#">Contact</a></li>
+            <li><a href="index.php?location=timesheetPage">Alex's Timesheets</a></li>
             <li role="presentation" class="divider"></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Timesheets <b class="caret"></b></a>

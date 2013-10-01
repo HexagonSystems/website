@@ -4,12 +4,23 @@
  * Features a helper method for building and returning Arrays of articles
  *
  * @author Stephen McMahon <stephentmcm@gmail.com>
+ * @author Alex Robinson
  */
-class Article
+class ArticleEntity
 {
     protected $database;
     //Holds the articles data in an Array most easily accessed through the getters
     protected $article;
+    
+    /**
+     * Article attributes
+     * 	- id
+     * 	- time
+     *  - content
+     *  - tag
+     *  - category
+     *  - status
+     */
 
     /**
      * Sets up an empty Article object
@@ -92,12 +103,12 @@ class Article
     //*********SETTERS----------------------
     public function setStatus($param)
     {
-        $this->article['displayStatus'] = $param;
+        $this->article['status'] = $param;
     }
 
-    public function setACL($param)
+    public function setTimeStamp($param)
     {
-        $this->article['ACL'] = $param;
+        $this->article['time'] = $param;
     }
 
     public function setContent($param)
@@ -105,25 +116,25 @@ class Article
         $this->article['content'] = $param;
     }
 
-    public function setDate($param)
+    public function setTag($param)
     {
         $this->article['creationDate'] = $param;
     }
 
-    public function setUsername($param)
+    public function setCategory($param)
     {
-        $this->article['username'] = $param;
+        $this->article['category'] = $param;
     }
 
     //*********GETTERS--------------
     public function getStatus()
     {
-        return($this->article['displayStatus']);
+        return($this->article['status']);
     }
 
-    public function getACL()
+    public function getTimeStamp()
     {
-        return($this->article['ACL']);
+        return($this->article['time']);
     }
 
     public function getContent()
@@ -131,13 +142,13 @@ class Article
         return($this->article['content']);
     }
 
-    public function getDate()
+    public function getTag()
     {
-        return($this->article['creationDate']);
+        return($this->article['tag']);
     }
 
-    public function getUsername()
+    public function getCategory()
     {
-        return($this->article['username']);
+        return($this->article['category']);
     }
 }//end article class

@@ -1,12 +1,12 @@
 <?php 
-/**
- * Define document paths
- */
-define('AppBase' , $_SERVER["DOCUMENT_ROOT"].'hexagon/App');
-define('SITE_ROOT' , 'localhost:8888/hexagon/');
+
+define('SITE_ROOT', 'localhost::8888/hexagon/');
+define('AppBaseSTRIPPED', '/swinburne2013S2/HexagonSystems_002/APP/');
+define('AppBase', $_SERVER["DOCUMENT_ROOT"].AppBaseSTRIPPED);
+
 
 function autoloadModel($className) {
-    $filename = AppBase."/Model/" . $className . ".php";
+    $filename = AppBase.'/Model/'.$className.'.php';
     if (is_readable($filename)) {
         require $filename;
     }

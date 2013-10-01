@@ -1,4 +1,6 @@
 <?php
+
+include 'Service/CookieMonster.php';
 class Router
 {
     public function __construct()
@@ -23,14 +25,8 @@ class Router
             case "loginPage":
                 $controller = "LoginController";
                 break;
-            case "registerPage":
-                $controller = "RegisterController";
-                break;
             case "accountPage":
                 $controller = "AccountController";
-                break;
-            case "verify":
-                $controller = "VerifyController";
                 break;
             case "navPage":
                 $controller = "NavController";
@@ -38,11 +34,8 @@ class Router
             case "adminPage":
                 $controller = "AdminController";
                 break;
-            case "viewBlog":
-                $controller = "BlogController";
-                break;
-            case "postPage":
-                $controller = "EditPostController";
+            case "timesheetPage":
+               	$controller = "TimesheetController";
                 break;
             case "logout":
                 $controller = "IndexController";
