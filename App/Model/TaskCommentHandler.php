@@ -1,5 +1,4 @@
 <?php
-
 class TaskCommentsHandler
 {
 	function createComment($taskId, $memberId, $tag, $content)
@@ -35,7 +34,6 @@ class TaskCommentsHandler
 	 */
 	public function loadComments($taskId, $memberId, $pageNum, $qty)
 	{
-	
 		try {
 			$statement = "SELECT * FROM `taskComment`
 						WHERE `taskId` = :taskId
@@ -51,23 +49,30 @@ class TaskCommentsHandler
 			$query->bindParam(':starting'   , $starting , PDO::PARAM_INT);
 	
 			$query->execute();
-	
+			
+			$commentHolder = array();
+			
 			$htmlString = "";
-	
 			foreach ($query as $row) {
 				$tempTask = array();
+				$tempTask['id'] = $row['commentId'];
 				$tempTask['tag'] = $row['tag'];
 				$tempTask['content'] = $row['content'];
 				$tempTask['memberId'] = $row['memberId'];
 				$tempTask['date'] = $row['postedDate'];
 				
+				array_push($commentHolder, $tempTask);
+				/*
 				echo '<tr>';
 				echo '<td><a href="#">'.$tempTask["tag"].'</a></td>';
 				echo '<td>'.$tempTask["content"].'</td>';
 				echo '<td>'.$tempTask["memberId"].'</td>';
 				echo '<td>'.$tempTask["date"].'</td>';
 				echo '</tr>';
+				*/
 			}
+			
+			echo json_encode($commentHolder);
 		} catch (PDOException $e) {
 			echo $e;
 		}

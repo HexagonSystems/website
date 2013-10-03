@@ -14,14 +14,13 @@ class TimesheetController extends Controller
         	$template_viewAll = "timesheetViewAll";
         	$this->template = $template_viewAll;
         	parent::invoke();
-            $task = new Task();
-            $task->setDatabase($this->database);
-            $arrayTask = $task->loadTasks(1);
+            $taskLoader = new TaskLoader();
+            $taskLoader->setDatabase($this->database);
             
             //create a new view and pass it our template
             $view = new TimesheetView($this->template,$this->footer, 0);
             $view->assign('title' , 'Logged in');
-            $view->assign('task', $arrayTask);
+            $view->assign('task', $taskLoader->loadTasks(1));
         }else if($_GET['action'] == "single")
         {
         	if(!isset($_GET['param']))
@@ -38,23 +37,25 @@ class TimesheetController extends Controller
         		$template_viewAll = "timesheetViewSingle";
         		$this->template = $template_viewAll;
         		parent::invoke();
-        		$taskLoader = new Task();
-        		$taskLoader->setDatabase($this->database);
         		
-        		if(!$taskLoader->load($_GET['param']))
+        		$taskLoader = new TaskLoader();
+        		$taskLoader->setDatabase($this->database);
+        		$task = $taskLoader->loadTask($_GET['param']);
+        		if($task === false)
         		{
         			/* HANDLE IF UNABLE TO LOAD TASK */
         			echo "fail";
         		}
         		
-        		$taskComments = $taskLoader->loadComments($_GET['param'], 0);
+        		// maybe a method will go here that will determine which page to load (depending on GET/POST/SESSION
+        		$task->loadComments(0);
         		 
         		//create a new view and pass it our template
         		$view = new TimesheetView($this->template,$this->footer, 0);
         		$view->assign('title' , 'Logged in');
         		
-        		$view->assign('task' , $taskLoader);
-        		$view->assign('comments' , $taskComments);
+        		$view->assign('task' , $task);
+        		$view->assign('comments' , $task->getComments());
         		
         		//$taskLoader->createComment("@addedTag", "Yay, adding tags is working");
         	}
