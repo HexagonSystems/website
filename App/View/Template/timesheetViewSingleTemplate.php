@@ -17,10 +17,13 @@
 </header>
 
 <!-- Button trigger modal -->
-<a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm">Add
+<a data-toggle="modal" href="#modal_comment" class="btn btn-primary btn-sm">Add
 	Update</a>
+<a data-toggle="modal" href="#modal_hours"
+	class="btn btn-primary btn-sm">Add Hours</a>
 <button class="btn btn-primary btn-sm">Edit Task</button>
-<?php include_once 'modal_test.php'; ?>
+<?php include_once 'modal_comment.php'; ?>
+<?php include_once 'modal_hours.php'; ?>
 
 
 <table id="testtable"
@@ -52,11 +55,6 @@
 	</ul>
 </div>
 
-<script
-	src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'>	
-	</script>
-<script
-	src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script>
 ajaxUrl = "<?php echo AppBaseSTRIPPED; ?>Model/TaskCommentsAJAX.php";
 
@@ -188,24 +186,69 @@ function updateCommentArray(jsonObject, pageNum) {
 }
 
 /**
+ * Creates a comment in the database
+ */
+function createComment(commentTag, commentContent)
+{
+	 $.post( ajaxUrl, { request: "create", taskId: <?php echo $data['task']->getId(); ?>, memberId: 1, content: commentContent,  tag: commentTag}, 
+		 		function( data )
+		 	    {
+					    if(data == "true")
+					    {
+							// Run function to check for updats, therefore asking the user to refresh
+							// Or refresh automatically, or just add the comment in locally, this will ignore the fact if other comments have been added around the same time as well
+							// Maybe it could do both, check for new updates, if there arnt any add this locally, if there are refresh or ask the user to refresh
+					    }else
+					    {
+						    alert(data);
+					    }
+					 });
+}
+
+/**
+ * Adds hours into the database
+ */
+function addHours(workedDate, workedHours)
+{
+	 $.post( ajaxUrl, { request: "addHours", taskId: <?php echo $data['task']->getId(); ?>, memberId: 1, workedDate: "03/10/2013", workedHours: workedHours}, 
+		 		function( data )
+		 	    {
+					    if(data == "true")
+					    {
+							// Run function to check for updats, therefore asking the user to refresh
+							// Or refresh automatically, or just add the comment in locally, this will ignore the fact if other comments have been added around the same time as well
+							// Maybe it could do both, check for new updates, if there arnt any add this locally, if there are refresh or ask the user to refresh
+					    }else
+					    {
+						    alert(data);
+					    }
+					 });
+}
+
+
+/**
  * Create comment button
  */
 $(function() {
     $("#createCommentButton").click( function()
          {
-    		$.post( ajaxUrl, { request: "create", taskId: <?php echo $data['task']->getId(); ?>, memberId: 1, content: $("#inputTaskContent").val(),  tag: $("#inputTaskTag").val()}, 
-    		function( data )
-    	    {
-			    if(data == "true")
-			    {
-					loadComments(0);
-			    }else
-			    {
-				    alert(data);
-			    }
-			 });
+    		createComment($("#inputTaskTag").val(), $("#inputTaskContent").val());
          });
 });
+
+/**
+ * Add hours button
+ */
+ $(function() {
+	    $("#addHoursButton").click( function()
+	         {
+	         	// run script to add hours through ajax
+	         	var tempCommentString = "Alex has added " + $("#addHoursHours").val() + " hours  worked on " + document.getElementById("addHoursDate").value + "<br />";
+	         	tempCommentString += $("#addHoursComment").val();
+	         	addHours(document.getElementById("addHoursDate").value, $("#addHoursHours").val());
+	    		createComment("@HoursAdded", tempCommentString);
+	         });
+	});
 
 /**
  * Comment section paginator on click event
@@ -218,9 +261,14 @@ $(function() {
 });
 
 /**
+ * jQuery Datepicker
+ */
+
+/**
  * Page on load
  */
 $( document ).ready(function() {
 	printCommentsInTable(1);
+	document.getElementById('addHoursDate').valueAsDate = new Date();
 });
 </script>

@@ -77,5 +77,37 @@ class TaskCommentsHandler
 			echo $e;
 		}
 	}//end loadPost
+	
+	function addHours($taskId, $memberId, $workedDate, $workedHours)
+	{
+		try {
+	
+			$statement = 'INSERT INTO `work`
+					(taskId, memberId, hours, date)
+					VALUES
+					(:taskId, :memberId, :hours, :date)';
+	
+			$query = DataBase::getConnection()->prepare($statement);
+			
+			$workedDate = date("Y-d-m", strtotime($workedDate));
+
+			$query->bindParam(':taskId'   , $taskId , PDO::PARAM_INT);
+			$query->bindParam(':memberId'   , $memberId , PDO::PARAM_INT);
+			$query->bindParam(':hours'   , $workedHours , PDO::PARAM_INT);
+			$query->bindParam(':date'   , $workedDate , PDO::PARAM_STR);
+	
+			if($query->execute())
+			{
+				echo "true";
+			}else
+			{
+				echo "Something failed";
+			}
+	
+			
+		} catch (PDOException $e) {
+			echo $e;
+		}
+	}
 }
 ?>

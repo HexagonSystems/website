@@ -1,3 +1,5 @@
+<a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm">Create Task</a>
+
 <table
 	class="table table-rowBorder table-responsive table-hover table-zebra">
 
@@ -13,36 +15,6 @@
 		foreach($data['task'] as $tempTask) {
 			include AppBase.'/View/Template/timesheetViewAll_singleTableRowTemplate.php';
 		}
-		/*
-			$status = "In Progress";
-		$taskName = "Responsive Menu - Drop Down";
-		$taskDscr = "Attempting to re-create our menu, but with a drop down version.";
-		$members = "Alex";
-		$lastUpdate = "9:50pm 30/09/2013";
-		$lastUpdateMember = "Alex";
-		include 'timesheetViewAll_singleTableRowTemplate.php';
-		$status = "Needs Attention";
-		$taskName = "View all tasks with Twitter Bootstrap";
-		$taskDscr = "Porting old version of the View all tasks page originally made in Pure CSS into Twitter Bootstrap";
-		$members = "Alex";
-		$lastUpdate = "9:50pm 30/09/2013";
-		$lastUpdateMember = "Alex";
-		include 'timesheetViewAll_singleTableRowTemplate.php';
-		$status = "In Progress";
-		$taskName = "Structure Dosmon";
-		$taskDscr = "Structure Dosmon so everything appears to have followed coding standards.";
-		$members = "Alex";
-		$lastUpdate = "9:50pm 30/09/2013";
-		$lastUpdateMember = "Alex";
-		include 'timesheetViewAll_singleTableRowTemplate.php';
-		$status = "Complete";
-		$taskName = "Another made up task";
-		$taskDscr = "I really couldn't be bothered coming up wither another task to put here. I just wanted some nice dummy data to get a feel for the new layout.";
-		$members = "Alex";
-		$lastUpdate = "9:50pm 30/09/2013";
-		$lastUpdateMember = "Alex";
-		include 'timesheetViewAll_singleTableRowTemplate.php';
-		*/
 		?>
 
 	</tbody>
@@ -60,3 +32,32 @@
 		<li><a href="#">&raquo;</a></li>
 	</ul>
 </div>
+
+<script
+	src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'>	
+	</script>
+<script
+	src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script>
+<script>
+/**
+ * Create comment button
+ */
+$(function() {
+    $("#createCommentButton").click( function()
+         {
+    		$.post( ajaxUrl, { request: "create", taskId: <?php echo $data['task']->getId(); ?>, memberId: 1, content: $("#inputTaskContent").val(),  tag: $("#inputTaskTag").val()}, 
+    		function( data )
+    	    {
+			    if(data == "true")
+			    {
+					loadComments(0);
+			    }else
+			    {
+				    alert(data);
+			    }
+			 });
+         });
+});
+
+</script>

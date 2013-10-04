@@ -38,7 +38,16 @@ if(!isset($_POST['request']))
 			{
 				echo missingError()." load";
 			}
-			break;	
+			break;
+		case "addHours":
+			if(commonCommentAttributesExist() && addHoursAttributesExists())
+			{
+				$commentHandler->addHours($_POST['taskId'], $_POST['memberId'], $_POST['workedDate'], $_POST['workedHours']);
+			}else
+			{
+				echo missingError()." addHours";
+			}
+			break;
 	}
 }
 
@@ -71,6 +80,25 @@ function loadCommentAttributesExist()
 		return true;
 	}else
 	{
+		return false;
+	}
+}
+
+function addHoursAttributesExists()
+{
+	if(isset($_POST['workedDate']))
+	{
+		if(isset($_POST['workedHours']))
+		{
+			return true;
+		}else
+		{
+			echo "Missing workedHours";
+			return false;
+		}
+	}else
+	{
+		echo "Missing workedDate";
 		return false;
 	}
 }
