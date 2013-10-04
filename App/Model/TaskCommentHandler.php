@@ -81,11 +81,12 @@ class TaskCommentsHandler
 	function addHours($taskId, $memberId, $workedDate, $workedHours)
 	{
 		try {
-	
+			
 			$statement = 'INSERT INTO `work`
 					(taskId, memberId, hours, date)
 					VALUES
-					(:taskId, :memberId, :hours, :date)';
+					(:taskId, :memberId, :hours, :date)
+					ON DUPLICATE KEY UPDATE hours = hours + :hours';
 	
 			$query = DataBase::getConnection()->prepare($statement);
 			

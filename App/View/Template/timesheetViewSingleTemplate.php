@@ -190,6 +190,7 @@ function updateCommentArray(jsonObject, pageNum) {
  */
 function createComment(commentTag, commentContent)
 {
+	commentTag = "@" + commentTag;
 	 $.post( ajaxUrl, { request: "create", taskId: <?php echo $data['task']->getId(); ?>, memberId: 1, content: commentContent,  tag: commentTag}, 
 		 		function( data )
 		 	    {
@@ -246,7 +247,7 @@ $(function() {
 	         	var tempCommentString = "Alex has added " + $("#addHoursHours").val() + " hours  worked on " + document.getElementById("addHoursDate").value + "<br />";
 	         	tempCommentString += $("#addHoursComment").val();
 	         	addHours(document.getElementById("addHoursDate").value, $("#addHoursHours").val());
-	    		createComment("@HoursAdded", tempCommentString);
+	    		createComment("HoursAdded", tempCommentString);
 	         });
 	});
 

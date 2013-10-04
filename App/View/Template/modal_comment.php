@@ -11,10 +11,12 @@
         <div class="modal-body">
           <form class="form-horizontal" role="form" id="addTaskInput">
 		<div class="form-group">
+		
 			<label for="inputTaskTag" class="col-lg-2 control-label">Tag</label>
-			<div class="col-lg-10">
+			<div class="col-lg-10 input-group">
+				<span class="input-group-addon">@</span>
 				<input type="text" class="form-control" id="inputTaskTag"
-					placeholder="@Tag">
+					placeholder="Tag">
 			</div>
 		</div>
 		<div class="form-group">
