@@ -24,7 +24,7 @@ if(!isset($_POST['request']))
 		case "create":
 			if(commonCommentAttributesExist() && createCommentAttributesExist())
 			{
-				$commentHandler->createComment($_POST['taskId'], $_POST['memberId'], $_POST['tag'], $_POST['content']);
+				$commentHandler->createComment($_POST['taskId'], $_POST['memberId'], $_POST['tag'], $_POST['title'], $_POST['content']);
 			}else
 			{
 				echo missingError()." create";
@@ -64,7 +64,7 @@ function commonCommentAttributesExist()
 
 function createCommentAttributesExist()
 {
-	if(isset($_POST['content']) && isset($_POST['tag']))
+	if(isset($_POST['title']) && isset($_POST['content']) && isset($_POST['tag']))
 	{
 		return true;
 	}else

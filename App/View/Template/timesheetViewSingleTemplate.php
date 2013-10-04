@@ -17,8 +17,8 @@
 </header>
 
 <!-- Button trigger modal -->
-<a data-toggle="modal" href="#modal_comment" class="btn btn-primary btn-sm">Add
-	Update</a>
+<a data-toggle="modal" href="#modal_comment"
+	class="btn btn-primary btn-sm">Add Update</a>
 <a data-toggle="modal" href="#modal_hours"
 	class="btn btn-primary btn-sm">Add Hours</a>
 <button class="btn btn-primary btn-sm">Edit Task</button>
@@ -36,10 +36,8 @@
 		<th class="table-colMedium">Posted on</th>
 	</thead>
 
-	<tbody id="commentsContainer">
-		<?php /*foreach($data['comments'] as $tempTask) {
-		include AppBase.'/View/Template/timesheetViewSingle_singleCommentRowTemplate.php';
-		}*/ ?>
+	<tbody id="commentsContainer" class="tbodyFirstLineAccordion">
+		<!-- Comments will be loaded here through AJAX -->
 	</tbody>
 </table>
 
@@ -99,6 +97,7 @@ function printCommentsInTable(pageNum) {
 		{
 			/* TABLE ROW */
 			var tableRow = document.createElement('tr');
+			tableRow.className = 'parentOfAccordion';
 			
 			/* TAG */
 			var tagTD = document.createElement('td');
@@ -110,7 +109,38 @@ function printCommentsInTable(pageNum) {
 
 			/* CONTENT */
 			var contentTD = document.createElement('td');
-			contentTD.innerHTML = arrayOfComments[counter]['content'];
+
+			/* CONTENT TITLE */
+			var contentTitle = document.createElement('p');
+			if(arrayOfComments[counter]['title'] !== undefined && arrayOfComments[counter]['title'] !== null && arrayOfComments[counter]['title'] !== "")
+			{
+				contentTitle.innerHTML = arrayOfComments[counter]['title'];
+			}else
+			{
+				contentTitle.innerHTML = "Title not set";
+			}
+
+			/* CONTENT */
+			var contentPreview = document.createElement('span');
+			var contentBreaker = document.createElement('span');
+			var contentContent = document.createElement('span');
+			var max = 40;
+			if(arrayOfComments[counter]['content'].length > max)
+			{
+				contentPreview.innerHTML = arrayOfComments[counter]['content'].substring(0, max);
+				contentBreaker.innerHTML = "...";
+				contentContent.innerHTML = arrayOfComments[counter]['content'].substring(max, (contentContent.innerHTML = arrayOfComments[counter]['content'].length));
+			}else
+			{
+				contentPreview.innerHTML = arrayOfComments[counter]['content'];
+			}
+
+			/* CONTENT FINISH */
+			contentTD.appendChild(contentTitle);
+			contentTD.appendChild(contentPreview);
+			contentTD.appendChild(contentBreaker);
+			contentTD.appendChild(contentContent);
+			contentTD.className = "actualAccordion";
 
 			/* MEMBER */
 			var memberIdTD = document.createElement('td');
@@ -130,6 +160,27 @@ function printCommentsInTable(pageNum) {
 			$(tableRow).show();
 		}
 	}
+	
+	$(function() {
+
+		$parentOfAccordion = $(".parentOfAccordion");
+
+		$parentOfAccordion.find(".actualAccordion").find(">:last-child").hide();
+		
+		$parentOfAccordion.click(function(){
+			var previousSibling = $(this).find(".actualAccordion").find(">:last-child").prev();
+			$(this).find(".actualAccordion").find(">:last-child").fadeToggle(500);
+			if( $(previousSibling).is(":visible") )
+			{
+				$(previousSibling).delay(500).toggle();
+			}else
+			{
+				$(previousSibling).delay(500).fadeToggle(0);
+			}
+			
+		    }).eq(0).trigger('click');
+	    	
+	});
 
 	
 }
@@ -188,10 +239,10 @@ function updateCommentArray(jsonObject, pageNum) {
 /**
  * Creates a comment in the database
  */
-function createComment(commentTag, commentContent)
+function createComment(commentTag, commentTitle, commentContent)
 {
 	commentTag = "@" + commentTag;
-	 $.post( ajaxUrl, { request: "create", taskId: <?php echo $data['task']->getId(); ?>, memberId: 1, content: commentContent,  tag: commentTag}, 
+	 $.post( ajaxUrl, { request: "create", taskId: <?php echo $data['task']->getId(); ?>, memberId: 1, title: commentTitle, content: commentContent,  tag: commentTag}, 
 		 		function( data )
 		 	    {
 					    if(data == "true")
@@ -233,7 +284,7 @@ function addHours(workedDate, workedHours)
 $(function() {
     $("#createCommentButton").click( function()
          {
-    		createComment($("#inputTaskTag").val(), $("#inputTaskContent").val());
+    		createComment($("#inputTaskTag").val(), $("#inputTaskTitle").val(), $("#inputTaskContent").val());
          });
 });
 
@@ -244,10 +295,9 @@ $(function() {
 	    $("#addHoursButton").click( function()
 	         {
 	         	// run script to add hours through ajax
-	         	var tempCommentString = "Alex has added " + $("#addHoursHours").val() + " hours  worked on " + document.getElementById("addHoursDate").value + "<br />";
-	         	tempCommentString += $("#addHoursComment").val();
+	         	var titleString = "Alex has added " + $("#addHoursHours").val() + " hours  worked on " + document.getElementById("addHoursDate").value;
 	         	addHours(document.getElementById("addHoursDate").value, $("#addHoursHours").val());
-	    		createComment("HoursAdded", tempCommentString);
+	    		createComment("HoursAdded", titleString, $("#addHoursComment").val());
 	         });
 	});
 
@@ -272,4 +322,8 @@ $( document ).ready(function() {
 	printCommentsInTable(1);
 	document.getElementById('addHoursDate').valueAsDate = new Date();
 });
+
+/**
+ * Testing an accordion
+ */
 </script>

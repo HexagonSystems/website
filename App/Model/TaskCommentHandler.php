@@ -1,19 +1,20 @@
 <?php
 class TaskCommentsHandler
 {
-	function createComment($taskId, $memberId, $tag, $content)
+	function createComment($taskId, $memberId, $tag, $title, $content)
 	{
 		try {
 
 			$statement = 'INSERT INTO `taskComment`
-					(taskId, memberId, content, tag)
+					(taskId, memberId, title, content, tag)
 					VALUES
-					(:taskId, :memberId, :content, :tag)';
+					(:taskId, :memberId, :title, :content, :tag)';
 
 			$query = DataBase::getConnection()->prepare($statement);
 
 			$query->bindParam(':taskId'   , $taskId , PDO::PARAM_INT);
 			$query->bindParam(':memberId'   , $memberId , PDO::PARAM_INT);
+			$query->bindParam(':title'   , $title , PDO::PARAM_STR);
 			$query->bindParam(':content'   , $content , PDO::PARAM_STR);
 			$query->bindParam(':tag'   , $tag , PDO::PARAM_STR);
 
@@ -57,6 +58,7 @@ class TaskCommentsHandler
 				$tempTask = array();
 				$tempTask['id'] = $row['commentId'];
 				$tempTask['tag'] = $row['tag'];
+				$tempTask['title'] = $row['title'];
 				$tempTask['content'] = $row['content'];
 				$tempTask['memberId'] = $row['memberId'];
 				$tempTask['date'] = $row['postedDate'];

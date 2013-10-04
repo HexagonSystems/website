@@ -20,9 +20,16 @@
 			</div>
 		</div>
 		<div class="form-group">
+			<label for="inputTaskTitle" class="col-lg-2 control-label">Title</label>
+			<div class="col-lg-10">
+				<input type="text" class="form-control" id="inputTaskTitle"
+					placeholder="Provide a brief description here">
+			</div>
+		</div>
+		<div class="form-group">
 			<label for="inputTaskContent" class="col-lg-2 control-label">Comment</label>
 			<div class="col-lg-10">
-				<textarea id="inputTaskContent" cols="5" class="boxsizingBorder width100"></textarea>
+				<textarea id="inputTaskContent" cols="5" class="boxsizingBorder width100" placeholder="A more detailed description goes here"></textarea>
 			</div>
 		</div>
 	</form>
