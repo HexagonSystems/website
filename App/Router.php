@@ -1,6 +1,8 @@
 <?php
+include 'Service/CookieMonster.php';
 class Router
 {
+
     public function __construct()
     {
     }
@@ -55,14 +57,14 @@ class Router
 
         if(isset($package))
         {
-        include_once( AppBase.'/Package/'.$package.'/'.$controller.'.php');
+        include_once(AppBase.'/Package/'.$package.'/'.$controller.'.php');
         $router = new $controller();
         $router->route($conn);
         }
         else
         {
 
-        include_once( AppBase.'/Controller/'.$controller.'.php');
+        include_once(AppBase.'/Controller/'.$controller.'.php');
         $controller = new $controller();
         $controller->setDatabase($conn);
         $controller->invoke();

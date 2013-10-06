@@ -9,37 +9,39 @@ class EditPageController
     private $post;
     public function __construct()
     {
-        $this->model = new Users();
-        $this->header = '../../Templates/Admin/header.php';
-	$this->footer = '../../Templates/Admin/footer.php';
-	$this->nav = '../../Templates/Admin/nav.php';
+        $this->model = new EditPageModel();
+        $this->header = 'View/Templates/header.php';
+	$this->footer = 'View/Templates/footer.php';
+	$this->nav = 'View/Templates/nav.php';
     } //end constructor
 
     public function invoke()
     {
-        if($this->get['post'] == 'new')
+        if($this->get['action'] == 'default')
         {
-            //Save a new post
-            //We'll assume this is actually done safely
-            $this->model = new Post();
-            $this->model->createPost($this->post['Title'],$this->post['Author'],$this->post['Content']);
-    
-            if($this->model->save() == 'success')
+            //This will load the pages default
+            $this->model->editPageDefault();
+
+        }
+        if($this->get['action'] == 'createPage')
+        {
+            if($this->model-> == 'success')
             {
+
                 $this->viewName = 'Post';
             }
             else
             {
                 $this->viewName = 'Error';
             }
-    
-            $this->template = AppBase.'/View/'.$this->viewName.'.php';
+
+            $this->template = AppBase . '/View/' . $this->viewName . '.php';
             //create a new view and pass it our template
             $view = new ExampleView($this->template);
             //Set it's model
-            $view->setModel($this->model);
+            $view -> setModel($this->model);
         }
-        elseif($this->get['post'] == 'edit')
+        else if($this->get['post'] == 'viewPage')
         {
             //Set up a post to be editted
         }
