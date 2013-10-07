@@ -16,10 +16,8 @@ if(!isset($_POST['request']))
 	die();
 }else
 {
-	include "TaskComment.php";
-	include "TaskCommentHandler.php";
-	include "TaskCommentDA.php";
 	include "../Config/DataBase.php";
+	include "../Config/Config.php";
 	$commentHandler = new TaskCommentsHandler();
 	
 	switch($_POST['request'])

@@ -74,6 +74,11 @@ class Task extends ArticleEntity
 		$this->article['updates'] = $param;
 	}
 	
+	public function setLastUpdate($param)
+	{
+		$this->article['lastUpdate'] = $param;
+	}
+	
 	//*********GETTERS--------------
 	public function getThis()
 	{
@@ -103,6 +108,11 @@ class Task extends ArticleEntity
 	public function getUpdates()
 	{
 		return($this->article['updates']);
+	}
+	
+	public function getLastUpdate()
+	{
+		return $this->article['lastUpdate'];
 	}
 	
 	public function getComments($startFrom = 0, $quantity = 5)

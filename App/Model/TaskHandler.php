@@ -17,9 +17,9 @@ class TaskHandler
 		$this->taskDA->setDatabase($database);
 	}
 	
-	public function loadTasks($page)
+	public function loadTasks($page, $quantity)
 	{
-		$tempArray = $this->taskDA->loadTasks($page);
+		$tempArray = $this->taskDA->loadTasks($page, $quantity);
 		return $tempArray;
 	}
 	
@@ -36,9 +36,23 @@ class TaskHandler
 			date_default_timezone_set('Australia/Melbourne');
 			$date = date('Y/m/d', time());
 			$taskCommentHandler = new TaskCommentsHandler();
-			$taskCommentHandler->addHours($returnValue, $memberId, $date, 0, "Task created");
+			return $taskCommentHandler->addHours($returnValue, $memberId, $date, 0, "Task created");
+		}else
+		{
+			$this->failReason = "Failed creating the task";
+			return false;
 		}
-		return $returnValue;
+		
+	}
+	
+	/**
+	 * Returns the reason the last method errored
+	 *
+	 * @return string
+	 */
+	public function getError()
+	{
+		return $this->failReason;
 	}
 	
 }

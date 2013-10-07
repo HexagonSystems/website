@@ -55,7 +55,7 @@
 </div>
 
 <script>
-ajaxUrl = "<?php echo AppBaseSTRIPPED; ?>Model/TaskCommentsAJAX.php";
+ajaxUrl = "<?php echo AppBaseSTRIPPED; ?>/Model/TaskCommentsAJAX.php";
 taskId = <?php echo $data['task']->getId(); ?>
 
 </script>

@@ -16,20 +16,25 @@ if(!isset($_POST['request']))
 	die();
 }else
 {
-	include "Task.php";
-	include "TaskHandler.php";
-	include "TaskDA.php";
-	include "../Config/DataBase.php";
-	$commentHandler = new TaskHandler();
+	// wrap in a try/catch
+	require_once "../Config/DataBase.php";
+	require_once "../Config/Config.php";
+	$taskHandler = new TaskHandler();
 	
 	switch($_POST['request'])
 	{
 		case "create":
 			if(commonCommentAttributesExist() && createCommentAttributesExist())
 			{
-				$response = $commentHandler->createComment($_POST['taskId'], $_POST['memberId'], $_POST['tag'], $_POST['title'], $_POST['content']);
+				$response = $taskHandler->createTask($_POST['title'], $_POST['content'], $_POST['memberId'], $_POST['status']);
 				$response = json_encode($response);
-				echo $response;
+				if($response == false)
+				{
+					echo $taskHandler->getError();
+				}else
+				{
+					echo $response;
+				}
 			}else
 			{
 				returnError("Missing attributes for create comments request");
@@ -38,7 +43,7 @@ if(!isset($_POST['request']))
 		case "load":
 			if(commonCommentAttributesExist() && loadCommentAttributesExist())
 			{
-				$response = $commentHandler->loadComments($_POST['taskId'], $_POST['memberId'], $_POST['pageNum'], $_POST['qty']);
+				$respomse = $taskHandler->loadTasks($_POST['pageNum'], $_POST['qty']);
 				for($counter = 0; $counter < sizeof($response); $counter++)
 				{
 					$tempTaskComment = $response[$counter];
@@ -77,7 +82,7 @@ if(!isset($_POST['request']))
  */
 function commonCommentAttributesExist()
 {
-	if(isset($_POST['taskId']) && isset($_POST['memberId']))
+	if(isset($_POST['memberId']))
 	{
 		return true;
 	}else
@@ -93,7 +98,7 @@ function commonCommentAttributesExist()
  */
 function createCommentAttributesExist()
 {
-	if(isset($_POST['title']) && isset($_POST['content']) && isset($_POST['tag']))
+	if(isset($_POST['title']) && isset($_POST['content']) && isset($_POST['status']))
 	{
 		return true;
 	}else

@@ -11,7 +11,7 @@
         <div class="modal-body">
           <form class="form-horizontal" role="form">
 		<div class="form-group">
-			<label for="addHoursDate" class="col-lg-2 control-label">Title</label>
+			<label for="createTaskTitle" class="col-lg-2 control-label">Title</label>
 			<div class="col-lg-10">
 				<input type="text" class="form-control" id="createTaskTitle" placeholder="Task title">
 					  </script>
@@ -26,7 +26,7 @@
 		<div class="form-group">
 			<label for="createTaskStatus" class="col-lg-2 control-label">Status</label>
 			<div class="col-lg-10">
-				<select class="form-control">
+				<select class="form-control" id="#createTaskStatus">
 				<!-- Will need to load these from database -->
 					<option>In Progress</option>
 					<option>Needs attention</option>

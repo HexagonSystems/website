@@ -21,7 +21,7 @@ class TimesheetController extends Controller
         	$view = new TimesheetView($this->template,$this->footer, 0);
         	$view->assign('title' , 'Logged in');
         	
-        	$view->assign('task' , $taskLoader->loadTasks(1));
+        	$view->assign('task' , $taskLoader->loadTasks(0, 5));
         }else if($_GET['action'] == "single")
         {
         	if(!isset($_GET['param']))

@@ -35,17 +35,11 @@ function emptyTableBody()
  * @param pageNum
  * @returns {Boolean}
  */
-function pageAlreadyLoaded(pageNum)
+function pageAlreadyLoaded(pageNum, tableArray)
 {
 	var positionToStartOn = ( pageNum - 1 ) * COMMENTS_PER_PAGE;
 	var positionToEndOn = positionToStartOn + COMMENTS_PER_PAGE - 1;
-
 	if(tableContent[positionToStartOn] === undefined || tableContent[positionToStartOn] === null)
-	{
-		return false;
-	}
-
-	if(tableContent[positionToEndOn] === undefined || tableContent[positionToEndOn] === null)
 	{
 		return false;
 	}
@@ -68,12 +62,28 @@ function updateTableContentArray(jsonObject, pageNum) {
 	var positionToStartOn = ( pageNum - 1 ) * COMMENTS_PER_PAGE;
 	var positionToEndOn = positionToStartOn + COMMENTS_PER_PAGE;
 	
-	for(var counter = 0; counter < COMMENTS_PER_PAGE; counter++)
-	{
-		tempCommentArray = jsonObject[counter];
-		positionToAdd = positionToStartOn + counter;
-		tableContent[positionToAdd] = jsonObject[counter];
-	}
+	var tempCounter = 0;
+	$.each(jsonObject, function(id) {
+		tableContent[positionToStartOn] = jsonObject[id];
+		positionToStartOn++;
+	});
 
+	findLastPage();
+	
 	printCommentsInTable(pageNum);
+}
+
+function findLastPage()
+{
+	if(tableContent.length <= COMMENTS_PER_PAGE)
+	{
+		lastPage = 1;
+	}
+	else if(tableContent.length % COMMENTS_PER_PAGE)
+	{
+		lastPage = Math.floor(tableContent.length / COMMENTS_PER_PAGE) + 1;
+	}else
+	{
+		lastPage = tableContent.length / COMMENTS_PER_PAGE;
+	}
 }

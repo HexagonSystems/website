@@ -37,7 +37,6 @@
 
 <script>
 ajaxUrl = "<?php echo AppBaseSTRIPPED; ?>Model/TaskAJAX.php";
-taskId = <?php echo $data['task']->getId(); ?>
 
 </script>
 <script src="<?php echo AppBaseSTRIPPED; ?>/includes/js/TaskLoader.js"></script>

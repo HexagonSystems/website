@@ -18,5 +18,8 @@
 		</div>
 	</td>
 	<td><?php echo implode(", ", $tempTask->getMembers()); ?></td>
-	<td><?php echo $tempTask->getUpdateAttribute(0, 'date'); ?> by <?php echo $tempTask->getUpdateAttribute(0, 'firstName'); ?>
+	<td><?php 
+		$lastUpdate = $tempTask->getLastUpdate();
+		echo $lastUpdate['memberId'].' on '.$lastUpdate['postedDate'];
+	?></td>
 </tr>

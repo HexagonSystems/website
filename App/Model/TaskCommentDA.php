@@ -36,10 +36,10 @@ class TaskCommentDA
 			$query->bindParam(':tag'   , $tag , PDO::PARAM_STR);
 	
 			$query->execute();
-	
+			
 			return true;
 		} catch (PDOException $e) {
-			// echo $e;
+			echo $e;
 			return false;
 		}
 	}

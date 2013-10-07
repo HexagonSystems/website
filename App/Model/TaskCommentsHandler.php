@@ -47,8 +47,11 @@ class TaskCommentsHandler
 		{
 			$this->failReason = $validation;
 			return false;
+		}else
+		{
+			return $this->taskCommentDA->createComment($taskId, $memberId, $tag, $title, $content);
 		}
-		return $this->taskCommentDA->createComment($taskId, $memberId, $tag, $title, $content);
+		
 	}
 
 	/**
@@ -76,10 +79,11 @@ class TaskCommentsHandler
 	 */
 	function addHours($taskId, $memberId, $workedDate, $workedHours, $workedComment)
 	{
-		$addHoursResponse= $this->taskCommentDA->addHours($taskId, $memberId, $workedDate, $workedHours);
+		$addHoursResponse = $this->taskCommentDA->addHours($taskId, $memberId, $workedDate, $workedHours);
+		
 		if($addHoursResponse === true)
 		{
-			$createCommentResponse = $this->createComment($taskId, $memberId, "@addedHours", "Alex has added ".$workedHours." for the date ".$workedDate, $workedComment);
+			return $createCommentResponse = $this->createComment($taskId, $memberId, "@addedHours", "Alex has added ".$workedHours." for the date ".$workedDate, $workedComment);
 		}else
 		{
 			$this->failReason = "Error adding hours";
@@ -118,11 +122,11 @@ class TaskCommentsHandler
 	}
 
 	/**
-	 * Returns the last item that was tested before erroring
+	 * Returns the reason the last method errored
 	 *
-	 * @return number
+	 * @return string
 	 */
-	private function returnError()
+	public function getError()
 	{
 		return $this->failReason;
 	}

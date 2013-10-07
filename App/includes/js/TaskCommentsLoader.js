@@ -1,9 +1,10 @@
 /* CONFIG */
 var tableContent = new Array();
+var lastPage = -1;
 var COMMENTS_PER_PAGE = 5;
 var TABLE_CONTENT_PRINT_LOCATION = "#commentsContainer";
 
-/* FUCNTIONS */
+/* FUNCTIONS */
 /**
  * Load Comments through JSON
  */
@@ -16,7 +17,6 @@ var TABLE_CONTENT_PRINT_LOCATION = "#commentsContainer";
 	    		function( nakedJson )
 	    	    {
 			 		var jsonObject = $.parseJSON(nakedJson);
-			 		
 			 		updateTableContentArray(jsonObject, pageNum);
 				 }
 		 );
@@ -27,7 +27,7 @@ var TABLE_CONTENT_PRINT_LOCATION = "#commentsContainer";
  */
 function printCommentsInTable(pageNum) {
 	// If the page of comments isn't already loaded, load it
-	if(pageAlreadyLoaded(pageNum) === false)
+	if(pageAlreadyLoaded(pageNum, tableContent) === false && pageNum != lastPage)
 	{
 		loadComments(pageNum);
 	}else
@@ -35,13 +35,21 @@ function printCommentsInTable(pageNum) {
 		var positionToStartOn = ( pageNum - 1 ) * COMMENTS_PER_PAGE;
 		var positionToEndOn = positionToStartOn + COMMENTS_PER_PAGE;
 		
+		var arrayToLoopOver = tableContent.concat();;
+		
+		if(lastPage > -1 && lastPage == pageNum)
+		{
+			arrayToLoopOver = arrayToLoopOver.splice(positionToStartOn);
+		}else
+		{
+			arrayToLoopOver = arrayToLoopOver.splice(positionToStartOn, positionToEndOn);
+		}
+		
 		emptyTableBody();
 		
-		for(var counter = positionToStartOn; counter < positionToEndOn; counter++)
-		{
-			currentComment = tableContent[counter];
-			printSingleComment(currentComment['tag'], currentComment['title'], currentComment['content'], currentComment['memberId'], currentComment['date'], false);
-		}
+		$.each(arrayToLoopOver, function(singleArray) {
+			printSingleComment(arrayToLoopOver[singleArray]['tag'], arrayToLoopOver[singleArray]['title'], arrayToLoopOver[singleArray]['content'], arrayToLoopOver[singleArray]['memberId'], arrayToLoopOver[singleArray]['date'], false);
+			});
 	}
 
 	assignTableContentAccordion()
@@ -116,7 +124,11 @@ function printSingleComment(commentTag, commentTitle, commentContent, commentMem
 	if(commentSlideIn)
 	{
 		$(tableRow).hide().prependTo(TABLE_CONTENT_PRINT_LOCATION).fadeIn('slow');
-		$(TABLE_CONTENT_PRINT_LOCATION).find('>:last-child').remove();
+		if(tableContent < COMMENTS_PER_PAGE)
+		{
+			$(TABLE_CONTENT_PRINT_LOCATION).find('>:last-child').remove();
+		}
+		
 	}else
 	{
 		$(tableRow).appendTo(TABLE_CONTENT_PRINT_LOCATION);

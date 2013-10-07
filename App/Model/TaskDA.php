@@ -3,30 +3,45 @@
 class TaskDA
 {
 	private $database = FALSE;
-	
+
 	public function setDatabase($database)
 	{
 		$this->database = $database;
 	}
-	
+
 	/**
 	 * Loads all of the tasks for the requested page
 	 *
 	 * This function is still a work in progress. The ability to customise the search
 	 * further than just the page number will be implemented in the future.
 	 *
-	 * @param Int $page The page of tasks to load
+	 * @param int $page The page of tasks to load
+	 * @param int $quantity The page of tasks to load
 	 *
 	 * @return array Array of Member Ids
 	 * @throws Exception PDO expection
 	 */
-	public function loadTasks($page)
+	public function loadTasks($starting, $quantity)
 	{
-		try {
-			$statement = "SELECT *
-					FROM `task`";
+		try
+		{
+			$statement = "SELECT * FROM
+					(
+					SELECT DISTINCT tskCom.postedDate, tskCom.memberId, tsk.*
+					FROM `taskcomment` tskCom
+					LEFT JOIN `task` tsk
+					ON tskCom.taskId = tsk.taskId
+					ORDER BY tskCom.postedDate DESC
+					
+					) AS my_table
+					GROUP BY taskId
+					ORDER BY postedDate DESC
+					LIMIT :starting, :quantity";
 
 			$query = $this->database->prepare($statement);
+
+			$query->bindParam(':starting'   , $starting , PDO::PARAM_INT);
+			$query->bindParam(':quantity'   , $quantity	, PDO::PARAM_INT);
 
 			$query->execute();
 
@@ -42,10 +57,13 @@ class TaskDA
 				$tempObject->setContent($row['details']);
 				$tempObject->setCategory($row['type']);
 				$tempObject->loadMembers();
-				$tempObject->setUpdates($this->loadUpdates($row['taskId'], 1));
-				
+				$tempObject->setLastUpdate(array(
+						"memberId" => $row['memberId'],
+						"postedDate" => $row['postedDate'],
+				));
 				$arrayOfTasks[$tempObject->getId()] = $tempObject;
 			}
+			echo "working";
 
 			// print_r($arrayOfPosts);
 			return $arrayOfTasks;
@@ -173,7 +191,7 @@ class TaskDA
 				$tmpArray['memberId'] = $row['memberId'];
 				$tmpArray['firstName'] = $row['firstName'];
 				$tmpArray['date'] = $row['date'];
-					
+
 				array_push($arrayParam, $tmpArray);
 			}
 
@@ -185,31 +203,32 @@ class TaskDA
 			return false;
 		}
 	}
-	
+
 	function createTask($title, $description, $memberId, $status)
 	{
 		try {
-	
+
 			$statement = 'INSERT INTO `task`
 					(name, details, status)
 					VALUES
 					(:name, :details, :status)';
-	
+
 			$query = DataBase::getConnection()->prepare($statement);
-	
+
 			$query->bindParam(':name'		, $title		, PDO::PARAM_STR);
 			$query->bindParam(':details'	, $description	, PDO::PARAM_STR);
 			$query->bindParam(':status'		, $status		, PDO::PARAM_STR);
-	
+
 			$query->execute();
-	
-			return true;
+
+			return DataBase::getConnection()->lastInsertId();
+
 		} catch (PDOException $e) {
 			// echo $e;
 			return false;
 		}
 	}
-	
+
 }
 
 ?>

@@ -10,9 +10,9 @@ class TaskLoader
 		$this->taskDA = new TaskDA();
 	}
 	
-	public function loadTasks($page)
+	public function loadTasks($page, $quantity)
 	{
-		$tempArray = $this->taskDA->loadTasks($page);
+		$tempArray = $this->taskDA->loadTasks($page, $quantity);
 		return $tempArray;
 	}
 	
