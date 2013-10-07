@@ -1,4 +1,6 @@
-<a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm">Create Task</a>
+<a data-toggle="modal" href="#modal_createTask"
+	class="btn btn-primary btn-sm">Add Update</a>
+<?php include_once 'modal_createTask.php'; ?>
 
 <table
 	class="table table-rowBorder table-responsive table-hover table-zebra">
@@ -33,31 +35,10 @@
 	</ul>
 </div>
 
-<script
-	src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'>	
-	</script>
-<script
-	src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script>
-<script>
-/**
- * Create comment button
- */
-$(function() {
-    $("#createCommentButton").click( function()
-         {
-    		$.post( ajaxUrl, { request: "create", taskId: <?php echo $data['task']->getId(); ?>, memberId: 1, content: $("#inputTaskContent").val(),  tag: $("#inputTaskTag").val()}, 
-    		function( data )
-    	    {
-			    if(data == "true")
-			    {
-					loadComments(0);
-			    }else
-			    {
-				    alert(data);
-			    }
-			 });
-         });
-});
+ajaxUrl = "<?php echo AppBaseSTRIPPED; ?>Model/TaskAJAX.php";
+taskId = <?php echo $data['task']->getId(); ?>
 
 </script>
+<script src="<?php echo AppBaseSTRIPPED; ?>/includes/js/TaskLoader.js"></script>
+<script src="<?php echo AppBaseSTRIPPED; ?>/includes/js/TableLoader.js"></script>

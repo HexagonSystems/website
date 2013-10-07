@@ -185,52 +185,31 @@ class TaskDA
 			return false;
 		}
 	}
-
-	/**
-	 * Loads the comments for a specific Task
-	 *
-	 * @param int $id the id number of the task
-	 * @param int $quantity The quantity of comments to load
-	 * @param int $startFrom Where to start from (the page number)
-	 *
-	 * @return array Array of comments
-	 * @throws Exception PDO expection
-	 */
-	public function loadComments($id, $pageNumber, $quantity)
+	
+	function createTask($title, $description, $memberId, $status)
 	{
-
 		try {
-			$statement = "SELECT * FROM `taskComment`
-					WHERE `taskId` = :taskId
-					ORDER BY `postedDate` DESC
-					LIMIT 0, 5";
-
-			$query = $this->database->prepare($statement);
-
-			$query->bindParam(':taskId'   , $id , PDO::PARAM_INT);
-
+	
+			$statement = 'INSERT INTO `task`
+					(name, details, status)
+					VALUES
+					(:name, :details, :status)';
+	
+			$query = DataBase::getConnection()->prepare($statement);
+	
+			$query->bindParam(':name'		, $title		, PDO::PARAM_STR);
+			$query->bindParam(':details'	, $description	, PDO::PARAM_STR);
+			$query->bindParam(':status'		, $status		, PDO::PARAM_STR);
+	
 			$query->execute();
-
-			$tmpMasterArray = array();
-
-			foreach ($query as $row) {
-				$tmpChildArray = array();
-				$tmpChildArray['tag'] = $row['tag'];
-				$tmpChildArray['content'] = $row['content'];
-				$tmpChildArray['memberId'] = $row['memberId'];
-				$tmpChildArray['date'] = $row['postedDate'];
-
-				array_push($tmpMasterArray, $tmpChildArray);
-			}
-
-			//print_r($arrayOfPosts);
-			return $tmpMasterArray;
+	
+			return true;
 		} catch (PDOException $e) {
-			echo $e;
-
+			// echo $e;
 			return false;
 		}
-	}//end loadPost
+	}
+	
 }
 
 ?>

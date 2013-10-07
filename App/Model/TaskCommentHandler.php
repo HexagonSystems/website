@@ -1,116 +1,130 @@
 <?php
 class TaskCommentsHandler
 {
+	private $taskCommentDA;
+	private $currentTest;
+	private $failReason;
+
+	/**
+	 * Constructor
+	*/
+	function __construct()
+	{
+		$this->taskCommentDA = new TaskCommentDA();
+	}
+
+	/**
+	 * Sets the database PDO object
+	 *
+	 * @param unknown $database
+	 */
+	public function setDatabase($database)
+	{
+		$this->taskCommentDA->setDatabase($database);
+	}
+
+	/**
+	 * Creates a comment in the database
+	 *
+	 * @param unknown $taskId
+	 * @param unknown $memberId
+	 * @param unknown $tag
+	 * @param unknown $title
+	 * @param unknown $content
+	 * @return boolean
+	 */
 	function createComment($taskId, $memberId, $tag, $title, $content)
 	{
-		try {
-
-			$statement = 'INSERT INTO `taskComment`
-					(taskId, memberId, title, content, tag)
-					VALUES
-					(:taskId, :memberId, :title, :content, :tag)';
-
-			$query = DataBase::getConnection()->prepare($statement);
-
-			$query->bindParam(':taskId'   , $taskId , PDO::PARAM_INT);
-			$query->bindParam(':memberId'   , $memberId , PDO::PARAM_INT);
-			$query->bindParam(':title'   , $title , PDO::PARAM_STR);
-			$query->bindParam(':content'   , $content , PDO::PARAM_STR);
-			$query->bindParam(':tag'   , $tag , PDO::PARAM_STR);
-
-			$query->execute();
-
-			echo "true";
-		} catch (PDOException $e) {
-			echo $e;
+		$tempTaskComment = new TaskComment();
+		$tempTaskComment->setId($taskId);
+		$tempTaskComment->setMemberId($memberId);
+		$tempTaskComment->setTag($tag);
+		$tempTaskComment->setTitle($title);
+		$tempTaskComment->setContent($content);
+		
+		$validation = $tempTaskComment->isValid();
+		if($validation === false)
+		{
+			$this->failReason = $validation;
+			return false;
 		}
+		return $this->taskCommentDA->createComment($taskId, $memberId, $tag, $title, $content);
 	}
-	
+
 	/**
-	 * Loads an existing post from the database
+	 * Loads the task comments
 	 *
-	 * @param Int $postId the id number of the post
-	 *
-	 * @return Boolean   True for loaded false for DB connection error
+	 * @param unknown $taskId
+	 * @param unknown $memberId
+	 * @param unknown $pageNum
+	 * @param unknown $qty
+	 * @return Ambigous <boolean, multitype:>
 	 */
 	public function loadComments($taskId, $memberId, $pageNum, $qty)
 	{
-		try {
-			$statement = "SELECT * FROM `taskComment`
-						WHERE `taskId` = :taskId
-						ORDER BY `postedDate` DESC
-						LIMIT :starting, 5";
-	
-			$query = DataBase::getConnection()->prepare($statement);
-				
-			$query->bindParam(':taskId'   , $taskId , PDO::PARAM_INT);
-			
-			$starting = ($pageNum - 1) * $qty;
-			
-			$query->bindParam(':starting'   , $starting , PDO::PARAM_INT);
-	
-			$query->execute();
-			
-			$commentHolder = array();
-			
-			$htmlString = "";
-			foreach ($query as $row) {
-				$tempTask = array();
-				$tempTask['id'] = $row['commentId'];
-				$tempTask['tag'] = $row['tag'];
-				$tempTask['title'] = $row['title'];
-				$tempTask['content'] = $row['content'];
-				$tempTask['memberId'] = $row['memberId'];
-				$tempTask['date'] = $row['postedDate'];
-				
-				array_push($commentHolder, $tempTask);
-				/*
-				echo '<tr>';
-				echo '<td><a href="#">'.$tempTask["tag"].'</a></td>';
-				echo '<td>'.$tempTask["content"].'</td>';
-				echo '<td>'.$tempTask["memberId"].'</td>';
-				echo '<td>'.$tempTask["date"].'</td>';
-				echo '</tr>';
-				*/
-			}
-			
-			echo json_encode($commentHolder);
-		} catch (PDOException $e) {
-			echo $e;
-		}
-	}//end loadPost
-	
-	function addHours($taskId, $memberId, $workedDate, $workedHours)
-	{
-		try {
-			
-			$statement = 'INSERT INTO `work`
-					(taskId, memberId, hours, date)
-					VALUES
-					(:taskId, :memberId, :hours, :date)
-					ON DUPLICATE KEY UPDATE hours = hours + :hours';
-	
-			$query = DataBase::getConnection()->prepare($statement);
-			
-			$workedDate = date("Y-d-m", strtotime($workedDate));
+		$temp = $this->taskCommentDA->loadComments($taskId, $memberId, $pageNum, $qty);
+		return $temp;
+	}
 
-			$query->bindParam(':taskId'   , $taskId , PDO::PARAM_INT);
-			$query->bindParam(':memberId'   , $memberId , PDO::PARAM_INT);
-			$query->bindParam(':hours'   , $workedHours , PDO::PARAM_INT);
-			$query->bindParam(':date'   , $workedDate , PDO::PARAM_STR);
-	
-			if($query->execute())
-			{
-				echo "true";
-			}else
-			{
-				echo "Something failed";
-			}
-	
-			
-		} catch (PDOException $e) {
-			echo $e;
+	/**
+	 * Adds hours for a member into the database
+	 *
+	 * @param unknown $taskId
+	 * @param unknown $memberId
+	 * @param unknown $workedDate
+	 * @param unknown $workedHours
+	 */
+	function addHours($taskId, $memberId, $workedDate, $workedHours, $workedComment)
+	{
+		$addHoursResponse= $this->taskCommentDA->addHours($taskId, $memberId, $workedDate, $workedHours);
+		if($addHoursResponse === true)
+		{
+			$createCommentResponse = $this->createComment($taskId, $memberId, "@addedHours", "Alex has added ".$workedHours." for the date ".$workedDate, $workedComment);
+		}else
+		{
+			$this->failReason = "Error adding hours";
+			return false;
 		}
+	}
+
+	private function validateInteger($testParam, $minAmount, $maxAmount)
+	{
+		if($testParam < $minAmount && $minAmount == null)
+		{
+			$this->failReason = "Integer too small";
+			return false;
+		}
+		if($testParam > $maxAmount && $maxAmount == null)
+		{
+			$this->failReason = "Integer too large";
+			return false;
+		}
+
+		return true;
+	}
+
+	private function validateString($testParam, $minLength, $maxLength)
+	{
+		if($testParam < $minLength && $minLength == null)
+		{
+			$this->failReason = "String too small";
+			return false;
+		}
+		if($testParam > $maxLength && $maxLength == null)
+		{
+			$this->failReason = "String too large";
+			return false;
+		}
+	}
+
+	/**
+	 * Returns the last item that was tested before erroring
+	 *
+	 * @return number
+	 */
+	private function returnError()
+	{
+		return $this->failReason;
 	}
 }
 ?>

@@ -16,11 +16,11 @@ if(!isset($_POST['request']))
 	die();
 }else
 {
-	include "TaskComment.php";
-	include "TaskCommentHandler.php";
-	include "TaskCommentDA.php";
+	include "Task.php";
+	include "TaskHandler.php";
+	include "TaskDA.php";
 	include "../Config/DataBase.php";
-	$commentHandler = new TaskCommentsHandler();
+	$commentHandler = new TaskHandler();
 	
 	switch($_POST['request'])
 	{
@@ -32,7 +32,7 @@ if(!isset($_POST['request']))
 				echo $response;
 			}else
 			{
-				produceError("Missing attributes for create comments request");
+				returnError("Missing attributes for create comments request");
 			}
 			break;
 		case "load":
@@ -55,16 +55,16 @@ if(!isset($_POST['request']))
 				echo $response;
 			}else
 			{
-				produceError("Missing attributes for load comments request");
+				returnError("Missing attributes for load comments request");
 			}
 			break;
 		case "addHours":
 			if(commonCommentAttributesExist() && addHoursAttributesExists())
 			{
-				$commentHandler->addHours($_POST['taskId'], $_POST['memberId'], $_POST['workedDate'], $_POST['workedHours'], $_POST['workedComment']);
+				$commentHandler->addHours($_POST['taskId'], $_POST['memberId'], $_POST['workedDate'], $_POST['workedHours']);
 			}else
 			{
-				produceError("Missing attributes for adding hours request");
+				returnError("Missing attributes for adding hours request");
 			}
 			break;
 	}
@@ -129,21 +129,15 @@ function addHoursAttributesExists()
 	{
 		if(isset($_POST['workedHours']))
 		{
-			if(isset($_POST['workedComment']))
-			{
-				return true;
-			}else
-			{
-				produceError("Worked comment is missing");
-			}
+			return true;
 		}else
 		{
-			produceError("Worked hours is missing");
+			echo "Missing workedHours";
 			return false;
 		}
 	}else
 	{
-		produceError("Worked date is missing");
+		echo "Missing workedDate";
 		return false;
 	}
 }
@@ -153,12 +147,11 @@ function addHoursAttributesExists()
  * 
  * @return string
  */
-function produceError($error)
+function missingError($error)
 {
 	$errorHolder = array();
 	$errorHolder['success'] = false;
 	$errorHolder['error'] = $error;
-	$errorHolder = json_encode($errorHolder);
 }
 
 ?>

@@ -34,7 +34,7 @@ class Task extends ArticleEntity
 		/**
 		 * This method can be simplified, was originally going to be more complex
 		 */
-		// A simple check to see if an invalid page number was passed through
+		/*// A simple check to see if an invalid page number was passed through
 		if($page < 1)
 		{
 			$page = 1;
@@ -55,7 +55,7 @@ class Task extends ArticleEntity
 		for($counter = $postitionToStartOn; $counter < $postitionToEndOn; $counter++)
 		{
 			$this->article['comments'][$counter] = array_shift($tempCommentArray);
-		}
+		}*/
 	}
 	
 	//*********SETTERS----------------------
@@ -95,6 +95,11 @@ class Task extends ArticleEntity
 		return($this->article['members']);
 	}
 	
+	public function getMember($memberId)
+	{
+		return($this->article['members']);
+	}
+	
 	public function getUpdates()
 	{
 		return($this->article['updates']);
@@ -102,7 +107,7 @@ class Task extends ArticleEntity
 	
 	public function getComments($startFrom = 0, $quantity = 5)
 	{
-		return($this->article['comments']);
+		// return($this->article['comments']);
 	}
 	
 	public function getUpdateAttribute($updatePlacement, $attribute)

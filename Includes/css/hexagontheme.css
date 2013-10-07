@@ -271,6 +271,7 @@ body {
 /**
  * Tables
  */
+ 
 .table-colSmall {
 	width:12em;
 }
@@ -280,7 +281,13 @@ body {
 }
 
 .table-colLarge {
-	width:100em;
+	width:50em;
+}
+
+.table td
+{
+	word-wrap:break-word;
+	max-width:50em;
 }
 
 .table-rowBorder {
