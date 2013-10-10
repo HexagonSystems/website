@@ -40,7 +40,7 @@ class TaskHandler
 		$tempTask->setStatus($status);
 		
 		/* ENTER THE TASK INTO THE DATABASE */
-		$taskDAReturn = $this->taskDA->createTask($title, $description, $memberId, $status);
+		$taskDAReturn = $this->taskDA->createTaskFromObject($tempTask);
 		
 		if($taskDAReturn['success'] === true)
 		{

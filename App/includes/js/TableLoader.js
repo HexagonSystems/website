@@ -59,7 +59,6 @@ function updateTableContentArray(jsonObject, pageNum) {
 	var positionToStartOn = (pageNum - 1) * COMMENTS_PER_PAGE;
 	var positionToEndOn = positionToStartOn + COMMENTS_PER_PAGE;
 
-	var tempCounter = 0;
 	$.each(jsonObject, function(id) {
 		tableContent[positionToStartOn] = jsonObject[id];
 		positionToStartOn++;

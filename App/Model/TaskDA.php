@@ -233,7 +233,7 @@ class TaskDA
 	function createTaskFromObject($taskObject)
 	{
 		/* MAYBE DO A CHECK HERE IF THE MEMBER HAS THE CORRECT ACCESS LEVEL */
-		return createTask($taskObject->getTitle(), $taskObject->getContent(), $taskObject->getStatus());
+		return $this->createTask($taskObject->getTitle(), $taskObject->getContent(), $taskObject->getStatus());
 	}
 	
 	/**

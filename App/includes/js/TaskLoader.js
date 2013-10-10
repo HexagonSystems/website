@@ -52,26 +52,24 @@ function createTask(taskTitle, taskDescription, taskStatus) {
  * Prints the comments into the comment table
  */
 function printTableDataInTable(pageNum) {
+	
 	// If the page of comments isn't already loaded, load it
-	if (pageAlreadyLoaded(pageNum, tableContent) === false
-			&& pageNum != lastPage) {
+	if (pageAlreadyLoaded(pageNum, tableContent) === false && pageNum != lastPage) {
 		loadTableData(pageNum);
 	} else {
 		var positionToStartOn = (pageNum - 1) * COMMENTS_PER_PAGE;
 		var positionToEndOn = positionToStartOn + COMMENTS_PER_PAGE;
 
 		var arrayToLoopOver = tableContent.concat();
-		;
 
 		if (lastPage > -1 && lastPage == pageNum) {
-			arrayToLoopOver = arrayToLoopOver.splice(positionToStartOn);
+			arrayToLoopOver = arrayToLoopOver.slice(positionToStartOn);
 		} else {
-			arrayToLoopOver = arrayToLoopOver.splice(positionToStartOn,
-					positionToEndOn);
+			arrayToLoopOver = arrayToLoopOver.slice(positionToStartOn, positionToEndOn);
 		}
 
 		emptyTableBody();
-
+		
 		$.each(arrayToLoopOver, function(singleArray) {
 			printSingleTask(arrayToLoopOver[singleArray]['id'],
 					arrayToLoopOver[singleArray]['title'],
@@ -173,7 +171,6 @@ $(function() {
 $(function() {
 	$("#createTaskButton").click(
 			function() {
-				alert($("#createTaskStatus option:selected").text());
 				createTask($("#createTaskTitle").val(), $("#createTaskDscr")
 						.val(), $("#createTaskStatus option:selected").text());
 			});
