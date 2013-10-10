@@ -26,7 +26,7 @@
 		<div class="form-group">
 			<label for="createTaskStatus" class="col-lg-2 control-label">Status</label>
 			<div class="col-lg-10">
-				<select class="form-control" id="#createTaskStatus">
+				<select class="form-control" id="createTaskStatus">
 				<!-- Will need to load these from database -->
 					<option>In Progress</option>
 					<option>Needs attention</option>

@@ -20,6 +20,7 @@ if(!isset($_POST['request']))
 	require_once "../Config/DataBase.php";
 	require_once "../Config/Config.php";
 	$taskHandler = new TaskHandler();
+	$taskHandler->setDatabase(DataBase::getConnection());
 	
 	switch($_POST['request'])
 	{
@@ -27,14 +28,34 @@ if(!isset($_POST['request']))
 			if(commonCommentAttributesExist() && createCommentAttributesExist())
 			{
 				$response = $taskHandler->createTask($_POST['title'], $_POST['content'], $_POST['memberId'], $_POST['status']);
-				$response = json_encode($response);
-				if($response == false)
+				/* If everything goes ok, the response should look something like:
+				 *  array (
+				 *  	'task' => array ( 'success' => true,
+				 *  						'data' => TaskObject),
+				 *  	'hours' => array( 'success' => true,
+				 *  						'data' => TaskHoursObject),
+				 *  	'comment' => array( 'success' => true,
+				 *  						'data' => TaskCommentObject),
+				 *  	'success' => true )
+				 *  
+				 *  If something goes wrong I expect the output to look like
+				 *  array (
+				 *  	'success' = false,
+				 *  	'error' => array ( 'location' => 'Location';,
+				 *  						'message' => 'Error message' ) )
+				 */
+				if($response['success'] == true)
 				{
-					echo $taskHandler->getError();
-				}else
-				{
-					echo $response;
+					$tempTaskObject = $response['task']['data'];
+					$response['task']['data'] = $tempTaskObject->toArray();
+					
+					$tempHoursObject = $response['hours']['data'];
+					$response['hours']['data'] = $tempHoursObject->toArray();
+					
+					$tempCommentObject = $response['comment']['data'];
+					$response['comment']['data'] = $tempCommentObject->toArray();
 				}
+				echo json_encode($response);
 			}else
 			{
 				returnError("Missing attributes for create comments request");
@@ -43,13 +64,13 @@ if(!isset($_POST['request']))
 		case "load":
 			if(commonCommentAttributesExist() && loadCommentAttributesExist())
 			{
-				$respomse = $taskHandler->loadTasks($_POST['pageNum'], $_POST['qty']);
+				$response = $taskHandler->loadTasks($_POST['pageNum'], $_POST['qty']);
 				for($counter = 0; $counter < sizeof($response); $counter++)
 				{
-					$tempTaskComment = $response[$counter];
-					if($tempTaskComment instanceof TaskComment)
+					$tempTask = $response[$counter];
+					if($tempTask instanceof Task)
 					{
-						$response[$counter] = $tempTaskComment->toArray();
+						$response[$counter] = $tempTask->toArray();
 					}else
 					{
 						$response[$counter] = "Error";

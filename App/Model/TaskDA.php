@@ -39,7 +39,11 @@ class TaskDA
 					LIMIT :starting, :quantity";
 
 			$query = $this->database->prepare($statement);
-
+			
+			$starting = ($starting - 1) * $quantity;
+			
+			$quantity += 0;
+			
 			$query->bindParam(':starting'   , $starting , PDO::PARAM_INT);
 			$query->bindParam(':quantity'   , $quantity	, PDO::PARAM_INT);
 
@@ -61,15 +65,13 @@ class TaskDA
 						"memberId" => $row['memberId'],
 						"postedDate" => $row['postedDate'],
 				));
-				$arrayOfTasks[$tempObject->getId()] = $tempObject;
+				
+				array_push($arrayOfTasks, $tempObject);
 			}
-			echo "working";
-
-			// print_r($arrayOfPosts);
 			return $arrayOfTasks;
 		} catch (PDOException $e) {
 			echo $e;
-
+			echo "errored";
 			return false;
 		}
 	}
@@ -148,7 +150,6 @@ class TaskDA
 			foreach ($query as $row) {
 				$arrayOfMembers[$row['memberId']] = $row['firstName'];
 			}
-
 			//print_r($arrayOfPosts);
 			return $arrayOfMembers;
 		} catch (PDOException $e) {
@@ -204,7 +205,7 @@ class TaskDA
 		}
 	}
 
-	function createTask($title, $description, $memberId, $status)
+	function createTask($title, $description, $status)
 	{
 		try {
 
@@ -214,19 +215,39 @@ class TaskDA
 					(:name, :details, :status)';
 
 			$query = DataBase::getConnection()->prepare($statement);
-
 			$query->bindParam(':name'		, $title		, PDO::PARAM_STR);
 			$query->bindParam(':details'	, $description	, PDO::PARAM_STR);
 			$query->bindParam(':status'		, $status		, PDO::PARAM_STR);
 
 			$query->execute();
-
-			return DataBase::getConnection()->lastInsertId();
-
+			
+			$returnArray = array();
+			$returnArray['success'] = true;
+			$returnArray['taskId'] = DataBase::getConnection()->lastInsertId();
+			return $returnArray;
 		} catch (PDOException $e) {
-			// echo $e;
-			return false;
+			return createError($e);
 		}
+	}
+	
+	function createTaskFromObject($taskObject)
+	{
+		/* MAYBE DO A CHECK HERE IF THE MEMBER HAS THE CORRECT ACCESS LEVEL */
+		return createTask($taskObject->getTitle(), $taskObject->getContent(), $taskObject->getStatus());
+	}
+	
+	/**
+	 * Creates an array that holds information about the error
+	 *
+	 * @return string
+	 */
+	public function createError($comment)
+	{
+		$errorMessage = array();
+		$errorMessage['success'] = false;
+		$errorMessage['error']['location'] = "TaskDA";
+		$errorMessage['error']['message'] = $comment;
+		return $errorMessage;
 	}
 
 }

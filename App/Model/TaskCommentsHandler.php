@@ -35,22 +35,41 @@ class TaskCommentsHandler
 	 */
 	function createComment($taskId, $memberId, $tag, $title, $content)
 	{
+		$masterResponse = array();
+		
+		/* CREATE THE TASK COMMENT OBJECT */
 		$tempTaskComment = new TaskComment();
-		$tempTaskComment->setId($taskId);
+		$tempTaskComment->setTaskId($taskId);
 		$tempTaskComment->setMemberId($memberId);
 		$tempTaskComment->setTag($tag);
 		$tempTaskComment->setTitle($title);
 		$tempTaskComment->setContent($content);
 		
+		/* GET CURRENT TIME FOR THE TASK COMENT OBJECT */
+		date_default_timezone_set('Australia/Melbourne');
+		$date = date('Y-m-d H:i:s');
+		$tempTaskComment->setDate($date);
+		
+		/* CHECK IF THE TASK COMMENT IS VALID */
 		$validation = $tempTaskComment->isValid();
 		if($validation === false)
 		{
-			$this->failReason = $validation;
-			return false;
+			return createError("TaskComment contained invalid data");
 		}else
 		{
-			return $this->taskCommentDA->createComment($taskId, $memberId, $tag, $title, $content);
+			$taskCommentDAResponse = $this->taskCommentDA->createCommentFromObject($tempTaskComment);
+			if($taskCommentDAResponse['success'] == true)
+			{
+				$masterResponse['success'] = true;
+				$masterResponse['data'] = $tempTaskComment;
+				return $masterResponse;
+			}else
+			{
+				return $taskCommentDAResponse;
+			}
 		}
+		
+		return $masterResponse;
 		
 	}
 
@@ -79,16 +98,38 @@ class TaskCommentsHandler
 	 */
 	function addHours($taskId, $memberId, $workedDate, $workedHours, $workedComment)
 	{
-		$addHoursResponse = $this->taskCommentDA->addHours($taskId, $memberId, $workedDate, $workedHours);
+		$masterResponse = array();
 		
-		if($addHoursResponse === true)
+		$tempHours = new TaskHours();
+		$tempHours->setTaskId($taskId);
+		$tempHours->setMemberId($memberId);
+		$tempHours->setDate($workedDate);
+		$tempHours->setHours($workedHours);
+		$addHoursResponse = $this->taskCommentDA->addHoursShort($tempHours);
+		
+		if($addHoursResponse['success'] === true)
 		{
-			return $createCommentResponse = $this->createComment($taskId, $memberId, "@addedHours", "Alex has added ".$workedHours." for the date ".$workedDate, $workedComment);
+			$masterResponse['hours']['success'] = true;
+			$masterResponse['hours']['data'] = array();
+			array_push($masterResponse['hours']['data'], $tempHours->toArray());
+			
+			/* CREATE THE TASK COMMENT */
+			$tempTaskComment = new TaskComment();
+			$tempTaskComment->setTag("@addedHours");
+			$tempTaskComment->setDate($workedDate);
+			$tempTaskComment->setTaskId($taskId);
+			$tempTaskComment->setTitle("Alex has added ".$workedHours." hours for the date ".$workedDate);
+			$tempTaskComment->setContent($workedContent);
+			
+			/* CREATE THE COMMENT IN THE DATABASE */
+			$masterResponse['comment'] = $this->createComment($tempTaskComment);
 		}else
 		{
+			$masterResponse['hours']['success'] = false;
 			$this->failReason = "Error adding hours";
-			return false;
 		}
+		
+		return $masterResponse;
 	}
 
 	private function validateInteger($testParam, $minAmount, $maxAmount)
@@ -122,13 +163,17 @@ class TaskCommentsHandler
 	}
 
 	/**
-	 * Returns the reason the last method errored
+	 * Creates an array that holds information about the error
 	 *
 	 * @return string
 	 */
-	public function getError()
+	public function createError($comment)
 	{
-		return $this->failReason;
+		$errorMessage = array();
+		$errorMessage['success'] = false;
+		$errorMessage['error']['location'] = "TaskCommentHandler";
+		$errorMessage['error']['message'] = $comment;
+		return $errorMessage;
 	}
 }
 ?>

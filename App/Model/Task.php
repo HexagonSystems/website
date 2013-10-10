@@ -132,6 +132,11 @@ class Task extends ArticleEntity
 		return $returnValue;
 	
 	}
+	
+	public function toArray()
+	{
+		return $this->article;
+	}
 }
 
 ?>

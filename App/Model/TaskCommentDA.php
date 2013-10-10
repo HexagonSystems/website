@@ -18,14 +18,14 @@ class TaskCommentDA
 	 * @param string $title
 	 * @param string $content
 	 */
-	function createComment($taskId, $memberId, $tag, $title, $content)
+	function createComment($taskId, $memberId, $tag, $title, $content, $time)
 	{
 		try {
 	
 			$statement = 'INSERT INTO `taskComment`
-					(taskId, memberId, title, content, tag)
+					(taskId, memberId, title, content, tag, postedDate)
 					VALUES
-					(:taskId, :memberId, :title, :content, :tag)';
+					(:taskId, :memberId, :title, :content, :tag, :postedDate)';
 	
 			$query = DataBase::getConnection()->prepare($statement);
 	
@@ -34,14 +34,21 @@ class TaskCommentDA
 			$query->bindParam(':title'   , $title , PDO::PARAM_STR);
 			$query->bindParam(':content'   , $content , PDO::PARAM_STR);
 			$query->bindParam(':tag'   , $tag , PDO::PARAM_STR);
+			$query->bindParam(':postedDate'   , $time , PDO::PARAM_INT);
 	
 			$query->execute();
-			
-			return true;
+			return array('success' => true);
 		} catch (PDOException $e) {
-			echo $e;
-			return false;
+			return createError($e);
 		}
+	}
+	
+	/*
+	 * TEMP FUNCTION, PLEASE FIX AT A LATER DATE
+	 */
+	public function createCommentFromObject($tempTaskComment)
+	{
+		return $this->createComment($tempTaskComment->getTaskId(), $tempTaskComment->getMemberId(), $tempTaskComment->getTag(), $tempTaskComment->getTitle(), $tempTaskComment->getContent(), $tempTaskComment->getDate());
 	}
 	
 	/**
@@ -98,6 +105,14 @@ class TaskCommentDA
 		}
 	}//end loadComments
 	
+	/*
+	 * THIS IS A TEMP FUNCTION, PLEASE FIX UP LATER
+	 */
+	function addHoursShort($tempTask)
+	{
+		return $this->addHours($tempTask->getTaskId(), $tempTask->getMemberId(), $tempTask->getDate(), $tempTask->getHours());
+	}
+	
 	/**
 	 * Adds hours for a member into the database
 	 *
@@ -127,17 +142,30 @@ class TaskCommentDA
 	
 			if($query->execute())
 			{
-				return true;
+				return array('success' => true);
 			}else
 			{
-				return false;
+				return array('success' => false);
 			}
 	
 				
 		} catch (PDOException $e) {
-			// echo $e;
-			return false;
+			return array('success' => false);
 		}
+	}
+	
+	/**
+	 * Creates an array that holds information about the error
+	 *
+	 * @return string
+	 */
+	public function createError($comment)
+	{
+		$errorMessage = array();
+		$errorMessage['success'] = false;
+		$errorMessage['error']['location'] = "TaskCommentDA";
+		$errorMessage['error']['message'] = $comment;
+		return $errorMessage;
 	}
 }
 

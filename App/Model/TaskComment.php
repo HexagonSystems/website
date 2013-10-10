@@ -10,6 +10,11 @@ class TaskComment
 		$this->commentArray['id'] = $id;	
 	}
 	
+	public function setTaskId($taskId)
+	{
+		$this->commentArray['taskId'] = $taskId;
+	}
+	
 	public function setTag($tag)
 	{
 		$this->commentArray['tag'] = $tag;
@@ -38,6 +43,11 @@ class TaskComment
 	public function getId()
 	{
 		return $this->commentArray['id'];
+	}
+	
+	public function getTaskId()
+	{
+		return $this->commentArray['taskId'];
 	}
 	
 	public function getTag()

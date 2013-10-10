@@ -12,12 +12,7 @@
 		<th class="table-colMedium">Last Update</th>
 	</thead>
 
-	<tbody>
-		<?php
-		foreach($data['task'] as $tempTask) {
-			include AppBase.'/View/Template/timesheetViewAll_singleTableRowTemplate.php';
-		}
-		?>
+	<tbody id="tasksContainer" class="tbodyFirstLineAccordion">
 
 	</tbody>
 
