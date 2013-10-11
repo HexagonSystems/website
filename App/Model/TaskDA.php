@@ -50,6 +50,8 @@ class TaskDA
 			$query->execute();
 
 			$arrayOfTasks = array();
+			$arrayOfTasks['success'] = true;
+			$arrayOfTasks['data'] = array();
 
 			foreach ($query as $row) {
 				$tempObject = new Task();
@@ -66,13 +68,11 @@ class TaskDA
 						"postedDate" => $row['postedDate'],
 				));
 				
-				array_push($arrayOfTasks, $tempObject);
+				array_push($arrayOfTasks['data'], $tempObject);
 			}
 			return $arrayOfTasks;
 		} catch (PDOException $e) {
-			echo $e;
-			echo "errored";
-			return false;
+			return createError($e);
 		}
 	}
 

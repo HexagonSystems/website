@@ -35,7 +35,7 @@ class TaskCommentDA
 			$query->bindParam(':content'   , $content , PDO::PARAM_STR);
 			$query->bindParam(':tag'   , $tag , PDO::PARAM_STR);
 			$query->bindParam(':postedDate'   , $time , PDO::PARAM_INT);
-	
+			/* MIGHT NEED TO GET AUTO INCREMENT COMMENT ID HERE */
 			$query->execute();
 			return array('success' => true);
 		} catch (PDOException $e) {
@@ -83,6 +83,9 @@ class TaskCommentDA
 			$query->execute();
 				
 			$commentHolder = array();
+			$commentHolder['success'] = true;
+			$commentHolder['data'] = array();
+			
 				
 			$htmlString = "";
 			foreach ($query as $row) {
@@ -94,14 +97,13 @@ class TaskCommentDA
 				$tempTaskComment->setMemberId($row['memberId']);
 				$tempTaskComment->setDate($row['postedDate']);
 	
-				array_push($commentHolder, $tempTaskComment);
+				array_push($commentHolder['data'], $tempTaskComment);
 			}
 				
 			// echo json_encode($commentHolder);
 			return $commentHolder;
 		} catch (PDOException $e) {
-			// echo $e;
-			return false;
+			return createError($e);
 		}
 	}//end loadComments
 	

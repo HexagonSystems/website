@@ -19,8 +19,12 @@ function loadComments(pageNum) {
 		pageNum : pageNum,
 		qty : 5
 	}, function(nakedJson) {
-		var jsonObject = $.parseJSON(nakedJson);
-		updateTableContentArray(jsonObject, pageNum);
+		nakedJson = $.parseJSON(nakedJson);
+		response = nakedJson.success;
+		if (response == true || response == "true") {			
+			var jsonObject = nakedJson.data;
+			updateTableContentArray(jsonObject, pageNum);
+		}
 	});
 }
 

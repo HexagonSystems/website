@@ -21,8 +21,21 @@ class TaskHandler
 	
 	public function loadTasks($page, $quantity)
 	{
-		$tempArray = $this->taskDA->loadTasks($page, $quantity);
-		return $tempArray;
+		if($page > 0)
+		{
+			if($quantity > 0)
+			{
+				$tempArray = $this->taskDA->loadTasks($page, $quantity);
+				return $tempArray;
+			}else
+			{
+				return createError("Quantity must be more than 0");
+			}
+		}else
+		{
+			return createError("Page must be at least 1");
+		}
+		
 	}
 	
 	public function loadTask($id)

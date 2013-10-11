@@ -18,8 +18,12 @@ function loadTableData(pageNum) {
 		pageNum : pageNum,
 		qty : COMMENTS_PER_PAGE
 	}, function(nakedJson) {
-		var jsonObject = $.parseJSON(nakedJson);
-		updateTableContentArray(jsonObject, pageNum);
+		nakedJson = $.parseJSON(nakedJson);
+		response = nakedJson.success;
+		if (response == true || response == "true") {
+			var jsonObject = nakedJson.data;
+			updateTableContentArray(jsonObject, pageNum);
+		}
 	});
 }
 
@@ -40,8 +44,8 @@ function createTask(taskTitle, taskDescription, taskStatus) {
 			task = data.task.data;
 			hours = data.hours.data;
 			comment = data.comment.data;
-			printSingleTask(task.id, task.title, task.content, task.status, task.members,
-		comment.memberId, comment.date, true);
+			printSingleTask(task.id, task.title, task.content, task.status,
+					task.members, comment.memberId, comment.date, true);
 		} else {
 			alert("success = " + data.success + " " + data);
 		}
@@ -52,9 +56,10 @@ function createTask(taskTitle, taskDescription, taskStatus) {
  * Prints the comments into the comment table
  */
 function printTableDataInTable(pageNum) {
-	
+
 	// If the page of comments isn't already loaded, load it
-	if (pageAlreadyLoaded(pageNum, tableContent) === false && pageNum != lastPage) {
+	if (pageAlreadyLoaded(pageNum, tableContent) === false
+			&& pageNum != lastPage) {
 		loadTableData(pageNum);
 	} else {
 		var positionToStartOn = (pageNum - 1) * COMMENTS_PER_PAGE;
@@ -65,17 +70,21 @@ function printTableDataInTable(pageNum) {
 		if (lastPage > -1 && lastPage == pageNum) {
 			arrayToLoopOver = arrayToLoopOver.slice(positionToStartOn);
 		} else {
-			arrayToLoopOver = arrayToLoopOver.slice(positionToStartOn, positionToEndOn);
+			arrayToLoopOver = arrayToLoopOver.slice(positionToStartOn,
+					positionToEndOn);
 		}
 
 		emptyTableBody();
-		
+
 		$.each(arrayToLoopOver, function(singleArray) {
 			printSingleTask(arrayToLoopOver[singleArray]['id'],
 					arrayToLoopOver[singleArray]['title'],
 					arrayToLoopOver[singleArray]['content'],
 					arrayToLoopOver[singleArray]['status'],
-					arrayToLoopOver[singleArray]['members'], arrayToLoopOver[singleArray]['lastUpdate'].memberId, arrayToLoopOver[singleArray]['lastUpdate'].postedDate, false);
+					arrayToLoopOver[singleArray]['members'],
+					arrayToLoopOver[singleArray]['lastUpdate'].memberId,
+					arrayToLoopOver[singleArray]['lastUpdate'].postedDate,
+					false);
 		});
 	}
 
@@ -101,7 +110,8 @@ function printSingleTask(taskId, taskTitle, taskDscr, taskStatus, taskMembers,
 	/* Title */
 	var taskTitleAHREF = document.createElement('a');
 	taskTitleAHREF.title = taskTitle;
-	taskTitleAHREF.href = "index.php?location=timesheetPage&action=single&param=" + taskId;
+	taskTitleAHREF.href = "index.php?location=timesheetPage&action=single&param="
+			+ taskId;
 	taskTitleAHREF.innerHTML = taskTitle + "<br />";
 
 	/* Description */
@@ -126,7 +136,7 @@ function printSingleTask(taskId, taskTitle, taskDscr, taskStatus, taskMembers,
 	taskDscrTD.appendChild(taskDscrBreaker);
 	taskDscrTD.appendChild(taskDscrContent);
 	taskDscrTD.className = "actualAccordion";
-	
+
 	/* Members */
 	var taskMembersTD = document.createElement('td');
 	$.each(taskMembers, function(member) {
@@ -135,8 +145,9 @@ function printSingleTask(taskId, taskTitle, taskDscr, taskStatus, taskMembers,
 
 	/* Last Update */
 	var taskLastUpdateTD = document.createElement('td');
-	taskLastUpdateTD.innerHTML = taskLastUpdateMemberId + " on " + taskLastUpdateDate;
-	
+	taskLastUpdateTD.innerHTML = taskLastUpdateMemberId + " on "
+			+ taskLastUpdateDate;
+
 	/* APPEND EVERYTHING TO TABLE ROW */
 	tableRow.appendChild(taskStatusTD);
 	tableRow.appendChild(taskDscrTD);

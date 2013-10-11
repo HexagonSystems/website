@@ -19,7 +19,7 @@ if(!isset($_POST['request']))
 	include "../Config/DataBase.php";
 	include "../Config/Config.php";
 	$commentHandler = new TaskCommentsHandler();
-	
+
 	switch($_POST['request'])
 	{
 		case "create":
@@ -37,18 +37,21 @@ if(!isset($_POST['request']))
 			if(commonCommentAttributesExist() && loadCommentAttributesExist())
 			{
 				$response = $commentHandler->loadComments($_POST['taskId'], $_POST['memberId'], $_POST['pageNum'], $_POST['qty']);
-				for($counter = 0; $counter < sizeof($response); $counter++)
+				if($response['success'] == true)
 				{
-					$tempTaskComment = $response[$counter];
-					if($tempTaskComment instanceof TaskComment)
+					for($counter = 0; $counter < sizeof($response['data']); $counter++)
 					{
-						$response[$counter] = $tempTaskComment->toArray();
-					}else
-					{
-						$response[$counter] = "Error";
+						$tempTaskComment = $response['data'][$counter];
+						if($tempTaskComment instanceof TaskComment)
+						{
+							$response['data'][$counter] = $tempTaskComment->toArray();
+						}else
+						{
+							$response['data'][$counter] = "Error";
+						}
 					}
-					
 				}
+
 				$response = json_encode($response);
 				echo $response;
 			}else
@@ -70,7 +73,7 @@ if(!isset($_POST['request']))
 
 /**
  * Checks that the required common post data has been passed through
- * 
+ *
  * @return boolean
  */
 function commonCommentAttributesExist()
@@ -86,7 +89,7 @@ function commonCommentAttributesExist()
 
 /**
  * Checks for the requied post data for creating a comment
- * 
+ *
  * @return boolean
  */
 function createCommentAttributesExist()
@@ -102,7 +105,7 @@ function createCommentAttributesExist()
 
 /**
  * Checks for the required post data for loading comments
- * 
+ *
  * @return boolean
  */
 function loadCommentAttributesExist()
@@ -118,7 +121,7 @@ function loadCommentAttributesExist()
 
 /**
  * Checks for the required post data for adding hours
- * 
+ *
  * @return boolean
  */
 function addHoursAttributesExists()
@@ -148,7 +151,7 @@ function addHoursAttributesExists()
 
 /**
  * Returns the standard error message
- * 
+ *
  * @return string
  */
 function produceError($error)
