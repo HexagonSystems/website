@@ -1,6 +1,5 @@
 <?php
 
-include 'Service/CookieMonster.php';
 class Router
 {
     public function __construct()
@@ -35,7 +34,8 @@ class Router
                 $controller = "AdminController";
                 break;
             case "timesheetPage":
-               	$controller = "TimesheetController";
+                $package = "Task";
+               	$controller = "TaskRouter";
                 break;
             case "logout":
                 $controller = "IndexController";
@@ -45,10 +45,17 @@ class Router
                 break;
         }//end switch
 
-        include_once( AppBase.'/Controller/'.$controller.'.php');
-        $controller = new $controller();
-        $controller->setDatabase($conn);
-        $controller->invoke();
+        if(isset($package))
+        {
+            include_once(AppBase.'/Package/'.$package.'/'.$controller.'.php');
+            $router = new $controller();
+            $router->route($conn);
+        }else{
+            include_once(AppBase.'/Controller/'.$controller.'.php');
+            $controller = new $controller();
+            $controller->setDatabase($conn);
+            $controller->invoke();
+        }
     }// end route
     //end class
 }
