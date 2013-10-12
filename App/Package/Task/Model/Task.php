@@ -1,6 +1,6 @@
 <?php
 namespace Task;
-class Task extends ArticleEntity
+class Task extends \ArticleEntity
 {
 	private $taskDA;
 	
@@ -11,7 +11,7 @@ class Task extends ArticleEntity
 		$this->taskDA = new TaskDA();
 	}
 	
-	public function setDatabase(PDO $database)
+	public function setDatabase(\PDO $database)
 	{
 		$this->taskDA->setDatabase($database);
 		parent::setDatabase($database);

@@ -56,6 +56,9 @@ spl_autoload_register("autoloadView");
 
 require_once(AppBase.'/Config/Database.php');
 
+require_once(AppBase.'/Package/Task/Config/Config.php');
+
+
 /**
  * Define any other config option you may want to use
 */

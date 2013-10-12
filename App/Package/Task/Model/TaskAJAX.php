@@ -1,5 +1,8 @@
 <?php
 namespace Task;
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+
 $ERROR_MISSING_ATTRIBUTES = "Required attributes not found";
 /**
  * Additional security will need to be implemented
@@ -17,10 +20,9 @@ if(!isset($_POST['request']))
 }else
 {
 	// wrap in a try/catch
-	require_once "../Config/DataBase.php";
-	require_once "../Config/Config.php";
+	require_once $_SERVER["DOCUMENT_ROOT"].'/App/Config/Config.php';
 	$taskHandler = new TaskHandler();
-	$taskHandler->setDatabase(DataBase::getConnection());
+	$taskHandler->setDatabase($conn);
 
 	switch($_POST['request'])
 	{

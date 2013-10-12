@@ -19,7 +19,7 @@ class TaskDA
 	 * @param int $quantity The page of tasks to load
 	 *
 	 * @return array Array of Member Ids
-	 * @throws Exception PDO expection
+	 * @throws Exception \PDO expection
 	 */
 	public function loadTasks($starting, $quantity)
 	{
@@ -44,8 +44,8 @@ class TaskDA
 			
 			$quantity += 0;
 			
-			$query->bindParam(':starting'   , $starting , PDO::PARAM_INT);
-			$query->bindParam(':quantity'   , $quantity	, PDO::PARAM_INT);
+			$query->bindParam(':starting'   , $starting , \PDO::PARAM_INT);
+			$query->bindParam(':quantity'   , $quantity	, \PDO::PARAM_INT);
 
 			$query->execute();
 
@@ -71,7 +71,7 @@ class TaskDA
 				array_push($arrayOfTasks['data'], $tempObject);
 			}
 			return $arrayOfTasks;
-		} catch (PDOException $e) {
+		} catch (\PDOException $e) {
 			return createError($e);
 		}
 	}
@@ -83,7 +83,7 @@ class TaskDA
 	 *
 	 * @return Boolean  	False if load failed
 	 * @return Task			If the Task loaded correctly
-	 * @throws Exception	PDO expection
+	 * @throws Exception	\PDO expection
 	 */
 	public function loadTask($id)
 	{
@@ -94,7 +94,7 @@ class TaskDA
 
 			$query = $this->database->prepare($statement);
 
-			$query->bindParam(':taskId'   , $id , PDO::PARAM_INT);
+			$query->bindParam(':taskId'   , $id , \PDO::PARAM_INT);
 
 			$query->execute();
 
@@ -115,7 +115,7 @@ class TaskDA
 			{
 				return false;
 			}
-		} catch (PDOException $e) {
+		} catch (\PDOException $e) {
 			echo $e;
 
 			return false;
@@ -128,7 +128,7 @@ class TaskDA
 	 * @param Int $id the id number of the task
 	 *
 	 * @return array Array of Member Ids
-	 * @throws Exception PDO expection
+	 * @throws Exception \PDO expection
 	 */
 	public function loadMembers($id)
 	{
@@ -141,7 +141,7 @@ class TaskDA
 
 			$query = $this->database->prepare($statement);
 
-			$query->bindParam(':taskId'   , $id , PDO::PARAM_INT);
+			$query->bindParam(':taskId'   , $id , \PDO::PARAM_INT);
 
 			$query->execute();
 
@@ -152,7 +152,7 @@ class TaskDA
 			}
 			//print_r($arrayOfPosts);
 			return $arrayOfMembers;
-		} catch (PDOException $e) {
+		} catch (\PDOException $e) {
 			echo $e;
 
 			return false;
@@ -167,7 +167,7 @@ class TaskDA
 	 * @param int $startFrom Where to start from (the page number)
 	 *
 	 * @return array Array of comments
-	 * @throws Exception PDO expection
+	 * @throws Exception \PDO expection
 	 */
 	public function loadUpdates($id, $quantity = 5, $startFrom = 0)
 	{
@@ -181,7 +181,7 @@ class TaskDA
 
 			$query = $this->database->prepare($statement);
 
-			$query->bindParam(':taskId'   , $id , PDO::PARAM_INT);
+			$query->bindParam(':taskId'   , $id , \PDO::PARAM_INT);
 
 			$query->execute();
 
@@ -198,7 +198,7 @@ class TaskDA
 
 			//print_r($arrayOfPosts);
 			return $arrayParam;
-		} catch (PDOException $e) {
+		} catch (\PDOException $e) {
 			echo $e;
 
 			return false;
@@ -215,9 +215,9 @@ class TaskDA
 					(:name, :details, :status)';
 
 			$query = DataBase::getConnection()->prepare($statement);
-			$query->bindParam(':name'		, $title		, PDO::PARAM_STR);
-			$query->bindParam(':details'	, $description	, PDO::PARAM_STR);
-			$query->bindParam(':status'		, $status		, PDO::PARAM_STR);
+			$query->bindParam(':name'		, $title		, \PDO::PARAM_STR);
+			$query->bindParam(':details'	, $description	, \PDO::PARAM_STR);
+			$query->bindParam(':status'		, $status		, \PDO::PARAM_STR);
 
 			$query->execute();
 			
@@ -225,7 +225,7 @@ class TaskDA
 			$returnArray['success'] = true;
 			$returnArray['taskId'] = DataBase::getConnection()->lastInsertId();
 			return $returnArray;
-		} catch (PDOException $e) {
+		} catch (\PDOException $e) {
 			return createError($e);
 		}
 	}
