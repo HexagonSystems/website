@@ -1,4 +1,5 @@
 <?php
+namespace Task;
 /**
  * TODO Class description
  *

@@ -1,5 +1,5 @@
 <?php
-
+namespace Task;
 class TaskComment
 {
 	private $commentArray = array();

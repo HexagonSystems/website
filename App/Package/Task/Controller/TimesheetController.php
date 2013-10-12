@@ -1,10 +1,9 @@
-
 <?php
-
+Namespace Task;
 class TimesheetController extends Controller
 {
 	
-	
+    protected $footer = "/App/Package/Task/View/Template/footer.php";
 
     public function invoke()
     {

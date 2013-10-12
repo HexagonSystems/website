@@ -1,5 +1,5 @@
 <?php
-
+namespace Task;
 $ERROR_MISSING_ATTRIBUTES = "Required attributes not found";
 /**
  * Additional security will need to be implemented

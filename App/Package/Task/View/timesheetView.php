@@ -1,4 +1,5 @@
 <?php
+namespace Task;
 /**
  * Handles the view functionality of our MVC framework
  */

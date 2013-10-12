@@ -1,11 +1,14 @@
 <?php
+Namespace Task;
+
+require_once('Config/Config.php');
 
 class TaskRouter
 {
     public function __construct()
     {
     }
-    public static function route(PDO $conn)
+    public static function route(\PDO $conn)
     {
         $getVars = $_GET;
 
@@ -20,8 +23,9 @@ class TaskRouter
                 break;
         }//end switch
 
-        include_once( AppBase.'/Controller/'.$controller.'.php');
-        $controller = new $controller();
+        //include_once( AppBase.'/Controller/'.$controller.'.php');
+        $controller = "Task\\".$controller;
+        $controller = new $controller;
         $controller->setDatabase($conn);
         $controller->invoke();
     }// end route

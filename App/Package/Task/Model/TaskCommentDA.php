@@ -1,5 +1,5 @@
 <?php
-
+namespace Task;
 class TaskCommentDA
 {
 	private $database = FALSE;

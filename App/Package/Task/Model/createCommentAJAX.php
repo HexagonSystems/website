@@ -1,6 +1,6 @@
 <?php
+namespace Task;
 
-include_once '../Config/DataBase.php';
 echo "working";
 if(!isset($_POST['content']))
 {
