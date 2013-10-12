@@ -2,7 +2,7 @@
 /**
  * Handles the view functionality of our MVC framework
  */
-class indexView
+class timesheetView
 {
     /**
      * Holds variables assigned to template
@@ -28,10 +28,10 @@ class indexView
              * to the view!
              */
             $this->render = $template;
-            echo $this->render;
         }else
         {
-        	echo "DOES NOT EXIST";
+        	echo "FILE DOES NOT EXIST";
+        	echo $template;
         }
         if (file_exists($footer)) {
             /**
@@ -54,6 +54,7 @@ class indexView
     {
         $this->data[$variable] = $value;
     }
+    
     private function printCurrentPagePosts()
     {
         foreach ($this->currentPagePosts as $blog) {
@@ -66,15 +67,13 @@ class indexView
         $data = $this->data;
         //echo "In Destructor" ;
         //render view
+        
         try {
-            include_once($this->render);
+            include($this->render);
         } catch (Exception $e) {
 
-        }
-        if ($this->currentPagePosts) {
-            $this->printCurrentPagePosts();
         }
         include_once($this->footer);
 
     }
-} //end class
+} // end class

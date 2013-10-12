@@ -23,6 +23,8 @@ body {
   padding-top: 50px; /* Account for fixed navbar */
 }
 
+
+
 /* Outline button for use within the docs */
 .btn-outline {
   color: #563d7c;
@@ -260,4 +262,64 @@ body {
 .news-article .panel-heading h1,h2,h3,h4,h5,h6 {
   padding-top: 0;
   margin-top: 0;
+}
+
+/**
+ * Alex's CSS
+ */
+
+/**
+ * Tables
+ */
+ 
+.table-colSmall {
+	width:12em;
+}
+
+.table-colMedium {
+	width:24em;
+}
+
+.table-colLarge {
+	width:50em;
+}
+
+.table td
+{
+	word-wrap:break-word;
+	max-width:50em;
+}
+
+.table-rowBorder {
+	border:2px solid gray;
+}
+
+.textAlignCenter
+{
+	text-align:center;
+}
+
+.table-zebra tr:nth-child(:first-child)
+{
+	background-color:transparent;
+}
+
+.table-zebra tbody tr:nth-child(odd)
+{
+	background-color:#ddd;
+}
+
+.table .label
+{
+	width:100%;
+}
+
+.boxsizingBorder {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+.width100 {
+	width:100%;
 }
