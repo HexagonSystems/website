@@ -1,5 +1,5 @@
 <?php
-
+namespace Task;
 class TaskDA
 {
 	private $database = FALSE;

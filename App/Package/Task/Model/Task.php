@@ -1,5 +1,5 @@
 <?php
-
+namespace Task;
 class Task extends ArticleEntity
 {
 	private $taskDA;

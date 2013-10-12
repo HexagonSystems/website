@@ -1,5 +1,5 @@
 <?php
-
+namespace Task;
 class TaskHoursDA
 {
 	private $database = FALSE;

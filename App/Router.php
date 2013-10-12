@@ -48,8 +48,9 @@ class Router
         if(isset($package))
         {
             include_once(AppBase.'/Package/'.$package.'/'.$controller.'.php');
-            $router = new $controller();
-            $router->route($conn);
+            $namespacedclass = $package.'\\'.$controller;
+            //$router = new $namespacedclass();
+            $namespacedclass::route($conn);
         }else{
             include_once(AppBase.'/Controller/'.$controller.'.php');
             $controller = new $controller();

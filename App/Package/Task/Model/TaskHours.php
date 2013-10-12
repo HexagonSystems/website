@@ -1,5 +1,5 @@
 <?php
-
+namespace Task;
 class TaskHours
 {
 	private $taskHoursArray = array();

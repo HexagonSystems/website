@@ -5,6 +5,7 @@
   	  <p>&copy; Hexagon Systems 2013</p>
   	</footer>
   </div>
+  <!-- FROM TASK PACKAGE -->
 
   <!-- JavaScript
   ================================================== -->
@@ -20,5 +21,14 @@
   <!--<![endif]-->
   <script src="includes/js/bootstrap.min.js"></script>
   <script src="includes/js/offcanvas.js"></script>
+  
+  <script>
+  ajaxUrl = "//<?php echo SITE_ROOT.Task\Base; ?>/Model/TaskAJAX.php";
+
+  </script>
+  <script src="//<?php echo SITE_ROOT.Task\Base; ?>/includes/js/TaskLoader.js"></script>
+  <script src="//<?php echo SITE_ROOT.Task\Base; ?>/includes/js/TableLoader.js"></script>
+  <!--<script src="//<?php echo SITE_ROOT.Task\Base; ?>/includes/js/TaskCommentsLoader.js"></script>-->
+
   </body>
 </html>

@@ -53,11 +53,3 @@
 		<li><a href="#">&raquo;</a></li>
 	</ul>
 </div>
-
-<script>
-ajaxUrl = "<?php echo AppBaseSTRIPPED; ?>/Model/TaskCommentsAJAX.php";
-taskId = <?php echo $data['task']->getId(); ?>
-
-</script>
-<script src="<?php echo AppBaseSTRIPPED; ?>/includes/js/TaskCommentsLoader.js"></script>
-<script src="<?php echo AppBaseSTRIPPED; ?>/includes/js/TableLoader.js"></script>

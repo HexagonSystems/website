@@ -1,4 +1,5 @@
 <?php
+namespace Task;
 class TaskHoursHandler
 {
 	private $taskHoursDA;

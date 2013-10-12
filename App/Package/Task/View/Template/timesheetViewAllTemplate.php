@@ -29,10 +29,3 @@
 		<li><a href="#">&raquo;</a></li>
 	</ul>
 </div>
-
-<script>
-ajaxUrl = "<?php echo AppBaseSTRIPPED; ?>Model/TaskAJAX.php";
-
-</script>
-<script src="<?php echo AppBaseSTRIPPED; ?>/includes/js/TaskLoader.js"></script>
-<script src="<?php echo AppBaseSTRIPPED; ?>/includes/js/TableLoader.js"></script>
