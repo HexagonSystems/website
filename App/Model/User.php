@@ -2,6 +2,10 @@
 class User
 {
     private $database;
+
+    private $memberId;
+    private $firstName;
+    private $lastName;
     private $username;
     private $password;
     private $email;
@@ -34,13 +38,15 @@ class User
 
     /**
      * Creates a new user
+     * This function sets up a new user object it does not save the object/user to database though.
+     * To create and save a user invoke createUser() and then save()
      *
      * @param String $username
      * @param String $password
      * @param String $email
      * @param return Object|String Return this object or an error string
      */
-    public function createUser($username, $password, $email)
+    public function createUser($firstName, $lastName, $username, $password, $email)
     {
         //Check if the username exists
         if ($this->checkUsername($username) == "Username not found") {
@@ -60,10 +66,9 @@ class User
 
         }
 
+        $this->setFirstName($firstName);
+        $this->setLastName($lastName);
         $this->setPassword($password);
-
-        $this->setFirstLogin();
-
         //If success return this object
         //NOTE We haven't saved the user yet
         return($this);
@@ -97,34 +102,6 @@ class User
         }
 
     }// end checkUsername
-
-    /**
-     * Tests data exists in user in the Database
-     * @param  String    $data the value we're searching for
-     * @param  String    $type the field we're checking
-     * @return String    'Data (not) found'
-     * @throws Exception
-     * @deprecated since version 1 Removed for sercurity reason will throw warnings
-     */
-    public function checkExists($data, $type)
-    {
-        throw new Exception("Warning! Deprecated function", 500);
-        try {
-            $user = $this->database->query("select $type from member where $type = '$data'")->fetch();
-
-        } catch (Exception $e) {
-            throw new Exception('Database error:', 0, $e);
-
-            return;
-        };
-
-        if ($user !== false) {
-            return("Data found");
-        } else {
-            return("Data not found");
-        }
-
-    }// end checkExists
 
     /**
      * Tests if email exists in Database
@@ -161,7 +138,6 @@ class User
      */
     public function checkPassword($password)
     {
-
         $verify = password_verify($password, $this->getPassword());
 
         if ($verify == 1) {
@@ -205,65 +181,15 @@ class User
             return("Password Incorrect");
         };
 
+        $this->setMemberId($user["memberId"]);
+        $this->setFirstName($user["firstName"]);
+        $this->setLastName($user["lastName"]);
+        $this->setEmail($user["email"]);
+        $this->setPhoneNo($user["phoneNo"]);
+
         return $this;
-        //As we don't use ACL here it's turned off.
-        //
-        //return $this->setAccessLevel($user['ACL']);
-        // switch ($user['ACL']) {
-        //     case 1:
-        //         //Else errors
-        //         return("verify");
-        //     break;
-        //     case 2:
-        //         return("User Is Suspended");
-        //     break;
-        //     case 5:
-        //         $this->setUsername($user["username"]);
-        //         $this->setEmail($user["email"]);
-        //         $this->setLastLogin();
-        //         $_SESSION['activeUser'] = $this->getUsername();
-        //         //If success return this object
-        //         return($this);
-        //     break;
-        // };
 
     }//end loginUser
-
-    public function automaticLogin($username, $session = true)
-    {
-        if ($this->checkUsername($username) == "Username not found") {
-            return("Username not found");
-        }
-
-        //Collect User from the database
-        try {
-            //returns multidemnsional array
-            $user = $this->database->query("select * from member where username = '$username'")->fetch();
-
-        } catch (Exception $e) {
-            throw new Exception('Database error:', 0, $e);
-
-            return;
-        };
-
-        //Set the password
-        $this->setPassword($user["memberPassword"], "old");
-
-        $this->setUsername($user["username"]);
-
-        $this->setEmail($user["email"]);
-
-        $this->setLastLogin();
-
-        if ($session) {
-            $this->sessionCreate();
-        }
-
-        $this->setAccessLevel($user['ACL']);
-
-        //If success return this object
-        return($this);
-    }
 
     public function getUsernameFromEmail($email)
     {
@@ -331,45 +257,6 @@ class User
         };
     }
 
-    public function updateUser()
-    {
-        //throw new Exception('Warning UpdateUser() Deprecated! Use save() instead');
-       // $query = "UPDATE `member` SET
-       //             `email` = :email,
-       //             `memberPassword` = :password,
-       //             `ACL` = :acl,
-       //             `lastLoginDate` = :lastLoginDate
-       //             WHERE `username` = :username";
-
-       // $email			= $this->getEmail();
-       // $password		= $this->getPassword();
-       // $acl			= $this->getAccessLevel();
-       // $lastLoginDate	= $this->getlastLogin();
-       // $username		= $this->getUsername();
-
-
-       // $resultSet = $this->database->prepare($query);
-       // $resultSet->bindParam(':email'			,	$email			, PDO::PARAM_STR);
-       // $resultSet->bindParam(':password'		,	$password		, PDO::PARAM_STR);
-       // $resultSet->bindParam(':acl'			, 	$acl			, PDO::PARAM_INT);
-       // $resultSet->bindParam(':lastLoginDate'	,	$lastLoginDate	, PDO::PARAM_STR);
-       // $resultSet->bindParam(':username'		, 	$username		, PDO::PARAM_STR);
-
-       // try {
-       //     $resultSet->execute();
-       // } catch (Exception $e) {
-       //     return "Something went wrong";
-       // }
-
-        if ($this->save()) {
-            return "Updated";
-        } else {
-            return "Something went wrong";
-        }
-
-
-    }
-
     /**
      * Save user to database
      *
@@ -378,90 +265,65 @@ class User
      */
     public function save()
     {
-        /**
-         *  Full texts  
-         *  memberId
-         *  firstName
-         *  lastName
-         *  email
-         *  phoneNo
-         *  username
-         *  memberPassword
-         */
+        //If this user exists update else create new
         if ($this->checkUsername($this->getUsername()) === 'Username found') {
-            try {
-                $sql = '
-                    UPDATE
-                        `member`
-                    SET
-                        `memberId`       = :memberId
-                        `firstName`      = :firstName
-                        `lastName`       = :lastName
-                        `email`          = :email
-                        `phoneNo`        = :phoneNo
-                        `username`       = :username
-                        `memberPassword` = :memberPassword
-                    WHERE
-                        `username` = :username';
-                $query = $this->database->prepare($sql);
-                $query->execute(
-                   array( ':username' => $this->getUsername()
-                        , ':email' => $this->getEmail()
-                        , ':memberPassword' => $this->getPassword()
-                   )
-                );
-            } catch (PDOException $e) {
-                echo $e->getMessage();
+            $sql = '
+                UPDATE
+                    `member`
+                SET
+                    `firstName`      = :firstName
+                    `lastName`       = :lastName
+                    `email`          = :email
+                    `phoneNo`        = :phoneNo
+                    `username`       = :username
+                    `memberPassword` = :memberPassword
+                WHERE
+                    `memberId`       = :memberId';
 
-                return;
-            }
         } else {
-
-            try {
-
-                $statement = '
-                        INSERT INTO
-                            `member`
-                            (`memberId`
-                            ,`firstName`
-                            ,`lastName`
-                            ,`email`
-                            ,`phoneNo`
-                            ,`username`
-                            ,`memberPassword`
-                            )
-                        VALUES
-                            (:memberId
-                            ,:firstName
-                            ,:lastName
-                            ,:email
-                            ,:phoneNo
-                            ,:username
-                            ,:memberPassword
-                            )';
-
-                $query = $this->database->prepare($statement);
-
-                $query->execute(
-                    array(':username' => $this->getUsername()
-                        , ':email' => $this->getEmail()
-                        , ':memberPassword' => $this->getPassword()
-                   )
-                );
-
-            } catch (Exception $e) {
-                throw new Exception('Database error:', 0, $e);
-
-                return;
-            };
+            //We DON'T set memberId as it auto-generates
+            $sql = '
+                INSERT INTO `member`
+                    (`firstName`
+                    ,`lastName`
+                    ,`email`
+                    ,`phoneNo`
+                    ,`username`
+                    ,`memberPassword`
+                    )
+                VALUES
+                    (:firstName
+                    ,:lastName
+                    ,:email
+                    ,:phoneNo
+                    ,:username
+                    ,:memberPassword
+                    )';
         };
+
+        try{
+            $query = $this->database->prepare($sql);
+            $query->execute(
+               array(':username'       => $this->getUsername()
+                    ,':email'          => $this->getEmail()
+                    ,':memberPassword' => $this->getPassword()
+                    ,':memberId'       => $this->getMemberId()
+                    ,':firstName'      => $this->getFirstName()
+                    ,':lastName'       => $this->getLastName()
+                    ,':phoneNo'        => $this->getPhoneNo()
+               )
+            );
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+
+            return;
+        }
 
         return("saved");
     }
 
     /**
      * Set the username for the user
-     * @todo go private on this I don't think it should be a public method
      * @param String $username
      */
     public function setUsername($username)
@@ -471,6 +333,32 @@ class User
     public function getUsername()
     {
         return $this->username;
+    }
+
+    /**
+     * Set the FirstName for the user
+     * @param String $FirstName
+     */
+    public function setFirstName($FirstName)
+    {
+        $this->firstName = $FirstName;
+    }
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * Set the LastName for the user
+     * @param String $username
+     */
+    public function setLastName($LastName)
+    {
+        $this->lastName = $LastName;
+    }
+    public function getLastName()
+    {
+        return $this->lastName;
     }
 
     /**
@@ -488,6 +376,34 @@ class User
     }
 
     /**
+     * Sets the member phoneNo
+     * @todo Add check for well formedness?
+     * @param String $phoneNo
+     */
+    public function setPhoneNo($phoneNo)
+    {
+        $this->phoneNo = $phoneNo;
+    }
+    public function getPhoneNo()
+    {
+        return $this->phoneNo;
+    }
+
+    /**
+     * Sets the memberId
+     * @todo Add check for well formedness?
+     * @param String $memberId
+     */
+    public function setMemberId($memberId)
+    {
+        $this->memberId = $memberId;
+    }
+    public function getMemberId()
+    {
+        return $this->memberId;
+    }
+
+    /**
      * Set Password, change the value of old when setting an already encrypted password
      * @param string $password
      * @param string $old      - If unset will encrypt the incoming password
@@ -500,57 +416,10 @@ class User
 
         $this->password = $password;
     }
+
     public function getPassword()
     {
         return $this->password;
-    }
-
-    //First Login
-    public function setFirstLogin()
-    {
-        $this->firstLogin =  date('Y-m-d H:i:s');
-    }
-    public function getFirstLogin()
-    {
-        return $this->firstLogin;
-    }
-
-    //Last Login
-    public function setLastLogin()
-    {
-        $this->lastLogin = date('Y-m-d H:i:s');
-        $this->save();
-    }
-
-    public function getlastLogin($username = null)
-    {
-        if ($username != null) {
-            try {
-                $user = $this->database->query("select lastLoginDate from member where username = '$username'")->fetch();
-            } catch (Exception $e) {
-                throw new Exception('Database error:', 0, $e);
-
-                return;
-            };
-
-            return($user['lastLoginDate']);
-        }
-
-        return $this->lastLogin;
-    }
-
-    /**
-     * Sets the access level for the user
-     * @todo Add Sanity checks in here and return values
-     * @param Int $accessLevel
-     */
-    public function setAccessLevel($accessLevel)
-    {
-        $this->accessLevel = $accessLevel;
-    }
-    public function getAccessLevel()
-    {
-        return $this->accessLevel;
     }
 
     public function displayUsers()
@@ -600,6 +469,54 @@ class User
                     );
     }
 
+    public function automaticLogin($username, $session = true)
+    {
+       throw new Exception("Warning. Removed function. High sercurity concern. Code remains in model but won't run.", 500);
+       return;
+        // if ($this->checkUsername($username) == "Username not found") {
+        //     return("Username not found");
+        // }
+
+        // //Collect User from the database
+        // try {
+        //     //returns multidemnsional array
+        //     $user = $this->database->query("select * from member where username = '$username'")->fetch();
+
+        // } catch (Exception $e) {
+        //     throw new Exception('Database error:', 0, $e);
+
+        //     return;
+        // };
+
+        // //Set the password
+        // $this->setPassword($user["memberPassword"], "old");
+
+        // $this->setUsername($user["username"]);
+
+        // $this->setEmail($user["email"]);
+
+        // $this->setLastLogin();
+
+        // if ($session) {
+        //     $this->sessionCreate();
+        // }
+
+        // $this->setAccessLevel($user['ACL']);
+
+        // //If success return this object
+        // return($this);
+    }
+
+    public function updateUser()
+    {
+        throw new Exception("Warning. Deprecated function. Use save() instead it handles both new and existing accounts.", 500);
+        if ($this->save()) {
+            return "Updated";
+        } else {
+            return "Something went wrong";
+        }
+    }
+    
     public function setDatabase(PDO $database)
     {
         $this->database = $database;
