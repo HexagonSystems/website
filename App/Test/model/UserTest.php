@@ -9,21 +9,21 @@ class UserTest extends PHPUnit_Framework_TestCase
     /**
      * @var User
      */
-    protected $object;
+    protected $User;
 
     /**
+     * @covers User::setDatabase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
     protected function setUp()
     {
         $host = "localhost";
-        $db = "tow";
-        $user = "towuser";
-        $pass = "towpassword";
+        $db = "hexagon";
+        $user = "root";
+        $pass = "root";
         $this->database = new PDO("mysql:host=$host;dbname=$db",$user,$pass);
         $this->User = new User($this->database);
-
     }
 
     /**
@@ -31,14 +31,17 @@ class UserTest extends PHPUnit_Framework_TestCase
      * This method is called after a test is executed.
      */
     protected function tearDown()
-    {      
+    {  
+        // //Delete 2nd last create
+        $this->database->query("DELETE FROM `member` WHERE `username` = 'Steve'");
+        // //Move last user create to DBTEST1 so we can check it happened
+        // $this->database->query("UPDATE  `users` SET  `username` =  'DBTEST1', `email` =  'DBTEST21' WHERE `username` =  'DBTEST'");    
     }
 
 
 
     /**
      * @covers User::checkUsername
-     * @todo   Implement testCheckUsername().
      */
     public function testCheckUsername()
     {
@@ -46,18 +49,17 @@ class UserTest extends PHPUnit_Framework_TestCase
        
         $this->assertEquals($username, 'Username found');
         
-        $username = $this->User->checkUsername("fake");
+        $username = $this->User->checkUsername("Steve");
        
         $this->assertEquals($username, 'Username not found');
     }
     
     /**
      * @covers User::checkEmail
-     * @todo   Implement testCheckEmail().
      */
     public function testCheckEmail()
     {
-        $email = $this->User->checkEmail("steve@steve.com");
+        $email = $this->User->checkEmail("alex-robinson@live.com");
        
         $this->assertEquals($email, 'Email found');
         
@@ -68,7 +70,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     /**
      * @covers User::checkPassword
-     * @todo   Implement testCheckPassword().
      */
     public function testCheckPassword()
     {
@@ -80,9 +81,6 @@ class UserTest extends PHPUnit_Framework_TestCase
         
         //set Password as a new password this will encrypt the password
         $this->User->setPassword("password");
-        
-        //as we encrypted as we set password is now '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8'
-        $this->assertEquals("5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8" , $this->User->getPassword());
         
         //check Password with encryption happening
         $test = $this->User->checkPassword("password");
@@ -97,55 +95,138 @@ class UserTest extends PHPUnit_Framework_TestCase
     
     /**
      * @covers User::createUser
-     * @todo   Implement testCreateUser().
      */
     public function testCreateUser()
     {
-        $user = $this->User->createUser("stephena", "password", "fake@steve.com", 5);
+        // Stop here and mark this test as incomplete.
+        //$this->markTestIncomplete( 'Skipping Test Save until insert set is revised');
+        $user = $this->User->createUser("Stephen", "McMahon", "Steve", "password", "stephentmcm@gmail.com", "0430580777");
        
         $this->assertInstanceOf('User', $user);
+
+        return $user;
      }
 
     /**
-     * @covers User::createUser
-     * @todo   Implement testCreateUser().
+     * @depends testCreateUser
+     * @covers User::save
      */
-    public function testSave()
+    public function testSave(User $user)
     {
         // Stop here and mark this test as incomplete.
-        //$this->markTestIncomplete( 'Skipping Test Save until created a delete');
+        //$this->markTestIncomplete( 'Skipping Test Save until insert set is revised');
         
-        $this->User->createUser("DBTEST", "password", "DBTEST@steve.com", 5);
+        //$this->User->createUser("Stephen", "McMahon", "Steve", "password", "stephentmcm@gmail.com", "0430580777");
         
-        $saved = $this->User->save();
+        $this->assertEquals("Steve", $user->getUsername());
+        
+        $saved = $user->save();
        
         $this->assertEquals('saved', $saved);
-        
-        //Delete 2nd last create
-        $this->database->query("DELETE FROM `users` WHERE `username` = 'DBTEST1'");
-        //Move last user create to DBTEST1 so we can check it happened
-        $this->database->query("UPDATE  `users` SET  `username` =  'DBTEST1', `email` =  'DBTEST21' WHERE `username` =  'DBTEST'");
+
      }
      
     /**
      * @covers User::loginUser
-     * @todo   Implement testLoginUser().
      */
     public function testLoginUser()
     {
         //Good user
-        $user = $this->User->loginUser("stephen", "password");
+        $user = $this->User->loginUser("Stephen", "password");
        
         $this->assertInstanceOf('User', $user);
         
         //Wrong username
-        $login = $this->User->loginUser("stephena", "password");
+        $login = $this->User->loginUser("Stephena", "password");
        
         $this->assertEquals($login, "Username not found");
         
         //Wrong password
-        $login = $this->User->loginUser("stephen", "passwordWrong");
+        $login = $this->User->loginUser("Stephen", "passwordWrong");
        
         $this->assertEquals($login, "Password Incorrect");
     }
+
+    /**
+     * @covers User::getUsernameFromEmail
+     */
+    public function testGetUsernameFromEmail()
+    {
+        $this->assertEquals("Stephen", $this->User->getUsernameFromEmail("fake@email.com"));
+    }
+
+    /**
+     * @covers User::getEmailFromUsername
+     */
+    public function testGetEmailFromUsername()
+    {
+        $this->assertEquals("fake@email.com", $this->User->getEmailFromUsername("Stephen"));
+    }
+
+    /**
+     * @covers User::setUsername
+     * @covers User::getUsername
+     * @covers User::setFirstName
+     * @covers User::getFirstName
+     * @covers User::setLastName
+     * @covers User::getLastName
+     * @covers User::setEmail
+     * @covers User::getEmail
+     * @covers User::setPhoneNo
+     * @covers User::getPhoneNo
+     * @covers User::setMemberId
+     * @covers User::getMemberId
+     * @covers User::setPassword
+     * @covers User::getPassword
+     */
+    public function testGetsAndSets(){
+        $this->User->setUsername("test");
+
+        $this->assertEquals("test", $this->User->getUsername() );
+
+        $this->User->setFirstName("test");
+
+        $this->assertEquals("test", $this->User->getFirstName() );
+
+        $this->User->setLastName("test");
+
+        $this->assertEquals("test", $this->User->getLastName() );
+
+        $this->User->setEmail("test");
+
+        $this->assertEquals("test", $this->User->getEmail() );
+
+        $this->User->setPhoneNo("test");
+
+        $this->assertEquals("test", $this->User->getPhoneNo() );
+
+        $this->User->setMemberId("test");
+
+        $this->assertEquals("test", $this->User->getMemberId() );
+
+    }
+
+    /**
+     * @covers User::displayUsers
+     */
+    public function testDisplayUsers()
+    {
+       foreach ($this->User->displayUsers() as $key => $array) {
+            $this->assertArrayHasKey('username', $array);
+       }   
+        
+    }
+
+    /**
+     * @covers User::sessionCreate
+     * @covers User::sessionDestroy
+     */
+    public function testSession()
+    {
+        $this->User->setUsername('TestSession');
+        $this->User->sessionCreate();
+
+        $this->assertTrue($this->User->sessionDestroy());
+    }
+
 }

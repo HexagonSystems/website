@@ -5,7 +5,6 @@ class Controller
 {
     protected $footer;
     protected $nav;
-    protected $currentPagePosts;
     protected $database;
     protected $template = 'index';
 
@@ -15,7 +14,7 @@ class Controller
             $this->template = $template;
 
         $this->nav = new HeadController();
-        $this->footer = AppBase.'/View/Template/footer.php';
+        $this->footer = 'footer';
     } //end constructor
 
     public function setDatabase(PDO $database)
@@ -26,8 +25,6 @@ class Controller
     public function invoke()
     {
             $this->nav->invoke();
-            
-            $this->template = AppBase.'/View/Template/'.$this->template.'Template.php';
 
     } // end function
 }
