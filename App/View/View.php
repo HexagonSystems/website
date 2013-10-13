@@ -39,7 +39,7 @@ class View
              */
             $this->footer = $footer;
         }else{
-            echo "ERROR in ".__FILE__." on line: ".__LINE__.": File not found at:".$template;
+            echo "ERROR in ".__FILE__." on line: ".__LINE__.": File not found at:".$footer;
         }
     }
     /*** Receives assignments from controller and stores in local data array

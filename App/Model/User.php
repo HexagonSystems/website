@@ -9,6 +9,7 @@ class User
     private $username;
     private $password;
     private $email;
+    private $phoneNo;
 
     /**
      * Constructor with extra quick create/login
@@ -46,7 +47,7 @@ class User
      * @param String $email
      * @param return Object|String Return this object or an error string
      */
-    public function createUser($firstName, $lastName, $username, $password, $email)
+    public function createUser($firstName, $lastName, $username, $password, $email, $phoneNo)
     {
         //Check if the username exists
         if ($this->checkUsername($username) == "Username not found") {
@@ -68,6 +69,7 @@ class User
 
         $this->setFirstName($firstName);
         $this->setLastName($lastName);
+        $this->setPhoneNo($phoneNo);
         $this->setPassword($password);
         //If success return this object
         //NOTE We haven't saved the user yet
@@ -307,7 +309,6 @@ class User
                array(':username'       => $this->getUsername()
                     ,':email'          => $this->getEmail()
                     ,':memberPassword' => $this->getPassword()
-                    ,':memberId'       => $this->getMemberId()
                     ,':firstName'      => $this->getFirstName()
                     ,':lastName'       => $this->getLastName()
                     ,':phoneNo'        => $this->getPhoneNo()
@@ -426,7 +427,7 @@ class User
     {
         try {
 
-            $statement = $this->database->query("select username, ACL FROM member WHERE ACL < 10")->fetchAll();
+            $statement = $this->database->query("select username FROM member")->fetchAll();
             //$statement = $this->database->prepare($statement);
 
             //$result = $statement->execute();
@@ -450,12 +451,15 @@ class User
 
     public function sessionDestroy()
     {
-        if (isset($_SESSION['account'])) {
-            session_unset('account');
+        if (!isset($_SESSION['account'])) {
+            return "No session for account";
         }
-        if (isset($_SESSION['accountObject'])) {
-            session_unset('accountObject');
+        if (!isset($_SESSION['accountObject'])) {
+            return "No session for accountObject";
         }
+        session_unset('account');
+        session_unset('accountObject');
+        return "Session Destoryed";
     }
 
     public function __sleep()
