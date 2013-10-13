@@ -444,8 +444,9 @@ class User
     public function sessionCreate()
     {
         if (!empty($this->username)) {
-            $_SESSION['account'] = array('username'=>$this->getUsername(), 'access'=>$this->getAccessLevel());
+            $_SESSION['account'] = $this->getUsername();
             $_SESSION['accountObject'] = serialize($this);
+            return true;
         }
     }
 
@@ -459,17 +460,18 @@ class User
         }
         session_unset('account');
         session_unset('accountObject');
-        return "Session Destoryed";
+        return true;
     }
 
     public function __sleep()
     {
-        return array('username'
-                    , 'password'
-                    , 'email'
-                    , 'firstLogin'
-                    , 'lastLogin'
-                    , 'accessLevel'
+        return array('memberId'
+                    ,'firstName'
+                    ,'lastName'
+                    ,'username'
+                    ,'password'
+                    ,'email'
+                    ,'phoneNo'
                     );
     }
 

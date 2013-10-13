@@ -211,53 +211,22 @@ class UserTest extends PHPUnit_Framework_TestCase
      */
     public function testDisplayUsers()
     {
-        $this->assertArrayHasKey('username', $this->User->displayUsers());
+       foreach ($this->User->displayUsers() as $key => $array) {
+            $this->assertArrayHasKey('username', $array);
+       }   
+        
     }
 
     /**
      * @covers User::sessionCreate
-     */
-    public function testSessionCreate()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
-    }
-
-    /**
      * @covers User::sessionDestroy
-     * @depends testSessionCreate
      */
-    public function testSessionDestroy()
+    public function testSession()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->User->setUsername('TestSession');
+        $this->User->sessionCreate();
+
+        $this->assertTrue($this->User->sessionDestroy());
     }
 
-    /**
-     * @covers User::__sleep
-     * @todo   Implement test__sleep().
-     */
-    public function test__sleep()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers User::setDatabase
-     * @todo   Implement testSetDatabase().
-     */
-    public function testSetDatabase()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
-    }
 }
