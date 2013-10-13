@@ -65,14 +65,13 @@ class LoginController extends Controller
 							$view->assign('content' , $content);
 						}
 						
-					}else
-					{
+					}else{
 						echo "testing";
 						$user->sessionCreate();
 						echo $user->getEmail();
 					}
-				}else
-				{
+
+				}else{
 					//if $_POSTs arn't set
 					//NOt logged In
 					echo "Post not set";
@@ -85,8 +84,7 @@ class LoginController extends Controller
 					$view->assign('content' , $content);
 				}
 
-			}else if($_GET['action'] == 'register')
-			{
+			}else if($_GET['action'] == 'register'){
 				echo "attempting to register<br/>";
 				$user = new User($this->database);
 				if(isset($_POST['username']) && isset($_POST['pass']) && isset($_POST['email']))

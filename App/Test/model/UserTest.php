@@ -9,7 +9,7 @@ class UserTest extends PHPUnit_Framework_TestCase
     /**
      * @var User
      */
-    protected $object;
+    protected $User;
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -18,9 +18,9 @@ class UserTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $host = "localhost";
-        $db = "tow";
-        $user = "towuser";
-        $pass = "towpassword";
+        $db = "hexagon";
+        $user = "root";
+        $pass = "root";
         $this->database = new PDO("mysql:host=$host;dbname=$db",$user,$pass);
         $this->User = new User($this->database);
 
@@ -57,7 +57,7 @@ class UserTest extends PHPUnit_Framework_TestCase
      */
     public function testCheckEmail()
     {
-        $email = $this->User->checkEmail("steve@steve.com");
+        $email = $this->User->checkEmail("alex-robinson@live.com");
        
         $this->assertEquals($email, 'Email found');
         
@@ -81,9 +81,6 @@ class UserTest extends PHPUnit_Framework_TestCase
         //set Password as a new password this will encrypt the password
         $this->User->setPassword("password");
         
-        //as we encrypted as we set password is now '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8'
-        $this->assertEquals("5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8" , $this->User->getPassword());
-        
         //check Password with encryption happening
         $test = $this->User->checkPassword("password");
        
@@ -101,6 +98,8 @@ class UserTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateUser()
     {
+        // Stop here and mark this test as incomplete.
+        $this->markTestIncomplete( 'Skipping Test Save until insert set is revised');
         $user = $this->User->createUser("stephena", "password", "fake@steve.com", 5);
        
         $this->assertInstanceOf('User', $user);
@@ -113,7 +112,7 @@ class UserTest extends PHPUnit_Framework_TestCase
     public function testSave()
     {
         // Stop here and mark this test as incomplete.
-        //$this->markTestIncomplete( 'Skipping Test Save until created a delete');
+        $this->markTestIncomplete( 'Skipping Test Save until insert set is revised');
         
         $this->User->createUser("DBTEST", "password", "DBTEST@steve.com", 5);
         
@@ -134,17 +133,17 @@ class UserTest extends PHPUnit_Framework_TestCase
     public function testLoginUser()
     {
         //Good user
-        $user = $this->User->loginUser("stephen", "password");
+        $user = $this->User->loginUser("Stephen", "password");
        
         $this->assertInstanceOf('User', $user);
         
         //Wrong username
-        $login = $this->User->loginUser("stephena", "password");
+        $login = $this->User->loginUser("Stephena", "password");
        
         $this->assertEquals($login, "Username not found");
         
         //Wrong password
-        $login = $this->User->loginUser("stephen", "passwordWrong");
+        $login = $this->User->loginUser("Stephen", "passwordWrong");
        
         $this->assertEquals($login, "Password Incorrect");
     }
