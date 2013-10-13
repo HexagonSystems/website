@@ -19,6 +19,8 @@ class View
      */
     public function __construct($template,$footer)
     {
+        $template = AppBase."/View/Template/".$template.".php";
+        $footer = AppBase."/View/Template/".$footer.".php";
         if (file_exists($template)) {
             /**
              * trigger render to include file when this model is destroyed
@@ -26,9 +28,8 @@ class View
              * to the view!
              */
             $this->render = $template;
-        }else
-        {
-        	echo "DOES NOT EXIST";
+        }else{
+        	echo "ERROR in ".__FILE__." on line: ".__LINE__.": File not found at:".$template;
         }
         if (file_exists($footer)) {
             /**
@@ -37,6 +38,8 @@ class View
              * to the view!
              */
             $this->footer = $footer;
+        }else{
+            echo "ERROR in ".__FILE__." on line: ".__LINE__.": File not found at:".$template;
         }
     }
     /*** Receives assignments from controller and stores in local data array

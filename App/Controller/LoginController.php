@@ -8,15 +8,16 @@ class LoginController extends Controller
 
 	public function invoke()
 	{
+		parent::invoke();
+
 		if (!isset($_GET['action']))
 		{
-			echo "NO ACTION SET";
-			$this->template = 'view/'.$this->loggedOutView.'Template.php';
-			include_once('view/'.$this->loggedOutView.'.php');
+			$this->template = 'LoginTemplate';
+			
 			//create a new view and pass it our template
 			$view = new LoginView($this->template,$this->footer);
 			$content ="";
-			$view->assign('title' , 'Loggged in');
+			$view->assign('title' , 'Logged in');
 			$view->assign('content' , $content);
 		}elseif (isset($_GET['action'])){
 			/*
@@ -26,7 +27,7 @@ class LoginController extends Controller
 			{
 				if(!isset($_POST['action']) && !isset($_POST['email'])){
 					$this->template = 'view/ResetPasswordTemplate.php';
-					include_once('view/'.$this->loggedOutView.'.php');
+					
 					$view = new LoginView($this->template,$this->footer);
 					$content ="";
 					$view->assign('title' , 'Loggged in');
@@ -34,14 +35,14 @@ class LoginController extends Controller
 				}else{
 					$get = array("action" => "mailSent");
 					$verify = new VerifyController($get, $_POST);
-					$verify->setDatabase($this->conn);
+					$verify->setDatabase($this->database);
 					$verify->invoke();
 				}
 				
 			}
 			else if($_GET['action'] == 'login')
 			{
-				$user = new User($this->conn);
+				$user = new User($this->database);
 				if(isset($_POST['username']) && isset($_POST['pass']))
 				{
 					$user = $user->loginUser($_POST["username"], $_POST["pass"]);
@@ -51,12 +52,12 @@ class LoginController extends Controller
 							echo "This account has not been verified. Please follow the instructions in your email to validate your account ";
 							$get = array("action" => "mailSent");
 							$verify = new VerifyController($get, $_POST);
-							$verify->setDatabase($this->conn);
+							$verify->setDatabase($this->database);
 							$verify->invoke();
 						}else{
 							echo $user;
 							$this->template = 'view/'.$this->loggedOutView.'Template.php';
-							include_once('view/'.$this->loggedOutView.'.php');
+							
 							//create a new view and pass it our template
 							$view = new LoginView($this->template,$this->footer);
 							$content ="";
@@ -76,7 +77,7 @@ class LoginController extends Controller
 					//NOt logged In
 					echo "Post not set";
 					$this->template = 'view/'.$this->$loggedOutView.'Template.php';
-					include_once('view/'.$this->$loggedOutView.'.php');
+					
 					//create a new view and pass it our template
 					$view = new LoginView($this->template,$this->header,$this->footer,$this->nav);
 					$content ="";
@@ -87,7 +88,7 @@ class LoginController extends Controller
 			}else if($_GET['action'] == 'register')
 			{
 				echo "attempting to register<br/>";
-				$user = new User($this->conn);
+				$user = new User($this->database);
 				if(isset($_POST['username']) && isset($_POST['pass']) && isset($_POST['email']))
 				{
 					$user = $user->createUser($_POST["username"], $_POST["pass"], $_POST["email"], "1");
@@ -95,7 +96,7 @@ class LoginController extends Controller
 						//NOt logged In
 						echo $user;
 						$this->template = 'view/'.$this->$loggedOutView.'Template.php';
-						include_once('view/'.$this->$loggedOutView.'.php');
+						
 						//create a new view and pass it our template
 						$view = new LoginView($this->template,$this->header,$this->footer,$this->nav);
 						$content ="";
