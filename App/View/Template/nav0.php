@@ -32,6 +32,9 @@
               </ul>
             </li>
           </ul>
+          <ul class="nav navbar-nav navbar-right">
+                <li><a href="index.php?location=login">Login</a></li>
+          </ul>
         </nav><!-- /.navbar-collapse -->
       </div>
     </header>

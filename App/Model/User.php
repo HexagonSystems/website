@@ -167,7 +167,7 @@ class User
      */
     public function checkPassword($password)
     {
-        $password = sha1($password);
+        $password = password_hash($password);
 
         if ($this->getPassword() === $password) {
             return true;
@@ -461,7 +461,7 @@ class User
     public function setPassword($password, $old = 0)
     {
         if ($old === 0) {
-            $password = sha1($password);
+            $password = password_hash($password);
         };
 
         $this->password = $password;
