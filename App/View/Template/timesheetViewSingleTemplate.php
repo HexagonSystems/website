@@ -22,7 +22,8 @@
 <a data-toggle="modal" href="#modal_hours"
 	class="btn btn-primary btn-sm">Add Hours</a>
 <button class="btn btn-primary btn-sm">Edit Task</button>
-<button class="btn btn-primary btn-sm" id="buttonSlideIn">Testing Add Comment With Slide In</button>
+<button class="btn btn-primary btn-sm" id="buttonSlideIn">Testing Add
+	Comment With Slide In</button>
 <?php include_once 'modal_comment.php'; ?>
 <?php include_once 'modal_hours.php'; ?>
 
@@ -54,10 +55,69 @@
 	</ul>
 </div>
 
+<script
+	src="<?php echo AppBaseSTRIPPED; ?>/includes/js/TaskCommentsLoaderNEW.js"></script>
+<script
+	src="<?php echo AppBaseSTRIPPED; ?>/includes/js/TableLoaderNEW.js"></script>
 <script>
-ajaxUrl = "<?php echo AppBaseSTRIPPED; ?>/Model/TaskCommentsAJAX.php";
-taskId = <?php echo $data['task']->getId(); ?>
+ajaxBase = "<?php echo AppBaseSTRIPPED; ?>";
 
+
+mainTaskCommentsTable = {
+		'print_location'	:	'#commentsContainer',
+		'quantity_per_page'	:	5,
+		'last_page'			:	-1,
+		'memberId'			:	1,
+		'taskId'			:	<?php echo $data['task']->getId(); ?>,
+		'content'			:	new Array()
+};
+
+
+/**
+ * Create comment button
+ * 
+ * NEEDS TO BE REMOVED
+ */
+$(function() {
+	$("#createCommentButton").click(
+			function() {
+				createComment(mainTaskCommentsTable, $("#inputTaskTag").val(), $("#inputTaskTitle").val(), $("#inputTaskContent").val());
+			});
+});
+
+/**
+ * Add hours button
+ * 
+ */
+$(function() {
+	$("#addHoursButton").click(
+			function() {
+				// run script to add hours through ajax
+				addHours(mainTaskCommentsTable, document.getElementById("addHoursDate").value, $(
+						"#addHoursHours").val(), $("#addHoursComment").val());
+			});
+});
+
+/**
+ * Comment section paginator on click event
+ */
+$(function() {
+	$(".pagination li a").click(function() {
+		printTableDataInTable(mainTaskCommentsTable, $(this).text());
+	});
+});
+
+/**
+ * jQuery Datepicker
+ */
+
+/**
+ * Page on load
+ * 
+ * NEEDS TO BE REMOVED
+ */
+$(document).ready(function() {
+	printTableDataInTable(mainTaskCommentsTable, 1);
+	document.getElementById('addHoursDate').valueAsDate = new Date();
+});
 </script>
-<script src="<?php echo AppBaseSTRIPPED; ?>/includes/js/TaskCommentsLoader.js"></script>
-<script src="<?php echo AppBaseSTRIPPED; ?>/includes/js/TableLoader.js"></script>

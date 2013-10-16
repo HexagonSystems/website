@@ -26,6 +26,11 @@ if(!isset($_POST['request']))
 			if(commonCommentAttributesExist() && createCommentAttributesExist())
 			{
 				$response = $commentHandler->createComment($_POST['taskId'], $_POST['memberId'], $_POST['tag'], $_POST['title'], $_POST['content']);
+				if($response['success'] == true)
+				{
+					$tempComment = $response['data'];
+					$response['data'] = $tempComment->toArray();
+				}
 				$response = json_encode($response);
 				echo $response;
 			}else

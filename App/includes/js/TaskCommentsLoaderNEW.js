@@ -1,21 +1,15 @@
-/* CONFIG */
-var tableContent = new Array();
-var lastPage = -1;
-var COMMENTS_PER_PAGE = 5;
-var TABLE_CONTENT_PRINT_LOCATION = "#commentsContainer";
-
 /* FUNCTIONS */
 /**
  * Load Comments through JSON
  */
-function loadComments(pageNum) {
+function loadComments(tableConfig, pageNum) {
 	if (quantity = undefined) {
 		quantity = commentsPerPage;
 	}
-	$.post(ajaxUrl + "/Model/TaskCommentsAJAX.php", {
+	$.post(ajaxUrl, {
 		request : "load",
-		taskId : taskId,
-		memberId : 1,
+		taskId : tableConfig['taskId'],
+		memberId : tableConfig['memberId'],
 		pageNum : pageNum,
 		qty : 5
 	}, function(nakedJson) {
@@ -23,7 +17,7 @@ function loadComments(pageNum) {
 		response = nakedJson.success;
 		if (response == true || response == "true") {			
 			var jsonObject = nakedJson.data;
-			updateTableContentArray(jsonObject, pageNum);
+			updateTableContentArray(tableConfig, jsonObject, pageNum);
 		}
 	});
 }
@@ -31,28 +25,28 @@ function loadComments(pageNum) {
 /**
  * Prints the comments into the comment table
  */
-function printTableDataInTable(pageNum) {
+function printTableDataInTable(tableConfig, pageNum) {
 	// If the page of comments isn't already loaded, load it
-	if (pageAlreadyLoaded(pageNum, tableContent) === false
-			&& pageNum != lastPage) {
-		loadComments(pageNum);
+	if (pageAlreadyLoaded(tableConfig, pageNum) === false
+			&& pageNum != tableConfig['last_page']) {
+		loadComments(tableConfig, pageNum);
 	} else {
-		var positionToStartOn = (pageNum - 1) * COMMENTS_PER_PAGE;
-		var positionToEndOn = positionToStartOn + COMMENTS_PER_PAGE;
+		var positionToStartOn = (pageNum - 1) * tableConfig['quantity_per_page'];
+		var positionToEndOn = positionToStartOn + tableConfig['quantity_per_page'];
 
-		var arrayToLoopOver = tableContent.concat();
+		var arrayToLoopOver = tableConfig['content'].concat();
 
-		if (lastPage > -1 && lastPage == pageNum) {
+		if (tableConfig['last_page'] > -1 && tableConfig['last_page'] == pageNum) {
 			arrayToLoopOver = arrayToLoopOver.splice(positionToStartOn);
 		} else {
 			arrayToLoopOver = arrayToLoopOver.splice(positionToStartOn,
 					positionToEndOn);
 		}
 
-		emptyTableBody();
+		emptyTableBody(tableConfig);
 
 		$.each(arrayToLoopOver, function(singleArray) {
-			printSingleComment(arrayToLoopOver[singleArray]['tag'],
+			printSingleComment(tableConfig, arrayToLoopOver[singleArray]['tag'],
 					arrayToLoopOver[singleArray]['title'],
 					arrayToLoopOver[singleArray]['content'],
 					arrayToLoopOver[singleArray]['memberId'],
@@ -66,7 +60,7 @@ function printTableDataInTable(pageNum) {
 /**
  * Prints a single comment
  */
-function printSingleComment(commentTag, commentTitle, commentContent,
+function printSingleComment(tableConfig, commentTag, commentTitle, commentContent,
 		commentMember, commentDate, commentSlideIn) {
 	/* TABLE ROW */
 	var tableRow = document.createElement('tr');
@@ -128,14 +122,14 @@ function printSingleComment(commentTag, commentTitle, commentContent,
 	tableRow.appendChild(dateTD);
 
 	if (commentSlideIn) {
-		$(tableRow).hide().prependTo(TABLE_CONTENT_PRINT_LOCATION).fadeIn(
+		$(tableRow).hide().prependTo(tableConfig['print_location']).fadeIn(
 				'slow');
-		if (tableContent.length > COMMENTS_PER_PAGE) {
-			$(TABLE_CONTENT_PRINT_LOCATION).find('>:last-child').remove();
+		if (tableConfig['content'].length > tableConfig['quantity_per_page']) {
+			$(tableConfig['print_location']).find('>:last-child').remove();
 		}
 
 	} else {
-		$(tableRow).appendTo(TABLE_CONTENT_PRINT_LOCATION);
+		$(tableRow).appendTo(tableConfig['print_location']);
 		$(tableRow).show();
 	}
 
@@ -144,16 +138,17 @@ function printSingleComment(commentTag, commentTitle, commentContent,
 /**
  * Creates a comment in the database
  */
-function createComment(commentTag, commentTitle, commentContent) {
+function createComment(tableConfig, commentTag, commentTitle, commentContent) {
 	commentTag = "@" + commentTag;
-	$.post(ajaxBase + "/Model/TaskCommentsAJAX.php", {
+	$.post(ajaxUrl, {
 		request : "create",
-		taskId : taskId,
-		memberId : 1,
+		taskId : tableConfig['taskId'],
+		memberId : tableConfig['memberId'],
 		title : commentTitle,
 		content : commentContent,
 		tag : commentTag
 	}, function(data) {
+		alert(data);
 		data = $.parseJSON(data);
 		response = data.success;
 		if (response == true) {
@@ -169,9 +164,9 @@ function createComment(commentTag, commentTitle, commentContent) {
 			tempArray['title'] = commentTitle;
 			tempArray['content'] = commentContent;
 			tempArray['memberId'] = 1;
-			tempArray['date'] = "Refresh to view date";
-			tableContent.unshift(tempArray);
-			printSingleComment(commentTag, commentTitle, commentContent,
+			tempArray['date'] = data.data.date;
+			tableConfig['content'].unshift(tempArray);
+			printSingleComment(tableConfig, commentTag, commentTitle, commentContent,
 					tempArray['memberId'], tempArray['date'], true);
 			assignTableContentAccordion()
 		} else {
@@ -183,11 +178,11 @@ function createComment(commentTag, commentTitle, commentContent) {
 /**
  * Adds hours into the database
  */
-function addHours(workedDate, workedHours, workedComment) {
-	$.post(ajaxBase + "/Model/TaskHoursAJAX.php", {
+function addHours(tableConfig, workedDate, workedHours, workedComment) {
+	$.post(ajaxBase + "", {
 		request : "addHours",
-		taskId : taskId,
-		memberId : 1,
+		taskId : tableConfig['taskId'],
+		memberId : tableConfig['memberId'],
 		workedDate : "03/10/2013",
 		workedHours : workedHours,
 		workedComment : workedComment
@@ -205,50 +200,3 @@ function addHours(workedDate, workedHours, workedComment) {
 		}
 	});
 }
-
-/**
- * Create comment button
- */
-$(function() {
-	$("#createCommentButton").click(
-			function() {
-				createComment($("#inputTaskTag").val(), $("#inputTaskTitle")
-						.val(), $("#inputTaskContent").val());
-			});
-});
-
-/**
- * Add hours button
- */
-$(function() {
-	$("#addHoursButton").click(
-			function() {
-				// run script to add hours through ajax
-				var titleString = "Alex has added " + $("#addHoursHours").val()
-						+ " hours  worked on "
-						+ document.getElementById("addHoursDate").value;
-				addHours(document.getElementById("addHoursDate").value, $(
-						"#addHoursHours").val(), $("#addHoursComment").val());
-			});
-});
-
-/**
- * Comment section paginator on click event
- */
-$(function() {
-	$(".pagination li a").click(function() {
-		printTableDataInTable($(this).text());
-	});
-});
-
-/**
- * jQuery Datepicker
- */
-
-/**
- * Page on load
- */
-$(document).ready(function() {
-	printTableDataInTable(1);
-	document.getElementById('addHoursDate').valueAsDate = new Date();
-});

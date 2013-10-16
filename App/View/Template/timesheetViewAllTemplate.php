@@ -30,9 +30,50 @@
 	</ul>
 </div>
 
+<script
+	src="<?php echo AppBaseSTRIPPED; ?>/includes/js/TaskLoaderNEW.js"></script>
+<script
+	src="<?php echo AppBaseSTRIPPED; ?>/includes/js/TableLoaderNEW.js"></script>
 <script>
-ajaxUrl = "<?php echo AppBaseSTRIPPED; ?>Model/TaskAJAX.php";
+ajaxBase = "<?php echo AppBaseSTRIPPED; ?>";
 
+/* MAIN TASK TABLE CONFIG ARRAY */
+mainTaskTable = {
+		'print_location'	:	'#tasksContainer',
+		'quantity_per_page'	:	5,
+		'last_page'			:	-1,
+		'memberId'			:	1,
+		'content'			:	new Array()
+};
+
+/**
+ * Comment section paginator on click event
+ */
+$(function() {
+	$(".pagination li a").click(function() {
+		printTableDataInTable(mainTaskTable, $(this).text());
+	});
+});
+
+/**
+ * Create comment button
+ * 
+ * THIS NEEDS TO BE REMOVED
+ */
+$(function() {
+	$("#createTaskButton").click(
+			function() {
+				createTask(mainTaskTable, $("#createTaskTitle").val(), $("#createTaskDscr")
+						.val(), $("#createTaskStatus option:selected").text());
+			});
+});
+
+/**
+ * Page on load
+ * 
+ * THIS NEEDS TO BE REMOVED
+ */
+$(document).ready(function() {
+	printTableDataInTable(mainTaskTable, 1);
+});
 </script>
-<script src="<?php echo AppBaseSTRIPPED; ?>/includes/js/TaskLoader.js"></script>
-<script src="<?php echo AppBaseSTRIPPED; ?>/includes/js/TableLoader.js"></script>
