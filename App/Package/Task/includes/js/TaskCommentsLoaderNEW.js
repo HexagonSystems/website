@@ -37,9 +37,9 @@ function printTableDataInTable(tableConfig, pageNum) {
 		var arrayToLoopOver = tableConfig['content'].concat();
 
 		if (tableConfig['last_page'] > -1 && tableConfig['last_page'] == pageNum) {
-			arrayToLoopOver = arrayToLoopOver.splice(positionToStartOn);
+			arrayToLoopOver = arrayToLoopOver.slice(positionToStartOn);
 		} else {
-			arrayToLoopOver = arrayToLoopOver.splice(positionToStartOn,
+			arrayToLoopOver = arrayToLoopOver.slice(positionToStartOn,
 					positionToEndOn);
 		}
 
@@ -148,7 +148,6 @@ function createComment(tableConfig, commentTag, commentTitle, commentContent) {
 		content : commentContent,
 		tag : commentTag
 	}, function(data) {
-		alert(data);
 		data = $.parseJSON(data);
 		response = data.success;
 		if (response == true) {
@@ -163,7 +162,7 @@ function createComment(tableConfig, commentTag, commentTitle, commentContent) {
 			tempArray['tag'] = commentTag;
 			tempArray['title'] = commentTitle;
 			tempArray['content'] = commentContent;
-			tempArray['memberId'] = 1;
+			tempArray['memberId'] = tableConfig['memberId'];
 			tempArray['date'] = data.data.date;
 			tableConfig['content'].unshift(tempArray);
 			printSingleComment(tableConfig, commentTag, commentTitle, commentContent,
@@ -187,14 +186,22 @@ function addHours(tableConfig, workedDate, workedHours, workedComment) {
 		workedHours : workedHours,
 		workedComment : workedComment
 	}, function(data) {
-		if (data == "true") {
-			// Run function to check for updats, therefore asking the user to
-			// refresh
-			// Or refresh automatically, or just add the comment in locally,
-			// this will ignore the fact if other comments have been added
-			// around the same time as well
-			// Maybe it could do both, check for new updates, if there arnt any
-			// add this locally, if there are refresh or ask the user to refresh
+		data = $.parseJSON(data);
+		response = data.success;
+		if (response == true) {
+			// alert(response);
+			commentJSON = data.comment.data;
+			var tempArray = new Array();
+			tempArray['tag'] = commentJSON.tag;
+			tempArray['title'] = commentJSON.title;
+			tempArray['content'] = commentJSON.content;
+			tempArray['memberId'] = tableConfig['memberId'];
+			tempArray['date'] = commentJSON.date;
+			tableConfig['content'].unshift(tempArray);
+			printSingleComment(tableConfig, tempArray['tag'], tempArray['title'],
+					tempArray['content'], tempArray['memberId'], tempArray['date'],
+					true);
+			assignTableContentAccordion()
 		} else {
 			alert(data);
 		}

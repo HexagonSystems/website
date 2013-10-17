@@ -85,19 +85,21 @@ class User
      * @return String
      * @throws Exception
      */
-    public function checkUsername($username)
+    public function checkUsername($email)
     {
 
         try {
-            $user = $this->database->query("select username from member where username = '$username'")->fetch();
+            $query = $this->database->prepare("select firstName from member where email = :email");
+            $query->bindParam(':email'   , $email , PDO::PARAM_STR);
+            $query->execute();
 
         } catch (Exception $e) {
             throw new Exception('Database error:', 0, $e);
 
             return;
-        };
+        }
 
-        if ($user !== false) {
+        if ($query !== false) {
             return("Username found");
         } else {
             return("Username not found");
@@ -140,7 +142,15 @@ class User
      */
     public function checkPassword($password)
     {
-        $verify = password_verify($password, $this->getPassword());
+    	if($password == $this->getPassword())
+    	{
+    		return true;
+    	}else
+    	{
+    		return false;
+    	}
+    }
+        /*$verify = password_verify($password, $this->getPassword());
 
         if ($verify == 1) {
             return true;
@@ -166,23 +176,25 @@ class User
         //Collect User from the database
         try {
             //returns multidemnsional array
-            $user = $this->database->query("select * from member where username = '$username'")->fetch();
-
+            $query = $this->database->prepare("SELECT * from MEMBER where EMAIL = :email");
+            $query->bindParam(':email'   , $username , PDO::PARAM_STR);
+            $query->execute();
+            
         } catch (Exception $e) {
             throw new Exception('Database error:', 0, $e);
 
             return;
         };
 
+        $user = $query->fetch();
         //We pull the password from the DB and set it for this User object
-        $this->setPassword($user["memberPassword"], "old");
+        $this->setPassword($user["hashedPass"], 1);
 
         //We then test this password against the input password
         if (!$this->checkPassword($password)) {
-            //Else errors
+            //Else errors;
             return("Password Incorrect");
         };
-
         $this->setMemberId($user["memberId"]);
         $this->setFirstName($user["firstName"]);
         $this->setLastName($user["lastName"]);
@@ -443,8 +455,8 @@ class User
 
     public function sessionCreate()
     {
-        if (!empty($this->username)) {
-            $_SESSION['account'] = $this->getUsername();
+        if (!empty($this->email)) {
+            $_SESSION['account'] = $this->getEmail();
             $_SESSION['accountObject'] = serialize($this);
             return true;
         }
