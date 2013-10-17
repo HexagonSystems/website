@@ -26,8 +26,8 @@
   ajaxUrl = "//<?php echo SITE_ROOT.Task\Base; ?>/Model/TaskAJAX.php";
 
   </script>
-  <script src="//<?php echo SITE_ROOT.Task\Base; ?>/includes/js/TaskLoader.js"></script>
-  <script src="//<?php echo SITE_ROOT.Task\Base; ?>/includes/js/TableLoader.js"></script>
+  <!--<script src="//<?php echo SITE_ROOT.Task\Base; ?>/includes/js/TaskLoader.js"></script>-->
+  <!--<script src="//<?php echo SITE_ROOT.Task\Base; ?>/includes/js/TableLoader.js"></script>-->
   <!--<script src="//<?php echo SITE_ROOT.Task\Base; ?>/includes/js/TaskCommentsLoader.js"></script>-->
 
   </body>

@@ -30,10 +30,10 @@ class TaskHoursHandler
 	/**
 	 * Adds hours for a member into the database
 	 *
-	 * @param unknown $taskId
-	 * @param unknown $memberId
+	 * @param int $taskId
+	 * @param int $memberId
 	 * @param unknown $workedDate
-	 * @param unknown $workedHours
+	 * @param int $workedHours
 	 */
 	function addHours($taskId, $memberId, $workedDate, $workedHours, $workedComment)
 	{

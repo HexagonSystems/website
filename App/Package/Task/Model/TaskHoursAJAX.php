@@ -17,23 +17,31 @@ if(!isset($_POST['request']))
 }else
 {
 	// wrap in a try/catch
-	require_once "../Config/DataBase.php";
-	require_once "../Config/Config.php";
-	$taskHandler = new TaskHandler();
-	$taskHandler->setDatabase(DataBase::getConnection());
-
+	require_once '../../../../App/Config/Config.php';
+	$taskHandler = new TaskHoursHandler();
+	$taskHandler->setDatabase(\DataBase::getConnection());
+	
+	$returnValue = "";
 	switch($_POST['request'])
 	{
 		case "addHours":
 			if(commonAttributesExist() && addHoursAttributesExists())
 			{
 				$returnValue = $taskHandler->addHours($_POST['taskId'], $_POST['memberId'], $_POST['workedDate'], $_POST['workedHours'], $_POST['workedComment']);
+				
+				if($returnValue['success'] == true)
+				{
+					$tempTaskComment = $returnValue['comment']['data'];
+					$returnValue['comment']['data'] = $tempTaskComment->toArray();
+				}
 			}else
 			{
-				produceError("Missing attributes for adding hours request");
+				$returnValue = produceError("Missing attributes for adding hours request");
 			}
 			break;
 	}
+	
+	echo json_encode($returnValue);
 }
 
 /**

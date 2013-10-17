@@ -70,8 +70,6 @@ class TaskCommentsHandler
 			}
 		}
 		
-		return $masterResponse;
-		
 	}
 
 	/**

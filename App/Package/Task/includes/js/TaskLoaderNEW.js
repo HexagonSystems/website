@@ -157,7 +157,7 @@ function printSingleTask(tableConfig, taskId, taskTitle, taskDscr, taskStatus, t
 	tableRow.appendChild(taskDscrTD);
 	tableRow.appendChild(taskMembersTD);
 	tableRow.appendChild(taskLastUpdateTD);
-
+	
 	if (commentSlideIn) {
 		$(tableRow).hide().prependTo(tableConfig['print_location']).fadeIn(
 				'slow');
