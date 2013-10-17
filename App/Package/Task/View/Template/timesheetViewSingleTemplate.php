@@ -53,3 +53,70 @@
 		<li><a href="#">&raquo;</a></li>
 	</ul>
 </div>
+
+<script
+	src="<?php echo AppBaseSTRIPPED; ?>/includes/js/TaskCommentsLoaderNEW.js"></script>
+<script
+	src="<?php echo AppBaseSTRIPPED; ?>/includes/js/TableLoaderNEW.js"></script>
+<script>
+ajaxBase = "<?php echo AppBaseSTRIPPED; ?>";
+
+
+mainTaskCommentsTable = {
+		'print_location'	:	'#commentsContainer',
+		'quantity_per_page'	:	5,
+		'last_page'			:	-1,
+		'memberId'			:	1,
+		'taskId'			:	<?php echo $data['task']->getId(); ?>,
+		'content'			:	new Array()
+};
+
+
+/**
+ * Create comment button
+ * 
+ * NEEDS TO BE REMOVED
+ */
+$(function() {
+	$("#createCommentButton").click(
+			function() {
+				createComment(mainTaskCommentsTable, $("#inputTaskTag").val(), $("#inputTaskTitle").val(), $("#inputTaskContent").val());
+			});
+});
+
+/**
+ * Add hours button
+ * 
+ */
+$(function() {
+	$("#addHoursButton").click(
+			function() {
+				// run script to add hours through ajax
+				addHours(mainTaskCommentsTable, document.getElementById("addHoursDate").value, $(
+						"#addHoursHours").val(), $("#addHoursComment").val());
+			});
+});
+
+/**
+ * Comment section paginator on click event
+ */
+$(function() {
+	$(".pagination li a").click(function() {
+		printTableDataInTable(mainTaskCommentsTable, $(this).text());
+	});
+});
+
+/**
+ * jQuery Datepicker
+ */
+
+/**
+ * Page on load
+ * 
+ * NEEDS TO BE REMOVED
+ */
+$(document).ready(function() {
+	printTableDataInTable(mainTaskCommentsTable, 1);
+	document.getElementById('addHoursDate').valueAsDate = new Date();
+});
+</script>

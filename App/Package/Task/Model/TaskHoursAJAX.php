@@ -24,67 +24,13 @@ if(!isset($_POST['request']))
 
 	switch($_POST['request'])
 	{
-		case "create":
-			if(commonCommentAttributesExist() && createCommentAttributesExist())
+		case "addHours":
+			if(commonAttributesExist() && addHoursAttributesExists())
 			{
-				$response = $taskHandler->createTask($_POST['title'], $_POST['content'], $_POST['memberId'], $_POST['status']);
-				/* If everything goes ok, the response should look something like:
-				 *  array (
-				 		*  	'task' => array ( 'success' => true,
-				 				*  						'data' => TaskObject),
-				 		*  	'hours' => array( 'success' => true,
-				 				*  						'data' => TaskHoursObject),
-				 		*  	'comment' => array( 'success' => true,
-				 				*  						'data' => TaskCommentObject),
-				 		*  	'success' => true )
-				*
-				*  If something goes wrong I expect the output to look like
-				*  array (
-						*  	'success' = false,
-						*  	'error' => array ( 'location' => 'Location';,
-								*  						'message' => 'Error message' ) )
-				*/
-				if($response['success'] == true)
-				{
-					$tempTaskObject = $response['task']['data'];
-					$response['task']['data'] = $tempTaskObject->toArray();
-						
-					$tempHoursObject = $response['hours']['data'];
-					$response['hours']['data'] = $tempHoursObject->toArray();
-						
-					$tempCommentObject = $response['comment']['data'];
-					$response['comment']['data'] = $tempCommentObject->toArray();
-				}
-				echo json_encode($response);
+				$returnValue = $taskHandler->addHours($_POST['taskId'], $_POST['memberId'], $_POST['workedDate'], $_POST['workedHours'], $_POST['workedComment']);
 			}else
 			{
-				returnError("Missing attributes for create comments request");
-			}
-			break;
-		case "load":
-			if(commonCommentAttributesExist() && loadCommentAttributesExist())
-			{
-				$response = $taskHandler->loadTasks($_POST['pageNum'], $_POST['qty']);
-				if($response['success'] == true)
-				{
-					for($counter = 0; $counter < sizeof($response['data']); $counter++)
-					{
-						$tempTask = $response['data'][$counter];
-						if($tempTask instanceof Task)
-						{
-							$response['data'][$counter] = $tempTask->toArray();
-						}else
-						{
-							$response['data'][$counter] = "Error";
-						}
-					}
-				}
-
-				$response = json_encode($response);
-				echo $response;
-			}else
-			{
-				returnError("Missing attributes for load comments request");
+				produceError("Missing attributes for adding hours request");
 			}
 			break;
 	}
@@ -95,41 +41,9 @@ if(!isset($_POST['request']))
  *
  * @return boolean
  */
-function commonCommentAttributesExist()
+function commonAttributesExist()
 {
 	if(isset($_POST['memberId']))
-	{
-		return true;
-	}else
-	{
-		return false;
-	}
-}
-
-/**
- * Checks for the requied post data for creating a comment
- *
- * @return boolean
- */
-function createCommentAttributesExist()
-{
-	if(isset($_POST['title']) && isset($_POST['content']) && isset($_POST['status']))
-	{
-		return true;
-	}else
-	{
-		return false;
-	}
-}
-
-/**
- * Checks for the required post data for loading comments
- *
- * @return boolean
- */
-function loadCommentAttributesExist()
-{
-	if(isset($_POST['pageNum']) && isset($_POST['qty']))
 	{
 		return true;
 	}else
