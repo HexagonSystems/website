@@ -35,14 +35,14 @@ class TaskHoursDA
 					(:taskId, :memberId, :hours, :date)
 					ON DUPLICATE KEY UPDATE hours = hours + :hours';
 	
-			$query = DataBase::getConnection()->prepare($statement);
+			$query = $this->database->prepare($statement);
 				
 			$workedDate = date("Y-d-m", strtotime($workedDate));
 	
-			$query->bindParam(':taskId'   , $taskId , PDO::PARAM_INT);
-			$query->bindParam(':memberId'   , $memberId , PDO::PARAM_INT);
-			$query->bindParam(':hours'   , $workedHours , PDO::PARAM_INT);
-			$query->bindParam(':date'   , $workedDate , PDO::PARAM_STR);
+			$query->bindParam(':taskId'   , $taskId , \PDO::PARAM_INT);
+			$query->bindParam(':memberId'   , $memberId , \PDO::PARAM_INT);
+			$query->bindParam(':hours'   , $workedHours , \PDO::PARAM_INT);
+			$query->bindParam(':date'   , $workedDate , \PDO::PARAM_STR);
 	
 			if($query->execute())
 			{
@@ -53,7 +53,7 @@ class TaskHoursDA
 			}
 	
 				
-		} catch (PDOException $e) {
+		} catch (\PDOException $e) {
 			return createError($e);
 		}
 	}

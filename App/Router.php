@@ -1,5 +1,8 @@
 <?php
 
+
+use Task\Task;
+use Task\TaskRouter;
 class Router
 {
     public function __construct()
@@ -44,9 +47,11 @@ class Router
                 $controller = "IndexController";
                 break;
         }//end switch
-
+		
         if(isset($package))
-        {
+        {	
+        	require_once '\Package\Task\TaskRouter.php';
+        	$test = new TaskRouter();
             $namespacedclass = $package.'\\'.$controller;
             //$router = new $namespacedclass();
             $namespacedclass::route($conn);

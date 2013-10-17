@@ -13,8 +13,8 @@ class HeadView
      * Holds render status of view.
     */
     private $render = FALSE;
-    private $header = FALSE;
-    private $nav = FALSE;
+    private $header = '/View/Template/header.php';
+    private $nav = '/View/Template/nav0.php';
     /**
      * Accept a template to load
      */
@@ -61,7 +61,7 @@ class HeadView
         $data = $this->data;
         //echo "In Destructor" ;
         //render view
-        include_once($this->header);
-        include_once($this->nav);
+        include(AppBase.'/'.$this->header);
+        include(AppBase.'/'.$this->nav);
     }
 } //end class

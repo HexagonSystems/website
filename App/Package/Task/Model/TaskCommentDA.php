@@ -27,14 +27,14 @@ class TaskCommentDA
 					VALUES
 					(:taskId, :memberId, :title, :content, :tag, :postedDate)';
 	
-			$query = DataBase::getConnection()->prepare($statement);
+			$query = $this->database->prepare($statement);
 	
-			$query->bindParam(':taskId'   , $taskId , PDO::PARAM_INT);
-			$query->bindParam(':memberId'   , $memberId , PDO::PARAM_INT);
-			$query->bindParam(':title'   , $title , PDO::PARAM_STR);
-			$query->bindParam(':content'   , $content , PDO::PARAM_STR);
-			$query->bindParam(':tag'   , $tag , PDO::PARAM_STR);
-			$query->bindParam(':postedDate'   , $time , PDO::PARAM_INT);
+			$query->bindParam(':taskId'   , $taskId , \PDO::PARAM_INT);
+			$query->bindParam(':memberId'   , $memberId , \PDO::PARAM_INT);
+			$query->bindParam(':title'   , $title , \PDO::PARAM_STR);
+			$query->bindParam(':content'   , $content , \PDO::PARAM_STR);
+			$query->bindParam(':tag'   , $tag , \PDO::PARAM_STR);
+			$query->bindParam(':postedDate'   , $time , \PDO::PARAM_INT);
 			/* MIGHT NEED TO GET AUTO INCREMENT COMMENT ID HERE */
 			$query->execute();
 			return array('success' => true);
@@ -69,16 +69,16 @@ class TaskCommentDA
 						ORDER BY `postedDate` DESC
 						LIMIT :starting, :quantity";
 	
-			$query = DataBase::getConnection()->prepare($statement);
+			$query = $this->database->prepare($statement);
 	
-			$query->bindParam(':taskId'   , $taskId , PDO::PARAM_INT);
+			$query->bindParam(':taskId'   , $taskId , \PDO::PARAM_INT);
 				
 			$starting = ($pageNum - 1) * $qty;
 			
 			$qty = $qty + 0;
 			
-			$query->bindParam(':starting'   , $starting , PDO::PARAM_INT);
-			$query->bindParam(':quantity'   , $qty		, PDO::PARAM_INT);
+			$query->bindParam(':starting'   , $starting , \PDO::PARAM_INT);
+			$query->bindParam(':quantity'   , $qty		, \PDO::PARAM_INT);
 	
 			$query->execute();
 				
@@ -137,10 +137,10 @@ class TaskCommentDA
 				
 			$workedDate = date("Y-d-m", strtotime($workedDate));
 	
-			$query->bindParam(':taskId'   , $taskId , PDO::PARAM_INT);
-			$query->bindParam(':memberId'   , $memberId , PDO::PARAM_INT);
-			$query->bindParam(':hours'   , $workedHours , PDO::PARAM_INT);
-			$query->bindParam(':date'   , $workedDate , PDO::PARAM_STR);
+			$query->bindParam(':taskId'   , $taskId , \PDO::PARAM_INT);
+			$query->bindParam(':memberId'   , $memberId , \PDO::PARAM_INT);
+			$query->bindParam(':hours'   , $workedHours , \PDO::PARAM_INT);
+			$query->bindParam(':date'   , $workedDate , \PDO::PARAM_STR);
 	
 			if($query->execute())
 			{

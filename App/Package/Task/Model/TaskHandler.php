@@ -71,6 +71,7 @@ class TaskHandler
 			
 			/* ADD HOURS INTO DATABASE */
 			$taskHoursHandler = new TaskHoursHandler();
+			$taskHoursHandler->setDatabase($this->databaseHolder);
 			$taskHoursHandlerResponse = $taskHoursHandler->addHours($taskDAReturn['taskId'], $memberId, $date, 0, "Task created");
 			
 			if($taskHoursHandlerResponse['success'] == true)

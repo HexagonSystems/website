@@ -20,9 +20,9 @@ if(!isset($_POST['request']))
 }else
 {
 	// wrap in a try/catch
-	require_once $_SERVER["DOCUMENT_ROOT"].'/App/Config/Config.php';
+	require_once '../../../../App/Config/Config.php';
 	$taskHandler = new TaskHandler();
-	$taskHandler->setDatabase($conn);
+	$taskHandler->setDatabase(\DataBase::getConnection());
 
 	switch($_POST['request'])
 	{

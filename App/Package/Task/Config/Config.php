@@ -1,6 +1,5 @@
 <?php 
 namespace Task;
-
 // __DIR__ return the directory of the current file
 // This will be something like 
 //  /Applications/MAMP/htdocs/hexagon/app/Config/
@@ -11,14 +10,14 @@ namespace Task;
 $test = 'test';
 
 const AppBaseSTRIPPED = "App/";
-const Base = "App/Package/Task";
+const Base = "Package/Task";
 
 
 function autoloadModel($className) {
     //Sub string the package name off the class in this case "Task\"
     $className = substr($className, 5);
 
-    $filename = $_SERVER["DOCUMENT_ROOT"].'/'.Base.'/Model/'.$className.'.php';
+    $filename = AppBase.'/'.Base.'/Model/'.$className.'.php';
             
     if (is_readable($filename)) {
         require $filename;
@@ -28,12 +27,12 @@ function autoloadModel($className) {
 function autoloadController($className) {
     //Sub string the package name off the class in this case "Task\"
     $className = substr($className, 5);
-
-    $filename = $_SERVER["DOCUMENT_ROOT"].'/'.Base."/Controller/" . $className . "Controller.php";
+	
+    $filename = AppBase.'/'.Base."/Controller/" . $className . ".php";
     if (is_readable($filename)) {
         require $filename;
     }else{
-      $filename = $_SERVER["DOCUMENT_ROOT"].'/'.Base."/Controller/" . $className . ".php";
+      $filename = AppBase.'/'.Base."/Controller/" . $className . ".php";
       if (is_readable($filename)) {
           require $filename;
       }
@@ -44,7 +43,7 @@ function autoloadService($className) {
     //Sub string the package name off the class in this case "Task\"
     $className = substr($className, 5);
 
-    $filename = $_SERVER["DOCUMENT_ROOT"].'/'.Base."/Service/" . $className . ".php";
+    $filename = AppBase.'/'.Base."/Service/" . $className . ".php";
     if (is_readable($filename)) {
         require $filename;
     }
@@ -54,18 +53,29 @@ function autoloadView($className) {
     //Sub string the package name off the class in this case "Task\"
     $className = substr($className, 5);
 
-    $filename = $_SERVER["DOCUMENT_ROOT"].'/'.Base."/View/" . $className . ".php";
+    $filename = AppBase.'/'.Base."/View/" . $className . ".php";
     if (is_readable($filename)) {
         require $filename;
     }
+}
+
+function autoloadRouter($className) {
+	//Sub string the package name off the class in this case "Task\"
+	$className = substr($className, 5);
+
+	$filename = AppBase.'/'.Base."/". $className . ".php";
+	if (is_readable($filename)) {
+		require $filename;
+	}
 }
 
 spl_autoload_register("Task\autoloadModel");
 spl_autoload_register("Task\autoloadController");
 spl_autoload_register("Task\autoloadService");
 spl_autoload_register("Task\autoloadView");
+spl_autoload_register("Task\autoloadRouter");
 
-require_once('Database.php');
+// require_once('DataBase.php');
 
 /**
  * Define any other config option you may want to use

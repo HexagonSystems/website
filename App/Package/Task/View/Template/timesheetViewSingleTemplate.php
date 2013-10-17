@@ -55,11 +55,11 @@
 </div>
 
 <script
-	src="<?php echo AppBaseSTRIPPED; ?>/includes/js/TaskCommentsLoaderNEW.js"></script>
+	src="<?php echo AppBaseSTRIPPED; ?>Package/Task/includes/js/TaskCommentsLoaderNEW.js"></script>
 <script
-	src="<?php echo AppBaseSTRIPPED; ?>/includes/js/TableLoaderNEW.js"></script>
+	src="<?php echo AppBaseSTRIPPED; ?>Package/Task/includes/js/TableLoaderNEW.js"></script>
 <script>
-ajaxBase = "<?php echo AppBaseSTRIPPED; ?>";
+ajaxBase = "<?php echo AppBaseSTRIPPED; ?>Package/Task/";
 
 
 mainTaskCommentsTable = {

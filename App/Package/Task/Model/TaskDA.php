@@ -214,7 +214,7 @@ class TaskDA
 					VALUES
 					(:name, :details, :status)';
 
-			$query = DataBase::getConnection()->prepare($statement);
+			$query = $this->database->prepare($statement);
 			$query->bindParam(':name'		, $title		, \PDO::PARAM_STR);
 			$query->bindParam(':details'	, $description	, \PDO::PARAM_STR);
 			$query->bindParam(':status'		, $status		, \PDO::PARAM_STR);
@@ -223,7 +223,7 @@ class TaskDA
 			
 			$returnArray = array();
 			$returnArray['success'] = true;
-			$returnArray['taskId'] = DataBase::getConnection()->lastInsertId();
+			$returnArray['taskId'] = $this->database->lastInsertId();
 			return $returnArray;
 		} catch (\PDOException $e) {
 			return createError($e);

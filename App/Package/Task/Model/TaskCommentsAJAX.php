@@ -16,9 +16,9 @@ if(!isset($_POST['request']))
 	die();
 }else
 {
-	include "../Config/DataBase.php";
-	include "../Config/Config.php";
+	require_once '../../../../App/Config/Config.php';
 	$commentHandler = new TaskCommentsHandler();
+	$commentHandler->setDatabase(\DataBase::getConnection());
 
 	switch($_POST['request'])
 	{

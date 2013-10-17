@@ -1,6 +1,6 @@
 <?php 
 
-define('SITE_ROOT', 'hexagon.dev/');
+define('SITE_ROOT', 'Swinburne2013S2/HexagonSystems_002/');
 
 // __DIR__ return the directory of the current file
 // This will be something like 

@@ -31,11 +31,11 @@
 </div>
 
 <script
-	src="<?php echo AppBaseSTRIPPED; ?>/includes/js/TaskLoaderNEW.js"></script>
+	src="App/Package/Task/includes/js/TaskLoaderNEW.js"></script>
 <script
-	src="<?php echo AppBaseSTRIPPED; ?>/includes/js/TableLoaderNEW.js"></script>
+	src="<?php echo AppBaseSTRIPPED; ?>Package/Task/includes/js/TableLoaderNEW.js"></script>
 <script>
-ajaxBase = "<?php echo AppBaseSTRIPPED; ?>";
+ajaxBase = "<?php echo AppBaseSTRIPPED; ?>Package/Task/";
 
 /* MAIN TASK TABLE CONFIG ARRAY */
 mainTaskTable = {

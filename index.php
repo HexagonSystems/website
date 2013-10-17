@@ -11,6 +11,6 @@ require_once('App/Config/Config.php');
 
 require_once("App/Router.php");
 
-Router::route($conn);
+Router::route(DataBase::getConnection());
 
 ?>
