@@ -13,9 +13,10 @@ function loadComments(tableConfig, pageNum) {
 		pageNum : pageNum,
 		qty : 5
 	}, function(nakedJson) {
+		alert(nakedJson);
 		nakedJson = $.parseJSON(nakedJson);
 		response = nakedJson.success;
-		if (response == true || response == "true") {			
+		if (response == true || response == "true") {
 			var jsonObject = nakedJson.data;
 			updateTableContentArray(tableConfig, jsonObject, pageNum);
 		}
@@ -31,22 +32,26 @@ function printTableDataInTable(tableConfig, pageNum) {
 			&& pageNum != tableConfig['last_page']) {
 		loadComments(tableConfig, pageNum);
 	} else {
-		var positionToStartOn = (pageNum - 1) * tableConfig['quantity_per_page'];
-		var positionToEndOn = positionToStartOn + tableConfig['quantity_per_page'];
+		var positionToStartOn = (pageNum - 1)
+				* tableConfig['quantity_per_page'];
+		var positionToEndOn = positionToStartOn
+				+ tableConfig['quantity_per_page'];
 
 		var arrayToLoopOver = tableConfig['content'].concat();
 
-		if (tableConfig['last_page'] > -1 && tableConfig['last_page'] == pageNum) {
-			arrayToLoopOver = arrayToLoopOver.splice(positionToStartOn);
+		if (tableConfig['last_page'] > -1
+				&& tableConfig['last_page'] == pageNum) {
+			arrayToLoopOver = arrayToLoopOver.slice(positionToStartOn);
 		} else {
-			arrayToLoopOver = arrayToLoopOver.splice(positionToStartOn,
+			arrayToLoopOver = arrayToLoopOver.slice(positionToStartOn,
 					positionToEndOn);
 		}
 
 		emptyTableBody(tableConfig);
 
 		$.each(arrayToLoopOver, function(singleArray) {
-			printSingleComment(tableConfig, arrayToLoopOver[singleArray]['tag'],
+			printSingleComment(tableConfig,
+					arrayToLoopOver[singleArray]['tag'],
 					arrayToLoopOver[singleArray]['title'],
 					arrayToLoopOver[singleArray]['content'],
 					arrayToLoopOver[singleArray]['memberId'],
@@ -60,8 +65,8 @@ function printTableDataInTable(tableConfig, pageNum) {
 /**
  * Prints a single comment
  */
-function printSingleComment(tableConfig, commentTag, commentTitle, commentContent,
-		commentMember, commentDate, commentSlideIn) {
+function printSingleComment(tableConfig, commentTag, commentTitle,
+		commentContent, commentMember, commentDate, commentSlideIn) {
 	/* TABLE ROW */
 	var tableRow = document.createElement('tr');
 	tableRow.className = 'parentOfAccordion';
@@ -110,6 +115,14 @@ function printSingleComment(tableConfig, commentTag, commentTitle, commentConten
 	/* MEMBER */
 	var memberIdTD = document.createElement('td');
 	memberIdTD.innerHTML = commentMember;
+	
+	/*var taskMemberSingleAHREF = document.createElement('a');
+	taskMemberSingleAHREF.title = taskMembers[member];
+	taskMemberSingleAHREF.href = "#";
+	taskMemberSingleAHREF.innerHTML = taskMembers[member];
+	taskMembersTD.appendChild(taskMemberSingleAHREF);
+	taskMembersTD.innerHTML += ", ";
+	memberIdTD.appendChild(taskMembersTD);*/
 
 	/* DATE */
 	var dateTD = document.createElement('td');
@@ -148,7 +161,6 @@ function createComment(tableConfig, commentTag, commentTitle, commentContent) {
 		content : commentContent,
 		tag : commentTag
 	}, function(data) {
-		alert(data);
 		data = $.parseJSON(data);
 		response = data.success;
 		if (response == true) {
@@ -163,11 +175,12 @@ function createComment(tableConfig, commentTag, commentTitle, commentContent) {
 			tempArray['tag'] = commentTag;
 			tempArray['title'] = commentTitle;
 			tempArray['content'] = commentContent;
-			tempArray['memberId'] = 1;
+			tempArray['memberId'] = tableConfig['memberId'];
 			tempArray['date'] = data.data.date;
 			tableConfig['content'].unshift(tempArray);
-			printSingleComment(tableConfig, commentTag, commentTitle, commentContent,
-					tempArray['memberId'], tempArray['date'], true);
+			printSingleComment(tableConfig, commentTag, commentTitle,
+					commentContent, tempArray['memberId'], tempArray['date'],
+					true);
 			assignTableContentAccordion()
 		} else {
 			alert(data);
@@ -187,14 +200,22 @@ function addHours(tableConfig, workedDate, workedHours, workedComment) {
 		workedHours : workedHours,
 		workedComment : workedComment
 	}, function(data) {
-		if (data == "true") {
-			// Run function to check for updats, therefore asking the user to
-			// refresh
-			// Or refresh automatically, or just add the comment in locally,
-			// this will ignore the fact if other comments have been added
-			// around the same time as well
-			// Maybe it could do both, check for new updates, if there arnt any
-			// add this locally, if there are refresh or ask the user to refresh
+		data = $.parseJSON(data);
+		response = data.success;
+		if (response == true) {
+			// alert(response);
+			commentJSON = data.comment.data;
+			var tempArray = new Array();
+			tempArray['tag'] = commentJSON.tag;
+			tempArray['title'] = commentJSON.title;
+			tempArray['content'] = commentJSON.content;
+			tempArray['memberId'] = tableConfig['memberId'];
+			tempArray['date'] = commentJSON.date;
+			tableConfig['content'].unshift(tempArray);
+			printSingleComment(tableConfig, tempArray['tag'],
+					tempArray['title'], tempArray['content'],
+					tempArray['memberId'], tempArray['date'], true);
+			assignTableContentAccordion()
 		} else {
 			alert(data);
 		}

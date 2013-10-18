@@ -66,9 +66,8 @@ class LoginController extends Controller
 						}
 						
 					}else{
-						echo "testing";
 						$user->sessionCreate();
-						echo $user->getEmail();
+						var_dump($_SESSION);
 					}
 
 				}else{

@@ -66,7 +66,7 @@ mainTaskCommentsTable = {
 		'print_location'	:	'#commentsContainer',
 		'quantity_per_page'	:	5,
 		'last_page'			:	-1,
-		'memberId'			:	1,
+		'memberId'			:	<?php echo unserialize($_SESSION['accountObject'])->getMemberId(); ?>,
 		'taskId'			:	<?php echo $data['task']->getId(); ?>,
 		'content'			:	new Array()
 };

@@ -55,6 +55,7 @@ spl_autoload_register("autoloadService");
 spl_autoload_register("autoloadView");
 
 require_once(AppBase.'/Config/Database.php');
+require_once(AppBase.'/Service/password.php');
 
 require_once(AppBase.'/Package/Task/Config/Config.php');
 

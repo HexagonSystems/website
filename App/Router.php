@@ -43,6 +43,9 @@ class Router
             case "logout":
                 $controller = "IndexController";
                 break;
+            case "config":
+            	$controller = "ConfigController";
+            	break;
             default:
                 $controller = "IndexController";
                 break;
