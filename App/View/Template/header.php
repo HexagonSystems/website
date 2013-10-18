@@ -10,13 +10,13 @@
 <title>Hexagon Systems</title>
 
 <!-- Custom styles for this template -->
-<link rel="stylesheet" href="includes/css/bootstrap.min.css" />
-<link href="includes/css/hexagontheme.css" rel="stylesheet">
+<link rel="stylesheet" href="<?php echo SITE_ROOT; ?>includes/css/bootstrap.min.css" />
+<link href="<?php echo SITE_ROOT; ?>includes/css/hexagontheme.css" rel="stylesheet">
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
-      <script src="includes/js/html5shiv.js"></script>
-      <script src="includes/js/respond.min.js"></script>
+      <script src="<?php echo SITE_ROOT; ?>includes/js/html5shiv.js"></script>
+      <script src="<?php echo SITE_ROOT; ?>includes/js/respond.min.js"></script>
     <![endif]-->
 
 <script
