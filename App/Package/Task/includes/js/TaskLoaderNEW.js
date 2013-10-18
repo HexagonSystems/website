@@ -21,7 +21,6 @@ function loadTableData(tableConfig, pageNum) {
 		pageNum : pageNum,
 		qty : tableConfig['quantity_per_page']
 	}, function(nakedJson) {
-		alert(nakedJson);
 		nakedJson = $.parseJSON(nakedJson);
 		response = nakedJson.success;
 		if (response == true || response == "true") {

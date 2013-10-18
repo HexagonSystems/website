@@ -37,7 +37,7 @@ class HeadView
              */
             $this->header = $header;
         }
-        if (file_exists($nav)) {
+        if (file_exists(AppBase.'/'.$nav)) {
             /**
              * trigger render to include file when this model is destroyed
              * if we render it now, we wouldn't be able to assign variables
