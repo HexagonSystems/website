@@ -21,6 +21,7 @@ function loadTableData(tableConfig, pageNum) {
 		pageNum : pageNum,
 		qty : tableConfig['quantity_per_page']
 	}, function(nakedJson) {
+		alert(nakedJson);
 		nakedJson = $.parseJSON(nakedJson);
 		response = nakedJson.success;
 		if (response == true || response == "true") {
@@ -41,7 +42,6 @@ function createTask(tableConfig, taskTitle, taskDescription, taskStatus) {
 		content : taskDescription,
 		status : taskStatus
 	}, function(data) {
-		alert(data);
 		data = $.parseJSON(data);
 		response = data.success;
 		if (response == true || response == "true") {
@@ -144,14 +144,26 @@ function printSingleTask(tableConfig, taskId, taskTitle, taskDscr, taskStatus, t
 	/* Members */
 	var taskMembersTD = document.createElement('td');
 	$.each(taskMembers, function(member) {
-		taskMembersTD.innerHTML += member + " ";
+		var taskMemberSingleAHREF = document.createElement('a');
+		taskMemberSingleAHREF.title = taskMembers[member];
+		taskMemberSingleAHREF.href = "#";
+		taskMemberSingleAHREF.innerHTML = taskMembers[member];
+		taskMembersTD.appendChild(taskMemberSingleAHREF);
+		taskMembersTD.innerHTML += ", ";
 	});
+	
+	taskMembersTD.innerHTML = taskMembersTD.innerHTML.slice(0, -2);
 
 	/* Last Update */
 	var taskLastUpdateTD = document.createElement('td');
-	taskLastUpdateTD.innerHTML = taskLastUpdateMemberId + " on "
-			+ taskLastUpdateDate;
-
+	
+	var taskMemberSingleAHREF = document.createElement('a');
+	taskMemberSingleAHREF.title = taskMembers[taskLastUpdateMemberId];
+	taskMemberSingleAHREF.href = "#";
+	taskMemberSingleAHREF.innerHTML = taskMembers[taskLastUpdateMemberId];
+	taskLastUpdateTD.appendChild(taskMemberSingleAHREF);
+	taskLastUpdateTD.innerHTML += " on " + taskLastUpdateDate;
+	
 	/* APPEND EVERYTHING TO TABLE ROW */
 	tableRow.appendChild(taskStatusTD);
 	tableRow.appendChild(taskDscrTD);

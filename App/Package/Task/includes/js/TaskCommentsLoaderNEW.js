@@ -13,9 +13,10 @@ function loadComments(tableConfig, pageNum) {
 		pageNum : pageNum,
 		qty : 5
 	}, function(nakedJson) {
+		alert(nakedJson);
 		nakedJson = $.parseJSON(nakedJson);
 		response = nakedJson.success;
-		if (response == true || response == "true") {			
+		if (response == true || response == "true") {
 			var jsonObject = nakedJson.data;
 			updateTableContentArray(tableConfig, jsonObject, pageNum);
 		}
@@ -31,12 +32,15 @@ function printTableDataInTable(tableConfig, pageNum) {
 			&& pageNum != tableConfig['last_page']) {
 		loadComments(tableConfig, pageNum);
 	} else {
-		var positionToStartOn = (pageNum - 1) * tableConfig['quantity_per_page'];
-		var positionToEndOn = positionToStartOn + tableConfig['quantity_per_page'];
+		var positionToStartOn = (pageNum - 1)
+				* tableConfig['quantity_per_page'];
+		var positionToEndOn = positionToStartOn
+				+ tableConfig['quantity_per_page'];
 
 		var arrayToLoopOver = tableConfig['content'].concat();
 
-		if (tableConfig['last_page'] > -1 && tableConfig['last_page'] == pageNum) {
+		if (tableConfig['last_page'] > -1
+				&& tableConfig['last_page'] == pageNum) {
 			arrayToLoopOver = arrayToLoopOver.slice(positionToStartOn);
 		} else {
 			arrayToLoopOver = arrayToLoopOver.slice(positionToStartOn,
@@ -46,7 +50,8 @@ function printTableDataInTable(tableConfig, pageNum) {
 		emptyTableBody(tableConfig);
 
 		$.each(arrayToLoopOver, function(singleArray) {
-			printSingleComment(tableConfig, arrayToLoopOver[singleArray]['tag'],
+			printSingleComment(tableConfig,
+					arrayToLoopOver[singleArray]['tag'],
 					arrayToLoopOver[singleArray]['title'],
 					arrayToLoopOver[singleArray]['content'],
 					arrayToLoopOver[singleArray]['memberId'],
@@ -60,8 +65,8 @@ function printTableDataInTable(tableConfig, pageNum) {
 /**
  * Prints a single comment
  */
-function printSingleComment(tableConfig, commentTag, commentTitle, commentContent,
-		commentMember, commentDate, commentSlideIn) {
+function printSingleComment(tableConfig, commentTag, commentTitle,
+		commentContent, commentMember, commentDate, commentSlideIn) {
 	/* TABLE ROW */
 	var tableRow = document.createElement('tr');
 	tableRow.className = 'parentOfAccordion';
@@ -110,6 +115,14 @@ function printSingleComment(tableConfig, commentTag, commentTitle, commentConten
 	/* MEMBER */
 	var memberIdTD = document.createElement('td');
 	memberIdTD.innerHTML = commentMember;
+	
+	/*var taskMemberSingleAHREF = document.createElement('a');
+	taskMemberSingleAHREF.title = taskMembers[member];
+	taskMemberSingleAHREF.href = "#";
+	taskMemberSingleAHREF.innerHTML = taskMembers[member];
+	taskMembersTD.appendChild(taskMemberSingleAHREF);
+	taskMembersTD.innerHTML += ", ";
+	memberIdTD.appendChild(taskMembersTD);*/
 
 	/* DATE */
 	var dateTD = document.createElement('td');
@@ -165,8 +178,9 @@ function createComment(tableConfig, commentTag, commentTitle, commentContent) {
 			tempArray['memberId'] = tableConfig['memberId'];
 			tempArray['date'] = data.data.date;
 			tableConfig['content'].unshift(tempArray);
-			printSingleComment(tableConfig, commentTag, commentTitle, commentContent,
-					tempArray['memberId'], tempArray['date'], true);
+			printSingleComment(tableConfig, commentTag, commentTitle,
+					commentContent, tempArray['memberId'], tempArray['date'],
+					true);
 			assignTableContentAccordion()
 		} else {
 			alert(data);
@@ -198,9 +212,9 @@ function addHours(tableConfig, workedDate, workedHours, workedComment) {
 			tempArray['memberId'] = tableConfig['memberId'];
 			tempArray['date'] = commentJSON.date;
 			tableConfig['content'].unshift(tempArray);
-			printSingleComment(tableConfig, tempArray['tag'], tempArray['title'],
-					tempArray['content'], tempArray['memberId'], tempArray['date'],
-					true);
+			printSingleComment(tableConfig, tempArray['tag'],
+					tempArray['title'], tempArray['content'],
+					tempArray['memberId'], tempArray['date'], true);
 			assignTableContentAccordion()
 		} else {
 			alert(data);
