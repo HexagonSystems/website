@@ -7,7 +7,6 @@ namespace Task;
 //  C:\\Program Files\xampp\htdocs\hexagon\app\Config\
 //  dirname(__DIR__) climbs one more so we get:
 //  */hexagon/app/
-$test = 'test';
 
 const AppBaseSTRIPPED = "App/";
 const Base = "Package/Task";
@@ -31,11 +30,6 @@ function autoloadController($className) {
     $filename = AppBase.'/'.Base."/Controller/" . $className . ".php";
     if (is_readable($filename)) {
         require $filename;
-    }else{
-      $filename = AppBase.'/'.Base."/Controller/" . $className . ".php";
-      if (is_readable($filename)) {
-          require $filename;
-      }
     }
 }
 
