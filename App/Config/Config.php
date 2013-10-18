@@ -1,5 +1,5 @@
 <?php 
-$filename = "LocalConfig.php"
+$filename = "LocalConfig.php";
 if (file_exists($filename)) {
     require_once($filename);
 } else {

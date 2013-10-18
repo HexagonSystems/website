@@ -1,6 +1,4 @@
 <?php
-
-
 use Task\Task;
 use Task\TaskRouter;
 class Router
@@ -53,7 +51,7 @@ class Router
 		
         if(isset($package))
         {	
-        	require_once '\Package\Task\TaskRouter.php';
+        	//require_once '\Package\Task\TaskRouter.php';
         	$test = new TaskRouter();
             $namespacedclass = $package.'\\'.$controller;
             //$router = new $namespacedclass();
