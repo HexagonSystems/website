@@ -10,7 +10,7 @@ $config = array(
 
     // The directories where the tests reside
     'test_directories' => array(
-        "{$root}/../tests"
+        "{$root}/../model"
     ),
 
 
@@ -70,7 +70,7 @@ $config = array(
 
     // Paths to any necessary bootstraps
     'bootstraps' => array(
-        "{$root}/../tests/visualstrap.php"
+        "autoloader.php"
     )
 );
 

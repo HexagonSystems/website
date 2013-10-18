@@ -1,12 +1,21 @@
 <?php 
-/**
- * Define document paths
- */
-define('AppBase' , $_SERVER["DOCUMENT_ROOT"].'hexagon/App');
-define('SITE_ROOT' , 'localhost:8888/hexagon/');
+
+define('SITE_ROOT', 'Swinburne2013S2/HexagonSystems_002/');
+
+// __DIR__ return the directory of the current file
+// This will be something like 
+//  /Applications/MAMP/htdocs/hexagon/app/Config/
+//  or
+//  C:\\Program Files\xampp\htdocs\hexagon\app\Config\
+//  dirname(__DIR__) climbs one more so we get:
+//  */hexagon/app/
+
+define('AppBaseSTRIPPED', "App/");
+define('AppBase', dirname(__DIR__));
+
 
 function autoloadModel($className) {
-    $filename = AppBase."/Model/" . $className . ".php";
+    $filename = AppBase.'/Model/'.$className.'.php';
     if (is_readable($filename)) {
         require $filename;
     }
@@ -46,6 +55,10 @@ spl_autoload_register("autoloadService");
 spl_autoload_register("autoloadView");
 
 require_once(AppBase.'/Config/Database.php');
+require_once(AppBase.'/Service/password.php');
+
+require_once(AppBase.'/Package/Task/Config/Config.php');
+
 
 /**
  * Define any other config option you may want to use

@@ -1,0 +1,66 @@
+/*
+ * Style tweaks
+ * --------------------------------------------------
+ */
+body {
+  padding-top: 70px;
+}
+footer {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/*
+ * Off Canvas
+ * --------------------------------------------------
+ */
+@media screen and (max-width: 768px) {
+  .row-offcanvas,  .sidebar-offcanvas, .btn-sidebar {
+    position: relative;
+    -webkit-transition: all 0.25s ease-out;
+    -moz-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
+  }
+
+  .btn-sidebar{
+font-size: 120%;
+background: none;
+color: #fff;
+border: none;
+padding: 4px 10px 0 10px;
+margin-right: 15px;
+  }
+  .btn-sidebar:hover{
+  background-color: #463265;
+}
+  .row-offcanvas-right
+  .sidebar-offcanvas {
+    right: -50%; /* 6 columns */
+  }
+
+  .row-offcanvas-left
+  .sidebar-offcanvas {
+    left: -50%; /* 6 columns */
+  }
+
+  .row-offcanvas-right.active {
+    right: 50%; /* 6 columns */
+  }
+
+  .row-offcanvas-left.active {
+    left: 50%; /* 6 columns */
+  }
+
+  .active .sidebar-offcanvas {
+    position: fixed;
+    top: 40px;
+    left: 0;
+    width: 49%; /* 6 columns */
+  }
+  .sidebar-offcanvas {
+    position: fixed;
+    top: 40px;
+  }
+
+
+}

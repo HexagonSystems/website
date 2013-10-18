@@ -28,6 +28,10 @@ class indexView
              * to the view!
              */
             $this->render = $template;
+            echo $this->render;
+        }else
+        {
+        	echo "DOES NOT EXIST";
         }
         if (file_exists($footer)) {
             /**
