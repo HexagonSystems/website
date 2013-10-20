@@ -71,11 +71,14 @@ function printSingleComment(tableConfig, commentTag, commentTitle,
 	tableRow.className = 'parentOfAccordion';
 
 	/* TAG */
+		
+		
 	var tagTD = document.createElement('td');
 	var tagAHREF = document.createElement('a');
 	tagAHREF.title = commentTag;
-	tagAHREF.href = "#";
+	tagAHREF.href = "#modal_pickSearchMethod";
 	tagAHREF.innerHTML = commentTag;
+	$(tagAHREF).attr("data-toggle", "modal");
 	tagTD.appendChild(tagAHREF);
 
 	/* CONTENT */

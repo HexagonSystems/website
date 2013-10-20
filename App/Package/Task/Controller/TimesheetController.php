@@ -4,15 +4,27 @@ class TimesheetController extends Controller
 {
 	
     protected $footer = "View/Template/footer.php";
-
+    
+    private $template_viewAll = "timesheetViewAll";
+    private $template_viewSingle = "timesheetViewSingle";
+    private $template_search = "timesheetSearched";
+    
     public function invoke()
     {
+    	$testingSearch = new TaskSearchHelper();
+    	$testingSearch->setTag("addedHours", false);
+    	$testingSearch->setTask(127, true);
+    	$testingSearch->setUser(2, true);
+    	$testingSearch->setDatabase($this->database);
+    	$testingSearch->search();
+    	
+    	echo "testing";
+    	
     	$taskLoader = new TaskLoader();
     	$taskLoader->setDatabase($this->database);
         if (!isset($_GET['action'])) {
         	
-        	$template_viewAll = "timesheetViewAll";
-        	$this->template = $template_viewAll;
+        	$this->template = $this->template_viewAll;
         	parent::invoke();
 
             
@@ -25,8 +37,7 @@ class TimesheetController extends Controller
         {
         	if(!isset($_GET['param']))
         	{
-        		$template_viewAll = "timesheetViewSingle";
-        		$this->template = $template_viewAll;
+        		$this->template = $this->template_viewSingle;
         		parent::invoke();
         		 
         		//create a new view and pass it our template
@@ -34,8 +45,7 @@ class TimesheetController extends Controller
         		$view->assign('title' , 'Logged in');
         	}else
         	{
-        		$template_viewAll = "timesheetViewSingle";
-        		$this->template = $template_viewAll;
+        		$this->template = $this->template_viewSingle;
         		parent::invoke();
         		
         		$taskLoader = new TaskLoader();
@@ -55,6 +65,16 @@ class TimesheetController extends Controller
         		
         		//$taskLoader->createComment("@addedTag", "Yay, adding tags is working");
         	}
+        }else if('action' == 'search')	
+        {
+        	/**
+        	 * Attributes you can search for
+        	 * 	- Tag
+        	 * 	- Task
+        	 * 	- User
+        	 * 	- String
+        	 * 	- Date
+        	 */
         	
         }else
         {

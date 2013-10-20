@@ -67,7 +67,7 @@ class TaskHandler
 			
 			/* GET CURRENT TIME FOR THE HOURS OBJECT */
 			date_default_timezone_set('Australia/Melbourne');
-			$date = date('Y/m/d', time());
+			$date = date('d/m/Y', time());
 			
 			/* ADD HOURS INTO DATABASE */
 			$taskHoursHandler = new TaskHoursHandler();
