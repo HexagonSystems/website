@@ -98,7 +98,7 @@ class TaskComment
 		$this->setTag($row['tag']);
 		$this->setTitle($row['title']);
 		$this->setContent($row['content']);
-		$this->setMemberId($row['memberId']);
+		$this->setMemberId($row['firstName']);
 		$this->setDate($row['postedDate']);
 	}
 }
