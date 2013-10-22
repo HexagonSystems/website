@@ -214,11 +214,17 @@ class TaskSearchHelper
 	}
 	
 	/**
-	 * Gets the tag
+	 * Gets the tag, returns false if the tag is not set
 	 */
 	public function getTag()
 	{
-		return $this->primarySearchData[$this->ref_tag];
+		if(isset($this->primarySearchData[$this->ref_tag]))
+		{
+			return $this->primarySearchData[$this->ref_tag];
+		}else
+		{
+			return false;
+		}
 	}
 	
 	/**
@@ -310,7 +316,9 @@ class TaskSearchHelper
 		
 		$this->setSearchFilters();
 		
-		$this->taskSearchHelperDA->performSearch();
+		$response = $this->taskSearchHelperDA->performSearch();
+		
+		return $response;
 		
 	}
 	
@@ -341,7 +349,7 @@ class TaskSearchHelper
 	private function searchForTasks()
 	{
 		/* SET THE PRIMARY TABLE */
-		$this->taskSearchHelperDA->setPrimarySearch($this->primarySearchData[$this->ref_task]);
+		$this->taskSearchHelperDA->setPrimarySearch($this->ref_task, $this->primarySearchData[$this->ref_task]);
 	
 		/* CHECK IF WE ARE SEARCHING FOR TASKS THAT A SPECIFIC USER IS A PART OF */
 		if(isset($this->primarySearchData[$this->ref_user]))

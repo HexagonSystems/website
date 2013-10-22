@@ -84,6 +84,23 @@ class TaskComment
 	{
 		return true;
 	}
+	
+	/**
+	 * Sets up object using a row from a query
+	 * 
+	 * This is a hacked method, if anyone can come up with some better, please let me know.
+	 * 
+	 * @param array $row
+	 */
+	public function buildFromQueryRow($row)
+	{
+		$this->setTaskId($row['taskId']);
+		$this->setTag($row['tag']);
+		$this->setTitle($row['title']);
+		$this->setContent($row['content']);
+		$this->setMemberId($row['memberId']);
+		$this->setDate($row['postedDate']);
+	}
 }
 
 ?>

@@ -18,6 +18,7 @@ function loadComments(tableConfig, pageNum) {
 		if (response == true || response == "true") {
 			var jsonObject = nakedJson.data;
 			updateTableContentArray(tableConfig, jsonObject, pageNum);
+			assignCommentTagClick();
 		}
 	});
 }
@@ -76,7 +77,8 @@ function printSingleComment(tableConfig, commentTag, commentTitle,
 	var tagTD = document.createElement('td');
 	var tagAHREF = document.createElement('a');
 	tagAHREF.title = commentTag;
-	tagAHREF.href = "#modal_pickSearchMethod";
+	//tagAHREF.href = "#modal_pickSearchMethod";
+	tagAHREF.className = "commentTag";
 	tagAHREF.innerHTML = commentTag;
 	$(tagAHREF).attr("data-toggle", "modal");
 	tagTD.appendChild(tagAHREF);
@@ -154,7 +156,6 @@ function printSingleComment(tableConfig, commentTag, commentTitle,
  * Creates a comment in the database
  */
 function createComment(tableConfig, commentTag, commentTitle, commentContent) {
-	commentTag = "@" + commentTag;
 	$.post(ajaxBase + "/Model/TaskCommentsAJAX.php", {
 		request : "create",
 		taskId : tableConfig['taskId'],
@@ -183,7 +184,8 @@ function createComment(tableConfig, commentTag, commentTitle, commentContent) {
 			printSingleComment(tableConfig, commentTag, commentTitle,
 					commentContent, tempArray['memberId'], tempArray['date'],
 					true);
-			assignTableContentAccordion()
+			assignTableContentAccordion();
+			assignCommentTagClick();
 		} else {
 			alert(data);
 		}
@@ -221,5 +223,23 @@ function addHours(tableConfig, workedDate, workedHours, workedComment) {
 		} else {
 			alert(data);
 		}
+	});
+}
+
+function assignCommentTagClick()
+{
+	/**
+	 * Add hours button
+	 * 
+	 */
+	$(function() {
+		$(".commentTag").click(
+				function() {
+					tempTagString = $(this).text();
+					//$(".searchModalButton").prop('href')
+					$('.searchModalButton').attr('href', function(i, a){ return a + "&tag_text=" + tempTagString });
+					//document.getElementByClass('searchModalButton').href += "&" + tempTagString;
+					$('#modal_pickSearchMethod').modal('show');
+				});
 	});
 }

@@ -137,6 +137,23 @@ class Task extends \ArticleEntity
 	{
 		return $this->article;
 	}
+	
+	/**
+	 * Sets up object using a row from a query
+	 *
+	 * This is a hacked method, if anyone can come up with some better, please let me know.
+	 *
+	 * @param array $row
+	 */
+	public function buildFromQueryRow($row)
+	{
+		$this->setId($row['taskId']);
+		$this->setTitle($row['name']);
+		$this->setTimeStamp($row['entryDate']);
+		$this->setStatus($row['status']);
+		$this->setContent($row['details']);
+		$this->setCategory($row['type']);
+	}
 }
 
 ?>
