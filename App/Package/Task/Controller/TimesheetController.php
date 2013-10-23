@@ -75,7 +75,7 @@ class TimesheetController extends Controller
 			 * $testingSearch->search();
 			 */
 			
-			$searchHelper = new TaskSearchHelper();
+			$searchHelper = new TaskSearchHelperNEW();
 			
 			if(isset($_GET['tag_id']))
 			{
@@ -101,7 +101,7 @@ class TimesheetController extends Controller
 				$searchHelper->setUser($_GET['user_text'], false);
 			}
 			$searchHelper->setDatabase($this->database);
-			$result = $searchHelper->search();
+			$result = $searchHelper->search('task');
 			
 			$this->template = $this->template_viewSearch;
 			

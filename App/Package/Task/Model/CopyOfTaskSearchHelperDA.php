@@ -35,7 +35,7 @@ class TaskSearchHelperDA
 	private $table_taskComment_taskId = 'taskId';
 	private $table_taskComment_memberId	= 'memberId';
 	private $table_taskComment_tag	= 'tag';
-
+	
 	private $primaryTableCriteria = array();
 
 	private $searchOptions = array(
@@ -45,11 +45,6 @@ class TaskSearchHelperDA
 					'primary_text'	=> 'name',
 					'object'		=> 'Task\\Task',
 					'get'			=> array('*'),
-					'where'			=> array(
-							'task' => array(
-									'id'	=> 'taskId',
-									'text'	=> 'name'),
-					),
 					'join'			=> FALSE
 			),
 			'tag'		=> array(
@@ -58,17 +53,6 @@ class TaskSearchHelperDA
 					'primary_text'	=> 'tag',
 					'object'		=> 'Task\\TaskComment',
 					'get'			=> array('*'),
-					'where'			=> array(
-							'tag'		=> array(
-									'id'	=> 'commentId',
-									'text'	=> 'tag'),
-							'member'	=> array(
-									'id'	=> 'memberId',
-									'text'	=> 'memberId'),
-							'task'		=> 	array(
-									'id'	=> 'taskId',
-									'text'	=> 'taskId'),
-					),
 					'join'			=> array(
 							array(
 									'table'		=> 'member',
@@ -83,9 +67,9 @@ class TaskSearchHelperDA
 					'primary_text'	=> 'firstName',
 					'get'			=> array('*'),
 					'where'			=> array(
-							'member' => array(
-									'id'	=> 'memberId',
-									'text'	=> 'firstName'),
+									'member' => array(
+													'id'	=> 'memberId',
+													'text'	=> 'firstName'),
 					),
 					'join'			=> FALSE
 			),
@@ -96,15 +80,15 @@ class TaskSearchHelperDA
 					'object'		=> 'Task\\TaskHours',
 					'get'			=> array('*'),
 					'where'			=> array(
-							'member'	=> array(
-									'id'	=> 'memberId',
-									'text'	=> 'memberId'),
-							'task'		=> 	array(
-									'id'	=> 'taskId',
-									'text'	=> 'taskId'),
-							'date'		=> array(
-									'id'	=> 'date',
-									'text'	=> 'date')
+									'member'	=> array(
+													'id'	=> 'memberId',
+													'text'	=> 'memberId'),
+									'task'		=> 	array(
+													'id'	=> 'taskId',
+													'text'	=> 'taskId'),
+									'date'		=> array(
+													'id'	=> 'date',
+													'text'	=> 'date')
 					),
 					'join'			=> array(
 							array(
@@ -116,7 +100,7 @@ class TaskSearchHelperDA
 									'table'		=> 'task',
 									'joinOn'	=> 'taskId',
 									'get'		=> array('name')
-							)
+								)
 					)
 			)
 	);
@@ -164,19 +148,19 @@ class TaskSearchHelperDA
 		$this->searchFilters = $value;
 	}
 
-	public function performSearch($searchOption, $primarySearchData)
+	public function performSearch()
 	{
 		/* SET THE PRIMARY SEARCH IN A LOCAL VARIABLE FOR EASY ACCESS */
-		//$primaryTarget = $this->primarySearchData[$searchOption];
+		$primaryTarget = $this->primarySearchData[$this->db_primary]['name'];
 
 		/* BEGIN STATEMENT */
 		$statement = "SELECT ";
 
 		/* ADD WHAT INFORMATION WE WANT TO GET FRom THE PRIMARY TABLE */
-		if($this->searchOptions[$searchOption]['get'])
+		if($this->searchOptions[$primaryTarget]['get'])
 		{
 			$firstRun = true;
-			foreach($this->searchOptions[$searchOption]['get'] as $secondaryColumn)
+			foreach($this->searchOptions[$primaryTarget]['get'] as $secondaryColumn)
 			{
 				if($firstRun)
 				{
@@ -192,9 +176,9 @@ class TaskSearchHelperDA
 		}
 
 		/* ADD ANY JOINED TABLES INFORMATION WE WANT TO GET */
-		if($this->searchOptions[$searchOption]['join'])
+		if($this->searchOptions[$primaryTarget]['join'])
 		{
-			foreach($this->searchOptions[$searchOption]['join'] as $joiningTable)
+			foreach($this->searchOptions[$primaryTarget]['join'] as $joiningTable)
 			{
 				foreach($joiningTable['get'] as $secondaryColumn)
 				{
@@ -204,12 +188,12 @@ class TaskSearchHelperDA
 			}
 		}
 
-		$statement .= " FROM ".$this->searchOptions[$searchOption]['table']." primaryTable";
+		$statement .= " FROM ".$this->searchOptions[$primaryTarget]['table']." primaryTable";
 
 		/* ADD INNER JOIN */
-		if($this->searchOptions[$searchOption]['join'])
+		if($this->searchOptions[$primaryTarget]['join'])
 		{
-			foreach($this->searchOptions[$searchOption]['join'] as $joiningTable)
+			foreach($this->searchOptions[$primaryTarget]['join'] as $joiningTable)
 			{
 				$tableNickName = $joiningTable['table'] . "N";
 				$statement .= " INNER JOIN " . $joiningTable['table'] ." $tableNickName";
@@ -217,79 +201,67 @@ class TaskSearchHelperDA
 			}
 		}
 
-		$tempStatement = " WHERE";
-		$tempStatementWorthy = false;
+		$statement .= " WHERE primaryTable.";
+		
+		if($this->searchOptions[$primaryTarget]['where'])
+		{
+			foreach($this->searchOptions[$primaryTarget]['where'] as $whereCriteria)
+			{
+				
+			}
+		}
+		/* DETERMINE IF SEARCHING BY ID OR STRING, TRUE = ID, FALSE = STRING */
+		if($this->primarySearchData[$this->db_primary][$this->ref_searchById])
+		{
+			$statement .= $this->searchOptions[$primaryTarget]['primary_id'];
+		}else
+		{
+			$statement .= $this->searchOptions[$primaryTarget]['primary_text'];
+		}
+
+		$statement .= " LIKE :primarySearch";
 
 		/* ADD SECONDARY SEARCH CRITERIA */
 			
-		if($this->searchOptions[$searchOption]['where'] && isset($primarySearchData))
+		if(isset($this->primarySearchData[$this->db_criteria]))
 		{
-			$firstRun = true;
-			foreach($primarySearchData as $criteriaName => $criteriaValues)
+			foreach($this->primarySearchData[$this->db_criteria] as $criteria)
 			{
-				$innerTempStatement = " ";
-				$innerTempStatementWorthy = false;
-				if(!$firstRun)
+				$tempStatement = " AND ";
+				switch($criteria['name'])
 				{
-					$innerTempStatement .= "AND ";
+					case $this->ref_task: $statement .= $tempStatement . $this->table_taskComment_taskId." = :$this->ref_task ";
+					break;
+					case $this->ref_user: $statement .= $tempStatement . $this->table_taskComment_memberId." = :$this->ref_user ";
+					break;
 				}
-
-				if(array_key_exists($criteriaName, $this->searchOptions[$searchOption]['where']))
-				{
-					if($criteriaValues['searchById'])
-					{
-						$innerTempStatement .= "primaryTable." . $this->searchOptions[$searchOption]['where'][$criteriaName]['id'] . " = :" . $criteriaName;
-						$tempStatementWorthy = true;
-						$innerTempStatementWorthy = true;
-					}else
-					{
-						$innerTempStatement .= "primaryTable." . $this->searchOptions[$searchOption]['where'][$criteriaName]['text'] . " LIKE :" . $criteriaName;
-						$tempStatementWorthy = true;
-						$innerTempStatementWorthy = true;
-					}
-					if($innerTempStatementWorthy)
-					{
-						$firstRun = false;
-						$tempStatement .= $innerTempStatement;
-					}
-					
-					
-				}
-
 			}
 		}
-		
-		if($tempStatementWorthy)
-		{
-			$statement .= $tempStatement;
-		}
-
+	
 		/* ADD SEARCH FILTERS */
 		$statement .= $this->addSQLForSearchFilters();
 
 		try
 		{
 			$query = $this->database->prepare($statement);
-				
+
 			/* BIND PARAMETERS */
-			if(isset($this->searchOptions[$searchOption]['where']))
+			if($this->primarySearchData[$this->db_primary][$this->ref_searchById])
 			{
-				foreach($primarySearchData as $criteriaName => $criteriaValues)
+				$query->bindValue(':primarySearch'   , $this->primarySearchData[$this->db_primary][$this->ref_value] , \PDO::PARAM_INT);
+			}else
+			{
+				$query->bindValue(':primarySearch'   , "%".$this->primarySearchData[$this->db_primary][$this->ref_value]."%" , \PDO::PARAM_STR);
+			}
+
+			if(isset($this->primarySearchData[$this->db_criteria]))
+			{
+				foreach($this->primarySearchData[$this->db_criteria] as $criteria)
 				{
-					if(array_key_exists($criteriaName, $this->searchOptions[$searchOption]['where']))
-					{
-						if($criteriaValues['searchById'])
-						{
-							$query->bindValue(":$criteriaName"   , $criteriaValues[$this->ref_value] , \PDO::PARAM_INT);
-						}
-						else
-						{
-							$query->bindValue(":$criteriaName"   , "%".$criteriaValues[$this->ref_value]."%" , \PDO::PARAM_STR);
-						}
-					}
+					$tempName = $criteria['name'];
+					$query->bindValue(":$tempName"   , $criteria[$this->ref_value] , \PDO::PARAM_INT);
 				}
 			}
-				
 			echo $statement;
 			$query->execute();
 			$tempObjectHolder = array();
@@ -297,7 +269,7 @@ class TaskSearchHelperDA
 			$tempObjectHolder['data'] = array();
 			$htmlString = "";
 			foreach ($query as $row) {
-				$objectToMake = $this->searchOptions[$searchOption]['object'];
+				$objectToMake = $this->searchOptions[$primaryTarget]['object'];
 				$tempObject = new $objectToMake;
 				$tempObject->buildFromQueryRow($row);
 				array_push($tempObjectHolder['data'], $tempObject);
