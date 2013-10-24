@@ -15,6 +15,11 @@ class TaskComment
 		$this->commentArray['taskId'] = $taskId;
 	}
 	
+	public function setParentTask($taskArray)
+	{
+		$this->commentArray['task'] = $taskArray;
+	}
+	
 	public function setTag($tag)
 	{
 		$this->commentArray['tag'] = $tag;
@@ -94,7 +99,17 @@ class TaskComment
 	 */
 	public function buildFromQueryRow($row)
 	{
-		$this->setTaskId($row['taskId']);
+		if(isset($row['name']))
+		{
+			$tempArray = array(
+					'id'	=> $row['taskId'],
+					'value'	=> $row['name']
+			);
+			$this->setParentTask($tempArray);
+		}else
+		{
+			$this->setTaskId($row['taskId']);
+		}
 		$this->setTag($row['tag']);
 		$this->setTitle($row['title']);
 		$this->setContent($row['content']);

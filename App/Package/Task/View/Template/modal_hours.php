@@ -13,7 +13,7 @@
 		<div class="form-group">
 			<label for="addHoursDate" class="col-lg-2 control-label">Date</label>
 			<div class="col-lg-10">
-				<input type="date" class="form-control" id="addHoursDate">
+				<input type="date" class="form-control" id="addHoursDatePicker">
 					  </script>
 			</div>
 		</div>

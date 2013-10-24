@@ -26,6 +26,11 @@ class TaskHoursHandler
 		$this->taskHoursDA->setDatabase($database);
 		$this->databaseHolder = $database;
 	}
+	
+	public function loadHours($taskId, $memberId, $startDate, $endDate)
+	{
+		return $this->taskHoursDA->loadHours($taskId, $memberId, $startDate, $endDate);
+	}
 
 	/**
 	 * Adds hours for a member into the database
@@ -41,8 +46,8 @@ class TaskHoursHandler
 		
 		/* CREATE HOURS OBJECT */
 		$tempHours = new TaskHours();
-		$tempHours->setTaskId($taskId);
-		$tempHours->setMemberId($memberId);
+		$tempHours->setTask(array('id' => $taskId));
+		$tempHours->setMember(array('id' => $memberId));
 		$tempHours->setDate($workedDate);
 		$tempHours->setHours($workedHours);
 		

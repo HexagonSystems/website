@@ -14,7 +14,11 @@ class TaskHoursDA
 	 */
 	function addHoursFromObject($tempTask)
 	{
-		return $this->addHours($tempTask->getTaskId(), $tempTask->getMemberId(), $tempTask->getDate(), $tempTask->getHours());
+		$taskId = $tempTask->getTask();
+		$taskId = $taskId['id'];
+		$memberId = $tempTask->getMember();
+		$memberId = $memberId['id'];
+		return $this->addHours($taskId, $memberId, $tempTask->getDate(), $tempTask->getHours());
 	}
 	
 	/**
@@ -36,8 +40,8 @@ class TaskHoursDA
 					ON DUPLICATE KEY UPDATE hours = hours + :hours';
 	
 			$query = $this->database->prepare($statement);
-				
-			$workedDate = date("Y-d-m", strtotime($workedDate));
+			
+			$workedDate = date("Y-m-d", strtotime($workedDate));
 	
 			$query->bindParam(':taskId'   , $taskId , \PDO::PARAM_INT);
 			$query->bindParam(':memberId'   , $memberId , \PDO::PARAM_INT);
@@ -57,6 +61,97 @@ class TaskHoursDA
 			return createError($e);
 		}
 	}
+	
+	public function loadHours($taskId, $memberId, $startDate, $endDate)
+	{
+		try {
+			$statement = "SELECT * FROM `work` workTable
+						INNER JOIN `task` taskTable ON workTable.taskId = taskTable.taskId 
+						INNER JOIN `member` memberTable ON workTable.memberId = memberTable.memberId ";
+			
+			if($taskId || $memberId || $startDate || $endDate)
+			{
+				$statement .= " WHERE";
+				$needAndWhere = false;
+				if($taskId)
+				{
+					$statement .= " `taskId` = :taskId";
+					$needAndWhere = true;
+				}
+					
+				if($memberId)
+				{
+					if($needAndWhere)
+					{
+						$statement .= " AND";
+					}
+				
+					$statement .= " `memberId` = :memeberId";
+				}
+				
+				if($startDate)
+				{
+					if($needAndWhere)
+					{
+						$statement .= " AND";
+					}
+				
+					$statement .= " `date` >= STR_TO_DATE(:startDate, '%Y%m%d')";
+				}
+				
+				if($startDate)
+				{
+					if($needAndWhere)
+					{
+						$statement .= " AND";
+					}
+				
+					$statement .= " `date` <= STR_TO_DATE(:endDate, '%Y%m%d')";
+				}
+			}
+	
+			$query = $this->database->prepare($statement);
+			
+			if($taskId)
+			{
+				$query->bindParam(':taskId'   , $taskId , \PDO::PARAM_INT);
+			}
+			if($memberId)
+			{
+				$query->bindParam(':memberId'   , $memberId , \PDO::PARAM_INT);
+			}
+			if($startDate)
+			{
+				$query->bindParam(':startDate'   , $startDate , \PDO::PARAM_STR);
+			}
+			if($endDate)
+			{
+				$query->bindParam(':endDate'   , $endDate , \PDO::PARAM_STR);
+			}
+				
+			$query->bindParam(':starting'   , $starting , \PDO::PARAM_INT);
+			$query->bindParam(':quantity'   , $qty		, \PDO::PARAM_INT);
+	
+			$query->execute();
+	
+			$timesheetHolder = array();
+			$timesheetHolder['success'] = true;
+			$timesheetHolder['data'] = array();
+				
+	
+			$htmlString = "";
+			foreach ($query as $row) {
+				$tempTimeSheet = new TaskHours();
+				$tempTimeSheet->buildFromQueryRow($row);
+				array_push($timesheetHolder['data'], $tempTimeSheet);
+			}
+			
+			// echo json_encode($commentHolder);
+			return $timesheetHolder;
+		} catch (PDOException $e) {
+			return createError($e);
+		}
+	}//end loadComments
 	
 	/**
 	 * Creates an array that holds information about the error

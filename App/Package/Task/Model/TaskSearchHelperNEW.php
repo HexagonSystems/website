@@ -42,7 +42,7 @@ class TaskSearchHelperNEW
 	 */
 	private $ref_tag = 'tag';
 	private $ref_task = 'task';
-	private $ref_user = 'user';
+	private $ref_user = 'member';
 	private $ref_wildCard = 'wildCard';
 	
 	private $ref_value = 'value';

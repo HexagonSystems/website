@@ -10,7 +10,7 @@ class TaskSearchHelperDA
 	/* HELPER ARRAY VALUES */
 	private $ref_tag = 'tag';
 	private $ref_task = 'task';
-	private $ref_user = 'user';
+	private $ref_user = 'member';
 	private $ref_value = 'value';
 	private $ref_searchById = 'searchById';
 	private $ref_page = 'page';
@@ -64,7 +64,7 @@ class TaskSearchHelperDA
 									'text'	=> 'tag'),
 							'member'	=> array(
 									'id'	=> 'memberId',
-									'text'	=> 'memberId'),
+									'text'	=> array('firstName', 'member')),
 							'task'		=> 	array(
 									'id'	=> 'taskId',
 									'text'	=> 'taskId'),
@@ -74,6 +74,11 @@ class TaskSearchHelperDA
 									'table'		=> 'member',
 									'joinOn'	=> 'memberId',
 									'get'		=> array('firstName')
+							),
+							array(
+									'table'		=> 'task',
+									'joinOn'	=> 'taskId',
+									'get'		=> array('name')
 							)
 					)
 			),
@@ -98,7 +103,7 @@ class TaskSearchHelperDA
 					'where'			=> array(
 							'member'	=> array(
 									'id'	=> 'memberId',
-									'text'	=> 'memberId'),
+									'text'	=> array('firstName', 'member')),
 							'task'		=> 	array(
 									'id'	=> 'taskId',
 									'text'	=> 'taskId'),
@@ -236,14 +241,33 @@ class TaskSearchHelperDA
 
 				if(array_key_exists($criteriaName, $this->searchOptions[$searchOption]['where']))
 				{
+					$searchInTable = 'primaryTable';
+
 					if($criteriaValues['searchById'])
 					{
-						$innerTempStatement .= "primaryTable." . $this->searchOptions[$searchOption]['where'][$criteriaName]['id'] . " = :" . $criteriaName;
+						if(is_array($this->searchOptions[$searchOption]['where'][$criteriaName]['id']))
+						{
+							$searchInTable = $this->searchOptions[$searchOption]['where'][$criteriaName]['id'][1] . "N";
+							$searchInColumn = $this->searchOptions[$searchOption]['where'][$criteriaName]['id'][0];
+						}else
+						{
+							$searchInColumn = $this->searchOptions[$searchOption]['where'][$criteriaName]['id'];
+						}
+						$innerTempStatement .= "$searchInTable." . $searchInColumn . " = :" . $criteriaName;
 						$tempStatementWorthy = true;
 						$innerTempStatementWorthy = true;
 					}else
 					{
-						$innerTempStatement .= "primaryTable." . $this->searchOptions[$searchOption]['where'][$criteriaName]['text'] . " LIKE :" . $criteriaName;
+					
+						if(is_array($this->searchOptions[$searchOption]['where'][$criteriaName]['text']))
+						{
+							$searchInTable = $this->searchOptions[$searchOption]['where'][$criteriaName]['text'][1] . "N";
+							$searchInColumn = $this->searchOptions[$searchOption]['where'][$criteriaName]['text'][0];
+						}else
+						{
+							$searchInColumn = $this->searchOptions[$searchOption]['where'][$criteriaName]['text'];
+						}
+						$innerTempStatement .= "$searchInTable." . $searchInColumn . " LIKE :" . $criteriaName;
 						$tempStatementWorthy = true;
 						$innerTempStatementWorthy = true;
 					}

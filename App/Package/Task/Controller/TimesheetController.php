@@ -8,6 +8,7 @@ class TimesheetController extends Controller
 	private $template_viewAll = "timesheetViewAll";
 	private $template_viewSingle = "timesheetViewSingle";
 	private $template_viewSearch = "timesheetViewSearched";
+	private $template_viewHours = "timesheetDisplayHours";
 
 	public function invoke()
 	{
@@ -101,7 +102,9 @@ class TimesheetController extends Controller
 				$searchHelper->setUser($_GET['user_text'], false);
 			}
 			$searchHelper->setDatabase($this->database);
-			$result = $searchHelper->search('task');
+			$result = $searchHelper->search('tag');
+			
+			
 			
 			$this->template = $this->template_viewSearch;
 			
@@ -116,7 +119,27 @@ class TimesheetController extends Controller
 			
 			
 			 
-		}else
+		}else if($_GET['action'] == 'displayHours')
+		{
+			$hoursLoader = new TaskHoursHandler();
+			$hoursLoader->setDatabase($this->database);
+			$hoursObjectArray = $hoursLoader->loadHours(false, false, false, false);
+				
+			$taskTimeSheet = new TaskTimeSheet();
+			$taskTimeSheet->setDateRange('2013-10-01', '2013-10-08');
+
+			$taskTimeSheet->buildTimeSheetFromTaskHourArray($hoursObjectArray['data']);
+			
+			$this->template = $this->template_viewHours;
+				
+			parent::invoke();
+				
+			//create a new view and pass it our template
+			$view = new TimesheetView($this->template,$this->footer, 0);
+			$view->assign('title' , 'Logged in');
+			$view->assign('timesheetData', $taskTimeSheet);
+		}
+		else
 		{
 			echo "Something went wrong";
 		}

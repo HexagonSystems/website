@@ -93,7 +93,7 @@ $(function() {
 	$("#addHoursButton").click(
 			function() {
 				// run script to add hours through ajax
-				addHours(mainTaskCommentsTable, document.getElementById("addHoursDate").value, $(
+				addHours(mainTaskCommentsTable, $("#addHoursDatePicker").val(), $(
 						"#addHoursHours").val(), $("#addHoursComment").val());
 			});
 });
