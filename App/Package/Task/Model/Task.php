@@ -147,8 +147,16 @@ class Task extends \ArticleEntity
 	 */
 	public function buildFromQueryRow($row)
 	{
-		$this->setId($row['taskId']);
-		$this->setTitle($row['name']);
+		/* A WILD DIRTY HACK APPEARS */
+		
+		/*
+		 * Please note: I am setting the Task's title to be an array instead of just the task title
+		 * so it formats nicely when printed out in the search field.
+		 * 
+		 * It might be worth making a different method to return a nicely formatted array
+		 * for the TaskSearchHelper.
+		 */
+		$this->setTitle(array('id' => $row['taskId'], 'value' => $row['name']));
 		$this->setTimeStamp($row['entryDate']);
 		$this->setStatus($row['status']);
 		$this->setContent($row['details']);

@@ -10,7 +10,7 @@
     	<div class="form-group">
 			<label for="addHoursDate" class="col-lg-2 control-label">Start Date</label>
 			<div class="col-lg-10">
-				<input type="date" class="form-control" name="startDate" id="addHoursDatePicker">
+				<input type="text" class="form-control" name="startDate" id="displayHours_datePicker">
 			</div>
 		</div>
 		
@@ -40,3 +40,11 @@ foreach($data['timesheetData']->toArray() as $tableUser => $tableData)
 	include 'timesheetDisplayHours_TableTemplate.php';
 }
 ?>
+
+<script>
+    $(document).ready(function () {
+        $("#displayHours_datePicker").datepicker();
+        $("#displayHours_datePicker").datepicker('setDate', new Date());
+        $( "#displayHours_datePicker" ).datepicker( "option", "dateFormat", "dd-M-yy" );
+    });
+</script>

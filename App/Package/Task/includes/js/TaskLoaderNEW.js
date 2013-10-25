@@ -47,8 +47,16 @@ function createTask(tableConfig, taskTitle, taskDescription, taskStatus) {
 			task = data.task.data;
 			hours = data.hours.data;
 			comment = data.comment.data;
+			/* ASSUME FIRST NAME IS CORRECT */
+			var fakeMemberArray = {};
+			fakeMemberArray[tableConfig['memberId']] = tableConfig['memberFirstName'];
+			var jsonString = JSON.stringify(fakeMemberArray);
+			fakeJSONObject = JSON.parse(jsonString)
+			
 			printSingleTask(tableConfig, task.id, task.title, task.content, task.status,
-					task.members, comment.memberId, comment.date, true);
+					fakeJSONObject, comment.memberId, comment.date, true);
+			
+			assignTableContentAccordion();
 		} else {
 			alert("success = " + data.success + " " + data);
 		}

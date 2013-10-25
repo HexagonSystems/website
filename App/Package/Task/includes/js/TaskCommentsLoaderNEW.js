@@ -200,7 +200,7 @@ function addHours(tableConfig, workedDate, workedHours, workedComment) {
 		request : "addHours",
 		taskId : tableConfig['taskId'],
 		memberId : tableConfig['memberId'],
-		workedDate : workedDate.toString(),
+		workedDate : workedDate,
 		workedHours : workedHours,
 		workedComment : workedComment
 	}, function(data) {

@@ -72,7 +72,6 @@ mainTaskCommentsTable = {
 		'content'			:	new Array()
 };
 
-
 /**
  * Create comment button
  * 
@@ -118,6 +117,10 @@ $(function() {
  */
 $(document).ready(function() {
 	printTableDataInTable(mainTaskCommentsTable, 1);
-	document.getElementById('addHoursDate').valueAsDate = new Date();
+
+	$("#addHoursDatePicker").datepicker();
+	$("#addHoursDatePicker").datepicker('setDate', new Date());
+    $( "#addHoursDatePicker" ).datepicker( "option", "dateFormat", "dd-M-yy" );
 });
+</script>
 </script>

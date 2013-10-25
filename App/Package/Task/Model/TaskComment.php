@@ -113,7 +113,8 @@ class TaskComment
 		$this->setTag($row['tag']);
 		$this->setTitle($row['title']);
 		$this->setContent($row['content']);
-		$this->setMemberId($row['firstName']);
+		/* SEE COMMENT IN THE SAME METHOD FOR TASK TO SEE WHY THIS WAS DONE */
+		$this->commentArray['member'] = $row['firstName'];
 		$this->setDate($row['postedDate']);
 	}
 }
