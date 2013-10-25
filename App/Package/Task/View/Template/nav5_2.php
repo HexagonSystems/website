@@ -23,7 +23,16 @@
 				<li><a href="#">About</a></li>
 				<li><a href="#">Projects</a></li>
 				<li><a href="#">Contact</a></li>
-				<li><a href="index.php?location=timesheetPage">Alex's Timesheets</a>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown">Alex's Timesheets<b class="caret"></b>
+				</a>
+					<ul class="dropdown-menu">
+						<li><a href="index.php?location=timesheetPage">Tasks</a></li>
+						<li role="presentation" class="divider"></li>
+						<li><a href="index.php?location=timesheetPage&action=displayHours">Hours report</a></li>
+						<li role="presentation" class="divider"></li>
+						<li><a href="index.php?location=timesheetPage&action=search">Search</a></li>
+					</ul>
 				</li>
 				<li role="presentation" class="divider"></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"

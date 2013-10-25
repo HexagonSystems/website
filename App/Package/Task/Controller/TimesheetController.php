@@ -78,31 +78,55 @@ class TimesheetController extends Controller
 			
 			$searchHelper = new TaskSearchHelperNEW();
 			
-			if(isset($_GET['tag_id']))
+			foreach($_GET as $getDataKey => $getDataValue)
 			{
-				$searchHelper->setTag($_GET['tag_id'], true);
-			}else if(isset($_GET['tag_text']))
-			{
-				$searchHelper->setTag($_GET['tag_text'], false);
+				
+				if(strpos($getDataKey, "_") && strlen($getDataValue)) // If the string conains a '_' that also isn't at index 0
+				{
+					$exploded = explode("_", $getDataKey);
+					if(sizeof($exploded) == 2) // If the string was the correct format
+					{
+						if($exploded[1] == 'value') // If we are dealing with an actual input
+						{
+							$attribute_value = $getDataValue;
+							$attribute_searchById = false; // Search for text by default
+							
+							if(isset($_GET[$exploded . '_searchBy']))
+							{
+								if($_GET[$exploded . '_searchBy'] === 'id') // If the user is searching by id
+								{
+									$attribute_searchById = true;
+								}
+							}
+							
+							switch($exploded[0])
+							{
+								case 'tag': $searchHelper->setTag($attribute_value, $attribute_searchById);
+								break;
+								case 'task': $searchHelper->setTask($attribute_value, $attribute_searchById);
+								break;
+								case 'member': $searchHelper->setUser($attribute_value, $attribute_searchById);
+							}
+						}
+					}
+				}
 			}
 			
-			if(isset($_GET['task_id']))
-			{
-				$searchHelper->setTask($_GET['task_id'], true);
-			}else if(isset($_GET['task_text']))
-			{
-				$searchHelper->setTask($_GET['task_text'], false);
-			}
-			
-			if(isset($_GET['user_id']))
-			{
-				$searchHelper->setUser($_GET['user_id'], true);
-			}else if(isset($_GET['user_text']))
-			{
-				$searchHelper->setUser($_GET['user_text'], false);
-			}
 			$searchHelper->setDatabase($this->database);
-			$result = $searchHelper->search('tag');
+			
+			if(isset($_GET['searchFor']))
+			{
+				if($_GET['searchFor'] == 'tag' || $_GET['searchFor'] == 'task')
+				{
+					$result = $searchHelper->search($_GET['searchFor']);
+				}else
+				{
+					$result = $searchHelper->search('tag'); // Search for tags by default
+				}
+			}
+			
+			
+			
 			
 			
 			
@@ -123,11 +147,41 @@ class TimesheetController extends Controller
 		{
 			$hoursLoader = new TaskHoursHandler();
 			$hoursLoader->setDatabase($this->database);
-			$hoursObjectArray = $hoursLoader->loadHours(false, false, false, false);
-				
+			
 			$taskTimeSheet = new TaskTimeSheet();
-			$taskTimeSheet->setDateRange('2013-10-01', '2013-10-08');
-
+			
+			
+			
+			if(isset($_GET['startDate']))
+			{
+				$startDate = strtotime($_GET['startDate']);
+				
+				
+				$endDate = strtotime("+7 day", $startDate);
+				
+				$startDate = date('Y-m-d', $startDate);
+				$endDate = date('Y-m-d', $endDate);
+			}else
+			{
+				date_default_timezone_set('Australia/Melbourne');
+				$endDate = date(time());
+				
+				
+				$startDate = strtotime("-7 day", $endDate);
+				$startDate = date('Y-m-d', $startDate);
+				$endDate = date('Y-m-d', $endDate);
+			}
+			
+			if(isset($_GET['user']))
+			{
+				$memberId = $_GET['user'];	
+			}else
+			{
+				$memberId = false;
+			}
+			$hoursObjectArray = $hoursLoader->loadHours(false, false, $startDate, $endDate);
+			
+			$taskTimeSheet->setDateRange($startDate, $endDate);
 			$taskTimeSheet->buildTimeSheetFromTaskHourArray($hoursObjectArray['data']);
 			
 			$this->template = $this->template_viewHours;

@@ -9,6 +9,11 @@ class TaskTimeSheet
 	private $arrayOfUsersNames = array();
 	private $arrayOfTaskNames = array();
 
+	/**
+	 * Builds and organises all of the data given through the array of Task Hours
+	 * 
+	 * @param array $taskHourArray
+	 */
 	function buildTimeSheetFromTaskHourArray($taskHourArray)
 	{
 		foreach($taskHourArray as $taskHour)
@@ -88,7 +93,14 @@ class TaskTimeSheet
 
 		$this->timesheetDates = $dates;
 	}
-
+	
+	/**
+	 * Returns either the date or the date's index in the date array depending on which is requested
+	 * 
+	 * @param unknown $value
+	 * @param unknown $searchByIndex
+	 * @return multitype:|mixed
+	 */
 	function getDate($value, $searchByIndex)
 	{
 		if($searchByIndex)
@@ -100,6 +112,12 @@ class TaskTimeSheet
 		}
 	}
 	
+	/**
+	 * Returns the member's name using it's id
+	 *
+	 * @param int $taskId
+	 * @return string
+	 */
 	function getMembersName($memberId)
 	{
 		if(array_key_exists($memberId, $this->arrayOfUsersNames))
@@ -107,10 +125,16 @@ class TaskTimeSheet
 			return $this->arrayOfUsersNames[$memberId];
 		}else
 		{
-			var_dump($this->arrayOfUsersNames);
+			return "Id $memberId not found";
 		}
 	}
 	
+	/**
+	 * Returns the task name using the task's id
+	 * 
+	 * @param int $taskId
+	 * @return string
+	 */
 	function getTaskName($taskId)
 	{
 		if(array_key_exists($taskId, $this->arrayOfTaskNames))
@@ -123,12 +147,21 @@ class TaskTimeSheet
 	}
 	
 	
-	
+	/**
+	 * Returns the array holding all of the dates for this timesheet
+	 * 
+	 * @return array:
+	 */
 	function getDateArray()
 	{
 		return $this->timesheetDates;
 	}
-
+	
+	/**
+	 * Returns the array holding all of the timesheet data
+	 * 
+	 * @return array
+	 */
 	function toArray()
 	{
 		return $this->timesheetArray;

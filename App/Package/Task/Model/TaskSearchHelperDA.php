@@ -67,7 +67,7 @@ class TaskSearchHelperDA
 									'text'	=> array('firstName', 'member')),
 							'task'		=> 	array(
 									'id'	=> 'taskId',
-									'text'	=> 'taskId'),
+									'text'	=> array('name', 'task')),
 					),
 					'join'			=> array(
 							array(
@@ -171,6 +171,17 @@ class TaskSearchHelperDA
 
 	public function performSearch($searchOption, $primarySearchData)
 	{
+		/*
+		 * Print values
+		 *
+		
+		echo "searchOption = $searchOption<br/>";
+		echo "primarySearchData = ";
+		var_dump($primarySearchData);
+		echo "<br/>";
+		
+		/* END Print values */
+		
 		/* SET THE PRIMARY SEARCH IN A LOCAL VARIABLE FOR EASY ACCESS */
 		//$primaryTarget = $this->primarySearchData[$searchOption];
 
@@ -314,7 +325,6 @@ class TaskSearchHelperDA
 				}
 			}
 				
-			echo $statement;
 			$query->execute();
 			$tempObjectHolder = array();
 			$tempObjectHolder['success'] = true;

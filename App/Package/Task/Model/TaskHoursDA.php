@@ -64,6 +64,17 @@ class TaskHoursDA
 	
 	public function loadHours($taskId, $memberId, $startDate, $endDate)
 	{
+		/*
+		 * Print values
+		 *
+		
+		echo "taskId = $taskId<br/>";
+		echo "memeberId = $memberId<br/>";
+		echo "startDate = $startDate<br/>";
+		echo "endDate = $endDate<br/>";
+		
+		/* END Print values */
+		
 		try {
 			$statement = "SELECT * FROM `work` workTable
 						INNER JOIN `task` taskTable ON workTable.taskId = taskTable.taskId 
@@ -85,8 +96,8 @@ class TaskHoursDA
 					{
 						$statement .= " AND";
 					}
-				
-					$statement .= " `memberId` = :memeberId";
+					$needAndWhere = true;
+					$statement .= " `memberId` = :memberId";
 				}
 				
 				if($startDate)
@@ -95,8 +106,8 @@ class TaskHoursDA
 					{
 						$statement .= " AND";
 					}
-				
-					$statement .= " `date` >= STR_TO_DATE(:startDate, '%Y%m%d')";
+					$needAndWhere = true;
+					$statement .= " `date` >= STR_TO_DATE(:startDate, '%Y-%m-%d')";
 				}
 				
 				if($startDate)
@@ -105,8 +116,8 @@ class TaskHoursDA
 					{
 						$statement .= " AND";
 					}
-				
-					$statement .= " `date` <= STR_TO_DATE(:endDate, '%Y%m%d')";
+					$needAndWhere = true;
+					$statement .= " `date` <= STR_TO_DATE(:endDate, '%Y-%m-%d')";
 				}
 			}
 	
@@ -128,10 +139,7 @@ class TaskHoursDA
 			{
 				$query->bindParam(':endDate'   , $endDate , \PDO::PARAM_STR);
 			}
-				
-			$query->bindParam(':starting'   , $starting , \PDO::PARAM_INT);
-			$query->bindParam(':quantity'   , $qty		, \PDO::PARAM_INT);
-	
+			
 			$query->execute();
 	
 			$timesheetHolder = array();
