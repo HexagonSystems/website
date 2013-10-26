@@ -10,14 +10,14 @@ class TaskHours
 		$this->taskHoursArray['id'] = $id;	
 	}
 	
-	public function setTaskId($taskId)
+	public function setTask($task)
 	{
-		$this->taskHoursArray['taskId'] = $taskId;
+		$this->taskHoursArray['task'] = $task;
 	}
 	
-	public function setMemberId($memberId)
+	public function setMember($member)
 	{
-		$this->taskHoursArray['memberId'] = $memberId;
+		$this->taskHoursArray['member'] = $member;
 	}
 	
 	public function setDate($date)
@@ -35,14 +35,14 @@ class TaskHours
 		return $this->taskHoursArray['id'];
 	}
 	
-	public function getTaskId()
+	public function getTask()
 	{
-		return $this->taskHoursArray['taskId'];
+		return $this->taskHoursArray['task'];
 	}
 	
-	public function getMemberId()
+	public function getMember()
 	{
-		return $this->taskHoursArray['memberId'];
+		return $this->taskHoursArray['member'];
 	}
 	
 	public function getDate()
@@ -58,6 +58,24 @@ class TaskHours
 	public function toArray()
 	{
 		return $this->taskHoursArray;
+	}
+	
+	public function buildFromQueryRow($tempArray)
+	{
+		
+		//$this->setId($tempArray['workId']);
+		$tempTaskArray = array(
+				'id'	=> $tempArray['taskId'],
+				'value'	=> $tempArray['name']
+		);
+		$this->setTask($tempTaskArray);
+		$tempMemberArray = array(
+				'id'	=> $tempArray['memberId'],
+				'value'	=> $tempArray['firstName']
+		);
+		$this->setMember($tempMemberArray);
+		$this->setHours($tempArray['hours']);
+		$this->setDate($tempArray['date']);
 	}
 	
 	public function isValid()

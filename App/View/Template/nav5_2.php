@@ -33,7 +33,8 @@
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-                <li><a href="index.php?location=login">Login</a></li>
+          		<li><span class="navbar-brand"><?php echo unserialize($_SESSION['accountObject'])->getFirstName(); ?></span></li>
+                <li><a href="index.php?location=logout">Logout</a></li>
           </ul>
         </nav><!-- /.navbar-collapse -->
       </div>

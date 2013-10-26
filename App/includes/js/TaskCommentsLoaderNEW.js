@@ -15,6 +15,7 @@ function loadComments(tableConfig, pageNum) {
 	}, function(nakedJson) {
 		nakedJson = $.parseJSON(nakedJson);
 		response = nakedJson.success;
+		alert("here");
 		if (response == true || response == "true") {
 			var jsonObject = nakedJson.data;
 			updateTableContentArray(tableConfig, jsonObject, pageNum);
@@ -174,7 +175,7 @@ function createComment(tableConfig, commentTag, commentTitle, commentContent) {
 					true);
 			assignTableContentAccordion()
 		} else {
-			alert(data);
+			alert("create comment erroring");
 		}
 	});
 }
@@ -194,7 +195,6 @@ function addHours(tableConfig, workedDate, workedHours, workedComment) {
 		data = $.parseJSON(data);
 		response = data.success;
 		if (response == true) {
-			// alert(response);
 			commentJSON = data.comment.data;
 			var tempArray = new Array();
 			tempArray['tag'] = commentJSON.tag;
@@ -208,7 +208,7 @@ function addHours(tableConfig, workedDate, workedHours, workedComment) {
 					true);
 			assignTableContentAccordion()
 		} else {
-			alert("Failed");
+			alert("Add hours failed");
 		}
 	});
 }

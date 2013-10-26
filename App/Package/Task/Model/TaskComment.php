@@ -15,6 +15,11 @@ class TaskComment
 		$this->commentArray['taskId'] = $taskId;
 	}
 	
+	public function setParentTask($taskArray)
+	{
+		$this->commentArray['task'] = $taskArray;
+	}
+	
 	public function setTag($tag)
 	{
 		$this->commentArray['tag'] = $tag;
@@ -83,6 +88,34 @@ class TaskComment
 	public function isValid()
 	{
 		return true;
+	}
+	
+	/**
+	 * Sets up object using a row from a query
+	 * 
+	 * This is a hacked method, if anyone can come up with some better, please let me know.
+	 * 
+	 * @param array $row
+	 */
+	public function buildFromQueryRow($row)
+	{
+		if(isset($row['name']))
+		{
+			$tempArray = array(
+					'id'	=> $row['taskId'],
+					'value'	=> $row['name']
+			);
+			$this->setParentTask($tempArray);
+		}else
+		{
+			$this->setTaskId($row['taskId']);
+		}
+		$this->setTag($row['tag']);
+		$this->setTitle($row['title']);
+		$this->setContent($row['content']);
+		/* SEE COMMENT IN THE SAME METHOD FOR TASK TO SEE WHY THIS WAS DONE */
+		$this->commentArray['member'] = $row['firstName'];
+		$this->setDate($row['postedDate']);
 	}
 }
 

@@ -25,6 +25,7 @@
 <button class="btn btn-primary btn-sm" id="buttonSlideIn">Testing Add Comment With Slide In</button>
 <?php include_once 'modal_comment.php'; ?>
 <?php include_once 'modal_hours.php'; ?>
+<?php include_once 'modal_pickSearchMethod.php'; ?>
 
 
 <table id="testtable"
@@ -71,7 +72,6 @@ mainTaskCommentsTable = {
 		'content'			:	new Array()
 };
 
-
 /**
  * Create comment button
  * 
@@ -92,7 +92,7 @@ $(function() {
 	$("#addHoursButton").click(
 			function() {
 				// run script to add hours through ajax
-				addHours(mainTaskCommentsTable, document.getElementById("addHoursDate").value, $(
+				addHours(mainTaskCommentsTable, $("#addHoursDatePicker").val(), $(
 						"#addHoursHours").val(), $("#addHoursComment").val());
 			});
 });
@@ -117,6 +117,10 @@ $(function() {
  */
 $(document).ready(function() {
 	printTableDataInTable(mainTaskCommentsTable, 1);
-	document.getElementById('addHoursDate').valueAsDate = new Date();
+
+	$("#addHoursDatePicker").datepicker();
+	$("#addHoursDatePicker").datepicker('setDate', new Date());
+    $( "#addHoursDatePicker" ).datepicker( "option", "dateFormat", "dd-M-yy" );
 });
+</script>
 </script>
