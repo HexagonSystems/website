@@ -15,7 +15,7 @@ class TaskRouter
         $page = isset($getVars['location']) ? $getVars['location'] : 'empty';
 
         switch ($page) {
-            case "timesheetPage":
+            case "Tasks":
                	$controller = "TimesheetController";
                 break;
             default:

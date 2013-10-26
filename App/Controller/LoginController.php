@@ -2,9 +2,6 @@
 
 class LoginController extends Controller
 {
-	// private $loggedOutView = 'loginView';
-	// private $loggedInView = 'loggedInView';
-	// private $forgottenPassword = 'ResetPassword';
 
 	public function invoke()
 	{
@@ -13,7 +10,7 @@ class LoginController extends Controller
 		if (!isset($_GET['action']))
 		{
 			$this->template = 'LoginTemplate';
-			
+
 			//create a new view and pass it our template
 			$view = new LoginView($this->template,$this->footer);
 			$content ="";
@@ -26,7 +23,7 @@ class LoginController extends Controller
 			if($_GET['action'] == 'forgotPassword')
 			{
 				if(!isset($_POST['action']) && !isset($_POST['email'])){
-					$this->template = 'view/ResetPasswordTemplate.php';
+					$this->template = 'view/ResetPasswordTemplate.html';
 					
 					$view = new LoginView($this->template,$this->footer);
 					$content ="";
@@ -56,7 +53,7 @@ class LoginController extends Controller
 							$verify->invoke();
 						}else{
 							echo $user;
-							$this->template = 'view/'.$this->loggedOutView.'Template.php';
+							$this->template = 'View/Template/IndexTemplate.html';
 							
 							//create a new view and pass it our template
 							$view = new LoginView($this->template,$this->footer);
@@ -74,10 +71,10 @@ class LoginController extends Controller
 					//if $_POSTs arn't set
 					//NOt logged In
 					echo "Post not set";
-					$this->template = 'view/'.$this->$loggedOutView.'Template.php';
+					$this->template = 'View/Template/IndexTemplate.html';
 					
 					//create a new view and pass it our template
-					$view = new LoginView($this->template,$this->header,$this->footer,$this->nav);
+					$view = new LoginView($this->template,$this->footer);
 					$content ="";
 					$view->assign('title' , 'Loggged in');
 					$view->assign('content' , $content);
@@ -92,10 +89,10 @@ class LoginController extends Controller
 					if(!is_a($user, 'User')){
 						//NOt logged In
 						echo $user;
-						$this->template = 'view/'.$this->$loggedOutView.'Template.php';
+						$this->template = 'View/Template/IndexTemplate.html';
 						
 						//create a new view and pass it our template
-						$view = new LoginView($this->template,$this->header,$this->footer,$this->nav);
+						$view = new LoginView($this->template,$this->footer);
 						$content ="";
 						$view->assign('title' , 'Loggged in');
 						$view->assign('content' , $content);

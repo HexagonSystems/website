@@ -8,6 +8,7 @@ class Controller
     protected $database;
     protected $get;
     protected $post;
+    protected $navigation;
 
     /**
      * This is the default constructor for Controllers it features a non-required ability to add templates.
@@ -47,12 +48,24 @@ class Controller
     }
 
     /**
+     * Simple setter for the Database connection of the controller this is used for injecting the DB into any models the
+     * controller class.
+     * @param PDO $database Database connection to the App's database.
+     * @return Void
+     */
+    public function setNavigation($navigation)
+    {
+        $this->navigation = $navigation;
+    }
+
+    /**
      * Abstract function for triggering the controller.
      * This method needs to be extended in subclasses to add functionality.
      * @return Void
      */
     public function invoke()
     {
+            $this->header->setNavigation($this->navigation);
             $this->header->invoke();
 
     } // end function
