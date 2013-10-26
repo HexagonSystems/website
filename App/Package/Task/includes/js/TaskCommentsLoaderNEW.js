@@ -13,6 +13,7 @@ function loadComments(tableConfig, pageNum) {
 		pageNum : pageNum,
 		qty : 5
 	}, function(nakedJson) {
+		console.log(nakedJson);
 		nakedJson = $.parseJSON(nakedJson);
 		response = nakedJson.success;
 		if (response == true || response == "true") {

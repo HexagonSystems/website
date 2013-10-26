@@ -110,9 +110,6 @@ class TaskTimeSheet
 			}
 		}
 		
-		echo "Totals = <br/>";
-		var_dump($this->timesheetTotals);
-		
 		
 	}
 
