@@ -1,6 +1,6 @@
 <?php
 
-function autoloadAppBase($className) {
+function autoload($className) {
     $model      = AppBase.'/Model/'.$className.'.php';
     $controller = AppBase."/Controller/" . $className . ".php";
     $service    = AppBase."/Service/" . $className . ".php";
@@ -17,5 +17,5 @@ function autoloadAppBase($className) {
     }
 }
 
-spl_autoload_register("autoloadAppBase");
+spl_autoload_register("autoload");
 ?>
