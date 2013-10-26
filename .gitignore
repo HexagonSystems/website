@@ -1,3 +1,5 @@
 /designFiles/
 .project
 .settings/
+gitAutoUpdateScript.sh
+gitdater.php

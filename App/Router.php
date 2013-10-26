@@ -1,4 +1,6 @@
 <?php
+use Task\Task;
+use Task\TaskRouter;
 class Router
 {
     public function __construct()
@@ -20,17 +22,11 @@ class Router
             case "indexPage":
                 $controller = "IndexController";
                 break;
-            case "loginPage":
+            case "login":
                 $controller = "LoginController";
-                break;
-            case "registerPage":
-                $controller = "RegisterController";
                 break;
             case "accountPage":
                 $controller = "AccountController";
-                break;
-            case "verify":
-                $controller = "VerifyController";
                 break;
             case "navPage":
                 $controller = "NavController";
@@ -38,24 +34,33 @@ class Router
             case "adminPage":
                 $controller = "AdminController";
                 break;
-            case "viewBlog":
-                $controller = "BlogController";
-                break;
-            case "postPage":
-                $controller = "EditPostController";
+            case "timesheetPage":
+                $package = "Task";
+               	$controller = "TaskRouter";
                 break;
             case "logout":
                 $controller = "IndexController";
                 break;
+            case "config":
+            	$controller = "ConfigController";
+            	break;
             default:
                 $controller = "IndexController";
                 break;
         }//end switch
-
-        include_once( AppBase.'/Controller/'.$controller.'.php');
-        $controller = new $controller();
-        $controller->setDatabase($conn);
-        $controller->invoke();
+		
+        if(isset($package))
+        {	
+        	//require_once '\Package\Task\TaskRouter.php';
+        	$test = new TaskRouter();
+            $namespacedclass = $package.'\\'.$controller;
+            //$router = new $namespacedclass();
+            $namespacedclass::route($conn);
+        }else{
+            $controller = new $controller();
+            $controller->setDatabase($conn);
+            $controller->invoke();
+        }
     }// end route
     //end class
 }
