@@ -8,15 +8,9 @@ class IndexController extends Controller
     {
         parent::invoke();
         
-        if (!isset($_GET['action'])) {
-
-            $post = new Post();
-            $post->setDatabase($this->database);
-            $this->currentPagePosts = $post->getPosts(0, 10);
-
+        if (!isset($this->get['action'])) {
             //create a new view and pass it our template
-            $view = new IndexView($this->template,$this->footer, $this->currentPagePosts);
-            $view->assign('title' , 'Logged in');
+            $view = new IndexView($this->template,$this->footer);
         }
 
     } // end function
