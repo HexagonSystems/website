@@ -183,6 +183,7 @@ class TimesheetController extends Controller
 			
 			$taskTimeSheet->setDateRange($startDate, $endDate);
 			$taskTimeSheet->buildTimeSheetFromTaskHourArray($hoursObjectArray['data']);
+			$taskTimeSheet->generateTotals();
 			
 			$this->template = $this->template_viewHours;
 				
@@ -192,6 +193,7 @@ class TimesheetController extends Controller
 			$view = new TimesheetView($this->template,$this->footer, 0);
 			$view->assign('title' , 'Logged in');
 			$view->assign('timesheetData', $taskTimeSheet);
+			$view->assign('timesheetTotals', $taskTimeSheet);
 		}
 		else
 		{

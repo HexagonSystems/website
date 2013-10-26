@@ -8,12 +8,13 @@ class TaskTimeSheet
 	private $timesheetDates = array();
 	private $arrayOfUsersNames = array();
 	private $arrayOfTaskNames = array();
+	private $timesheetTotals = array();
 
 	/**
 	 * Builds and organises all of the data given through the array of Task Hours
-	 * 
+	 *
 	 * @param array $taskHourArray
-	 */
+	*/
 	function buildTimeSheetFromTaskHourArray($taskHourArray)
 	{
 		foreach($taskHourArray as $taskHour)
@@ -21,19 +22,19 @@ class TaskTimeSheet
 			$date = $taskHour->getDate();
 			$taskData = $taskHour->getTask();
 			$memberData = $taskHour->getMember();
-			
+
 			/* ADD TASK NAMES TO ARRAY FOR EASY ACCESS */
 			if(!array_key_exists($taskData['id'], $this->arrayOfTaskNames))
 			{
 				$this->arrayOfTaskNames[$taskData['id']] = $taskData['value'];
 			}
-			
+
 			/* ADD MEMBER NAMES TO ARRAY FOR EASY ACCESS */
 			if(!array_key_exists($memberData['id'], $this->arrayOfUsersNames))
 			{
 				$this->arrayOfUsersNames[$memberData['id']] = $memberData['value'];
 			}
-			
+
 			$this->timesheetArray[$memberData['id']][$taskData['id']][$date] = $taskHour->getHours();
 		}
 
@@ -58,7 +59,7 @@ class TaskTimeSheet
 				ksort($this->timesheetArray[$user][$task]);
 			}
 		}
-		
+
 		/*
 		 * For testing purposes
 		var_dump($this->timesheetDates);
@@ -66,6 +67,53 @@ class TaskTimeSheet
 		echo "<br/>";
 		var_dump($this->timesheetArray);
 		*/
+	}
+
+	function generateTotals()
+	{
+		foreach($this->timesheetArray as $user => $userTimesheet)
+		{
+			/* CREATE THE USER ARRAY IN TIME SHEET TOTALS */
+			if(!array_key_exists($user, $this->timesheetTotals))
+			{
+				$this->timesheetTotals[$user] 			= array();
+				$this->timesheetTotals[$user]['task'] 	= array();
+				$this->timesheetTotals[$user]['date']	= array();
+				$this->timesheetTotals[$user]['total']	= 0;
+			}
+				
+			$totalTaskHours = 0;
+			foreach($userTimesheet as $task => $taskTimesheet)
+			{
+				/* CREATE THE TASK ARRAY IN TIME SHEET TOTALS */
+				if(!array_key_exists($task, $this->timesheetTotals[$user]['task']))
+				{
+					$this->timesheetTotals[$user]['task'][$task] = 0;
+				}
+
+				foreach($taskTimesheet as $date => $hours)
+				{
+					/* CREATE THE DATE ARRAY IN TIME SHEET TOTALS */
+					if(!array_key_exists($date, $this->timesheetTotals[$user]['date']))
+					{
+						$this->timesheetTotals[$user]['date'][$date] = 0;
+					}
+					
+					if($hours !== "-")
+					{
+						$this->timesheetTotals[$user]['date'][$date]	+= $hours;
+						$this->timesheetTotals[$user]['task'][$task]	+= $hours;
+						$this->timesheetTotals[$user]['total']			+= $hours;
+					}
+
+				}
+			}
+		}
+		
+		echo "Totals = <br/>";
+		var_dump($this->timesheetTotals);
+		
+		
 	}
 
 	/**
@@ -93,10 +141,10 @@ class TaskTimeSheet
 
 		$this->timesheetDates = $dates;
 	}
-	
+
 	/**
 	 * Returns either the date or the date's index in the date array depending on which is requested
-	 * 
+	 *
 	 * @param unknown $value
 	 * @param unknown $searchByIndex
 	 * @return multitype:|mixed
@@ -111,7 +159,7 @@ class TaskTimeSheet
 			return array_search($value, $this->timesheetDates);
 		}
 	}
-	
+
 	/**
 	 * Returns the member's name using it's id
 	 *
@@ -128,10 +176,10 @@ class TaskTimeSheet
 			return "Id $memberId not found";
 		}
 	}
-	
+
 	/**
 	 * Returns the task name using the task's id
-	 * 
+	 *
 	 * @param int $taskId
 	 * @return string
 	 */
@@ -146,10 +194,27 @@ class TaskTimeSheet
 		}
 	}
 	
-	
+	function getTaskTotal($userId, $taskId)
+	{
+		if(array_key_exists($userId, $this->timesheetTotals))
+		{
+			if(array_key_exists($taskId, $this->timesheetTotals[$userId]['task']))
+			{
+				return $this->timesheetTotals[$userId]['task'][$taskId];
+			}else
+			{
+				return "Task ID not found";
+			}
+		}else
+		{
+			return "User ID not found";
+		}
+	}
+
+
 	/**
 	 * Returns the array holding all of the dates for this timesheet
-	 * 
+	 *
 	 * @return array:
 	 */
 	function getDateArray()
@@ -158,8 +223,18 @@ class TaskTimeSheet
 	}
 	
 	/**
-	 * Returns the array holding all of the timesheet data
+	 * Returns the array holding the totals for the timesheets
 	 * 
+	 * @return array:
+	 */
+	function getTotalsArray()
+	{
+		return $this->timesheetTotals;
+	}
+
+	/**
+	 * Returns the array holding all of the timesheet data
+	 *
 	 * @return array
 	 */
 	function toArray()
