@@ -1,38 +1,21 @@
 <?php
-class AutoLoader {
- 
-    static private $classNames = array();
- 
-    /**
-     * Store the filename (sans extension) & full path of all ".php" files found
-     */
-    public static function registerDirectory($dirName) {
- 
-        $di = new DirectoryIterator($dirName);
-        foreach ($di as $file) {
- 
-            if ($file->isDir() && !$file->isLink() && !$file->isDot()) {
-                // recurse into directories other than a few special ones
-                self::registerDirectory($file->getPathname());
-            } elseif (substr($file->getFilename(), -4) === '.php') {
-                // save the class name / path of a .php file found
-                $className = substr($file->getFilename(), 0, -4);
-                AutoLoader::registerClass($className, $file->getPathname());
-            }
-        }
+
+function autoloadAppBase($className) {
+    $model      = AppBase.'/Model/'.$className.'.php';
+    $controller = AppBase."/Controller/" . $className . ".php";
+    $service    = AppBase."/Service/" . $className . ".php";
+    $view       = AppBase."/View/" . $className . ".php";
+    
+    if (is_readable($model)) {
+        require $model;
+    }elseif (is_readable($controller)) {
+        require $controller;
+    }elseif (is_readable($service)) {
+        require $service;
+    }elseif (is_readable($view)) {
+        require $view;
     }
- 
-    public static function registerClass($className, $fileName) {
-        AutoLoader::$classNames[$className] = $fileName;
-    }
- 
-    public static function loadClass($className) {
-        if (isset(AutoLoader::$classNames[$className])) {
-            require_once(AutoLoader::$classNames[$className]);
-        }
-     }
- 
 }
- 
-spl_autoload_register(array('AutoLoader', 'loadClass'));
+
+spl_autoload_register("autoloadAppBase");
 ?>
