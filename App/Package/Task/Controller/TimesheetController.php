@@ -91,9 +91,9 @@ class TimesheetController extends Controller
 							$attribute_value = $getDataValue;
 							$attribute_searchById = false; // Search for text by default
 							
-							if(isset($_GET[$exploded . '_searchBy']))
+							if(isset($_GET[$exploded[0] . '_searchBy']))
 							{
-								if($_GET[$exploded . '_searchBy'] === 'id') // If the user is searching by id
+								if($_GET[$exploded[0] . '_searchBy'] == 'id') // If the user is searching by id
 								{
 									$attribute_searchById = true;
 								}
@@ -113,6 +113,8 @@ class TimesheetController extends Controller
 			}
 			
 			$searchHelper->setDatabase($this->database);
+			
+			$result = FALSE;
 			
 			if(isset($_GET['searchFor']))
 			{

@@ -13,7 +13,6 @@ function loadComments(tableConfig, pageNum) {
 		pageNum : pageNum,
 		qty : 5
 	}, function(nakedJson) {
-		console.log(nakedJson);
 		nakedJson = $.parseJSON(nakedJson);
 		response = nakedJson.success;
 		if (response == true || response == "true") {
@@ -201,6 +200,7 @@ function addHours(tableConfig, workedDate, workedHours, workedComment) {
 		request : "addHours",
 		taskId : tableConfig['taskId'],
 		memberId : tableConfig['memberId'],
+		memberFirstName : tableConfig['memberFirstName'],
 		workedDate : workedDate,
 		workedHours : workedHours,
 		workedComment : workedComment
@@ -238,7 +238,7 @@ function assignCommentTagClick()
 				function() {
 					tempTagString = $(this).text();
 					//$(".searchModalButton").prop('href')
-					$('.searchModalButton').attr('href', function(i, a){ return a + "&tag_text=" + tempTagString });
+					$('.searchModalButton').attr('href', function(i, a){ return a + "&tag_value=" + tempTagString });
 					//document.getElementByClass('searchModalButton').href += "&" + tempTagString;
 					$('#modal_pickSearchMethod').modal('show');
 				});

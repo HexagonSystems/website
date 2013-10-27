@@ -40,7 +40,7 @@ class TaskHoursHandler
 	 * @param unknown $workedDate
 	 * @param int $workedHours
 	 */
-	function addHours($taskId, $memberId, $workedDate, $workedHours, $workedComment)
+	function addHours($taskId, $memberId, $memberName, $workedDate, $workedHours, $workedComment)
 	{
 		$masterResponse = array();
 		
@@ -61,7 +61,7 @@ class TaskHoursHandler
 			
 			/* STRUCTURING DATA TO GO INTO CREATE TASK COMMENT */
 			$tempTaskCommentTag = "@addedHours";
-			$tempTaskCommentTitle = "Alex has added ".$workedHours." hours for the date ".$workedDate;
+			$tempTaskCommentTitle = "$memberName has added ".$workedHours." hours for the date ".$workedDate;
 			
 			/* CREATE THE COMMENT IN THE DATABASE */
 			$taskCommentsHandler = new TaskCommentsHandler();

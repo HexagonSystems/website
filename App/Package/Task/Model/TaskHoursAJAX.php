@@ -27,7 +27,7 @@ if(!isset($_POST['request']))
 		case "addHours":
 			if(commonAttributesExist() && addHoursAttributesExists())
 			{
-				$returnValue = $taskHandler->addHours($_POST['taskId'], $_POST['memberId'], $_POST['workedDate'], $_POST['workedHours'], $_POST['workedComment']);
+				$returnValue = $taskHandler->addHours($_POST['taskId'], $_POST['memberId'], $_POST['memberFirstName'], $_POST['workedDate'], $_POST['workedHours'], $_POST['workedComment']);
 				
 				if($returnValue['success'] == true)
 				{

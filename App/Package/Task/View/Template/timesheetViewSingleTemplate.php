@@ -22,7 +22,8 @@
 <a data-toggle="modal" href="#modal_hours"
 	class="btn btn-primary btn-sm">Add Hours</a>
 <button class="btn btn-primary btn-sm">Edit Task</button>
-<button class="btn btn-primary btn-sm" id="buttonSlideIn">Testing Add Comment With Slide In</button>
+<button class="btn btn-primary btn-sm" id="buttonSlideIn">Testing Add
+	Comment With Slide In</button>
 <?php include_once 'modal_comment.php'; ?>
 <?php include_once 'modal_hours.php'; ?>
 <?php include_once 'modal_pickSearchMethod.php'; ?>
@@ -68,6 +69,7 @@ mainTaskCommentsTable = {
 		'quantity_per_page'	:	5,
 		'last_page'			:	-1,
 		'memberId'			:	<?php echo unserialize($_SESSION['accountObject'])->getMemberId(); ?>,
+		'memberFirstName'	: 	"<?php echo unserialize($_SESSION['accountObject'])->getFirstName(); ?>",
 		'taskId'			:	<?php echo $data['task']->getId(); ?>,
 		'content'			:	new Array()
 };
@@ -107,13 +109,7 @@ $(function() {
 });
 
 /**
- * jQuery Datepicker
- */
-
-/**
  * Page on load
- * 
- * NEEDS TO BE REMOVED
  */
 $(document).ready(function() {
 	printTableDataInTable(mainTaskCommentsTable, 1);
