@@ -10,6 +10,8 @@ $ERROR_MISSING_ATTRIBUTES = "Required attributes not found";
  * 	- create
  *  - load
  */
+
+var_dump($_SESSION);
 if(!isset($_POST['request']))
 {
 	echo "Error: Please submit a request";

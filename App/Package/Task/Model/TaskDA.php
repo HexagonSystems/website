@@ -146,7 +146,6 @@ class TaskDA
 			$query->execute();
 
 			$arrayOfMembers = array();
-
 			foreach ($query as $row) {
 				$arrayOfMembers[$row['memberId']] = $row['firstName'];
 			}

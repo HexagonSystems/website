@@ -60,8 +60,8 @@ class TaskHoursHandler
 			$masterResponse['hours']['data'] = $tempHours;
 			
 			/* STRUCTURING DATA TO GO INTO CREATE TASK COMMENT */
-			$tempTaskCommentTag = "@addedHours";
-			$tempTaskCommentTitle = "$memberName has added ".$workedHours." hours for the date ".$workedDate;
+			$tempTaskCommentTag = "addedHours";
+			$tempTaskCommentTitle = "I have added ".$workedHours." hours for the date ".$workedDate;
 			
 			/* CREATE THE COMMENT IN THE DATABASE */
 			$taskCommentsHandler = new TaskCommentsHandler();

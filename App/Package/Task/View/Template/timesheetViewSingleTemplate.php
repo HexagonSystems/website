@@ -23,8 +23,6 @@
 	class="btn btn-primary btn-sm">Add Hours</a>
 <a data-toggle="modal" href="#modal_editTask"
 	class="btn btn-primary btn-sm">Edit Task</a>
-<button class="btn btn-primary btn-sm" id="buttonSlideIn">Testing Add
-	Comment With Slide In</button>
 <?php include_once 'modal_comment.php'; ?>
 <?php include_once 'modal_hours.php'; ?>
 <?php include_once 'modal_editTask.php'; ?>
@@ -143,7 +141,7 @@ $(function() {
  * Page on load
  */
 $(document).ready(function() {
-	printTableDataInTable(mainTaskCommentsTable, 1);
+	loadComments(mainTaskCommentsTable, 1);
 
 	$("#addHoursDatePicker").datepicker();
 	$("#addHoursDatePicker").datepicker('setDate', new Date());

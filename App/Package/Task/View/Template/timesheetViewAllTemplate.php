@@ -73,6 +73,6 @@ $(function() {
  * THIS NEEDS TO BE REMOVED
  */
 $(document).ready(function() {
-	printTableDataInTable(mainTaskTable, 1);
+	loadTasks(mainTaskTable, 1);
 });
 </script>

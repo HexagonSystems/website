@@ -17,8 +17,25 @@ function loadComments(tableConfig, pageNum) {
 		response = nakedJson.success;
 		if (response == true || response == "true") {
 			var jsonObject = nakedJson.data;
-			updateTableContentArray(tableConfig, jsonObject, pageNum);
-			assignCommentTagClick();
+			var arrayToLoopOver = updateTableContentArray(tableConfig,
+					jsonObject, pageNum);
+
+			if (arrayToLoopOver) {
+				$.each(arrayToLoopOver, function(singleArray) {
+					printSingleComment(tableConfig,
+							arrayToLoopOver[singleArray]['tag'],
+							arrayToLoopOver[singleArray]['title'],
+							arrayToLoopOver[singleArray]['content'],
+							arrayToLoopOver[singleArray]['memberId'],
+							arrayToLoopOver[singleArray]['date'], false);
+				});
+				assignTableContentAccordion()
+
+				assignCommentTagClick();
+			} else {
+				loadComments(tableConfig, pageNum);
+			}
+
 		}
 	});
 }
@@ -26,7 +43,7 @@ function loadComments(tableConfig, pageNum) {
 /**
  * Prints the comments into the comment table
  */
-function printTableDataInTable(tableConfig, pageNum) {
+function printTableDataInTableOLD(tableConfig, pageNum) {
 	// If the page of comments isn't already loaded, load it
 	if (pageAlreadyLoaded(tableConfig, pageNum) === false
 			&& pageNum != tableConfig['last_page']) {
@@ -72,12 +89,11 @@ function printSingleComment(tableConfig, commentTag, commentTitle,
 	tableRow.className = 'parentOfAccordion';
 
 	/* TAG */
-		
-		
+
 	var tagTD = document.createElement('td');
 	var tagAHREF = document.createElement('a');
 	tagAHREF.title = commentTag;
-	//tagAHREF.href = "#modal_pickSearchMethod";
+	// tagAHREF.href = "#modal_pickSearchMethod";
 	tagAHREF.className = "commentTag";
 	tagAHREF.innerHTML = commentTag;
 	$(tagAHREF).attr("data-toggle", "modal");
@@ -119,14 +135,14 @@ function printSingleComment(tableConfig, commentTag, commentTitle,
 	/* MEMBER */
 	var memberIdTD = document.createElement('td');
 	memberIdTD.innerHTML = commentMember;
-	
-	/*var taskMemberSingleAHREF = document.createElement('a');
-	taskMemberSingleAHREF.title = taskMembers[member];
-	taskMemberSingleAHREF.href = "#";
-	taskMemberSingleAHREF.innerHTML = taskMembers[member];
-	taskMembersTD.appendChild(taskMemberSingleAHREF);
-	taskMembersTD.innerHTML += ", ";
-	memberIdTD.appendChild(taskMembersTD);*/
+
+	/*
+	 * var taskMemberSingleAHREF = document.createElement('a');
+	 * taskMemberSingleAHREF.title = taskMembers[member];
+	 * taskMemberSingleAHREF.href = "#"; taskMemberSingleAHREF.innerHTML =
+	 * taskMembers[member]; taskMembersTD.appendChild(taskMemberSingleAHREF);
+	 * taskMembersTD.innerHTML += ", "; memberIdTD.appendChild(taskMembersTD);
+	 */
 
 	/* DATE */
 	var dateTD = document.createElement('td');
@@ -227,20 +243,21 @@ function addHours(tableConfig, workedDate, workedHours, workedComment) {
 	});
 }
 
-function assignCommentTagClick()
-{
+function assignCommentTagClick() {
 	/**
 	 * Add hours button
 	 * 
 	 */
 	$(function() {
-		$(".commentTag").click(
-				function() {
-					tempTagString = $(this).text();
-					//$(".searchModalButton").prop('href')
-					$('.searchModalButton').attr('href', function(i, a){ return a + "&tag_value=" + tempTagString });
-					//document.getElementByClass('searchModalButton').href += "&" + tempTagString;
-					$('#modal_pickSearchMethod').modal('show');
-				});
+		$(".commentTag").click(function() {
+			tempTagString = $(this).text();
+			// $(".searchModalButton").prop('href')
+			$('.searchModalButton').attr('href', function(i, a) {
+				return a + "&tag_value=" + tempTagString
+			});
+			// document.getElementByClass('searchModalButton').href += "&" +
+			// tempTagString;
+			$('#modal_pickSearchMethod').modal('show');
+		});
 	});
 }

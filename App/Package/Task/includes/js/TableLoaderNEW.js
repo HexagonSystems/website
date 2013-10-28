@@ -65,7 +65,7 @@ function updateTableContentArray(tableConfig, jsonObject, pageNum) {
 
 	findLastPage(tableConfig);
 
-	printTableDataInTable(tableConfig, pageNum);
+	return printTableDataInTable(tableConfig, pageNum);
 }
 
 function findLastPage(tableConfig) {
@@ -76,4 +76,35 @@ function findLastPage(tableConfig) {
 	} else {
 		tableConfig['last_page'] = tableConfig['content'].length / tableConfig['quantity_per_page'];
 	}
+}
+
+/**
+ * Returns the next items to print out to the screen
+ */
+function printTableDataInTable(tableConfig, pageNum) {
+	// If the page of comments isn't already loaded, load it
+	if (pageAlreadyLoaded(tableConfig, pageNum) === false
+			&& pageNum != tableConfig['last_page']) {
+		return false;
+	} else {
+		var positionToStartOn = (pageNum - 1)
+				* tableConfig['quantity_per_page'];
+		var positionToEndOn = positionToStartOn
+				+ tableConfig['quantity_per_page'];
+
+		var arrayToLoopOver = tableConfig['content'].concat();
+
+		if (tableConfig['last_page'] > -1
+				&& tableConfig['last_page'] == pageNum) {
+			arrayToLoopOver = arrayToLoopOver.slice(positionToStartOn);
+		} else {
+			arrayToLoopOver = arrayToLoopOver.slice(positionToStartOn,
+					positionToEndOn);
+		}
+
+		emptyTableBody(tableConfig);
+		
+		return arrayToLoopOver;
+	}
+
 }

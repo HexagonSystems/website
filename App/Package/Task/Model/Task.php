@@ -102,7 +102,14 @@ class Task extends \ArticleEntity
 	
 	public function getMember($memberId)
 	{
-		return($this->article['members']);
+		if(isset($this->article['members']))
+		{
+			return($this->article['members']);
+		}else
+		{
+			return false;
+		}
+		
 	}
 	
 	public function getUpdates()

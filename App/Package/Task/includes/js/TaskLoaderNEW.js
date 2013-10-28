@@ -11,7 +11,7 @@
 /**
  * Load Comments through JSON
  */
-function loadTableData(tableConfig, pageNum) {
+function loadTasks(tableConfig, pageNum) {
 	if (quantity = undefined) {
 		quantity = COMMENTS_PER_PAGE;
 	}
@@ -25,7 +25,24 @@ function loadTableData(tableConfig, pageNum) {
 		response = nakedJson.success;
 		if (response == true || response == "true") {
 			var jsonObject = nakedJson.data;
-			updateTableContentArray(tableConfig, jsonObject, pageNum);
+			var arrayToLoopOver = updateTableContentArray(tableConfig,
+					jsonObject, pageNum);
+			if (arrayToLoopOver) {
+				$.each(arrayToLoopOver, function(singleArray) {
+					printSingleTask(tableConfig, arrayToLoopOver[singleArray]['id'],
+							arrayToLoopOver[singleArray]['title'],
+							arrayToLoopOver[singleArray]['content'],
+							arrayToLoopOver[singleArray]['status'],
+							arrayToLoopOver[singleArray]['members'],
+							arrayToLoopOver[singleArray]['lastUpdate'].memberId,
+							arrayToLoopOver[singleArray]['lastUpdate'].postedDate,
+							false);
+				});
+				assignTableContentAccordion()
+			} else {
+				loadTasks(tableConfig, pageNum);
+			}
+
 		}
 	});
 }
@@ -34,33 +51,38 @@ function loadTableData(tableConfig, pageNum) {
  * Creates a task in the database
  */
 function createTask(tableConfig, taskTitle, taskDescription, taskStatus) {
-	$.post(ajaxBase + "/Model/TaskAJAX.php", {
-		request : "create",
-		memberId : tableConfig['memberId'],
-		title : taskTitle,
-		content : taskDescription,
-		status : taskStatus
-	}, function(data) {
-		data = $.parseJSON(data);
-		response = data.success;
-		if (response == true || response == "true") {
-			task = data.task.data;
-			hours = data.hours.data;
-			comment = data.comment.data;
-			/* ASSUME FIRST NAME IS CORRECT */
-			var fakeMemberArray = {};
-			fakeMemberArray[tableConfig['memberId']] = tableConfig['memberFirstName'];
-			var jsonString = JSON.stringify(fakeMemberArray);
-			fakeJSONObject = JSON.parse(jsonString)
-			
-			printSingleTask(tableConfig, task.id, task.title, task.content, task.status,
-					fakeJSONObject, comment.memberId, comment.date, true);
-			
-			assignTableContentAccordion();
-		} else {
-			alert("success = " + data.success + " " + data);
-		}
-	});
+	$
+			.post(
+					ajaxBase + "/Model/TaskAJAX.php",
+					{
+						request : "create",
+						memberId : tableConfig['memberId'],
+						title : taskTitle,
+						content : taskDescription,
+						status : taskStatus
+					},
+					function(data) {
+						data = $.parseJSON(data);
+						response = data.success;
+						if (response == true || response == "true") {
+							task = data.task.data;
+							hours = data.hours.data;
+							comment = data.comment.data;
+							/* ASSUME FIRST NAME IS CORRECT */
+							var fakeMemberArray = {};
+							fakeMemberArray[tableConfig['memberId']] = tableConfig['memberFirstName'];
+							var jsonString = JSON.stringify(fakeMemberArray);
+							fakeJSONObject = JSON.parse(jsonString)
+
+							printSingleTask(tableConfig, task.id, task.title,
+									task.content, task.status, fakeJSONObject,
+									comment.memberId, comment.date, true);
+
+							assignTableContentAccordion();
+						} else {
+							alert("success = " + data.success + " " + data);
+						}
+					});
 }
 
 /**
@@ -90,19 +112,22 @@ function editTask(tableConfig, taskId, taskTitle, taskDescription, taskStatus) {
 /**
  * Prints the comments into the comment table
  */
-function printTableDataInTable(tableConfig, pageNum) {
+function printTableDataInTableOLD(tableConfig, pageNum) {
 
 	// If the page of comments isn't already loaded, load it
 	if (pageAlreadyLoaded(tableConfig, pageNum) === false
 			&& pageNum != tableConfig['last_page']) {
 		loadTableData(tableConfig, pageNum);
 	} else {
-		var positionToStartOn = (pageNum - 1) * tableConfig['quantity_per_page'];
-		var positionToEndOn = positionToStartOn + tableConfig['quantity_per_page'];
+		var positionToStartOn = (pageNum - 1)
+				* tableConfig['quantity_per_page'];
+		var positionToEndOn = positionToStartOn
+				+ tableConfig['quantity_per_page'];
 
 		var arrayToLoopOver = tableConfig['content'].concat();
 
-		if (tableConfig['last_page'] > -1 && tableConfig['last_page'] == pageNum) {
+		if (tableConfig['last_page'] > -1
+				&& tableConfig['last_page'] == pageNum) {
 			arrayToLoopOver = arrayToLoopOver.slice(positionToStartOn);
 		} else {
 			arrayToLoopOver = arrayToLoopOver.slice(positionToStartOn,
@@ -110,7 +135,7 @@ function printTableDataInTable(tableConfig, pageNum) {
 		}
 
 		emptyTableBody(tableConfig);
-
+		return arrayToLoopOver;
 		$.each(arrayToLoopOver, function(singleArray) {
 			printSingleTask(tableConfig, arrayToLoopOver[singleArray]['id'],
 					arrayToLoopOver[singleArray]['title'],
@@ -129,8 +154,8 @@ function printTableDataInTable(tableConfig, pageNum) {
 /**
  * Prints a single comment
  */
-function printSingleTask(tableConfig, taskId, taskTitle, taskDscr, taskStatus, taskMembers,
-		taskLastUpdateMemberId, taskLastUpdateDate, commentSlideIn) {
+function printSingleTask(tableConfig, taskId, taskTitle, taskDscr, taskStatus,
+		taskMembers, taskLastUpdateMemberId, taskLastUpdateDate, commentSlideIn) {
 	/* TABLE ROW */
 	var tableRow = document.createElement('tr');
 	tableRow.className = 'parentOfAccordion';
@@ -182,25 +207,25 @@ function printSingleTask(tableConfig, taskId, taskTitle, taskDscr, taskStatus, t
 		taskMembersTD.appendChild(taskMemberSingleAHREF);
 		taskMembersTD.innerHTML += ", ";
 	});
-	
+
 	taskMembersTD.innerHTML = taskMembersTD.innerHTML.slice(0, -2);
 
 	/* Last Update */
 	var taskLastUpdateTD = document.createElement('td');
-	
+
 	var taskMemberSingleAHREF = document.createElement('a');
 	taskMemberSingleAHREF.title = taskMembers[taskLastUpdateMemberId];
 	taskMemberSingleAHREF.href = "#";
 	taskMemberSingleAHREF.innerHTML = taskMembers[taskLastUpdateMemberId];
 	taskLastUpdateTD.appendChild(taskMemberSingleAHREF);
 	taskLastUpdateTD.innerHTML += " on " + taskLastUpdateDate;
-	
+
 	/* APPEND EVERYTHING TO TABLE ROW */
 	tableRow.appendChild(taskStatusTD);
 	tableRow.appendChild(taskDscrTD);
 	tableRow.appendChild(taskMembersTD);
 	tableRow.appendChild(taskLastUpdateTD);
-	
+
 	if (commentSlideIn) {
 		$(tableRow).hide().prependTo(tableConfig['print_location']).fadeIn(
 				'slow');

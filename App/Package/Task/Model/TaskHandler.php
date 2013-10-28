@@ -59,7 +59,7 @@ class TaskHandler
 		{
 			/* UPDATE TEMP TASK WITH ID THAT WAS JUST GENERATED  VIA AUTO INCREMENT IN DATABASE */
 			$tempTask->setId($taskDAReturn['taskId']);
-			$tempTask->loadMembers(); // This is a very lazy way of doing this
+			//$tempTask->loadMembers(); // This is a very lazy way of doing this
 				
 			/* ADD TASK TO MASTER ARRAY */
 			$masterArray['task']['success'] = true;
@@ -72,7 +72,7 @@ class TaskHandler
 			/* ADD HOURS INTO DATABASE */
 			$taskHoursHandler = new TaskHoursHandler();
 			$taskHoursHandler->setDatabase($this->databaseHolder);
-			$taskHoursHandlerResponse = $taskHoursHandler->addHours($taskDAReturn['taskId'], $memberId, unserialize($_SESSION['accountObject'])->getFirstName(), $date, 0, "Task created");
+			$taskHoursHandlerResponse = $taskHoursHandler->addHours($taskDAReturn['taskId'], $memberId, $tempTask->getMember($memberId), $date, 0, "Task created");
 				
 			if($taskHoursHandlerResponse['success'] == true)
 			{
