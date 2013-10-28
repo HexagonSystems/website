@@ -236,6 +236,40 @@ class TaskDA
 		return $this->createTask($taskObject->getTitle(), $taskObject->getContent(), $taskObject->getStatus());
 	}
 	
+	function EditTask($id, $title, $description, $status)
+	{
+		try {
+	
+			$statement = 'UPDATE `task`
+					SET `name` = :name,
+					`details` = :details,
+					`status` = :status
+					WHERE `taskId` = :taskId';
+	
+			$query = $this->database->prepare($statement);
+			$query->bindParam(':taskId'		, $id		, \PDO::PARAM_INT);
+			$query->bindParam(':name'		, $title		, \PDO::PARAM_STR);
+			$query->bindParam(':details'	, $description	, \PDO::PARAM_STR);
+			$query->bindParam(':status'		, $status		, \PDO::PARAM_STR);
+	
+			$query->execute();
+				
+			$returnArray = array();
+			$returnArray['success'] = true;
+			return $returnArray;
+		} catch (\PDOException $e) {
+			return createError($e);
+		}
+	}
+
+	function editTaskFromObject($taskObject)
+	{
+		/* MAYBE DO A CHECK HERE IF THE MEMBER HAS THE CORRECT ACCESS LEVEL */
+		$returnArray = $this->editTask($taskObject->getId(), $taskObject->getTitle(), $taskObject->getContent(), $taskObject->getStatus());
+		$returnArray['data'] = $taskObject;
+		return $returnArray;
+	}
+	
 	/**
 	 * Creates an array that holds information about the error
 	 *

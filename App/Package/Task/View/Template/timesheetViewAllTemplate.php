@@ -58,14 +58,12 @@ $(function() {
 
 /**
  * Create comment button
- * 
- * THIS NEEDS TO BE REMOVED
  */
 $(function() {
 	$("#createTaskButton").click(
 			function() {
-				createTask(mainTaskTable, $("#createTaskTitle").val(), $("#createTaskDscr")
-						.val(), $("#createTaskStatus option:selected").text());
+				createTask(mainTaskTable, $("#modal_taskTitle").val(), $("#modal_taskDscr")
+						.val(), $("#modal_taskStatus option:selected").text());
 			});
 });
 

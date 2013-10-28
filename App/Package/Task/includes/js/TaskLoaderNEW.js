@@ -31,7 +31,7 @@ function loadTableData(tableConfig, pageNum) {
 }
 
 /**
- * Creates a comment in the database
+ * Creates a task in the database
  */
 function createTask(tableConfig, taskTitle, taskDescription, taskStatus) {
 	$.post(ajaxBase + "/Model/TaskAJAX.php", {
@@ -59,6 +59,30 @@ function createTask(tableConfig, taskTitle, taskDescription, taskStatus) {
 			assignTableContentAccordion();
 		} else {
 			alert("success = " + data.success + " " + data);
+		}
+	});
+}
+
+/**
+ * Updates a tasks information in the database
+ */
+function editTask(tableConfig, taskId, taskTitle, taskDescription, taskStatus) {
+	$.post(ajaxBase + "/Model/TaskAJAX.php", {
+		request : "edit",
+		memberId : tableConfig['memberId'],
+		taskId : taskId,
+		title : taskTitle,
+		content : taskDescription,
+		status : taskStatus
+	}, function(data) {
+		data = $.parseJSON(data);
+		response = data.success;
+		if (response == true || response == "true") {
+			$(tableConfig['titleLocation']).text(taskTitle);
+			$(tableConfig['contentLocation']).text(taskDescription);
+			$(tableConfig['statusLocation']).text(taskStatus);
+		} else {
+			alert("Soemthing went wrong");
 		}
 	});
 }
