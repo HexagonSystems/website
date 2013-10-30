@@ -1,5 +1,9 @@
 <?php
 namespace Task;
+/**
+ * @author Alex
+ *
+ */
 class TaskHandler
 {
 
@@ -8,11 +12,21 @@ class TaskHandler
 	private $currentTest;
 	private $failReason;
 
+	/**
+	 * 
+	 */
 	function __construct()
 	{
 		$this->taskDA = new TaskDA();
+		
 	}
 
+	/**
+	 * 
+	 * @param unknown $database
+	 * 
+	 * @author Alex Robinson <alex-robinson@live.com>
+	 */
 	public function setDatabase($database)
 	{
 		$this->taskDA->setDatabase($database);
@@ -104,7 +118,17 @@ class TaskHandler
 		$taskDAReturn = $this->taskDA->EditTaskFromObject($tempTask);
 
 		return $taskDAReturn;
-			
+	}
+	
+	/**
+	 * Gets all of the possible status for a Task
+	 * 
+	 * @author Alex Robinson <alex-robinson@live.com>
+	 */
+	public function getAllTaskStatus()
+	{
+		$taskDAReturn = $this->taskDA->getAllTaskStatus();
+		return $taskDAReturn;
 	}
 
 /**

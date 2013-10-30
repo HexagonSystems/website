@@ -1,5 +1,5 @@
 <a data-toggle="modal" href="#modal_createTask"
-	class="btn btn-primary btn-sm">Add Update</a>
+	class="btn btn-primary btn-sm">Create Task</a>
 <?php include_once 'modal_createTask.php'; ?>
 
 <table
