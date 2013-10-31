@@ -9,9 +9,9 @@ namespace Task;
 //  */hexagon/app/
 
 const AppBaseSTRIPPED = "App/";
-const Base = "Package/Task";
+const Base = "Package/Task/";
 
-require_once(AppBase.'/'.Base.'/Service/Autoloader.php');
+require_once(AppBase.'/'.Base.'Service/Autoloader.php');
 
 // require_once('DataBase.php');
 
