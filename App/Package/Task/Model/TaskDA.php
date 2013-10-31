@@ -32,18 +32,18 @@ class TaskDA
 					LEFT JOIN `task` tsk
 					ON tskCom.taskId = tsk.taskId
 					ORDER BY tskCom.postedDate DESC
-					
+						
 					) AS my_table
 					GROUP BY taskId
 					ORDER BY postedDate DESC
 					LIMIT :starting, :quantity";
 
 			$query = $this->database->prepare($statement);
-			
+				
 			$starting = ($starting - 1) * $quantity;
-			
+				
 			$quantity += 0;
-			
+				
 			$query->bindParam(':starting'   , $starting , \PDO::PARAM_INT);
 			$query->bindParam(':quantity'   , $quantity	, \PDO::PARAM_INT);
 
@@ -67,7 +67,7 @@ class TaskDA
 						"memberId" => $row['memberId'],
 						"postedDate" => $row['postedDate'],
 				));
-				
+
 				array_push($arrayOfTasks['data'], $tempObject);
 			}
 			return $arrayOfTasks;
@@ -146,7 +146,6 @@ class TaskDA
 			$query->execute();
 
 			$arrayOfMembers = array();
-
 			foreach ($query as $row) {
 				$arrayOfMembers[$row['memberId']] = $row['firstName'];
 			}
@@ -220,7 +219,7 @@ class TaskDA
 			$query->bindParam(':status'		, $status		, \PDO::PARAM_STR);
 
 			$query->execute();
-			
+				
 			$returnArray = array();
 			$returnArray['success'] = true;
 			$returnArray['taskId'] = $this->database->lastInsertId();
@@ -229,13 +228,94 @@ class TaskDA
 			return createError($e);
 		}
 	}
-	
+
 	function createTaskFromObject($taskObject)
 	{
 		/* MAYBE DO A CHECK HERE IF THE MEMBER HAS THE CORRECT ACCESS LEVEL */
 		return $this->createTask($taskObject->getTitle(), $taskObject->getContent(), $taskObject->getStatus());
 	}
-	
+
+	function EditTask($id, $title, $description, $status)
+	{
+		try {
+
+			$statement = 'UPDATE `task`
+					SET `name` = :name,
+					`details` = :details,
+					`status` = :status
+					WHERE `taskId` = :taskId';
+
+			$query = $this->database->prepare($statement);
+			$query->bindParam(':taskId'		, $id		, \PDO::PARAM_INT);
+			$query->bindParam(':name'		, $title		, \PDO::PARAM_STR);
+			$query->bindParam(':details'	, $description	, \PDO::PARAM_STR);
+			$query->bindParam(':status'		, $status		, \PDO::PARAM_STR);
+
+			$query->execute();
+
+			$returnArray = array();
+			$returnArray['success'] = true;
+			return $returnArray;
+		} catch (\PDOException $e) {
+			return createError($e);
+		}
+	}
+
+	function editTaskFromObject($taskObject)
+	{
+		/* MAYBE DO A CHECK HERE IF THE MEMBER HAS THE CORRECT ACCESS LEVEL */
+		$returnArray = $this->editTask($taskObject->getId(), $taskObject->getTitle(), $taskObject->getContent(), $taskObject->getStatus());
+		$returnArray['data'] = $taskObject;
+		return $returnArray;
+	}
+
+	/**
+	 * Gets all possible Task status'
+	 * 
+	 * @return array
+	 */
+	function getAllTaskStatus()
+	{
+		$statement = "SHOW COLUMNS FROM `task` WHERE Field = 'status'";
+
+		try{
+			$query = $this->database->prepare($statement);
+
+			$query->execute();
+			
+			$returnArray = array();
+			$returnArray['success'] = true;
+			$returnArray['data'] = array();
+			/*
+			 * Inspiration for code http://akinas.com/pages/en/blog/mysql_enum/
+			* Regex taken straight from website
+			* 19/04/2013
+			*/
+			if($query->rowCount())
+			{
+				foreach($query as $row){
+					$enumValues = $row[1];
+				}
+					
+				$regex = "/'(.*?)'/";
+				preg_match_all( $regex , $enumValues, $enum_array );
+				$enum_fields = $enum_array[1];
+				
+				foreach($enum_fields as $row){
+					array_push($returnArray['data'], $row);
+				}
+				return $returnArray;
+			}else
+			{
+				return $this->createError("No status' found");
+			}
+			
+			
+		} catch(PDOException $e) {
+			return $this->createError($e);
+		} //end of try/catch statement;
+	}
+
 	/**
 	 * Creates an array that holds information about the error
 	 *

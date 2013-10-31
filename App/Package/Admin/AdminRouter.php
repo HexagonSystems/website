@@ -1,9 +1,9 @@
 <?php
-Namespace Task;
+Namespace Admin;
 
 require_once('Config/Config.php');
 
-class TaskRouter
+class AdminRouter
 {
     public function __construct()
     {
@@ -22,13 +22,13 @@ class TaskRouter
         }
         
         switch ($page) {
-        	case "all":
+        	case "home":
         		$controller = "AllTimesheetController";
         		break;
-            case "single":
-               	$controller = "SingleTimesheetController";
+            case "user":
+               	$controller = "UserManagementController";
                 break;
-            case "search":
+            case "task":
             	$controller = "SearchTimesheetController";
             	break;
             case "report":
@@ -40,7 +40,7 @@ class TaskRouter
         }//end switch
 
         //include_once( AppBase.'/Controller/'.$controller.'.php');
-        $controller = "Task\\".$controller;
+        $controller = "Admin\\".$controller;
         $controller = new $controller;
         $controller->setDatabase($conn);
         $controller->invoke();

@@ -44,7 +44,7 @@ foreach($data['timesheetData']->toArray() as $tableUser => $tableData)
 <script>
     $(document).ready(function () {
         $("#displayHours_datePicker").datepicker();
-        $("#displayHours_datePicker").datepicker('setDate', new Date());
+        $("#displayHours_datePicker").datepicker('setDate', '-7');
         $( "#displayHours_datePicker" ).datepicker( "option", "dateFormat", "dd-M-yy" );
     });
 </script>

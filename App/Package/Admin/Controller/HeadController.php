@@ -1,5 +1,5 @@
 <?php
-namespace Task;
+namespace Admin;
 class HeadController
 {
 	private $header;

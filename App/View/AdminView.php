@@ -1,4 +1,5 @@
 <?php
+namespace Task;
 /**
  * Handles the view functionality of our MVC framework
  */
@@ -21,19 +22,19 @@ class timesheetView
     public function __construct($template,$footer,$currentPagePosts)
     {
         // echo "In Constructor" ;
-        if (file_exists($template)) {
+        if (file_exists(AppBase.'/'.$template)) {
             /**
              * trigger render to include file when this model is destroyed
              * if we render it now, we wouldn't be able to assign variables
              * to the view!
              */
-            $this->render = $template;
+            $this->render = AppBase.'/'.$template;
         }else
         {
         	echo "FILE DOES NOT EXIST";
-        	echo $template;
+        	echo AppBase.'/'.$template;
         }
-        if (file_exists($footer)) {
+        if (file_exists(AppBase.'/'.$footer)) {
             /**
              * trigger render to include file when this model is destroyed
              * if we render it now, we wouldn't be able to assign variables
@@ -73,7 +74,7 @@ class timesheetView
         } catch (Exception $e) {
 
         }
-        include_once($this->footer);
+        include_once(AppBase.'/'.$this->footer);
 
     }
 } // end class

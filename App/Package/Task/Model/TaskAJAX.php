@@ -27,7 +27,7 @@ if(!isset($_POST['request']))
 	switch($_POST['request'])
 	{
 		case "create":
-			if(commonCommentAttributesExist() && createCommentAttributesExist())
+			if(commonTaskAttributesExist() && createTaskAttributesExist())
 			{
 				$response = $taskHandler->createTask($_POST['title'], $_POST['content'], $_POST['memberId'], $_POST['status']);
 				/* If everything goes ok, the response should look something like:
@@ -50,10 +50,10 @@ if(!isset($_POST['request']))
 				{
 					$tempTaskObject = $response['task']['data'];
 					$response['task']['data'] = $tempTaskObject->toArray();
-						
+
 					$tempHoursObject = $response['hours']['data'];
 					$response['hours']['data'] = $tempHoursObject->toArray();
-						
+
 					$tempCommentObject = $response['comment']['data'];
 					$response['comment']['data'] = $tempCommentObject->toArray();
 				}
@@ -64,7 +64,7 @@ if(!isset($_POST['request']))
 			}
 			break;
 		case "load":
-			if(commonCommentAttributesExist() && loadCommentAttributesExist())
+			if(commonTaskAttributesExist() && loadTaskAttributesExist())
 			{
 				$response = $taskHandler->loadTasks($_POST['pageNum'], $_POST['qty']);
 				if($response['success'] == true)
@@ -89,6 +89,18 @@ if(!isset($_POST['request']))
 				returnError("Missing attributes for load comments request");
 			}
 			break;
+		case 'edit': if(commonTaskAttributesExist() && createTaskAttributesExist() && editTaskAttributesExist())
+		{
+			$response = $taskHandler->editTask($_POST['taskId'], $_POST['title'], $_POST['content'], $_POST['memberId'], $_POST['status']);
+
+			$response = json_encode($response);
+			echo $response;
+		}else
+		{
+			echo json_encode(returnError("Missing attributes for edit comments request" + var_dump($_POST)));
+			
+		}
+		break;
 	}
 }
 
@@ -97,7 +109,7 @@ if(!isset($_POST['request']))
  *
  * @return boolean
  */
-function commonCommentAttributesExist()
+function commonTaskAttributesExist()
 {
 	if(isset($_POST['memberId']))
 	{
@@ -113,7 +125,7 @@ function commonCommentAttributesExist()
  *
  * @return boolean
  */
-function createCommentAttributesExist()
+function createTaskAttributesExist()
 {
 	if(isset($_POST['title']) && isset($_POST['content']) && isset($_POST['status']))
 	{
@@ -129,9 +141,25 @@ function createCommentAttributesExist()
  *
  * @return boolean
  */
-function loadCommentAttributesExist()
+function loadTaskAttributesExist()
 {
 	if(isset($_POST['pageNum']) && isset($_POST['qty']))
+	{
+		return true;
+	}else
+	{
+		return false;
+	}
+}
+
+/**
+ * Checks for the required post data for loading comments
+ *
+ * @return boolean
+ */
+function editTaskAttributesExist()
+{
+	if(isset($_POST['taskId']))
 	{
 		return true;
 	}else
@@ -169,11 +197,13 @@ function addHoursAttributesExists()
  *
  * @return string
  */
-function missingError($error)
+function returnError($error)
 {
 	$errorHolder = array();
 	$errorHolder['success'] = false;
 	$errorHolder['error'] = $error;
+	return $errorHolder;
 }
+
 
 ?>

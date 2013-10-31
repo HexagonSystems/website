@@ -32,7 +32,8 @@ class Router
                 $controller = "NavController";
                 break;
             case "adminPage":
-                $controller = "AdminController";
+            	$package = "Admin";
+                $controller = "AdminRouter";
                 break;
             case "timesheetPage":
                 $package = "Task";

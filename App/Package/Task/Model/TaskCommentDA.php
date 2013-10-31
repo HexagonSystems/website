@@ -64,10 +64,11 @@ class TaskCommentDA
 	public function loadComments($taskId, $memberId, $pageNum, $qty)
 	{
 		try {
-			$statement = "SELECT * FROM `taskComment`
-						WHERE `taskId` = :taskId
-						ORDER BY `postedDate` DESC
-						LIMIT :starting, :quantity";
+			$statement = "SELECT comment.*, member.firstName FROM `taskComment` comment 
+					INNER JOIN `member` member ON comment.memberId = member.memberId 
+					WHERE comment.taskId = :taskId 
+					ORDER BY comment.postedDate DESC 
+					LIMIT :starting, :quantity";
 	
 			$query = $this->database->prepare($statement);
 	
@@ -80,7 +81,10 @@ class TaskCommentDA
 			$query->bindParam(':starting'   , $starting , \PDO::PARAM_INT);
 			$query->bindParam(':quantity'   , $qty		, \PDO::PARAM_INT);
 	
-			$query->execute();
+			if(!$query->execute())
+			{
+				return $this->createError("SQL had trouble executing ");
+			}
 				
 			$commentHolder = array();
 			$commentHolder['success'] = true;
@@ -94,7 +98,7 @@ class TaskCommentDA
 				$tempTaskComment->setTag($row['tag']);
 				$tempTaskComment->setTitle($row['title']);
 				$tempTaskComment->setContent($row['content']);
-				$tempTaskComment->setMemberId($row['memberId']);
+				$tempTaskComment->setMemberId($row['firstName']);
 				$tempTaskComment->setDate($row['postedDate']);
 	
 				array_push($commentHolder['data'], $tempTaskComment);

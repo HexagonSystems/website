@@ -20,10 +20,22 @@ class LoginController extends Controller
 			$view->assign('title' , 'Logged in');
 			$view->assign('content' , $content);
 		}elseif (isset($_GET['action'])){
+			if($_GET['action'] == 'logout')
+			{
+				if(isset($_SESSION['accountObject']) || isset($_SESSION['account']))
+				{
+					unserialize($_SESSION['accountObject'])->sessionDestroy();
+					echo "You have been logged out";
+				}else
+				{
+					echo "You were already logged out";
+				}
+				
+			}
 			/*
 			 * Forgot Password Screen
 			*/
-			if($_GET['action'] == 'forgotPassword')
+			else if($_GET['action'] == 'forgotPassword')
 			{
 				if(!isset($_POST['action']) && !isset($_POST['email'])){
 					$this->template = 'view/ResetPasswordTemplate.php';

@@ -25,6 +25,7 @@ require_once(AppBase.'/Service/password.php');
 
 require_once(AppBase.'/Package/Task/Config/Config.php');
 
+require_once(AppBase.'/Package/Admin/Config/Config.php');
 
 /**
  * Define any other config option you may want to use
