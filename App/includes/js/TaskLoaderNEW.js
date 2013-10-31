@@ -50,7 +50,7 @@ function createTask(tableConfig, taskTitle, taskDescription, taskStatus) {
 			printSingleTask(tableConfig, task.id, task.title, task.content, task.status,
 					task.members, comment.memberId, comment.date, true);
 		} else {
-			alert("success = " + data.success + " " + data);
+			alert("Create task failed");
 		}
 	});
 }

@@ -1,5 +1,5 @@
 <a data-toggle="modal" href="#modal_createTask"
-	class="btn btn-primary btn-sm">Add Update</a>
+	class="btn btn-primary btn-sm">Create Task</a>
 <?php include_once 'modal_createTask.php'; ?>
 
 <table
@@ -43,6 +43,7 @@ mainTaskTable = {
 		'quantity_per_page'	:	5,
 		'last_page'			:	-1,
 		'memberId'			:	<?php echo unserialize($_SESSION['accountObject'])->getMemberId(); ?>,
+		'memberFirstName'	: 	"<?php echo unserialize($_SESSION['accountObject'])->getFirstName(); ?>",
 		'content'			:	new Array()
 };
 
@@ -57,14 +58,12 @@ $(function() {
 
 /**
  * Create comment button
- * 
- * THIS NEEDS TO BE REMOVED
  */
 $(function() {
 	$("#createTaskButton").click(
 			function() {
-				createTask(mainTaskTable, $("#createTaskTitle").val(), $("#createTaskDscr")
-						.val(), $("#createTaskStatus option:selected").text());
+				createTask(mainTaskTable, $("#modal_taskTitle").val(), $("#modal_taskDscr")
+						.val(), $("#modal_taskStatus option:selected").text());
 			});
 });
 
@@ -74,6 +73,6 @@ $(function() {
  * THIS NEEDS TO BE REMOVED
  */
 $(document).ready(function() {
-	printTableDataInTable(mainTaskTable, 1);
+	loadTasks(mainTaskTable, 1);
 });
 </script>

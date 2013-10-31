@@ -1,7 +1,7 @@
-<header class="page-header relative">
+<header class="page-header relative" id="taskHeader">
 	<h3>
-		<?php echo $data['task']->getTitle(); ?>
-		<small><?php echo $data['task']->getStatus(); ?> </small>
+		<span id="taskTitleLocation"><?php echo $data['task']->getTitle(); ?></span>
+		<small id="taskStatusLocation"><?php echo $data['task']->getStatus(); ?> </small>
 	</h3>
 	<article>
 		Members
@@ -11,7 +11,7 @@
 		} ?>
 		</ul>
 	</article>
-	<article>
+	<article id="taskDescriptionLocation">
 		<?php echo $data['task']->getContent(); ?>
 	</article>
 </header>
@@ -21,10 +21,12 @@
 	class="btn btn-primary btn-sm">Add Update</a>
 <a data-toggle="modal" href="#modal_hours"
 	class="btn btn-primary btn-sm">Add Hours</a>
-<button class="btn btn-primary btn-sm">Edit Task</button>
-<button class="btn btn-primary btn-sm" id="buttonSlideIn">Testing Add Comment With Slide In</button>
+<a data-toggle="modal" href="#modal_editTask"
+	class="btn btn-primary btn-sm">Edit Task</a>
 <?php include_once 'modal_comment.php'; ?>
 <?php include_once 'modal_hours.php'; ?>
+<?php include_once 'modal_editTask.php'; ?>
+<?php include_once 'modal_pickSearchMethod.php'; ?>
 
 
 <table id="testtable"
@@ -58,6 +60,8 @@
 	src="<?php echo AppBaseSTRIPPED; ?>Package/Task/includes/js/TaskCommentsLoaderNEW.js"></script>
 <script
 	src="<?php echo AppBaseSTRIPPED; ?>Package/Task/includes/js/TableLoaderNEW.js"></script>
+<script
+	src="<?php echo AppBaseSTRIPPED; ?>Package/Task/includes/js/TaskLoaderNEW.js"></script>
 <script>
 ajaxBase = "<?php echo AppBaseSTRIPPED; ?>Package/Task/";
 
@@ -67,10 +71,10 @@ mainTaskCommentsTable = {
 		'quantity_per_page'	:	5,
 		'last_page'			:	-1,
 		'memberId'			:	<?php echo unserialize($_SESSION['accountObject'])->getMemberId(); ?>,
+		'memberFirstName'	: 	"<?php echo unserialize($_SESSION['accountObject'])->getFirstName(); ?>",
 		'taskId'			:	<?php echo $data['task']->getId(); ?>,
 		'content'			:	new Array()
 };
-
 
 /**
  * Create comment button
@@ -92,7 +96,7 @@ $(function() {
 	$("#addHoursButton").click(
 			function() {
 				// run script to add hours through ajax
-				addHours(mainTaskCommentsTable, document.getElementById("addHoursDate").value, $(
+				addHours(mainTaskCommentsTable, $("#addHoursDatePicker").val(), $(
 						"#addHoursHours").val(), $("#addHoursComment").val());
 			});
 });
@@ -106,17 +110,41 @@ $(function() {
 	});
 });
 
+
+
 /**
- * jQuery Datepicker
+ * Edit Task functions
  */
+ editTaskArray = {
+			'titleLocation'		: 	"#taskTitleLocation",
+			'contentLocation'	:	"#taskDescriptionLocation",
+			'statusLocation'	:	"#taskStatusLocation",
+			'memberId'			:	<?php echo unserialize($_SESSION['accountObject'])->getMemberId(); ?>,
+			'memberFirstName'	: 	"<?php echo unserialize($_SESSION['accountObject'])->getFirstName(); ?>",
+			'taskId'			:	<?php echo $data['task']->getId(); ?>,
+	};
+ $(function() {
+		$("#editTaskSubmitButton").click(function() {
+			$("#editTaskForm").submit();
+		});
+	});
+$(function() {
+	$("#editTaskForm").submit(
+			function(event) {
+				editTask(editTaskArray, mainTaskCommentsTable['taskId'], $("#modal_taskTitle").val(), $("#modal_taskDscr")
+						.val(), $("#modal_taskStatus option:selected").text());
+				event.preventDefault();
+			});
+});
 
 /**
  * Page on load
- * 
- * NEEDS TO BE REMOVED
  */
 $(document).ready(function() {
-	printTableDataInTable(mainTaskCommentsTable, 1);
-	document.getElementById('addHoursDate').valueAsDate = new Date();
+	loadComments(mainTaskCommentsTable, 1);
+
+	$("#addHoursDatePicker").datepicker();
+	$("#addHoursDatePicker").datepicker('setDate', new Date());
+    $( "#addHoursDatePicker" ).datepicker( "option", "dateFormat", "dd-M-yy" );
 });
 </script>

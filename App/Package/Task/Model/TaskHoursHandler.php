@@ -26,6 +26,11 @@ class TaskHoursHandler
 		$this->taskHoursDA->setDatabase($database);
 		$this->databaseHolder = $database;
 	}
+	
+	public function loadHours($taskId, $memberId, $startDate, $endDate)
+	{
+		return $this->taskHoursDA->loadHours($taskId, $memberId, $startDate, $endDate);
+	}
 
 	/**
 	 * Adds hours for a member into the database
@@ -35,14 +40,14 @@ class TaskHoursHandler
 	 * @param unknown $workedDate
 	 * @param int $workedHours
 	 */
-	function addHours($taskId, $memberId, $workedDate, $workedHours, $workedComment)
+	function addHours($taskId, $memberId, $memberName, $workedDate, $workedHours, $workedComment)
 	{
 		$masterResponse = array();
 		
 		/* CREATE HOURS OBJECT */
 		$tempHours = new TaskHours();
-		$tempHours->setTaskId($taskId);
-		$tempHours->setMemberId($memberId);
+		$tempHours->setTask(array('id' => $taskId));
+		$tempHours->setMember(array('id' => $memberId));
 		$tempHours->setDate($workedDate);
 		$tempHours->setHours($workedHours);
 		
@@ -55,8 +60,8 @@ class TaskHoursHandler
 			$masterResponse['hours']['data'] = $tempHours;
 			
 			/* STRUCTURING DATA TO GO INTO CREATE TASK COMMENT */
-			$tempTaskCommentTag = "@addedHours";
-			$tempTaskCommentTitle = "Alex has added ".$workedHours." hours for the date ".$workedDate;
+			$tempTaskCommentTag = "addedHours";
+			$tempTaskCommentTitle = "I have added ".$workedHours." hours for the date ".$workedDate;
 			
 			/* CREATE THE COMMENT IN THE DATABASE */
 			$taskCommentsHandler = new TaskCommentsHandler();
