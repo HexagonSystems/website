@@ -11,10 +11,9 @@
         <div class="modal-body">
           <form class="form-horizontal" role="form" id="addHoursDate">
 		<div class="form-group">
-			<label for="addHoursDate" class="col-lg-2 control-label">Date</label>
+			<label for="addHoursDatePicker" class="col-lg-2 control-label">Date</label>
 			<div class="col-lg-10">
-				<input type="date" class="form-control" id="addHoursDate">
-					  </script>
+				<input type="text" class="form-control" id="addHoursDatePicker">
 			</div>
 		</div>
 		<div class="form-group">

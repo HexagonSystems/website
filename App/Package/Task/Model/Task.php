@@ -102,7 +102,14 @@ class Task extends \ArticleEntity
 	
 	public function getMember($memberId)
 	{
-		return($this->article['members']);
+		if(isset($this->article['members']))
+		{
+			return($this->article['members']);
+		}else
+		{
+			return false;
+		}
+		
 	}
 	
 	public function getUpdates()
@@ -136,6 +143,31 @@ class Task extends \ArticleEntity
 	public function toArray()
 	{
 		return $this->article;
+	}
+	
+	/**
+	 * Sets up object using a row from a query
+	 *
+	 * This is a hacked method, if anyone can come up with some better, please let me know.
+	 *
+	 * @param array $row
+	 */
+	public function buildFromQueryRow($row)
+	{
+		/* A WILD DIRTY HACK APPEARS */
+		
+		/*
+		 * Please note: I am setting the Task's title to be an array instead of just the task title
+		 * so it formats nicely when printed out in the search field.
+		 * 
+		 * It might be worth making a different method to return a nicely formatted array
+		 * for the TaskSearchHelper.
+		 */
+		$this->setTitle(array('id' => $row['taskId'], 'value' => $row['name']));
+		$this->setTimeStamp($row['entryDate']);
+		$this->setStatus($row['status']);
+		$this->setContent($row['details']);
+		$this->setCategory($row['type']);
 	}
 }
 

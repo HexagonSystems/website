@@ -12,10 +12,11 @@ class HeadController
 		if(isset($_SESSION['activeUser'])&&($_SESSION['account']['access']=="10")){
 			$this->nav = AppBase.'View/Template/nav10.php';
 		}
-		elseif(isset($_SESSION['activeUser'])){
-			$this->nav = AppBase.'/View/Template/nav5.php';
+		elseif(isset($_SESSION['account'])){
+			/* PLEASE FIX UP THIS NAV SECTION, TEMP WORK AROUND TO DISPLAY USER'S FIRST NAME IN PLACE */
+			$this->nav = AppBase.'/View/Template/nav5_2.php';
 		}else{
-			$this->nav = AppBase.'/View/Template/nav0.php';				
+			$this->nav = AppBase.'/View/Template/nav0.php';			
 		}
 		
 	} //end constructor

@@ -14,7 +14,6 @@
 		
 			<label for="inputTaskTag" class="col-lg-2 control-label">Tag</label>
 			<div class="col-lg-10 input-group">
-				<span class="input-group-addon">@</span>
 				<input type="text" class="form-control" id="inputTaskTag"
 					placeholder="Tag">
 			</div>
