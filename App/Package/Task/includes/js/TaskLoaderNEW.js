@@ -11,40 +11,33 @@
 /**
  * Load Comments through JSON
  */
-function loadTasks(tableConfig, pageNum) {
-	if (quantity = undefined) {
-		quantity = COMMENTS_PER_PAGE;
-	}
-	$.post(ajaxBase + "/Model/TaskAJAX.php", {
-		request : "load",
-		memberId : tableConfig['memberId'],
-		pageNum : pageNum,
-		qty : tableConfig['quantity_per_page']
-	}, function(nakedJson) {
-		nakedJson = $.parseJSON(nakedJson);
-		response = nakedJson.success;
-		if (response == true || response == "true") {
-			var jsonObject = nakedJson.data;
-			var arrayToLoopOver = updateTableContentArray(tableConfig,
-					jsonObject, pageNum);
-			if (arrayToLoopOver) {
-				$.each(arrayToLoopOver, function(singleArray) {
-					printSingleTask(tableConfig, arrayToLoopOver[singleArray]['id'],
-							arrayToLoopOver[singleArray]['title'],
-							arrayToLoopOver[singleArray]['content'],
-							arrayToLoopOver[singleArray]['status'],
-							arrayToLoopOver[singleArray]['members'],
-							arrayToLoopOver[singleArray]['lastUpdate'].memberId,
-							arrayToLoopOver[singleArray]['lastUpdate'].postedDate,
-							false);
-				});
-				assignTableContentAccordion()
-			} else {
-				loadTasks(tableConfig, pageNum);
-			}
+function loadTasks(tableConfig, pageNum, forceLoad) {
+	var arrayToLoopOver = printTableDataInTable(tableConfig, pageNum);
+	if (!(arrayToLoopOver) || forceLoad) {
+		$.post(ajaxBase + "Model/TaskAJAX.php", {
+			request : "load",
+			memberId : tableConfig['memberId'],
+			pageNum : pageNum,
+			qty : tableConfig['quantity_per_page']
+		}, function(nakedJson) {
+			nakedJson = $.parseJSON(nakedJson);
+			response = nakedJson.success;
+			if (response == true || response == "true") {
+				var jsonObject = nakedJson.data;
+				var arrayToLoopOver = updateTableContentArray(tableConfig,
+						jsonObject, pageNum);
+				if (arrayToLoopOver) {
+					printTaskTableData(tableConfig, arrayToLoopOver);
+				} else {
+					loadTasks(tableConfig, pageNum);
+				}
 
-		}
-	});
+			}
+		});
+	} else {
+		printTaskTableData(tableConfig, arrayToLoopOver);
+	}
+
 }
 
 /**
@@ -53,7 +46,7 @@ function loadTasks(tableConfig, pageNum) {
 function createTask(tableConfig, taskTitle, taskDescription, taskStatus) {
 	$
 			.post(
-					ajaxBase + "/Model/TaskAJAX.php",
+					ajaxBase + "Model/TaskAJAX.php",
 					{
 						request : "create",
 						memberId : tableConfig['memberId'],
@@ -89,7 +82,7 @@ function createTask(tableConfig, taskTitle, taskDescription, taskStatus) {
  * Updates a tasks information in the database
  */
 function editTask(tableConfig, taskId, taskTitle, taskDescription, taskStatus) {
-	$.post(ajaxBase + "/Model/TaskAJAX.php", {
+	$.post(ajaxBase + "Model/TaskAJAX.php", {
 		request : "edit",
 		memberId : tableConfig['memberId'],
 		taskId : taskId,
@@ -238,3 +231,19 @@ function printSingleTask(tableConfig, taskId, taskTitle, taskDscr, taskStatus,
 		$(tableRow).show();
 	}
 }
+
+function printTaskTableData(tableConfig, arrayToLoopOver) {
+	emptyTableBody(tableConfig);
+	
+	$.each(arrayToLoopOver, function(singleArray) {
+		printSingleTask(tableConfig, arrayToLoopOver[singleArray]['id'],
+				arrayToLoopOver[singleArray]['title'],
+				arrayToLoopOver[singleArray]['content'],
+				arrayToLoopOver[singleArray]['status'],
+				arrayToLoopOver[singleArray]['members'],
+				arrayToLoopOver[singleArray]['lastUpdate'].memberId,
+				arrayToLoopOver[singleArray]['lastUpdate'].postedDate, false);
+	});
+	assignTableContentAccordion();
+}
+

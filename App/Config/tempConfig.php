@@ -22,7 +22,7 @@ class TaskCommentDA
 	{
 		try {
 	
-			$statement = 'INSERT INTO `taskcomment`
+			$statement = 'INSERT INTO `taskComment`
 					(taskId, memberId, title, content, tag, postedDate)
 					VALUES
 					(:taskId, :memberId, :title, :content, :tag, :postedDate)';
@@ -36,6 +36,7 @@ class TaskCommentDA
 			$query->bindParam(':tag'   , $tag , \PDO::PARAM_STR);
 			$query->bindParam(':postedDate'   , $time , \PDO::PARAM_INT);
 			/* MIGHT NEED TO GET AUTO INCREMENT COMMENT ID HERE */
+			echo "created comment";
 			$query->execute();
 			return array('success' => true);
 		} catch (PDOException $e) {
@@ -64,7 +65,7 @@ class TaskCommentDA
 	public function loadComments($taskId, $memberId, $pageNum, $qty)
 	{
 		try {
-			$statement = "SELECT comment.*, member.firstName FROM `taskcomment` comment 
+			$statement = "SELECT comment.*, member.firstName FROM `taskComment` comment 
 					INNER JOIN `member` member ON comment.memberId = member.memberId 
 					WHERE comment.taskId = :taskId 
 					ORDER BY comment.postedDate DESC 

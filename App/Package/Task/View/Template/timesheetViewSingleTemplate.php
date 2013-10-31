@@ -57,13 +57,13 @@
 </div>
 
 <script
-	src="<?php echo AppBaseSTRIPPED; ?>Package/Task/includes/js/TaskCommentsLoaderNEW.js"></script>
+	src="<?php echo SITE_ROOT.AppBaseSTRIPPED; ?>Package/Task/includes/js/TaskCommentsLoaderNEW.js"></script>
 <script
-	src="<?php echo AppBaseSTRIPPED; ?>Package/Task/includes/js/TableLoaderNEW.js"></script>
+	src="<?php echo SITE_ROOT.AppBaseSTRIPPED; ?>Package/Task/includes/js/TableLoaderNEW.js"></script>
 <script
-	src="<?php echo AppBaseSTRIPPED; ?>Package/Task/includes/js/TaskLoaderNEW.js"></script>
+	src="<?php echo SITE_ROOT.AppBaseSTRIPPED; ?>Package/Task/includes/js/TaskLoaderNEW.js"></script>
 <script>
-ajaxBase = "<?php echo AppBaseSTRIPPED; ?>Package/Task/";
+ajaxBase = "<?php echo SITE_ROOT.AppBaseSTRIPPED; ?>Package/Task/";
 
 
 mainTaskCommentsTable = {
@@ -106,7 +106,7 @@ $(function() {
  */
 $(function() {
 	$(".pagination li a").click(function() {
-		printTableDataInTable(mainTaskCommentsTable, $(this).text());
+		loadComments(mainTaskCommentsTable, $(this).text());
 	});
 });
 
