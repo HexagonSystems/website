@@ -36,8 +36,10 @@ function emptyTableBody(tableConfig) {
  */
 function pageAlreadyLoaded(tableConfig, pageNum) {
 	var positionToStartOn = (pageNum - 1) * tableConfig['quantity_per_page'];
-	var positionToEndOn = positionToStartOn + tableConfig['quantity_per_page'] - 1;
-	if (tableConfig['content'][positionToStartOn] === undefined || tableConfig['content'][positionToStartOn] === null) {
+	var positionToEndOn = positionToStartOn + tableConfig['quantity_per_page']
+			- 1;
+	if (tableConfig['content'][positionToStartOn] === undefined
+			|| tableConfig['content'][positionToStartOn] === null) {
 		return false;
 	}
 
@@ -72,9 +74,11 @@ function findLastPage(tableConfig) {
 	if (tableConfig['content'].length <= tableConfig['quantity_per_page']) {
 		tableConfig['last_page'] = 1;
 	} else if (tableConfig['content'].length % tableConfig['quantity_per_page']) {
-		tableConfig['last_page'] = Math.floor(tableConfig['content'].length / tableConfig['quantity_per_page']) + 1;
+		tableConfig['last_page'] = Math.floor(tableConfig['content'].length
+				/ tableConfig['quantity_per_page']) + 1;
 	} else {
-		tableConfig['last_page'] = tableConfig['content'].length / tableConfig['quantity_per_page'];
+		tableConfig['last_page'] = tableConfig['content'].length
+				/ tableConfig['quantity_per_page'];
 	}
 }
 
@@ -103,7 +107,7 @@ function printTableDataInTable(tableConfig, pageNum) {
 		}
 
 		emptyTableBody(tableConfig);
-		
+
 		return arrayToLoopOver;
 	}
 

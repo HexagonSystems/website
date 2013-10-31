@@ -170,7 +170,7 @@ class User
 		//Collect User from the database
 		try {
 			//returns multidemnsional array
-			$query = $this->database->prepare("SELECT * from MEMBER where EMAIL = :email");
+			$query = $this->database->prepare("SELECT * from `member` where EMAIL = :email");
 			$query->bindParam(':email'   , $username , PDO::PARAM_STR);
 			$query->execute();
 
