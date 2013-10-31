@@ -68,7 +68,6 @@ class TaskHandler
 
 		/* ENTER THE TASK INTO THE DATABASE */
 		$taskDAReturn = $this->taskDA->createTaskFromObject($tempTask);
-
 		if($taskDAReturn['success'] === true)
 		{
 			/* UPDATE TEMP TASK WITH ID THAT WAS JUST GENERATED  VIA AUTO INCREMENT IN DATABASE */
@@ -87,7 +86,6 @@ class TaskHandler
 			$taskHoursHandler = new TaskHoursHandler();
 			$taskHoursHandler->setDatabase($this->databaseHolder);
 			$taskHoursHandlerResponse = $taskHoursHandler->addHours($taskDAReturn['taskId'], $memberId, $tempTask->getMember($memberId), $date, 0, "Task created");
-				
 			if($taskHoursHandlerResponse['success'] == true)
 			{
 				$masterArray['hours'] = $taskHoursHandlerResponse['hours'];

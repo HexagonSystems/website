@@ -2,42 +2,36 @@
 /**
  * Load Comments through JSON
  */
-function loadComments(tableConfig, pageNum) {
-	if (quantity = undefined) {
-		quantity = commentsPerPage;
-	}
-	$.post(ajaxBase + "/Model/TaskCommentsAJAX.php", {
-		request : "load",
-		taskId : tableConfig['taskId'],
-		memberId : tableConfig['memberId'],
-		pageNum : pageNum,
-		qty : 5
-	}, function(nakedJson) {
-		nakedJson = $.parseJSON(nakedJson);
-		response = nakedJson.success;
-		if (response == true || response == "true") {
-			var jsonObject = nakedJson.data;
-			var arrayToLoopOver = updateTableContentArray(tableConfig,
-					jsonObject, pageNum);
+function loadComments(tableConfig, pageNum, forceLoad) {
+	var arrayToLoopOver = printTableDataInTable(tableConfig, pageNum);
+	if (!(arrayToLoopOver) || forceLoad) {
+		$.post(ajaxBase + "Model/TaskCommentsAJAX.php", {
+			request : "load",
+			taskId : tableConfig['taskId'],
+			memberId : tableConfig['memberId'],
+			pageNum : pageNum,
+			qty : 5
+		}, function(nakedJson) {
+			nakedJson = $.parseJSON(nakedJson);
+			response = nakedJson.success;
+			if (response == true || response == "true") {
+				var jsonObject = nakedJson.data;
+				var arrayToLoopOver = updateTableContentArray(tableConfig,
+						jsonObject, pageNum);
 
-			if (arrayToLoopOver) {
-				$.each(arrayToLoopOver, function(singleArray) {
-					printSingleComment(tableConfig,
-							arrayToLoopOver[singleArray]['tag'],
-							arrayToLoopOver[singleArray]['title'],
-							arrayToLoopOver[singleArray]['content'],
-							arrayToLoopOver[singleArray]['memberId'],
-							arrayToLoopOver[singleArray]['date'], false);
-				});
-				assignTableContentAccordion()
+				if (arrayToLoopOver) {
+					printCommentTableData(tableConfig, arrayToLoopOver);
+				} else {
+					loadComments(tableConfig, pageNum);
+				}
 
-				assignCommentTagClick();
-			} else {
-				loadComments(tableConfig, pageNum);
+			}
+		});
+		}else
+			{
+			printCommentTableData(tableConfig, arrayToLoopOver);
 			}
 
-		}
-	});
 }
 
 /**
@@ -172,7 +166,7 @@ function printSingleComment(tableConfig, commentTag, commentTitle,
  * Creates a comment in the database
  */
 function createComment(tableConfig, commentTag, commentTitle, commentContent) {
-	$.post(ajaxBase + "/Model/TaskCommentsAJAX.php", {
+	$.post(ajaxBase + "Model/TaskCommentsAJAX.php", {
 		request : "create",
 		taskId : tableConfig['taskId'],
 		memberId : tableConfig['memberId'],
@@ -212,7 +206,7 @@ function createComment(tableConfig, commentTag, commentTitle, commentContent) {
  * Adds hours into the database
  */
 function addHours(tableConfig, workedDate, workedHours, workedComment) {
-	$.post(ajaxBase + "/Model/TaskHoursAJAX.php", {
+	$.post(ajaxBase + "Model/TaskHoursAJAX.php", {
 		request : "addHours",
 		taskId : tableConfig['taskId'],
 		memberId : tableConfig['memberId'],
@@ -260,4 +254,20 @@ function assignCommentTagClick() {
 			$('#modal_pickSearchMethod').modal('show');
 		});
 	});
+}
+
+function printCommentTableData(tableConfig, arrayToLoopOver) {
+	emptyTableBody(tableConfig);
+
+	$.each(arrayToLoopOver, function(singleArray) {
+		printSingleComment(tableConfig, arrayToLoopOver[singleArray]['tag'],
+				arrayToLoopOver[singleArray]['title'],
+				arrayToLoopOver[singleArray]['content'],
+				arrayToLoopOver[singleArray]['memberId'],
+				arrayToLoopOver[singleArray]['date'], false);
+	});
+
+	assignTableContentAccordion();
+	
+	assignCommentTagClick();
 }
