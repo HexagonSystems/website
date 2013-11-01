@@ -66,7 +66,17 @@ function createTask(tableConfig, taskTitle, taskDescription, taskStatus) {
 							fakeMemberArray[tableConfig['memberId']] = tableConfig['memberFirstName'];
 							var jsonString = JSON.stringify(fakeMemberArray);
 							fakeJSONObject = JSON.parse(jsonString)
-
+							
+							var arrayToUnshift = new Array();
+							arrayToUnshift['id'] = task.id;
+							arrayToUnshift['title'] = task.title;
+							arrayToUnshift['content'] = task.content;
+							arrayToUnshift['status'] = task.status;
+							arrayToUnshift['members'] = fakeJSONObject;
+							arrayToUnshift['lastUpdate'] = comment;
+							
+							tableConfig['content'].unshift(arrayToUnshift);
+							
 							printSingleTask(tableConfig, task.id, task.title,
 									task.content, task.status, fakeJSONObject,
 									comment.memberId, comment.date, true);
@@ -222,7 +232,7 @@ function printSingleTask(tableConfig, taskId, taskTitle, taskDscr, taskStatus,
 	if (commentSlideIn) {
 		$(tableRow).hide().prependTo(tableConfig['print_location']).fadeIn(
 				'slow');
-		if (tableConfig['content'].length = tableConfig['quantity_per_page']) {
+		if (tableConfig['content'].length > tableConfig['quantity_per_page']) {
 			$(tableConfig['print_location']).find('>:last-child').remove();
 		}
 
@@ -234,7 +244,6 @@ function printSingleTask(tableConfig, taskId, taskTitle, taskDscr, taskStatus,
 
 function printTaskTableData(tableConfig, arrayToLoopOver) {
 	emptyTableBody(tableConfig);
-	
 	$.each(arrayToLoopOver, function(singleArray) {
 		printSingleTask(tableConfig, arrayToLoopOver[singleArray]['id'],
 				arrayToLoopOver[singleArray]['title'],

@@ -35,6 +35,9 @@ function emptyTableBody(tableConfig) {
  * @returns {Boolean}
  */
 function pageAlreadyLoaded(tableConfig, pageNum) {
+	if (pageNum > tableConfig['last_page']) {
+		return false;
+	}
 	var positionToStartOn = (pageNum - 1) * tableConfig['quantity_per_page'];
 	var positionToEndOn = positionToStartOn + tableConfig['quantity_per_page']
 			- 1;
@@ -65,20 +68,22 @@ function updateTableContentArray(tableConfig, jsonObject, pageNum) {
 		positionToStartOn++;
 	});
 
-	findLastPage(tableConfig);
+	findLastPage(tableConfig, pageNum);
 
 	return printTableDataInTable(tableConfig, pageNum);
 }
 
-function findLastPage(tableConfig) {
-	if (tableConfig['content'].length <= tableConfig['quantity_per_page']) {
-		tableConfig['last_page'] = 1;
-	} else if (tableConfig['content'].length % tableConfig['quantity_per_page']) {
-		tableConfig['last_page'] = Math.floor(tableConfig['content'].length
-				/ tableConfig['quantity_per_page']) + 1;
-	} else {
-		tableConfig['last_page'] = tableConfig['content'].length
-				/ tableConfig['quantity_per_page'];
+function findLastPage(tableConfig, pageNum) {
+	/*
+	 * if (tableConfig['content'].length <= tableConfig['quantity_per_page']) {
+	 * tableConfig['last_page'] = 1; } else if (tableConfig['content'].length %
+	 * tableConfig['quantity_per_page']) { tableConfig['last_page'] =
+	 * Math.floor(tableConfig['content'].length /
+	 * tableConfig['quantity_per_page']) + 1; } else { tableConfig['last_page'] =
+	 * tableConfig['content'].length / tableConfig['quantity_per_page']; }
+	 */
+	if (tableConfig['last_page'] < pageNum) {
+		tableConfig['last_page'] = pageNum;
 	}
 }
 
@@ -88,7 +93,7 @@ function findLastPage(tableConfig) {
 function printTableDataInTable(tableConfig, pageNum) {
 	// If the page of comments isn't already loaded, load it
 	if (pageAlreadyLoaded(tableConfig, pageNum) === false
-			&& pageNum != tableConfig['last_page']) {
+			&& pageNum >= tableConfig['last_page']) {
 		return false;
 	} else {
 		var positionToStartOn = (pageNum - 1)
