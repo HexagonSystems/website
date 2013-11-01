@@ -40,7 +40,7 @@ function loadComments(tableConfig, pageNum, forceLoad) {
 function printTableDataInTableOLD(tableConfig, pageNum) {
 	// If the page of comments isn't already loaded, load it
 	if (pageAlreadyLoaded(tableConfig, pageNum) === false
-			&& pageNum != tableConfig['last_page']) {
+			&& pageNum >= tableConfig['last_page']) {
 		loadComments(tableConfig, pageNum);
 	} else {
 		var positionToStartOn = (pageNum - 1)
