@@ -21,6 +21,15 @@ class Router
         switch ($page) {
             case "indexPage":
                 $controller = "IndexController";
+                break;  
+			case "aboutPage":
+                $controller = "AboutController";
+                break;  
+			case "projectPage":
+                $controller = "ProjectController";
+                break;  
+			case "contactPage":
+                $controller = "ContactController";
                 break;
             case "login":
                 $controller = "LoginController";
