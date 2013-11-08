@@ -4,8 +4,8 @@ if (file_exists($filename)) {
     require_once($filename);
 } else {
 	
-    $site_base = "HexagonSystems_002/";
-    $site_root = "//localhost/Swinburne2013S2/$site_base"; //$_SERVER["SERVER_NAME"].dirname($_SERVER["SCRIPT_NAME"]);
+    $site_base = "HEXAGONwebsite/";
+    $site_root = "localhost/SmartGitHg/$site_base"; //$_SERVER["SERVER_NAME"].dirname($_SERVER["SCRIPT_NAME"]);
     
     
     define('SITE_ROOT', $site_root);
