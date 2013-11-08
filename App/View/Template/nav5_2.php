@@ -20,10 +20,10 @@
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<nav class="collapse navbar-collapse topmenu">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">Home</a></li>
-				<li><a href="#">About</a></li>
-				<li><a href="#">Projects</a></li>
-				<li><a href="#">Contact</a></li>
+				<li class="active"><a href="index.php?location=indexPage">Home</a></li>
+				<li><a href="index.php?location=aboutPage">About</a></li>
+				<li><a href="index.php?location=projectPage">Projects</a></li>
+				<li><a href="index.php?location=contactPage">Contact</a></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown">Alex's Timesheets<b class="caret"></b>
 				</a>
