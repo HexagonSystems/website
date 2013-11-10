@@ -24,6 +24,9 @@ class AllTimesheetController extends Controller
 		{
 			/* HANDLE ERROR HERE OR IN VIEW */
 		}
+		
+		/* GET HOW MANY TASKS THERE ARE FOR THE PAGEINATOR */
+		$amountOfTasks = $taskHandler->countAllTasks();
 
 		parent::invoke();
 
@@ -31,6 +34,7 @@ class AllTimesheetController extends Controller
 		$view = new TimesheetView($this->template,$this->footer, 0);
 		$view->assign('title' , 'Logged in');
 		$view->assign('allTaskStatus' , $allStatus);
+		$view->assign('taskCount' , $amountOfTasks);
 
 		$view->assign('task' , null);
 

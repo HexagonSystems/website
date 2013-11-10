@@ -75,10 +75,10 @@ class TaskCommentsHandler
 	/**
 	 * Loads the task comments
 	 *
-	 * @param unknown $taskId
-	 * @param unknown $memberId
-	 * @param unknown $pageNum
-	 * @param unknown $qty
+	 * @param int $taskId
+	 * @param int $memberId
+	 * @param int $pageNum
+	 * @param int $qty
 	 * @return Ambigous <boolean, multitype:>
 	 */
 	public function loadComments($taskId, $memberId, $pageNum, $qty)
@@ -86,6 +86,26 @@ class TaskCommentsHandler
 		$temp = $this->taskCommentDA->loadComments($taskId, $memberId, $pageNum, $qty);
 		return $temp;
 	}
+	
+	/**
+	 * Contacts the TaskCommentDA to get the newest comments
+	 * 
+	 * @param unknown $taskId
+	 * @param unknown $memberId
+	 * @param unknown $lastLoaded
+	 * @param unknown $qty
+	 * @return Ambigous <string, \Task\multitype:multitype:, multitype:multitype: boolean >
+	 */
+	public function loadNewestComments($taskId, $memberId, $lastLoaded, $qty)
+	{
+		return $this->taskCommentDA->loadNewestComments($taskId, $memberId, $lastLoaded, $qty);
+	}
+	
+	public function getCommentCount($taskId, $memberId)
+	{
+		return $this->taskCommentDA->getCommentCount($taskId);
+	}
+	
 
 	/**
 	 * Adds hours for a member into the database

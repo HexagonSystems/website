@@ -31,13 +31,42 @@ function loadTasks(tableConfig, pageNum, forceLoad) {
 				} else {
 					loadTasks(tableConfig, pageNum);
 				}
-
 			}
 		});
 	} else {
 		printTaskTableData(tableConfig, arrayToLoopOver);
 	}
+}
 
+/**
+ * Loads the newest Tasks
+ * 
+ * This has not been fully implemented yet
+ * 
+ * @param tableConfig
+ */
+function loadNewestTasks(tableConfig)
+{
+	$.post(ajaxBase + "Model/TaskAJAX.php",{
+				request : "loadNewest",
+				memberId : tableConfig['memberId'],
+				lastLoaded : tableConfig['content'][0]['id'],
+			},
+			function(data) {
+				nakedJson = $.parseJSON(nakedJson);
+				response = nakedJson.success;
+				if (response == true || response == "true") {
+					var jsonObject = nakedJson.data;
+					updateTableContentArray(tableConfig,
+							jsonObject, pageNum);
+					var arrayToLoopOver = printTableDataInTable(tableConfig, pageNum, true);
+					if (arrayToLoopOver) {
+						printTaskTableData(tableConfig, arrayToLoopOver);
+					} else {
+						loadNewestTasks(tableConfig);
+					}
+				}
+			});
 }
 
 /**
