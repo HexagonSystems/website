@@ -21,11 +21,22 @@
 <div class="text-center">
 	<ul class="pagination">
 		<li><a href="#">&laquo;</a></li>
-		<li><a href="#">1</a></li>
-		<li><a href="#">2</a></li>
-		<li><a href="#">3</a></li>
-		<li><a href="#">4</a></li>
-		<li><a href="#">5</a></li>
+		<?php 
+
+		if($data['taskCount']['success'] == true){
+			$amountOfTasks = $data['taskCount']['data'][0];
+
+			$commentCount = ceil($amountOfTasks / 5);
+			for($counter = 0; $counter < $commentCount; $counter++)
+			{
+				echo '<li><a href="#">'.$counter.'</a></li>';
+			}
+		}else
+		{
+			echo $data['taskCount']['message'];
+		}
+
+		?>
 		<li><a href="#">&raquo;</a></li>
 	</ul>
 </div>
@@ -49,10 +60,9 @@ mainTaskTable = {
 /**
  * Comment section paginator on click event
  */
-$(function() {
-	$(".pagination li a").click(function() {
-		loadTasks(mainTaskTable, $(this).text());
-	});
+ $(document).on('click', ".pagination li a", function () {
+		event.preventDefault();
+		loadTasks(mainTaskTable, parseInt($(this).text()) + 1);
 });
 
 /**
@@ -68,8 +78,6 @@ $(function() {
 
 /**
  * Page on load
- * 
- * THIS NEEDS TO BE REMOVED
  */
 $(document).ready(function() {
 	loadTasks(mainTaskTable, 1);

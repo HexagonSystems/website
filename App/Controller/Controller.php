@@ -12,6 +12,7 @@ class Controller
 
     public function __construct($template = NULL, $get = NULL, $post = NULL)
     {
+    	
         if($template != NULL)
             $this->template = $template;
 

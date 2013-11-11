@@ -28,6 +28,7 @@ class SingleTimesheetController extends Controller
 			$taskHandler = new TaskHandler();
 			$taskHandler->setDatabase($this->database);
 			$task = $taskLoader->loadTask($_GET['param']);
+			$task->loadCommentCount();
 			if($task === false)
 			{
 				/* HANDLE IF UNABLE TO LOAD TASK */
