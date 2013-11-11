@@ -32,6 +32,11 @@ class TaskHandler
 		$this->taskDA->setDatabase($database);
 		$this->databaseHolder = $database;
 	}
+	
+	public function countAllTasks()
+	{
+		return $this->taskDA->getAllTaskCount();
+	}
 
 	public function loadTasks($page, $quantity)
 	{
@@ -49,7 +54,6 @@ class TaskHandler
 		{
 			return createError("Page must be at least 1");
 		}
-
 	}
 
 	public function loadTask($id)

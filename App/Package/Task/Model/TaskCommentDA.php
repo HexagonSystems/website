@@ -111,6 +111,101 @@ class TaskCommentDA
 		}
 	}//end loadComments
 	
+	/**
+	 * Loads
+	 * @param int $taskId
+	 * @param int $memberId
+	 * @param Date lastLoaded
+	 * @return string|multitype:multitype: boolean
+	 */
+	public function loadNewestComments($taskId, $memberId, $lastLoaded, $qty)
+	{
+		try {
+			$statement = "SELECT comment.*, member.firstName FROM `taskcomment` comment
+					INNER JOIN `member` member ON comment.memberId = member.memberId
+					WHERE comment.taskId = :taskId
+					AND comment.postedDate > :lastLoaded
+					ORDER BY comment.postedDate DESC
+					LIMIT 0, :quantity";
+	
+			$query = $this->database->prepare($statement);
+	
+			$query->bindParam(':taskId'	, $taskId , \PDO::PARAM_INT);
+			$query->bindParam(':lastLoaded'	, $lastLoaded , \PDO::PARAM_STR);
+				
+			$qty = $qty + 0; // A silly way to make it an integer
+				
+			$query->bindParam(':quantity'   , $qty		, \PDO::PARAM_INT);
+	
+			if(!$query->execute())
+			{
+				return $this->createError("SQL had trouble executing ");
+			}
+	
+			$commentHolder = array();
+			$commentHolder['success'] = true;
+			$commentHolder['data'] = array();
+				
+	
+			$htmlString = "";
+			foreach ($query as $row) {
+				$tempTaskComment = new TaskComment();
+				$tempTaskComment->setId($row['commentId']);
+				$tempTaskComment->setTag($row['tag']);
+				$tempTaskComment->setTitle($row['title']);
+				$tempTaskComment->setContent($row['content']);
+				$tempTaskComment->setMemberId($row['firstName']);
+				$tempTaskComment->setDate($row['postedDate']);
+	
+				array_push($commentHolder['data'], $tempTaskComment);
+			}
+	
+			// echo json_encode($commentHolder);
+			return $commentHolder;
+		} catch (PDOException $e) {
+			return createError($e);
+		}
+	}//end loadComments
+	
+	/**
+	 * Gets the amount of comments that are in the specified Task
+	 * 
+	 * @param unknown $taskId
+	 * @return string|multitype:multitype: boolean
+	 */
+	public function getCommentCount($taskId)
+	{
+		try {
+			$statement = "SELECT COUNT(*) FROM `taskcomment` WHERE `taskId` = :taskId";
+	
+			$query = $this->database->prepare($statement);
+	
+			$query->bindParam(':taskId'   , $taskId , \PDO::PARAM_INT);
+			
+			$commentCountHolder = array();
+			$commentCountHolder['success'] = true;
+			$commentCountHolder['data'] = array();
+			
+			if(!$query->execute())
+			{
+				return $this->createError("SQL had trouble executing");
+			}else
+			{
+				$row = $query->fetch();
+				if($row !== false)
+				{
+					array_push($commentCountHolder['data'], $row[0]);
+				}else
+				{
+					return $this->createError("Unable to find Task requested");
+				}
+			}
+			return $commentCountHolder;
+		} catch (PDOException $e) {
+			return createError($e);
+		}
+	}//end loadComments
+	
 	/*
 	 * THIS IS A TEMP FUNCTION, PLEASE FIX UP LATER
 	 */
