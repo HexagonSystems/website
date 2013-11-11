@@ -59,18 +59,24 @@ function pageAlreadyLoaded(tableConfig, pageNum) {
  * @param pageNumber
  * @param quantity
  */
-function updateTableContentArray(tableConfig, jsonObject, pageNum) {
-	var positionToStartOn = (pageNum - 1) * tableConfig['quantity_per_page'];
-	var positionToEndOn = positionToStartOn + tableConfig['quantity_per_page'];
+function updateTableContentArray(tableConfig, jsonObject, pageNum, unshiftArray) {
+	if (unshiftArray == undefined || unshiftArray == false) {
+		var positionToStartOn = (pageNum - 1)
+				* tableConfig['quantity_per_page'];
+		var positionToEndOn = positionToStartOn
+				+ tableConfig['quantity_per_page'];
 
-	$.each(jsonObject, function(id) {
-		tableConfig['content'][positionToStartOn] = jsonObject[id];
-		positionToStartOn++;
-	});
+		$.each(jsonObject, function(id) {
+			tableConfig['content'][positionToStartOn] = jsonObject[id];
+			positionToStartOn++;
+		});
+	} else {
+		$.each(jsonObject, function(id) {
+			tableConfig['content'].unshift(jsonObject[id]);
+		});
+	}
 
 	findLastPage(tableConfig, pageNum);
-
-	return printTableDataInTable(tableConfig, pageNum);
 }
 
 function findLastPage(tableConfig, pageNum) {
@@ -90,7 +96,7 @@ function findLastPage(tableConfig, pageNum) {
 /**
  * Returns the next items to print out to the screen
  */
-function printTableDataInTable(tableConfig, pageNum) {
+function printTableDataInTable(tableConfig, pageNum, emptyBeforeReturn) {
 	// If the page of comments isn't already loaded, load it
 	if (pageAlreadyLoaded(tableConfig, pageNum) === false
 			&& pageNum >= tableConfig['last_page']) {
@@ -111,7 +117,9 @@ function printTableDataInTable(tableConfig, pageNum) {
 					positionToEndOn);
 		}
 
-		emptyTableBody(tableConfig);
+		if (emptyBeforeReturn != false) {
+			emptyTableBody(tableConfig);
+		}
 
 		return arrayToLoopOver;
 	}

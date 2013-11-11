@@ -12,13 +12,15 @@ function loadComments(tableConfig, pageNum, forceLoad) {
 			pageNum : pageNum,
 			qty : 5
 		}, function(nakedJson) {
+			console.log("Loaded comments through AJAX");
+			console.log("Current array = " + tableConfig['content'].toString())
 			nakedJson = $.parseJSON(nakedJson);
 			response = nakedJson.success;
 			if (response == true || response == "true") {
 				var jsonObject = nakedJson.data;
-				var arrayToLoopOver = updateTableContentArray(tableConfig,
-						jsonObject, pageNum);
-
+				updateTableContentArray(tableConfig, jsonObject, pageNum);
+				var arrayToLoopOver = printTableDataInTable(tableConfig,
+						pageNum, true);
 				if (arrayToLoopOver) {
 					printCommentTableData(tableConfig, arrayToLoopOver);
 				} else {
@@ -27,11 +29,74 @@ function loadComments(tableConfig, pageNum, forceLoad) {
 
 			}
 		});
-		}else
-			{
-			printCommentTableData(tableConfig, arrayToLoopOver);
+	} else {
+		printCommentTableData(tableConfig, arrayToLoopOver);
+	}
+
+}
+
+/**
+ * Loads the newest comments for a specific Task
+ * 
+ * If 5 comments are returned the current tableConfig['content'] array is wiped
+ * and filled with the new 5 comments. If < 5 comments are loaded, they are
+ * simply added to the start of the array and printed to the screen. This is to
+ * provide a work around if the user hasn't loaded the page in quite some time,
+ * this method will given them a clean way of loading all of the new comments.
+ * 
+ * @param tableConfig
+ */
+function loadNewestComments(tableConfig) {
+	$.post(ajaxBase + "Model/TaskCommentsAJAX.php", {
+		request : "loadNewest",
+		taskId : tableConfig['taskId'],
+		memberId : tableConfig['memberId'],
+		lastLoaded : tableConfig['content'][0]['date'],
+		qty : 5
+	}, function(nakedJson) {
+		console.log(nakedJson);
+		nakedJson = $.parseJSON(nakedJson);
+		response = nakedJson.success;
+		if (response == true || response == "true") {
+			var jsonData = nakedJson.data;
+			jsonData.reverse();
+			console.log("About to print");
+			$.each(jsonData, function(id) {
+				tableConfig['content'].unshift(jsonData[id]); // Add to the
+																// start of the
+																// array
+				console.log("Printing " + jsonData[id]['title']);
+				printSingleComment(tableConfig, jsonData[id]['tag'],
+						jsonData[id]['title'], jsonData[id]['content'],
+						jsonData[id]['memberId'], jsonData[id]['date'], true);
+			});
+			if (jsonData.length >= 5) {
+				tableConfig['content'] = tableConfig['content'].slice(0, 5);
+				findLastPage(tableConfig, 1);
 			}
 
+			/* PAGINATOR */
+			var countResponse = nakedJson.count;
+			console.log("About to handle countResponse");
+			if (countResponse.success == true) {
+				console.log("Replacing html " + tableConfig['paginatorLocation']);
+				$(tableConfig['paginatorLocation']).html(countResponse.data.html);
+			}else
+			{
+				console.log("false");
+			}
+		}
+	});
+
+	/*
+	 * var tempArray = new Array(); tempArray['tag'] = commentTag;
+	 * tempArray['title'] = commentTitle; tempArray['content'] = commentContent;
+	 * tempArray['memberId'] = tableConfig['memberId']; tempArray['date'] =
+	 * data.data.date; tableConfig['content'].unshift(tempArray);
+	 * printSingleComment(tableConfig, commentTag, commentTitle, commentContent,
+	 * tempArray['memberId'], tempArray['date'], true);
+	 * assignTableContentAccordion(); assignCommentTagClick();
+	 */
 }
 
 /**
@@ -149,6 +214,7 @@ function printSingleComment(tableConfig, commentTag, commentTitle,
 	tableRow.appendChild(dateTD);
 
 	if (commentSlideIn) {
+		console.log("Sliding in comment " + commentTitle);
 		$(tableRow).hide().prependTo(tableConfig['print_location']).fadeIn(
 				'slow');
 		if (tableConfig['content'].length > tableConfig['quantity_per_page']) {
@@ -177,6 +243,7 @@ function createComment(tableConfig, commentTag, commentTitle, commentContent) {
 		data = $.parseJSON(data);
 		response = data.success;
 		if (response == true) {
+			loadNewestComments(tableConfig);
 			// Run function to check for updats, therefore asking the user to
 			// refresh
 			// Or refresh automatically, or just add the comment in locally,
@@ -184,18 +251,16 @@ function createComment(tableConfig, commentTag, commentTitle, commentContent) {
 			// around the same time as well
 			// Maybe it could do both, check for new updates, if there arnt any
 			// add this locally, if there are refresh or ask the user to refresh
-			var tempArray = new Array();
-			tempArray['tag'] = commentTag;
-			tempArray['title'] = commentTitle;
-			tempArray['content'] = commentContent;
-			tempArray['memberId'] = tableConfig['memberId'];
-			tempArray['date'] = data.data.date;
-			tableConfig['content'].unshift(tempArray);
-			printSingleComment(tableConfig, commentTag, commentTitle,
-					commentContent, tempArray['memberId'], tempArray['date'],
-					true);
-			assignTableContentAccordion();
-			assignCommentTagClick();
+			/**
+			 * var tempArray = new Array(); tempArray['tag'] = commentTag;
+			 * tempArray['title'] = commentTitle; tempArray['content'] =
+			 * commentContent; tempArray['memberId'] = tableConfig['memberId'];
+			 * tempArray['date'] = data.data.date;
+			 * tableConfig['content'].unshift(tempArray);
+			 * printSingleComment(tableConfig, commentTag, commentTitle,
+			 * commentContent, tempArray['memberId'], tempArray['date'], true);
+			 * assignTableContentAccordion(); assignCommentTagClick();
+			 */
 		} else {
 			alert(data);
 		}
@@ -268,6 +333,6 @@ function printCommentTableData(tableConfig, arrayToLoopOver) {
 	});
 
 	assignTableContentAccordion();
-	
+
 	assignCommentTagClick();
 }

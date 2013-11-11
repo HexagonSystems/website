@@ -1,7 +1,8 @@
 <header class="page-header relative" id="taskHeader">
 	<h3>
-		<span id="taskTitleLocation"><?php echo $data['task']->getTitle(); ?></span>
-		<small id="taskStatusLocation"><?php echo $data['task']->getStatus(); ?> </small>
+		<span id="taskTitleLocation"><?php echo $data['task']->getTitle(); ?>
+		</span> <small id="taskStatusLocation"><?php echo $data['task']->getStatus(); ?>
+		</small>
 	</h3>
 	<article>
 		Members
@@ -45,14 +46,17 @@
 </table>
 
 <div class="text-center">
-	<ul class="pagination">
-		<li><a href="">&laquo;</a></li>
-		<li><a href="#">1</a></li>
-		<li><a href="#">2</a></li>
-		<li><a href="#">3</a></li>
-		<li><a href="#">4</a></li>
-		<li><a href="#">5</a></li>
-		<li><a href="#">&raquo;</a></li>
+	<ul class="pagination" id="taskCommentPaginator">
+		<?php 
+		if($data['task']->getCommentCount() != null)
+		{
+			$amountOfPages = ceil($data['task']->getCommentCount() / 5);
+			include 'paginator_generator.php';
+		}else
+		{
+			echo "There was trouble loading the paginator";
+		}
+		?>
 	</ul>
 </div>
 
@@ -68,6 +72,7 @@ ajaxBase = "<?php echo SITE_ROOT.AppBaseSTRIPPED; ?>Package/Task/";
 
 mainTaskCommentsTable = {
 		'print_location'	:	'#commentsContainer',
+		'paginatorLocation'	:	"#taskCommentPaginator",
 		'quantity_per_page'	:	5,
 		'last_page'			:	-1,
 		'memberId'			:	<?php echo unserialize($_SESSION['accountObject'])->getMemberId(); ?>,
@@ -104,10 +109,9 @@ $(function() {
 /**
  * Comment section paginator on click event
  */
-$(function() {
-	$(".pagination li a").click(function() {
-		loadComments(mainTaskCommentsTable, $(this).text());
-	});
+ $(document).on('click', ".pagination li a", function () {
+		event.preventDefault();
+		loadComments(mainTaskCommentsTable, parseInt($(this).text()) + 1);
 });
 
 

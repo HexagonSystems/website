@@ -75,6 +75,42 @@ class TaskDA
 			return createError($e);
 		}
 	}
+	
+	/**
+	 * Gets the amount of Tasks currently available
+	 *
+	 * @return string|multitype:multitype: boolean
+	 */
+	public function getAllTaskCount()
+	{
+		try {
+			$statement = "SELECT COUNT(*) FROM `task`";
+	
+			$query = $this->database->prepare($statement);
+				
+			$taskCountHolder = array();
+			$taskCountHolder['success'] = true;
+			$taskCountHolder['data'] = array();
+				
+			if(!$query->execute())
+			{
+				return $this->createError("SQL had trouble executing");
+			}else
+			{
+				$row = $query->fetch();
+				if($row !== false)
+				{
+					array_push($taskCountHolder['data'], $row[0]);
+				}else
+				{
+					return $this->createError("Unable to find any Tasks");
+				}
+			}
+			return $taskCountHolder;
+		} catch (PDOException $e) {
+			return createError($e);
+		}
+	}//end loadAllTaskCOunt
 
 	/**
 	 * Loads an existing task from the database
