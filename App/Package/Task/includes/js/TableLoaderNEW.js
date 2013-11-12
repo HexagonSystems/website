@@ -36,16 +36,22 @@ function emptyTableBody(tableConfig) {
  */
 function pageAlreadyLoaded(tableConfig, pageNum) {
 	if (pageNum > tableConfig['last_page']) {
+		console.log("Page not already loaded, returning false");
 		return false;
 	}
 	var positionToStartOn = (pageNum - 1) * tableConfig['quantity_per_page'];
 	var positionToEndOn = positionToStartOn + tableConfig['quantity_per_page']
 			- 1;
-	if (tableConfig['content'][positionToStartOn] === undefined
-			|| tableConfig['content'][positionToStartOn] === null) {
-		return false;
+
+	for ( var counter = positionToStartOn; counter < positionToEndOn; counter++) {
+		if (tableConfig['content'][counter] === undefined
+				|| tableConfig['content'][counter] === null) {
+			console.log("Page not already loaded, returning false");
+			return false;
+		}
 	}
 
+	console.log("Page already loaded, returning true");
 	/* USED FOR TESTING */
 	// alert(arrayOfComments[positionToStartOn]['content']);
 	// alert(arrayOfComments[positionToEndOn]['content']);
@@ -99,9 +105,11 @@ function findLastPage(tableConfig, pageNum) {
 function printTableDataInTable(tableConfig, pageNum, emptyBeforeReturn) {
 	// If the page of comments isn't already loaded, load it
 	if (pageAlreadyLoaded(tableConfig, pageNum) === false
-			&& pageNum >= tableConfig['last_page']) {
+			&& pageNum != tableConfig['last_page']) {
+		console.log("Page not already loaded, returning false");
 		return false;
 	} else {
+		console.log("Page already loaded... Getting data from memory");
 		var positionToStartOn = (pageNum - 1)
 				* tableConfig['quantity_per_page'];
 		var positionToEndOn = positionToStartOn

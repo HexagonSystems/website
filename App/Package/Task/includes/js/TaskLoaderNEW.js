@@ -14,6 +14,7 @@
 function loadTasks(tableConfig, pageNum, forceLoad) {
 	var arrayToLoopOver = printTableDataInTable(tableConfig, pageNum);
 	if (!(arrayToLoopOver) || forceLoad) {
+		console.log("Loading from the database");
 		$.post(ajaxBase + "Model/TaskAJAX.php", {
 			request : "load",
 			memberId : tableConfig['memberId'],
@@ -34,6 +35,7 @@ function loadTasks(tableConfig, pageNum, forceLoad) {
 			}
 		});
 	} else {
+		console.log("printing from memory forceLoad = " + forceLoad);
 		printTaskTableData(tableConfig, arrayToLoopOver);
 	}
 }
@@ -232,11 +234,9 @@ function printSingleTask(tableConfig, taskId, taskTitle, taskDscr, taskStatus,
 	/* Members */
 	var taskMembersTD = document.createElement('td');
 	$.each(taskMembers, function(member) {
-		var taskMemberSingleAHREF = document.createElement('a');
-		taskMemberSingleAHREF.title = taskMembers[member];
-		taskMemberSingleAHREF.href = "#";
-		taskMemberSingleAHREF.innerHTML = taskMembers[member];
-		taskMembersTD.appendChild(taskMemberSingleAHREF);
+		var taskMemberSingleSpan = document.createElement('span');
+		taskMemberSingleSpan.innerHTML = taskMembers[member];
+		taskMembersTD.appendChild(taskMemberSingleSpan);
 		taskMembersTD.innerHTML += ", ";
 	});
 
@@ -245,11 +245,9 @@ function printSingleTask(tableConfig, taskId, taskTitle, taskDscr, taskStatus,
 	/* Last Update */
 	var taskLastUpdateTD = document.createElement('td');
 
-	var taskMemberSingleAHREF = document.createElement('a');
-	taskMemberSingleAHREF.title = taskMembers[taskLastUpdateMemberId];
-	taskMemberSingleAHREF.href = "#";
-	taskMemberSingleAHREF.innerHTML = taskMembers[taskLastUpdateMemberId];
-	taskLastUpdateTD.appendChild(taskMemberSingleAHREF);
+	var taskMemberSingleSpan = document.createElement('span');
+	taskMemberSingleSpan.innerHTML = taskMembers[taskLastUpdateMemberId];
+	taskLastUpdateTD.appendChild(taskMemberSingleSpan);
 	taskLastUpdateTD.innerHTML += " on " + taskLastUpdateDate;
 
 	/* APPEND EVERYTHING TO TABLE ROW */

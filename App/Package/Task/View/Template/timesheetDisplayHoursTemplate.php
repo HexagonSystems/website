@@ -7,19 +7,16 @@
 		<form class="form-horizontal" role="form" action="#" method="GET">
 			<input type="hidden" name="location" value="timesheetPage"> <input
 				type="hidden" name="action" value="displayHours">
+
 			<div class="form-group">
 				<label for="addHoursDate" class="col-lg-2 control-label">Start Date</label>
-				<div class="col-lg-10">
+				<div class="col-lg-8 inline">
 					<input type="text" class="form-control" name="startDate"
 						id="displayHours_datePicker" value="1383260400">
 				</div>
+				<button type="submit" class="btn btn-default">Search</button>
 			</div>
 
-			<div class="form-group">
-				<div class="col-lg-10">
-					<button type="submit">Search</button>
-				</div>
-			</div>
 		</form>
 	</div>
 </div>
@@ -34,7 +31,7 @@ foreach($data['timesheetData']->toArray() as $tableUser => $tableData)
 <?php 
 $datePickerDate = "";
 if(isset($_GET['startDate']))
-{	
+{
 	$date = str_replace('-','.',$_GET['startDate']);
 	$datePickerDate = date('Y-m-d',strtotime($date));
 }else
