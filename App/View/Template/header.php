@@ -7,7 +7,7 @@
 <meta name="author" content="">
 <link rel="shortcut icon" href="includes/ico/favicon.png">
 
-<title>Hexagon Systems</title>
+<title>Home - Hexagon Systems</title>
 
 <!-- Custom styles for this template -->
 <link rel="stylesheet" href="//<?php echo SITE_ROOT; ?>Includes/css/bootstrap.min.css" />
