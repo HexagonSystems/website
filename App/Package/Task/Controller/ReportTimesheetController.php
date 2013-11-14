@@ -21,26 +21,23 @@ class ReportTimesheetController extends Controller
 
 		$taskTimeSheet = new TaskTimeSheet();
 
+		if(isset($_GET['timeFrame']))
+		{
+			$taskTimeSheet->setTimeFrame($_GET['timeFrame']);
+		}else
+		{
+			$taskTimeSheet->setTimeFrame("default");
+		}
+
+		$format = $taskTimeSheet->getTimeFormat();
 
 
 		if(isset($_GET['startDate']))
 		{
-			$startDate = strtotime($_GET['startDate']);
-
-
-			$endDate = strtotime("+7 day", $startDate);
-
-			$startDate = date('Y-m-d', $startDate);
-			$endDate = date('Y-m-d', $endDate);
+			$startDate = $taskTimeSheet->getStartDate($_GET['startDate']);
 		}else
 		{
-			date_default_timezone_set('Australia/Melbourne');
-			$endDate = date(time());
-
-
-			$startDate = strtotime("-7 day", $endDate);
-			$startDate = date('Y-m-d', $startDate);
-			$endDate = date('Y-m-d', $endDate);
+			$startDate = $taskTimeSheet->getStartDate(false);
 		}
 
 		if(isset($_GET['user']))
@@ -50,12 +47,20 @@ class ReportTimesheetController extends Controller
 		{
 			$memberId = false;
 		}
-		$hoursObjectArray = $hoursLoader->loadHours(false, false, $startDate, $endDate);
 
+		/*
+		 For testing purposes
+		echo "Start date:			" . $startDate . "<br/>";
+		echo "End date:				" . $taskTimeSheet->getEndDate($startDate) . "<br/>";
+		echo "Time Frame:			" . $taskTimeSheet->getTimeFrame() . "<br/>";
+		echo "Time Frame interval:	" . $taskTimeSheet->getTimeFrameInterval() . "<br/>";
+		*/
+
+		$endDate = $taskTimeSheet->getEndDate($startDate);
+		$hoursObjectArray = $hoursLoader->loadHours(false, false, $startDate, $endDate);
 		$taskTimeSheet->setDateRange($startDate, $endDate);
 		$taskTimeSheet->buildTimeSheetFromTaskHourArray($hoursObjectArray['data']);
 		$taskTimeSheet->generateTotals();
-
 		parent::invoke();
 
 		//create a new view and pass it our template
@@ -63,6 +68,9 @@ class ReportTimesheetController extends Controller
 		$view->assign('title' , 'Logged in');
 		$view->assign('timesheetData', $taskTimeSheet);
 		$view->assign('timesheetTotals', $taskTimeSheet);
+		
+		$view->assign('startDateFormatted', $startDate);
+		$view->assign('endDateFormatted', $endDate);
 	} // end function
 }
 

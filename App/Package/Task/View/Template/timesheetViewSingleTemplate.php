@@ -7,9 +7,16 @@
 	<article>
 		Members
 		<ul>
-			<?php foreach($data['task']->getMembers() as $member) {
-				echo "<li>$member</li>";
-		} ?>
+			<?php
+			if(count($data['task']) == 0)
+			{
+				echo "<li>Noone has added hours to this Task yet</li>";
+			}else
+			{
+				foreach($data['task']->getMembers() as $member) {
+					echo "<li>$member</li>";
+				}
+			}?>
 		</ul>
 	</article>
 	<article id="taskDescriptionLocation">
@@ -114,12 +121,18 @@ $(function() {
 		event.preventDefault();
 		if($(this).text() == "<<")
 		{
+			$(this).parent().siblings().children().css('backgroundColor', 'white');
+			$(this).parent().next().children().css('backgroundColor', '#eee');
 			loadComments(mainTaskCommentsTable, 1);
 		}else if($(this).text() == ">>")
 		{
+			$(this).parent().siblings().children().css('backgroundColor', 'white');
+			$(this).parent().prev().children().css('backgroundColor', '#eee');
 			loadComments(mainTaskCommentsTable, parseInt($(this).parent().prev().find(">:first-child").text()) + 1);
 		}else
 		{
+			$(this).parent().siblings().children().css('backgroundColor', 'white');
+			$(this).css('backgroundColor', '#eee');
 			loadComments(mainTaskCommentsTable, parseInt($(this).text()) + 1);
 		}
 		
