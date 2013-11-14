@@ -25,7 +25,7 @@ if (file_exists($filename)) {
 }
 
 require_once(AppBase.'/Service/Autoloader.php');
-require_once(AppBase.'/Config/Database.php');
+require_once(AppBase.'/Config/Database.example.php');
 require_once(AppBase.'/Service/password.php');
 
 require_once(AppBase.'/Package/Task/Config/Config.php');
