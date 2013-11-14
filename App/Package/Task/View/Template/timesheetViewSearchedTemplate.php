@@ -8,40 +8,58 @@
 			<input type="hidden" name="location" value="timesheetPage"> <input
 				type="hidden" name="action" value="search">
 			<div class="form-group" id="searchFormTag">
-				<label for="tag_value" class="col-lg-2 control-label">Tag</label>
-				<div class="col-lg-8">
+				<label for="tag_value"
+					class="col-lg-2 col-md-2 col-sm-2 col-xs-2 control-label">Tag</label>
+				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
 					<input type="text" class="form-control" name="tag_value"
 						id="tag_value"
 						value="<?php if(isset($_GET['tag_value'])) { echo $_GET['tag_value']; }?>">
 				</div>
-				<?php
-				$searchType = 'tag';
-				include 'timesheetViewSearched_IdorTextTemplate.php';
-				?>
+				<div class="visible-xs">
+					<br /> <br /> <br />
+				</div>
+				<div class="mobile-center">
+					<?php
+					$searchType = 'tag';
+					include 'timesheetViewSearched_IdorTextTemplate.php';
+					?>
+				</div>
 			</div>
 			<div class="form-group">
-				<label for="task_value" class="col-lg-2 control-label">Task</label>
-				<div class="col-lg-8">
+				<label for="task_value"
+					class="col-lg-2 col-md-2 col-sm-2 col-xs-2 control-label">Task</label>
+				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
 					<input type="text" class="form-control" name="task_value"
 						id="task_value"
 						value="<?php if(isset($_GET['task_value'])) { echo $_GET['task_value']; }?>">
 				</div>
-				<?php
-				$searchType = 'task';
-				include 'timesheetViewSearched_IdorTextTemplate.php';
-				?>
+				<div class="visible-xs">
+					<br /> <br /> <br />
+				</div>
+				<div class="mobile-center">
+					<?php
+					$searchType = 'task';
+					include 'timesheetViewSearched_IdorTextTemplate.php';
+					?>
+				</div>
 			</div>
 			<div class="form-group" id="searchFormMember">
-				<label for="addHoursDate" class="col-lg-2 control-label">Member</label>
-				<div class="col-lg-8">
+				<label for="addHoursDate"
+					class="col-lg-2 col-md-2 col-sm-2 col-xs-2 control-label">Member</label>
+				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
 					<input type="text" class="form-control" name="member_value"
 						id="member_value"
 						value="<?php if(isset($_GET['member_value'])) { echo $_GET['member_value']; }?>">
 				</div>
-				<?php
-				$searchType = 'member';
-				include 'timesheetViewSearched_IdorTextTemplate.php';
-				?>
+				<div class="visible-xs">
+					<br /> <br /> <br />
+				</div>
+				<div class="mobile-center">
+					<?php
+					$searchType = 'member';
+					include 'timesheetViewSearched_IdorTextTemplate.php';
+					?>
+				</div>
 			</div>
 
 			<div class="form-group">
@@ -77,16 +95,23 @@
 	<thead>
 		<tr>
 			<?php 
-			if($this->data['searchResult'])
+			if(isset($_GET['searchFor']))
 			{
-				foreach(array_keys($this->data['searchResult']['data'][0]->toArray()) as $key)
+				if($this->data['searchResult'] && count($this->data['searchResult']['data']) > 0)
 				{
-					include 'timesheetViewSearched_tableHeaderTemplate.php';
+					foreach(array_keys($this->data['searchResult']['data'][0]->toArray()) as $key)
+					{
+						include 'timesheetViewSearched_tableHeaderTemplate.php';
+					}
+				}else
+				{
+					echo "No results found";
 				}
 			}else
 			{
-				echo "No results found";
+				echo "To search please click the 'Search' button";
 			}
+
 
 			?>
 		</tr>

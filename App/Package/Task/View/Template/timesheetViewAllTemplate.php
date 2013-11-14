@@ -58,14 +58,22 @@ mainTaskTable = {
  */
  $(document).on('click', ".pagination li a", function () {
 		event.preventDefault();
+
+		
 		if($(this).text() == "<<")
 		{
+			$(this).parent().siblings().children().css('backgroundColor', 'white');
+			$(this).parent().next().children().css('backgroundColor', '#eee');
 			loadTasks(mainTaskTable, 1);
 		}else if($(this).text() == ">>")
 		{
+			$(this).parent().siblings().children().css('backgroundColor', 'white');
+			$(this).parent().prev().children().css('backgroundColor', '#eee');
 			loadTasks(mainTaskTable, parseInt($(this).parent().prev().find(">:first-child").text()) + 1);
 		}else
 		{
+			$(this).parent().siblings().children().css('backgroundColor', 'white');
+			$(this).css('backgroundColor', '#eee');
 			loadTasks(mainTaskTable, parseInt($(this).text()) + 1);
 		}
 });

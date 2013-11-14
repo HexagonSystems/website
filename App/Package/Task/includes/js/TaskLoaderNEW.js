@@ -14,7 +14,6 @@
 function loadTasks(tableConfig, pageNum, forceLoad) {
 	var arrayToLoopOver = printTableDataInTable(tableConfig, pageNum);
 	if (!(arrayToLoopOver) || forceLoad) {
-		console.log("Loading from the database");
 		$.post(ajaxBase + "Model/TaskAJAX.php", {
 			request : "load",
 			memberId : tableConfig['memberId'],
@@ -35,7 +34,6 @@ function loadTasks(tableConfig, pageNum, forceLoad) {
 			}
 		});
 	} else {
-		console.log("printing from memory forceLoad = " + forceLoad);
 		printTaskTableData(tableConfig, arrayToLoopOver);
 	}
 }
@@ -47,28 +45,26 @@ function loadTasks(tableConfig, pageNum, forceLoad) {
  * 
  * @param tableConfig
  */
-function loadNewestTasks(tableConfig)
-{
-	$.post(ajaxBase + "Model/TaskAJAX.php",{
-				request : "loadNewest",
-				memberId : tableConfig['memberId'],
-				lastLoaded : tableConfig['content'][0]['id'],
-			},
-			function(data) {
-				nakedJson = $.parseJSON(nakedJson);
-				response = nakedJson.success;
-				if (response == true || response == "true") {
-					var jsonObject = nakedJson.data;
-					updateTableContentArray(tableConfig,
-							jsonObject, pageNum);
-					var arrayToLoopOver = printTableDataInTable(tableConfig, pageNum, true);
-					if (arrayToLoopOver) {
-						printTaskTableData(tableConfig, arrayToLoopOver);
-					} else {
-						loadNewestTasks(tableConfig);
-					}
-				}
-			});
+function loadNewestTasks(tableConfig) {
+	$.post(ajaxBase + "Model/TaskAJAX.php", {
+		request : "loadNewest",
+		memberId : tableConfig['memberId'],
+		lastLoaded : tableConfig['content'][0]['id'],
+	}, function(data) {
+		nakedJson = $.parseJSON(nakedJson);
+		response = nakedJson.success;
+		if (response == true || response == "true") {
+			var jsonObject = nakedJson.data;
+			updateTableContentArray(tableConfig, jsonObject, pageNum);
+			var arrayToLoopOver = printTableDataInTable(tableConfig, pageNum,
+					true);
+			if (arrayToLoopOver) {
+				printTaskTableData(tableConfig, arrayToLoopOver);
+			} else {
+				loadNewestTasks(tableConfig);
+			}
+		}
+	});
 }
 
 /**
@@ -94,10 +90,10 @@ function createTask(tableConfig, taskTitle, taskDescription, taskStatus) {
 							comment = data.comment.data;
 							/* ASSUME FIRST NAME IS CORRECT */
 							var fakeMemberArray = {};
-							fakeMemberArray[tableConfig['memberId']] = tableConfig['memberFirstName'];
+							fakeMemberArray[tableConfig['memberId']] = "-";
 							var jsonString = JSON.stringify(fakeMemberArray);
 							fakeJSONObject = JSON.parse(jsonString)
-							
+
 							var arrayToUnshift = new Array();
 							arrayToUnshift['id'] = task.id;
 							arrayToUnshift['title'] = task.title;
@@ -105,12 +101,12 @@ function createTask(tableConfig, taskTitle, taskDescription, taskStatus) {
 							arrayToUnshift['status'] = task.status;
 							arrayToUnshift['members'] = fakeJSONObject;
 							arrayToUnshift['lastUpdate'] = comment;
-							
+
 							tableConfig['content'].unshift(arrayToUnshift);
-							
+
 							printSingleTask(tableConfig, task.id, task.title,
 									task.content, task.status, fakeJSONObject,
-									comment.memberId, comment.date, true);
+									tableConfig['memberFirstName'], comment.date, true);
 
 							assignTableContentAccordion();
 						} else {
@@ -233,12 +229,17 @@ function printSingleTask(tableConfig, taskId, taskTitle, taskDscr, taskStatus,
 
 	/* Members */
 	var taskMembersTD = document.createElement('td');
-	$.each(taskMembers, function(member) {
-		var taskMemberSingleSpan = document.createElement('span');
-		taskMemberSingleSpan.innerHTML = taskMembers[member];
+	var taskMemberSingleSpan = document.createElement('span');
+	if (taskMembers.length == 0) {
+		taskMemberSingleSpan.innerHTML = "-";
 		taskMembersTD.appendChild(taskMemberSingleSpan);
-		taskMembersTD.innerHTML += ", ";
-	});
+	} else {
+		$.each(taskMembers, function(member) {
+			taskMemberSingleSpan.innerHTML = taskMembers[member];
+			taskMembersTD.appendChild(taskMemberSingleSpan);
+			taskMembersTD.innerHTML += ", ";
+		});
+	}
 
 	taskMembersTD.innerHTML = taskMembersTD.innerHTML.slice(0, -2);
 
@@ -246,7 +247,7 @@ function printSingleTask(tableConfig, taskId, taskTitle, taskDscr, taskStatus,
 	var taskLastUpdateTD = document.createElement('td');
 
 	var taskMemberSingleSpan = document.createElement('span');
-	taskMemberSingleSpan.innerHTML = taskMembers[taskLastUpdateMemberId];
+	taskMemberSingleSpan.innerHTML = taskLastUpdateMemberId;
 	taskLastUpdateTD.appendChild(taskMemberSingleSpan);
 	taskLastUpdateTD.innerHTML += " on " + taskLastUpdateDate;
 
@@ -282,4 +283,3 @@ function printTaskTableData(tableConfig, arrayToLoopOver) {
 	});
 	assignTableContentAccordion();
 }
-
