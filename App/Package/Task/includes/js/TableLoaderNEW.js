@@ -35,9 +35,14 @@ function emptyTableBody(tableConfig) {
  * @returns {Boolean}
  */
 function pageAlreadyLoaded(tableConfig, pageNum) {
+	if (pageNum > tableConfig['last_page']) {
+		return false;
+	}
 	var positionToStartOn = (pageNum - 1) * tableConfig['quantity_per_page'];
-	var positionToEndOn = positionToStartOn + tableConfig['quantity_per_page'] - 1;
-	if (tableConfig['content'][positionToStartOn] === undefined || tableConfig['content'][positionToStartOn] === null) {
+	var positionToEndOn = positionToStartOn + tableConfig['quantity_per_page']
+			- 1;
+	if (tableConfig['content'][positionToStartOn] === undefined
+			|| tableConfig['content'][positionToStartOn] === null) {
 		return false;
 	}
 
@@ -54,26 +59,69 @@ function pageAlreadyLoaded(tableConfig, pageNum) {
  * @param pageNumber
  * @param quantity
  */
-function updateTableContentArray(tableConfig, jsonObject, pageNum) {
-	var positionToStartOn = (pageNum - 1) * tableConfig['quantity_per_page'];
-	var positionToEndOn = positionToStartOn + tableConfig['quantity_per_page'];
+function updateTableContentArray(tableConfig, jsonObject, pageNum, unshiftArray) {
+	if (unshiftArray == undefined || unshiftArray == false) {
+		var positionToStartOn = (pageNum - 1)
+				* tableConfig['quantity_per_page'];
+		var positionToEndOn = positionToStartOn
+				+ tableConfig['quantity_per_page'];
 
-	$.each(jsonObject, function(id) {
-		tableConfig['content'][positionToStartOn] = jsonObject[id];
-		positionToStartOn++;
-	});
+		$.each(jsonObject, function(id) {
+			tableConfig['content'][positionToStartOn] = jsonObject[id];
+			positionToStartOn++;
+		});
+	} else {
+		$.each(jsonObject, function(id) {
+			tableConfig['content'].unshift(jsonObject[id]);
+		});
+	}
 
-	findLastPage(tableConfig);
-
-	printTableDataInTable(tableConfig, pageNum);
+	findLastPage(tableConfig, pageNum);
 }
 
-function findLastPage(tableConfig) {
-	if (tableConfig['content'].length <= tableConfig['quantity_per_page']) {
-		tableConfig['last_page'] = 1;
-	} else if (tableConfig['content'].length % tableConfig['quantity_per_page']) {
-		tableConfig['last_page'] = Math.floor(tableConfig['content'].length / tableConfig['quantity_per_page']) + 1;
-	} else {
-		tableConfig['last_page'] = tableConfig['content'].length / tableConfig['quantity_per_page'];
+function findLastPage(tableConfig, pageNum) {
+	/*
+	 * if (tableConfig['content'].length <= tableConfig['quantity_per_page']) {
+	 * tableConfig['last_page'] = 1; } else if (tableConfig['content'].length %
+	 * tableConfig['quantity_per_page']) { tableConfig['last_page'] =
+	 * Math.floor(tableConfig['content'].length /
+	 * tableConfig['quantity_per_page']) + 1; } else { tableConfig['last_page'] =
+	 * tableConfig['content'].length / tableConfig['quantity_per_page']; }
+	 */
+	if (tableConfig['last_page'] < pageNum) {
+		tableConfig['last_page'] = pageNum;
 	}
+}
+
+/**
+ * Returns the next items to print out to the screen
+ */
+function printTableDataInTable(tableConfig, pageNum, emptyBeforeReturn) {
+	// If the page of comments isn't already loaded, load it
+	if (pageAlreadyLoaded(tableConfig, pageNum) === false
+			&& pageNum >= tableConfig['last_page']) {
+		return false;
+	} else {
+		var positionToStartOn = (pageNum - 1)
+				* tableConfig['quantity_per_page'];
+		var positionToEndOn = positionToStartOn
+				+ tableConfig['quantity_per_page'];
+
+		var arrayToLoopOver = tableConfig['content'].concat();
+
+		if (tableConfig['last_page'] > -1
+				&& tableConfig['last_page'] == pageNum) {
+			arrayToLoopOver = arrayToLoopOver.slice(positionToStartOn);
+		} else {
+			arrayToLoopOver = arrayToLoopOver.slice(positionToStartOn,
+					positionToEndOn);
+		}
+
+		if (emptyBeforeReturn != false) {
+			emptyTableBody(tableConfig);
+		}
+
+		return arrayToLoopOver;
+	}
+
 }

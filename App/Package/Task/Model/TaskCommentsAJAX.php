@@ -73,6 +73,35 @@ if(!isset($_POST['request']))
 				produceError("Missing attributes for adding hours request");
 			}
 			break;
+		case "loadNewest":
+			if(commonCommentAttributesExist() && loadNewestAttributesExists())
+			{
+				$response = $commentHandler->loadNewestComments($_POST['taskId'], $_POST['memberId'], $_POST['lastLoaded'], $_POST['qty']);
+				if($response['success'] == true)
+				{
+					for($counter = 0; $counter < sizeof($response['data']); $counter++)
+					{
+						$tempTaskComment = $response['data'][$counter];
+						if($tempTaskComment instanceof TaskComment)
+						{
+							$response['data'][$counter] = $tempTaskComment->toArray();
+						}else
+						{
+							$response['data'][$counter] = "Error";
+						}
+					}
+				}
+				
+				$response['count'] = $commentHandler->getCommentCount($_POST['taskId'], $_POST['memberId']);
+				$amountOfPages = ceil($response['count']['data'][0] / 5);
+				ob_start();
+				include '../View/Template/paginator_generator.php';
+				$newPaginator = ob_get_contents();
+				ob_end_clean();
+				$response['count']['data']['html'] = $newPaginator;
+				$response = json_encode($response);
+				echo $response;
+			}
 	}
 }
 
@@ -150,6 +179,29 @@ function addHoursAttributesExists()
 	}else
 	{
 		produceError("Worked date is missing");
+		return false;
+	}
+}
+
+/**
+ * Checks for the required post data for loading the newest comments
+ *
+ * @return boolean
+ */
+function loadNewestAttributesExists()
+{
+	if(isset($_POST['lastLoaded']))
+	{
+		if(isset($_POST['qty']))
+		{
+			return true;
+		}else
+		{
+			produceError("Quantiy is missing");
+		}
+	}else
+	{
+		produceError("Last loaded date is missing");
 		return false;
 	}
 }

@@ -12,14 +12,30 @@ class TaskRouter
     {
         $getVars = $_GET;
 
-        $page = isset($getVars['location']) ? $getVars['location'] : 'empty';
+        $page = isset($getVars['action']) ? $getVars['action'] : 'empty';
+		
 
+        /* CHECK THE USER IS LOGGED IN */
+        if(! isset($_SESSION['account'])){
+        	echo "Please login to view this page";
+        	$page = 'empty';
+        }
+        
         switch ($page) {
-            case "timesheetPage":
-               	$controller = "TimesheetController";
+        	case "all":
+        		$controller = "AllTimesheetController";
+        		break;
+            case "single":
+               	$controller = "SingleTimesheetController";
                 break;
+            case "search":
+            	$controller = "SearchTimesheetController";
+            	break;
+            case "report":
+            	$controller = "ReportTimesheetController";
+            	break;
             default:
-                $controller = "IndexController";
+                $controller = "TimesheetController";
                 break;
         }//end switch
 

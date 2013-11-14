@@ -1,7 +1,8 @@
-<header class="page-header relative">
+<header class="page-header relative" id="taskHeader">
 	<h3>
-		<?php echo $data['task']->getTitle(); ?>
-		<small><?php echo $data['task']->getStatus(); ?> </small>
+		<span id="taskTitleLocation"><?php echo $data['task']->getTitle(); ?>
+		</span> <small id="taskStatusLocation"><?php echo $data['task']->getStatus(); ?>
+		</small>
 	</h3>
 	<article>
 		Members
@@ -11,7 +12,7 @@
 		} ?>
 		</ul>
 	</article>
-	<article>
+	<article id="taskDescriptionLocation">
 		<?php echo $data['task']->getContent(); ?>
 	</article>
 </header>
@@ -21,10 +22,11 @@
 	class="btn btn-primary btn-sm">Add Update</a>
 <a data-toggle="modal" href="#modal_hours"
 	class="btn btn-primary btn-sm">Add Hours</a>
-<button class="btn btn-primary btn-sm">Edit Task</button>
-<button class="btn btn-primary btn-sm" id="buttonSlideIn">Testing Add Comment With Slide In</button>
+<a data-toggle="modal" href="#modal_editTask"
+	class="btn btn-primary btn-sm">Edit Task</a>
 <?php include_once 'modal_comment.php'; ?>
 <?php include_once 'modal_hours.php'; ?>
+<?php include_once 'modal_editTask.php'; ?>
 <?php include_once 'modal_pickSearchMethod.php'; ?>
 
 
@@ -44,30 +46,37 @@
 </table>
 
 <div class="text-center">
-	<ul class="pagination">
-		<li><a href="">&laquo;</a></li>
-		<li><a href="#">1</a></li>
-		<li><a href="#">2</a></li>
-		<li><a href="#">3</a></li>
-		<li><a href="#">4</a></li>
-		<li><a href="#">5</a></li>
-		<li><a href="#">&raquo;</a></li>
+	<ul class="pagination" id="taskCommentPaginator">
+		<?php 
+		if($data['task']->getCommentCount() != null)
+		{
+			$amountOfPages = ceil($data['task']->getCommentCount() / 5);
+			include 'paginator_generator.php';
+		}else
+		{
+			echo "There was trouble loading the paginator";
+		}
+		?>
 	</ul>
 </div>
 
 <script
-	src="<?php echo AppBaseSTRIPPED; ?>Package/Task/includes/js/TaskCommentsLoaderNEW.js"></script>
+	src="<?php echo SITE_ROOT.AppBaseSTRIPPED; ?>Package/Task/includes/js/TaskCommentsLoaderNEW.js"></script>
 <script
-	src="<?php echo AppBaseSTRIPPED; ?>Package/Task/includes/js/TableLoaderNEW.js"></script>
+	src="<?php echo SITE_ROOT.AppBaseSTRIPPED; ?>Package/Task/includes/js/TableLoaderNEW.js"></script>
+<script
+	src="<?php echo SITE_ROOT.AppBaseSTRIPPED; ?>Package/Task/includes/js/TaskLoaderNEW.js"></script>
 <script>
-ajaxBase = "<?php echo AppBaseSTRIPPED; ?>Package/Task/";
+ajaxBase = "<?php echo SITE_ROOT.AppBaseSTRIPPED; ?>Package/Task/";
 
 
 mainTaskCommentsTable = {
 		'print_location'	:	'#commentsContainer',
+		'paginatorLocation'	:	"#taskCommentPaginator",
 		'quantity_per_page'	:	5,
 		'last_page'			:	-1,
 		'memberId'			:	<?php echo unserialize($_SESSION['accountObject'])->getMemberId(); ?>,
+		'memberFirstName'	: 	"<?php echo unserialize($_SESSION['accountObject'])->getFirstName(); ?>",
 		'taskId'			:	<?php echo $data['task']->getId(); ?>,
 		'content'			:	new Array()
 };
@@ -100,27 +109,46 @@ $(function() {
 /**
  * Comment section paginator on click event
  */
-$(function() {
-	$(".pagination li a").click(function() {
-		printTableDataInTable(mainTaskCommentsTable, $(this).text());
+ $(document).on('click', ".pagination li a", function () {
+		event.preventDefault();
+		loadComments(mainTaskCommentsTable, parseInt($(this).text()) + 1);
+});
+
+
+
+/**
+ * Edit Task functions
+ */
+ editTaskArray = {
+			'titleLocation'		: 	"#taskTitleLocation",
+			'contentLocation'	:	"#taskDescriptionLocation",
+			'statusLocation'	:	"#taskStatusLocation",
+			'memberId'			:	<?php echo unserialize($_SESSION['accountObject'])->getMemberId(); ?>,
+			'memberFirstName'	: 	"<?php echo unserialize($_SESSION['accountObject'])->getFirstName(); ?>",
+			'taskId'			:	<?php echo $data['task']->getId(); ?>,
+	};
+ $(function() {
+		$("#editTaskSubmitButton").click(function() {
+			$("#editTaskForm").submit();
+		});
 	});
+$(function() {
+	$("#editTaskForm").submit(
+			function(event) {
+				editTask(editTaskArray, mainTaskCommentsTable['taskId'], $("#modal_taskTitle").val(), $("#modal_taskDscr")
+						.val(), $("#modal_taskStatus option:selected").text());
+				event.preventDefault();
+			});
 });
 
 /**
- * jQuery Datepicker
- */
-
-/**
  * Page on load
- * 
- * NEEDS TO BE REMOVED
  */
 $(document).ready(function() {
-	printTableDataInTable(mainTaskCommentsTable, 1);
+	loadComments(mainTaskCommentsTable, 1);
 
 	$("#addHoursDatePicker").datepicker();
 	$("#addHoursDatePicker").datepicker('setDate', new Date());
     $( "#addHoursDatePicker" ).datepicker( "option", "dateFormat", "dd-M-yy" );
 });
-</script>
 </script>

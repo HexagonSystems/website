@@ -13,7 +13,7 @@ class HeadController
 		if(isset($_SESSION['activeUser'])&&($_SESSION['account']['access']=="10")){
 			$this->nav = Base.'View/Template/nav10.php';
 		}
-		elseif(isset($_SESSION['account'])){
+		else if(isset($_SESSION['account'])){
 			/* PLEASE FIX UP THIS NAV SECTION, TEMP WORK AROUND TO DISPLAY USER'S FIRST NAME IN PLACE */
 			$this->nav = Base.'/View/Template/nav5_2.php';
 		}else{

@@ -8,53 +8,35 @@
 			<input type="hidden" name="location" value="timesheetPage"> <input
 				type="hidden" name="action" value="search">
 			<div class="form-group">
-				<label for="addHoursDate" class="col-lg-2 control-label">Tag</label>
+				<label for="tag_value" class="col-lg-2 control-label">Tag</label>
 				<div class="col-lg-8">
 					<input type="text" class="form-control" name="tag_value"
-						id="addHoursDatePicker">
+						id="tag_value" value="<?php if(isset($_GET['tag_value'])) { echo $_GET['tag_value']; }?>">
 				</div>
-				<div class="radio-inline">
-					<label> <input type="radio" name="tag_searchBy"
-						value="id" checked> Id
-					</label>
-				</div>
-				<div class="radio-inline">
-					<label> <input type="radio" name="tag_searchBy"
-						value="text"> Txt
-					</label>
-				</div>
+				<?php
+				$searchType = 'tag';
+				include 'timesheetViewSearched_IdorTextTemplate.php';
+				?>
 			</div>
 			<div class="form-group">
-				<label for="addHoursDate" class="col-lg-2 control-label">Task</label>
+				<label for="task_value" class="col-lg-2 control-label">Task</label>
 				<div class="col-lg-8">
-					<input type="text" class="form-control" name="task_value">
+					<input type="text" class="form-control" name="task_value" id="task_value" value="<?php if(isset($_GET['task_value'])) { echo $_GET['task_value']; }?>">
 				</div>
-				<div class="radio-inline">
-					<label> <input type="radio" name="task_searchBy"
-						value="id" checked> Id
-					</label>
-				</div>
-				<div class="radio-inline">
-					<label> <input type="radio" name="task_searchBy"
-						value="text"> Txt
-					</label>
-				</div>
+				<?php
+				$searchType = 'task';
+				include 'timesheetViewSearched_IdorTextTemplate.php';
+				?>
 			</div>
 			<div class="form-group">
 				<label for="addHoursDate" class="col-lg-2 control-label">Member</label>
 				<div class="col-lg-8">
-					<input type="text" class="form-control" name="member_value" >
+					<input type="text" class="form-control" name="member_value" id="member_value" value="<?php if(isset($_GET['member_value'])) { echo $_GET['member_value']; }?>">
 				</div>
-				<div class="radio-inline">
-					<label> <input type="radio" name="member_searchBy"
-						value="id" checked> Id
-					</label>
-				</div>
-				<div class="radio-inline">
-					<label> <input type="radio" name="member_searchBy"
-						value="text"> Txt
-					</label>
-				</div>
+				<?php
+				$searchType = 'member';
+				include 'timesheetViewSearched_IdorTextTemplate.php';
+				?>
 			</div>
 
 			<div class="form-group">
@@ -83,26 +65,35 @@
 	<thead>
 		<tr>
 			<?php 
-			foreach(array_keys($this->data['searchResult']['data'][0]->toArray()) as $key)
+			if($this->data['searchResult'])
 			{
-				include 'timesheetViewSearched_tableHeaderTemplate.php';
+				foreach(array_keys($this->data['searchResult']['data'][0]->toArray()) as $key)
+				{
+					include 'timesheetViewSearched_tableHeaderTemplate.php';
+				}
+			}else
+			{
+				echo "No results found";
 			}
+
 			?>
 		</tr>
 	</thead>
 
 	<tbody id="commentsContainer" class="tbodyFirstLineAccordion">
 		<?php 
-		foreach($this->data['searchResult']['data'] as $currentObject)
+		if($this->data['searchResult'])
 		{
-			echo '<tr>';
-			$currentObject = $currentObject->toArray();
-			foreach(array_keys($this->data['searchResult']['data'][0]->toArray()) as $key)
+			foreach($this->data['searchResult']['data'] as $currentObject)
 			{
-				include 'timesheetViewSearched_tableBodyTemplate.php';
+				echo '<tr>';
+				$currentObject = $currentObject->toArray();
+				foreach(array_keys($this->data['searchResult']['data'][0]->toArray()) as $key)
+				{
+					include 'timesheetViewSearched_tableBodyTemplate.php';
+				}
+				echo '</tr>';
 			}
-			echo '</tr>';
-
 		}
 		?>
 	</tbody>

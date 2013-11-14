@@ -6,6 +6,8 @@ class Controller
     protected $footer;
     protected $header;
     protected $database;
+    // TODO Deprecated Remove after 20/11/13
+    protected $template = 'index';
     protected $get;
     protected $post;
 

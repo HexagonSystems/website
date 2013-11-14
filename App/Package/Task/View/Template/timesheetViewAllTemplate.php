@@ -1,5 +1,5 @@
 <a data-toggle="modal" href="#modal_createTask"
-	class="btn btn-primary btn-sm">Add Update</a>
+	class="btn btn-primary btn-sm">Create Task</a>
 <?php include_once 'modal_createTask.php'; ?>
 
 <table
@@ -21,21 +21,31 @@
 <div class="text-center">
 	<ul class="pagination">
 		<li><a href="#">&laquo;</a></li>
-		<li><a href="#">1</a></li>
-		<li><a href="#">2</a></li>
-		<li><a href="#">3</a></li>
-		<li><a href="#">4</a></li>
-		<li><a href="#">5</a></li>
+		<?php 
+
+		if($data['taskCount']['success'] == true){
+			$amountOfTasks = $data['taskCount']['data'][0];
+
+			$commentCount = ceil($amountOfTasks / 5);
+			for($counter = 0; $counter < $commentCount; $counter++)
+			{
+				echo '<li><a href="#">'.$counter.'</a></li>';
+			}
+		}else
+		{
+			echo $data['taskCount']['message'];
+		}
+
+		?>
 		<li><a href="#">&raquo;</a></li>
 	</ul>
 </div>
-
 <script
-	src="App/Package/Task/includes/js/TaskLoaderNEW.js"></script>
+	src="<?php echo SITE_ROOT.AppBaseSTRIPPED; ?>Package/Task/includes/js/TaskLoaderNEW.js"></script>
 <script
-	src="<?php echo AppBaseSTRIPPED; ?>Package/Task/includes/js/TableLoaderNEW.js"></script>
+	src="<?php echo SITE_ROOT.AppBaseSTRIPPED; ?>Package/Task/includes/js/TableLoaderNEW.js"></script>
 <script>
-ajaxBase = "<?php echo AppBaseSTRIPPED; ?>Package/Task/";
+ajaxBase = "<?php echo SITE_ROOT.AppBaseSTRIPPED; ?>Package/Task/";
 
 /* MAIN TASK TABLE CONFIG ARRAY */
 mainTaskTable = {
@@ -50,31 +60,26 @@ mainTaskTable = {
 /**
  * Comment section paginator on click event
  */
-$(function() {
-	$(".pagination li a").click(function() {
-		printTableDataInTable(mainTaskTable, $(this).text());
-	});
+ $(document).on('click', ".pagination li a", function () {
+		event.preventDefault();
+		loadTasks(mainTaskTable, parseInt($(this).text()) + 1);
 });
 
 /**
  * Create comment button
- * 
- * THIS NEEDS TO BE REMOVED
  */
 $(function() {
 	$("#createTaskButton").click(
 			function() {
-				createTask(mainTaskTable, $("#createTaskTitle").val(), $("#createTaskDscr")
-						.val(), $("#createTaskStatus option:selected").text());
+				createTask(mainTaskTable, $("#modal_taskTitle").val(), $("#modal_taskDscr")
+						.val(), $("#modal_taskStatus option:selected").text());
 			});
 });
 
 /**
  * Page on load
- * 
- * THIS NEEDS TO BE REMOVED
  */
 $(document).ready(function() {
-	printTableDataInTable(mainTaskTable, 1);
+	loadTasks(mainTaskTable, 1);
 });
 </script>
