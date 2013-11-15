@@ -86,12 +86,6 @@ body {
 	position: relative;
 }
 
-@media screen and (max-width: 768px) {
-	.mobile-center {
-		text-align: center;
-	}
-}
-
 @media screen and (min-width: 768px) {
 	.bs-header {
 		font-size: 21px;
@@ -291,10 +285,24 @@ body {
 	text-align: center;
 }
 
-.table-zebra tr:nth-child (:first-child ) {
-	background-color: transparent;
-}
+.table-zebra
+ 
+tr
+:nth-child
+ 
+(
+:first-child
+ 
+)
+{
+background-color
+:
+ 
+transparent
+;
 
+
+}
 .table-zebra tbody tr:nth-child(odd) {
 	background-color: #ddd;
 }
@@ -311,4 +319,20 @@ body {
 
 .width100 {
 	width: 100%;
+}
+
+.table td{
+	max-width: 1px;
+	word-wrap: break-word;
+}
+
+/* MOBILE SCREENS */
+@media screen and (max-width: 768px) {
+	.mobile-center {
+		text-align: center;
+	}
+	.table-responsive-dropLast2Col tr th:nth-last-child(2),.table-responsive-dropLast2Col tr td:nth-last-child(2),.table-responsive-dropLast2Col tr th:last-child,.table-responsive-dropLast2Col tr td:last-child
+		{
+		display: none;
+	}
 }
