@@ -61,13 +61,14 @@ function loadNewestComments(tableConfig) {
 			console.log("About to print");
 			$.each(jsonData, function(id) {
 				tableConfig['content'].unshift(jsonData[id]); // Add to the
-																// start of the
-																// array
+				// start of the
+				// array
 				console.log("Printing " + jsonData[id]['title']);
 				printSingleComment(tableConfig, jsonData[id]['tag'],
 						jsonData[id]['title'], jsonData[id]['content'],
 						jsonData[id]['memberId'], jsonData[id]['date'], true);
 			});
+			assignCommentTagClick();
 			if (jsonData.length >= 5) {
 				tableConfig['content'] = tableConfig['content'].slice(0, 5);
 				findLastPage(tableConfig, 1);
@@ -77,10 +78,11 @@ function loadNewestComments(tableConfig) {
 			var countResponse = nakedJson.count;
 			console.log("About to handle countResponse");
 			if (countResponse.success == true) {
-				console.log("Replacing html " + tableConfig['paginatorLocation']);
-				$(tableConfig['paginatorLocation']).html(countResponse.data.html);
-			}else
-			{
+				console.log("Replacing html "
+						+ tableConfig['paginatorLocation']);
+				$(tableConfig['paginatorLocation']).html(
+						countResponse.data.html);
+			} else {
 				console.log("false");
 			}
 		}
@@ -182,10 +184,11 @@ function printSingleComment(tableConfig, commentTag, commentTitle,
 	} else {
 		contentPreview.innerHTML = commentContent;
 	}
-	
+
 	/* CONTENT RESPONSIVE */
 	var contentResponsive = document.createElement('small');
-	contentResponsive.innerHTML = "<br/><br/>Posted by " + commentMember + " on " + commentDate + "";
+	contentResponsive.innerHTML = "<br/><br/>Posted by " + commentMember
+			+ " on " + commentDate + "";
 	contentResponsive.className = "visible-xs";
 	/* CONTENT FINISH */
 	contentTD.appendChild(contentTitle);
@@ -193,7 +196,7 @@ function printSingleComment(tableConfig, commentTag, commentTitle,
 	contentTD.appendChild(contentBreaker);
 	contentTD.appendChild(contentContent);
 	contentTD.appendChild(contentResponsive);
-	
+
 	contentTD.className = "actualAccordion";
 
 	/* MEMBER */

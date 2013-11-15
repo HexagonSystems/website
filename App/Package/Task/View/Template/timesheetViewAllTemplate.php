@@ -1,3 +1,9 @@
+<header class="page-header relative" id="taskHeader">
+	<h3>
+		Project Tasks <small>Click 'Create Task' to create a new Task</small>
+	</h3>
+</header>
+
 <a data-toggle="modal" href="#modal_createTask"
 	class="btn btn-primary btn-sm">Create Task</a>
 <?php include_once 'modal_createTask.php'; ?>

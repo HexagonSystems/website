@@ -10,7 +10,7 @@
 			<?php
 			if(count($data['task']->getMembers()) == 0)
 			{
-				echo "<li>Noone has added hours to this Task yet</li>";
+				echo "<li>Add hours to Task to be shown here</li>";
 			}else
 			{
 				foreach($data['task']->getMembers() as $member) {

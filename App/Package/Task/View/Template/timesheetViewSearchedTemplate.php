@@ -1,5 +1,7 @@
 <header class="page-header relative">
-	<h3>Searching for:</h3>
+	<h3>
+		Search <small>Use this search for Tasks and Comments</small>
+	</h3>
 </header>
 <div class="panel panel-default">
 	<div class="panel-heading">Search</div>
