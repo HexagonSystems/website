@@ -1,6 +1,8 @@
-
-<h3>Timesheets</h3>
-
+<header class="page-header relative">
+	<h3>
+		Time Sheets <small>Viewable by week, month or year</small>
+	</h3>
+</header>
 <div class="panel panel-default">
 	<div class="panel-heading">Search</div>
 	<div class="panel-body">
