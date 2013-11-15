@@ -1,27 +1,5 @@
 
-<h3>
-	Timesheets
-	<?php 
-	if(isset($_GET['timeFrame']))
-	{
-		switch($_GET['timeFrame'])
-		{
-			case 'year': $reportTitle = "Displaying hours for a year starting from " . date('M, Y', strtotime($data['startDateFormatted']));
-			break;
-			case 'month': $reportTitle = "Displaying hours for the month of " . date('M, Y', strtotime($data['startDateFormatted']));
-			break;
-			case 'week':$reportTitle = "Displaying hours for 7 days starting " . date('d-M-Y', strtotime($data['startDateFormatted']));
-			break;
-			default: $reportTitle = "Please click 'Search' to display hours";
-		}
-	}else
-	{
-		$reportTitle = "Please click 'Search' to display hours";
-	}
-	?>
-	<small> <?php echo $reportTitle; ?>
-	</small>
-</h3>
+<h3>Timesheets</h3>
 
 <div class="panel panel-default">
 	<div class="panel-heading">Search</div>
@@ -66,9 +44,7 @@
 					<div class="input-group">
 						<input type="text" class="form-control" name="startDate"
 							id="displayHours_datePicker"> <span class="input-group-btn">
-							<button type="submit"
-								class="btn btn-default">Search
-							</button>
+							<button type="submit" class="btn btn-default">Search</button>
 						</span>
 					</div>
 				</div>
@@ -76,6 +52,27 @@
 		</form>
 	</div>
 </div>
+
+<?php 
+if(isset($_GET['timeFrame']))
+{
+	switch($_GET['timeFrame'])
+	{
+		case 'year': $reportTitle = "Displaying hours for a year starting from " . date('M, Y', strtotime($data['startDateFormatted']));
+		break;
+		case 'month': $reportTitle = "Displaying hours for the month of " . date('M, Y', strtotime($data['startDateFormatted']));
+		break;
+		case 'week':$reportTitle = "Displaying hours for 7 days starting " . date('d-M-Y', strtotime($data['startDateFormatted']));
+		break;
+		default: $reportTitle = "Please click 'Search' to display hours";
+	}
+}else
+{
+	$reportTitle = "Please click 'Search' to display hours";
+}
+?>
+<h4 class="textAlignCenter"> <?php echo $reportTitle; ?>
+</h4>
 
 <?php 
 foreach($data['timesheetData']->toArray() as $tableUser => $tableData)
