@@ -3,7 +3,7 @@
 <?php include_once 'modal_createTask.php'; ?>
 
 <table
-	class="table table-rowBorder table-responsive table-hover table-zebra">
+	class="table table-rowBorder table-hover table-zebra table-responsive-dropLast2Col">
 
 	<thead>
 		<th class="table-colSmall">Status</th>

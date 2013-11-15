@@ -36,22 +36,20 @@
 <?php include_once 'modal_editTask.php'; ?>
 <?php include_once 'modal_pickSearchMethod.php'; ?>
 
-<div class="table-responsive">
-	<table id="testtable"
-		class="table table-rowBorder table-responsive table-hover table-zebra">
+<table id="testtable"
+	class="table table-rowBorder table-hover table-zebra table-responsive-dropLast2Col">
 
-		<thead>
-			<th class="table-colSmall">Tag</th>
-			<th class="table-colLarge">Update</th>
-			<th class="table-colMedium">Posted By</th>
-			<th class="table-colMedium">Posted on</th>
-		</thead>
+	<thead>
+		<th class="table-colSmall">Tag</th>
+		<th class="table-colLarge">Update</th>
+		<th class="table-colMedium">Posted By</th>
+		<th class="table-colMedium">Posted on</th>
+	</thead>
 
-		<tbody id="commentsContainer" class="tbodyFirstLineAccordion">
-			<!-- Comments will be loaded here through AJAX -->
-		</tbody>
-	</table>
-</div>
+	<tbody id="commentsContainer" class="tbodyFirstLineAccordion">
+		<!-- Comments will be loaded here through AJAX -->
+	</tbody>
+</table>
 
 <div class="text-center">
 	<ul class="pagination" id="taskCommentPaginator">
