@@ -27,12 +27,13 @@ class TaskDA
 		{
 			$statement = "SELECT * FROM
 					(
-					SELECT DISTINCT tskCom.postedDate, tskCom.memberId, tsk.*
+					SELECT DISTINCT tskCom.postedDate, mbr.firstName, tsk.*
 					FROM `taskcomment` tskCom
 					LEFT JOIN `task` tsk
 					ON tskCom.taskId = tsk.taskId
+					LEFT JOIN `member` mbr
+					ON tskCom.memberId = mbr.memberId
 					ORDER BY tskCom.postedDate DESC
-						
 					) AS my_table
 					GROUP BY taskId
 					ORDER BY postedDate DESC
@@ -64,7 +65,7 @@ class TaskDA
 				$tempObject->setCategory($row['type']);
 				$tempObject->loadMembers();
 				$tempObject->setLastUpdate(array(
-						"memberId" => $row['memberId'],
+						"memberId" => $row['firstName'],
 						"postedDate" => $row['postedDate'],
 				));
 
@@ -173,7 +174,8 @@ class TaskDA
 			$statement = 'SELECT DISTINCT wrk.memberId, mbr.firstName
 					FROM work wrk, member mbr
 					WHERE wrk.taskId = :taskId AND
-					mbr.memberId = wrk.memberId';
+					mbr.memberId = wrk.memberId AND
+					wrk.hours > 0';
 
 			$query = $this->database->prepare($statement);
 

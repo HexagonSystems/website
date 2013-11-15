@@ -4,5 +4,5 @@
  */
 class IndexView extends View
 {
-    //Currently empty as we haven't created a indexView
+    //Currently empty as we haven't created a IndexView
 } //end class

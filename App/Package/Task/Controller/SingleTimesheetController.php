@@ -12,8 +12,8 @@ class SingleTimesheetController extends Controller
 			
 		$taskLoader = new TaskLoader();
 		$taskLoader->setDatabase($this->database);
-		
-		
+
+
 		if(!isset($_GET['param']))
 		{
 			parent::invoke();
@@ -28,7 +28,6 @@ class SingleTimesheetController extends Controller
 			$taskHandler = new TaskHandler();
 			$taskHandler->setDatabase($this->database);
 			$task = $taskLoader->loadTask($_GET['param']);
-			$task->loadCommentCount();
 			if($task === false)
 			{
 				/* HANDLE IF UNABLE TO LOAD TASK */
@@ -47,6 +46,8 @@ class SingleTimesheetController extends Controller
 			$view->assign('title' , 'Logged in');
 
 			$view->assign('task' , $task);
+			$task->loadCommentCount();
+
 			$view->assign('allTaskStatus' , $allStatus);
 
 			//$taskLoader->createComment("@addedTag", "Yay, adding tags is working");
