@@ -4,13 +4,14 @@
 function assignTableContentAccordion() {
 	$parentOfAccordion = $(".parentOfAccordion");
 
-	$parentOfAccordion.find(".actualAccordion").find(">:last-child").hide();
+	$parentOfAccordion.find(".actualAccordion").find(">:last-child").prev()
+			.hide();
 
 	$parentOfAccordion.click(
 			function() {
 				var previousSibling = $(this).find(".actualAccordion").find(
-						">:last-child").prev();
-				$(this).find(".actualAccordion").find(">:last-child")
+						">:last-child").prev().prev();
+				$(this).find(".actualAccordion").find(">:last-child").prev()
 						.fadeToggle(500);
 				if ($(previousSibling).is(":visible")) {
 					$(previousSibling).delay(500).toggle();

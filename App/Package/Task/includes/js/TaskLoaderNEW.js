@@ -197,36 +197,6 @@ function printSingleTask(tableConfig, taskId, taskTitle, taskDscr, taskStatus,
 	taskStatusSpan.innerHTML = taskStatus;
 	taskStatusTD.appendChild(taskStatusSpan);
 
-	/* Title */
-	var taskTitleAHREF = document.createElement('a');
-	taskTitleAHREF.title = taskTitle;
-	taskTitleAHREF.href = "index.php?location=timesheetPage&action=single&param="
-			+ taskId;
-	taskTitleAHREF.innerHTML = taskTitle + "<br />";
-
-	/* Description */
-	var taskDscrTD = document.createElement('td');
-
-	var taskDscrPreview = document.createElement('span');
-	var taskDscrBreaker = document.createElement('span');
-	var taskDscrContent = document.createElement('span');
-	var max = 40;
-	if (taskDscr !== undefined && taskDscr.length > max) {
-		taskDscrPreview.innerHTML = taskDscr.substring(0, max);
-		taskDscrBreaker.innerHTML = "...";
-		taskDscrContent.innerHTML = taskDscr.substring(max,
-				(taskDscrContent.innerHTML = taskDscr.length));
-	} else {
-		taskDscrPreview.innerHTML = taskDscr;
-	}
-
-	/* CONTENT FINISH */
-	taskDscrTD.appendChild(taskTitleAHREF);
-	taskDscrTD.appendChild(taskDscrPreview);
-	taskDscrTD.appendChild(taskDscrBreaker);
-	taskDscrTD.appendChild(taskDscrContent);
-	taskDscrTD.className = "actualAccordion";
-
 	/* Members */
 	var taskMembersTD = document.createElement('td');
 	var taskMemberSingleSpan = document.createElement('span');
@@ -250,6 +220,50 @@ function printSingleTask(tableConfig, taskId, taskTitle, taskDscr, taskStatus,
 	taskMemberSingleSpan.innerHTML = taskLastUpdateMemberId;
 	taskLastUpdateTD.appendChild(taskMemberSingleSpan);
 	taskLastUpdateTD.innerHTML += " on " + taskLastUpdateDate;
+	
+	/* Title */
+	var taskTitleAHREF = document.createElement('a');
+	taskTitleAHREF.title = taskTitle;
+	taskTitleAHREF.href = "index.php?location=timesheetPage&action=single&param="
+			+ taskId;
+	taskTitleAHREF.innerHTML = "<strong>" + taskTitle + "</strong><br />";
+
+	/* Description */
+	var taskDscrTD = document.createElement('td');
+
+	var taskDscrPreview = document.createElement('span');
+	var taskDscrBreaker = document.createElement('span');
+	var taskDscrContent = document.createElement('span');
+	var max = 40;
+	if (taskDscr !== undefined && taskDscr.length > max) {
+		taskDscrPreview.innerHTML = taskDscr.substring(0, max);
+		taskDscrBreaker.innerHTML = "...";
+		taskDscrContent.innerHTML = taskDscr.substring(max,
+				(taskDscrContent.innerHTML = taskDscr.length));
+	} else {
+		taskDscrPreview.innerHTML = taskDscr;
+	}
+	
+	/* CONTENT RESPONSIVE */
+	var contentResponsive = document.createElement('small');
+	
+	var contentResponsiveMembers = document.createElement('p');
+	contentResponsiveMembers.innerHTML = "<br/><br/>Members: " + taskMembersTD.innerHTML;
+	var contentResponsiveLastUpdate = document.createElement('p');
+	contentResponsiveLastUpdate.innerHTML = "Last updated by " + taskLastUpdateTD.innerHTML + "";
+	
+	contentResponsive.appendChild(contentResponsiveMembers);
+	contentResponsive.appendChild(contentResponsiveLastUpdate);
+	
+	contentResponsive.className = "visible-xs";
+
+	/* CONTENT FINISH */
+	taskDscrTD.appendChild(taskTitleAHREF);
+	taskDscrTD.appendChild(taskDscrPreview);
+	taskDscrTD.appendChild(taskDscrBreaker);
+	taskDscrTD.appendChild(taskDscrContent);
+	taskDscrTD.className = "actualAccordion";
+	taskDscrTD.appendChild(contentResponsive);
 
 	/* APPEND EVERYTHING TO TABLE ROW */
 	tableRow.appendChild(taskStatusTD);

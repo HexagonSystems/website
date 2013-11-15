@@ -160,13 +160,14 @@ function printSingleComment(tableConfig, commentTag, commentTitle,
 	var contentTD = document.createElement('td');
 
 	/* CONTENT TITLE */
-	var contentTitle = document.createElement('p');
+	var contentTitle = document.createElement('strong');
 	if (commentTitle !== undefined && commentTitle !== null
 			&& commentTitle !== "") {
 		contentTitle.innerHTML = commentTitle;
 	} else {
 		contentTitle.innerHTML = "Title not set";
 	}
+	contentTitle.innerHTML += "<br/>";
 
 	/* CONTENT */
 	var contentPreview = document.createElement('span');
@@ -181,12 +182,18 @@ function printSingleComment(tableConfig, commentTag, commentTitle,
 	} else {
 		contentPreview.innerHTML = commentContent;
 	}
-
+	
+	/* CONTENT RESPONSIVE */
+	var contentResponsive = document.createElement('small');
+	contentResponsive.innerHTML = "<br/><br/>Posted by " + commentMember + " on " + commentDate + "";
+	contentResponsive.className = "visible-xs";
 	/* CONTENT FINISH */
 	contentTD.appendChild(contentTitle);
 	contentTD.appendChild(contentPreview);
 	contentTD.appendChild(contentBreaker);
 	contentTD.appendChild(contentContent);
+	contentTD.appendChild(contentResponsive);
+	
 	contentTD.className = "actualAccordion";
 
 	/* MEMBER */
