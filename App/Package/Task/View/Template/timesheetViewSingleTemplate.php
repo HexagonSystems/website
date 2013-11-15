@@ -8,7 +8,7 @@
 		Members
 		<ul>
 			<?php
-			if(count($data['task']) == 0)
+			if(count($data['task']->getMembers()) == 0)
 			{
 				echo "<li>Noone has added hours to this Task yet</li>";
 			}else
