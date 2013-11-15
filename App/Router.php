@@ -1,26 +1,37 @@
 <?php
-use Task\Task;
-use Task\TaskRouter;
+// use Task\Task;
+// use Task\TaskRouter;
 class Router
 {
-    public function __construct()
+    private function __construct()
     {
     }
-    public static function route(PDO $conn)
+    public static function route(PDO $database)
     {
-        $getVars = $_GET;
+        $get = $_GET;
+
+        $post = $_POST;
 
         $cookieMonster = new CookieMonster();
 
-        $cookieMonster->setDatabase($conn);
+        $cookieMonster->setDatabase($database);
 
         $cookieMonster->lookForCookies();
 
-        $page = isset($getVars['location']) ? $getVars['location'] : 'empty';
+        $page = isset($get['location']) ? $get['location'] : 'empty';
 
         switch ($page) {
             case "indexPage":
                 $controller = "IndexController";
+                break;  
+			case "aboutPage":
+                $controller = "AboutController";
+                break;  
+			case "projectPage":
+                $controller = "ProjectController";
+                break;  
+			case "contactPage":
+                $controller = "ContactController";
                 break;
             case "login":
                 $controller = "LoginController";
@@ -52,14 +63,12 @@ class Router
 		
         if(isset($package))
         {	
-        	//require_once '\Package\Task\TaskRouter.php';
-        	$test = new TaskRouter();
-            $namespacedclass = $package.'\\'.$controller;
-            //$router = new $namespacedclass();
-            $namespacedclass::route($conn);
+            $subRouter = $package.'\\'.$controller;
+            //$router = new $subRouter();
+            $subRouter::route($database);
         }else{
-            $controller = new $controller();
-            $controller->setDatabase($conn);
+            $controller = new $controller($get, $post);
+            $controller->setDatabase($database);
             $controller->invoke();
         }
     }// end route

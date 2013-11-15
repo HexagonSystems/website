@@ -12,8 +12,6 @@ function loadComments(tableConfig, pageNum, forceLoad) {
 			pageNum : pageNum,
 			qty : 5
 		}, function(nakedJson) {
-			console.log("Loaded comments through AJAX");
-			console.log("Current array = " + tableConfig['content'].toString())
 			nakedJson = $.parseJSON(nakedJson);
 			response = nakedJson.success;
 			if (response == true || response == "true") {
@@ -283,19 +281,7 @@ function addHours(tableConfig, workedDate, workedHours, workedComment) {
 		data = $.parseJSON(data);
 		response = data.success;
 		if (response == true) {
-			// alert(response);
-			commentJSON = data.comment.data;
-			var tempArray = new Array();
-			tempArray['tag'] = commentJSON.tag;
-			tempArray['title'] = commentJSON.title;
-			tempArray['content'] = commentJSON.content;
-			tempArray['memberId'] = tableConfig['memberId'];
-			tempArray['date'] = commentJSON.date;
-			tableConfig['content'].unshift(tempArray);
-			printSingleComment(tableConfig, tempArray['tag'],
-					tempArray['title'], tempArray['content'],
-					tempArray['memberId'], tempArray['date'], true);
-			assignTableContentAccordion()
+			loadNewestComments(tableConfig);
 		} else {
 			alert(data);
 		}

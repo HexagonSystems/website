@@ -7,9 +7,16 @@
 	<article>
 		Members
 		<ul>
-			<?php foreach($data['task']->getMembers() as $member) {
-				echo "<li>$member</li>";
-		} ?>
+			<?php
+			if(count($data['task']) == 0)
+			{
+				echo "<li>Noone has added hours to this Task yet</li>";
+			}else
+			{
+				foreach($data['task']->getMembers() as $member) {
+					echo "<li>$member</li>";
+				}
+			}?>
 		</ul>
 	</article>
 	<article id="taskDescriptionLocation">
@@ -29,21 +36,22 @@
 <?php include_once 'modal_editTask.php'; ?>
 <?php include_once 'modal_pickSearchMethod.php'; ?>
 
+<div class="table-responsive">
+	<table id="testtable"
+		class="table table-rowBorder table-responsive table-hover table-zebra">
 
-<table id="testtable"
-	class="table table-rowBorder table-responsive table-hover table-zebra">
+		<thead>
+			<th class="table-colSmall">Tag</th>
+			<th class="table-colLarge">Update</th>
+			<th class="table-colMedium">Posted By</th>
+			<th class="table-colMedium">Posted on</th>
+		</thead>
 
-	<thead>
-		<th class="table-colSmall">Tag</th>
-		<th class="table-colLarge">Update</th>
-		<th class="table-colMedium">Posted By</th>
-		<th class="table-colMedium">Posted on</th>
-	</thead>
-
-	<tbody id="commentsContainer" class="tbodyFirstLineAccordion">
-		<!-- Comments will be loaded here through AJAX -->
-	</tbody>
-</table>
+		<tbody id="commentsContainer" class="tbodyFirstLineAccordion">
+			<!-- Comments will be loaded here through AJAX -->
+		</tbody>
+	</table>
+</div>
 
 <div class="text-center">
 	<ul class="pagination" id="taskCommentPaginator">
@@ -111,7 +119,23 @@ $(function() {
  */
  $(document).on('click', ".pagination li a", function () {
 		event.preventDefault();
-		loadComments(mainTaskCommentsTable, parseInt($(this).text()) + 1);
+		if($(this).text() == "<<")
+		{
+			$(this).parent().siblings().children().css('backgroundColor', 'white');
+			$(this).parent().next().children().css('backgroundColor', '#eee');
+			loadComments(mainTaskCommentsTable, 1);
+		}else if($(this).text() == ">>")
+		{
+			$(this).parent().siblings().children().css('backgroundColor', 'white');
+			$(this).parent().prev().children().css('backgroundColor', '#eee');
+			loadComments(mainTaskCommentsTable, parseInt($(this).parent().prev().find(">:first-child").text()) + 1);
+		}else
+		{
+			$(this).parent().siblings().children().css('backgroundColor', 'white');
+			$(this).css('backgroundColor', '#eee');
+			loadComments(mainTaskCommentsTable, parseInt($(this).text()) + 1);
+		}
+		
 });
 
 

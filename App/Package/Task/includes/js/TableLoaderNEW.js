@@ -41,9 +41,12 @@ function pageAlreadyLoaded(tableConfig, pageNum) {
 	var positionToStartOn = (pageNum - 1) * tableConfig['quantity_per_page'];
 	var positionToEndOn = positionToStartOn + tableConfig['quantity_per_page']
 			- 1;
-	if (tableConfig['content'][positionToStartOn] === undefined
-			|| tableConfig['content'][positionToStartOn] === null) {
-		return false;
+
+	for ( var counter = positionToStartOn; counter < positionToEndOn; counter++) {
+		if (tableConfig['content'][counter] === undefined
+				|| tableConfig['content'][counter] === null) {
+			return false;
+		}
 	}
 
 	/* USED FOR TESTING */
@@ -99,7 +102,7 @@ function findLastPage(tableConfig, pageNum) {
 function printTableDataInTable(tableConfig, pageNum, emptyBeforeReturn) {
 	// If the page of comments isn't already loaded, load it
 	if (pageAlreadyLoaded(tableConfig, pageNum) === false
-			&& pageNum >= tableConfig['last_page']) {
+			&& pageNum != tableConfig['last_page']) {
 		return false;
 	} else {
 		var positionToStartOn = (pageNum - 1)

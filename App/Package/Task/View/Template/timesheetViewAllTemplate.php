@@ -20,24 +20,20 @@
 
 <div class="text-center">
 	<ul class="pagination">
-		<li><a href="#">&laquo;</a></li>
 		<?php 
 
 		if($data['taskCount']['success'] == true){
 			$amountOfTasks = $data['taskCount']['data'][0];
 
-			$commentCount = ceil($amountOfTasks / 5);
-			for($counter = 0; $counter < $commentCount; $counter++)
-			{
-				echo '<li><a href="#">'.$counter.'</a></li>';
-			}
+			$amountOfPages = ceil($amountOfTasks / 5);
+			include 'paginator_generator.php';
 		}else
 		{
-			echo $data['taskCount']['message'];
+			//echo $data['taskCount']['message'];
+			echo "There was trouble loading the paginator";
 		}
 
 		?>
-		<li><a href="#">&raquo;</a></li>
 	</ul>
 </div>
 <script
@@ -62,7 +58,24 @@ mainTaskTable = {
  */
  $(document).on('click', ".pagination li a", function () {
 		event.preventDefault();
-		loadTasks(mainTaskTable, parseInt($(this).text()) + 1);
+
+		
+		if($(this).text() == "<<")
+		{
+			$(this).parent().siblings().children().css('backgroundColor', 'white');
+			$(this).parent().next().children().css('backgroundColor', '#eee');
+			loadTasks(mainTaskTable, 1);
+		}else if($(this).text() == ">>")
+		{
+			$(this).parent().siblings().children().css('backgroundColor', 'white');
+			$(this).parent().prev().children().css('backgroundColor', '#eee');
+			loadTasks(mainTaskTable, parseInt($(this).parent().prev().find(">:first-child").text()) + 1);
+		}else
+		{
+			$(this).parent().siblings().children().css('backgroundColor', 'white');
+			$(this).css('backgroundColor', '#eee');
+			loadTasks(mainTaskTable, parseInt($(this).text()) + 1);
+		}
 });
 
 /**

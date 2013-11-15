@@ -2,7 +2,7 @@
 /**
  * Handles the view functionality of our MVC framework
  */
-class LoginView extends View
+class AboutView extends View
 {
- 
+    //Currently empty as we haven't created a indexView
 } //end class
