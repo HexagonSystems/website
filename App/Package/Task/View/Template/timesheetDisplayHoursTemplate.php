@@ -1,9 +1,11 @@
-<header class="page-header relative">
+
+<header class="page-header relative hidden-print">
 	<h3>
-		Time Sheets <small>Viewable by week, month or year</small>
+		Time Sheets <small class="hidden-print">Viewable by week, month or
+			year</small>
 	</h3>
 </header>
-<div class="panel panel-default">
+<div class="panel panel-default hidden-print">
 	<div class="panel-heading">Search</div>
 	<div class="panel-body">
 		<form class="form-horizontal" role="form" action="#" method="GET">
@@ -73,7 +75,8 @@ if(isset($_GET['timeFrame']))
 	$reportTitle = "Please click 'Search' to display hours";
 }
 ?>
-<h4 class="textAlignCenter"> <?php echo $reportTitle; ?>
+<h4 class="textAlignCenter hidden-print">
+	<?php echo $reportTitle; ?>
 </h4>
 
 <?php 
