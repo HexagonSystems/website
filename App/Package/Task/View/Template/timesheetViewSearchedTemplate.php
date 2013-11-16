@@ -47,8 +47,8 @@
 			</div>
 			<div class="form-group" id="searchFormMember">
 				<label for="addHoursDate"
-					class="col-lg-2 col-md-2 col-sm-2 col-xs-2 control-label">Member</label>
-				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+					class="col-lg-2 col-md-2 col-sm-2 col-xs-3 control-label">Member</label>
+				<div class="col-xs-9 col-sm-8 col-md-8 col-lg-8">
 					<input type="text" class="form-control" name="member_value"
 						id="member_value"
 						value="<?php if(isset($_GET['member_value'])) { echo $_GET['member_value']; }?>">
@@ -65,8 +65,10 @@
 			</div>
 
 			<div class="form-group">
-				<label for="addHoursDate" class="col-lg-2 control-label">Search for</label>
-				<div class="col-lg-8 inline">
+				<label for="addHoursDate"
+					class="col-lg-2 col-md-2 col-sm-2 col-xs-3 control-label">Search
+					for</label>
+				<div class="col-lg-8 col-sm-8 col-md-8 col-xs-9">
 					<select class="form-control" id="chooseSearchOption"
 						name="searchFor">
 						<?php
@@ -84,8 +86,11 @@
 					</select>
 
 				</div>
-				<button type="submit" class="btn btn-default">Search</button>
-
+				<div class="visible-xs"><br/><br/><br/></div>
+				
+				<div class="mobile-center mobile-100width">
+					<button type="submit" class="btn btn-default">Search</button>
+				</div>
 			</div>
 		</form>
 	</div>

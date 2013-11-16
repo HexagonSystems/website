@@ -1,4 +1,4 @@
-<header class="page-header relative" id="taskHeader">
+<header class="page-header relative">
 	<h3>
 		Project Tasks <small>Click 'Create Task' to create a new Task</small>
 	</h3>

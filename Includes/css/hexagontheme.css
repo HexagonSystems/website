@@ -260,6 +260,17 @@ body {
 /**
  * Tables
  */
+.table {
+	width: 100%;
+	margin: 5px;
+}
+
+.table>thead>tr>th,.table>tbody>tr>th,.table>tfoot>tr>th,.table>thead>tr>td,.table>tbody>tr>td,.table>tfoot>tr>td
+	{
+	padding: 10px;
+	text-align: left;
+}
+
 .table-colSmall {
 	width: 12em;
 }
@@ -272,11 +283,6 @@ body {
 	width: 50em;
 }
 
-.table td {
-	word-wrap: break-word;
-	max-width: 50em;
-}
-
 .table-rowBorder {
 	border: 2px solid gray;
 }
@@ -285,24 +291,6 @@ body {
 	text-align: center;
 }
 
-.table-zebra
- 
-tr
-:nth-child
- 
-(
-:first-child
- 
-)
-{
-background-color
-:
- 
-transparent
-;
-
-
-}
 .table-zebra tbody tr:nth-child(odd) {
 	background-color: #ddd;
 }
@@ -321,8 +309,11 @@ transparent
 	width: 100%;
 }
 
-.table td{
-	max-width: 1px;
+.print-multiple-header:nth-of-type(0) {
+	display: none;
+}
+
+table {
 	word-wrap: break-word;
 }
 
@@ -334,5 +325,19 @@ transparent
 	.table-responsive-dropLast2Col tr th:nth-last-child(2),.table-responsive-dropLast2Col tr td:nth-last-child(2),.table-responsive-dropLast2Col tr th:last-child,.table-responsive-dropLast2Col tr td:last-child
 		{
 		display: none;
+	}
+	.mobile-100width {
+		width: 100%;
+		bottom: 0px;
+	}
+	.mobile-100width>* {
+		width: 100%;
+	}
+}
+
+/* REMOVE A HREF FROM LINKS WHEN PRINTING */
+@media print {
+	a[href]:after {
+		content: none !important;
 	}
 }
