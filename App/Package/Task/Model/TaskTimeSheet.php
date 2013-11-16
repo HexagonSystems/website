@@ -43,7 +43,7 @@ class TaskTimeSheet
 
 			$this->timesheetArray[$memberData['id']][$taskData['id']][$date] = $taskHour->getHours();
 		}
-		
+
 		/* LOOP THROUGH USER ARRAY */
 		foreach($this->timesheetArray as $user => $userTimesheet)
 		{
@@ -87,7 +87,7 @@ class TaskTimeSheet
 					}
 					$this->timesheetFinal[$user][$task][$this->timesheetDates[$newIndex]] += $hours;
 				}
-				
+
 				/* FILL IN MISSING HOURS */
 				foreach($this->timesheetDates as $date)
 				{
@@ -102,20 +102,20 @@ class TaskTimeSheet
 						}
 					}
 				}
-				
+
 				/* SORT DATES */
 				ksort($this->timesheetFinal[$user][$task]);
 			}
 		}
 
-		
+
 		/*
 		 * For testing purposes
 		var_dump($this->timesheetDates);
 		echo "<br/>";
 		echo "<br/>";
 		var_dump($this->timesheetArray);*/
-		
+
 		$this->timesheetArray = $this->timesheetFinal;
 
 	}
@@ -201,7 +201,7 @@ class TaskTimeSheet
 	{
 		switch($timeframe)
 		{
-			case 'year': $this->configTimeRange = "+11 months"; $this->configTimeFrame = 'year'; $this->configTimeInterval = 'month';
+			case 'year': $this->configTimeRange = "+1 year"; $this->configTimeFrame = 'year'; $this->configTimeInterval = 'month';
 			break;
 			case 'month': $this->configTimeRange = "+1 month"; $this->configTimeFrame = 'month'; $this->configTimeInterval = 'week';
 			break;
@@ -299,6 +299,12 @@ class TaskTimeSheet
 	function getEndDate($startDate)
 	{
 		$tempDate = strtotime($this->configTimeRange, strtotime("$startDate"));
+		switch($this->configTimeFrame)
+		{
+			case 'year': $tempDate = strtotime("-1 day", "$tempDate");
+			break;
+		}
+
 		return date($this->getTimeFormat('week'), $tempDate);
 	}
 

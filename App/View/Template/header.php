@@ -12,6 +12,7 @@
 <!-- Custom styles for this template -->
 <link rel="stylesheet" href="//<?php echo SITE_ROOT; ?>Includes/css/bootstrap.min.css" />
 <link href="//<?php echo SITE_ROOT; ?>Includes/css/hexagontheme.css" rel="stylesheet">
+<link href="//<?php echo SITE_ROOT; ?>Includes/css/hexagon-print.css" rel="stylesheet" media="print">
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
