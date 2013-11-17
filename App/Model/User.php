@@ -170,7 +170,7 @@ class User
 		//Collect User from the database
 		try {
 			//returns multidemnsional array
-			$query = $this->database->prepare("SELECT * from MEMBER where EMAIL = :email");
+			$query = $this->database->prepare("SELECT * from `member` where EMAIL = :email");
 			$query->bindParam(':email'   , $username , PDO::PARAM_STR);
 			$query->execute();
 
@@ -329,6 +329,39 @@ class User
 		return("saved");
 	}
 
+	/**
+	* Retrive all the data in the member table
+	* @param 
+	*/
+	/*******TARA**************WEIRD OBJECT*******************************************************************************************************************************/
+	public function getAllMembers()
+	{
+		try {
+			$sql = $this->database->query("SELECT * FROM member")->fetchAll();
+			return $sql;
+			
+		} catch (Exception $e) {
+		
+			throw new Exception('Database error:', 0, $e);
+			return false;
+		}
+	}
+	
+	public function userDetails($memberId, $firstName, $lastName, $email, $phoneNo)
+	{
+		$obj = new User($this->database);
+		
+		$obj->setMemberId($memberId);
+		$obj->setFirstName($firstName);
+		$obj->setLastName($lastName);
+		$obj->setEmail($email);
+		$obj->setPhoneNo($phoneNo);
+		
+		return($obj);
+		
+	}
+	/****************************************************************************************************************************************************/
+	
 	/**
 	 * Set the username for the user
 	 * @param String $username

@@ -1,4 +1,22 @@
 <?php
+
+/**
+ * TaskSearchHelperDA
+ *
+ * This class was more designed to be an experimental class, seeing if it was possible to create
+ * an easy way to modify SQL queries without having to get to deep into the code.
+ *
+ * What I have designed is an array based query system, where you can set the different
+ * values of the array to modify that SQL query.
+ * 
+ * Unforunately the SQL queries I ended up needing for the SearchHelperDA have gotten a little complex
+ * which has led to a lot of bloat in both my array and my performSearch() method.
+ * 
+ * This has restricted me in some of the different things I have wanted to add to the search page.
+ * 
+ * @author Alex Robinson <alex-robinson@live.com>
+ */
+
 namespace Task;
 
 class TaskSearchHelperDA
@@ -173,15 +191,15 @@ class TaskSearchHelperDA
 	{
 		/*
 		 * Print values
-		 *
-		
+		*
+
 		echo "searchOption = $searchOption<br/>";
 		echo "primarySearchData = ";
 		var_dump($primarySearchData);
 		echo "<br/>";
-		
+
 		/* END Print values */
-		
+
 		/* SET THE PRIMARY SEARCH IN A LOCAL VARIABLE FOR EASY ACCESS */
 		//$primaryTarget = $this->primarySearchData[$searchOption];
 
@@ -269,7 +287,7 @@ class TaskSearchHelperDA
 						$innerTempStatementWorthy = true;
 					}else
 					{
-					
+							
 						if(is_array($this->searchOptions[$searchOption]['where'][$criteriaName]['text']))
 						{
 							$searchInTable = $this->searchOptions[$searchOption]['where'][$criteriaName]['text'][1] . "N";
@@ -287,13 +305,13 @@ class TaskSearchHelperDA
 						$firstRun = false;
 						$tempStatement .= $innerTempStatement;
 					}
-					
-					
+						
+						
 				}
 
 			}
 		}
-		
+
 		if($tempStatementWorthy)
 		{
 			$statement .= $tempStatement;
@@ -305,7 +323,7 @@ class TaskSearchHelperDA
 		try
 		{
 			$query = $this->database->prepare($statement);
-				
+
 			/* BIND PARAMETERS */
 			if(isset($this->searchOptions[$searchOption]['where']))
 			{
@@ -324,7 +342,7 @@ class TaskSearchHelperDA
 					}
 				}
 			}
-				
+
 			$query->execute();
 			$tempObjectHolder = array();
 			$tempObjectHolder['success'] = true;

@@ -18,30 +18,48 @@ class Router
 
         $cookieMonster->lookForCookies();
 
-        $page = isset($get['location']) ? $get['location'] : 'Index';
+        $page = isset($get['location']) ? $get['location'] : 'empty';
 
-        $sth = $database->prepare("SELECT * FROM menu");
-        $sth->execute();
-        $pages = $sth->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($pages as $key => $value) {
-            $value['link'] = '/index.php?location='.$value['link'];
-            $pages[$value['name']] = $value;
-            unset($pages[$key]);
-        }
-        var_dump($pages);
-        // echo $page;
-        foreach ($pages as $nav => $details) {
-            if($details['name'] == $page){
-                $controller = $details['controller'];
-                $package = $details['package'];
-            };
-        };
-
-
-        //Fall Through to Index needs to be replaced with Error controller
-        if(!isset($controller)){
-            $controller = 'IndexController';
-        };
+        switch ($page) {
+            case "indexPage":
+                $controller = "IndexController";
+                break;  
+			case "aboutPage":
+                $controller = "AboutController";
+                break;  
+			case "projectPage":
+                $controller = "ProjectController";
+                break;  
+			case "contactPage":
+                $controller = "ContactController";
+                break;
+            case "login":
+                $controller = "LoginController";
+                break;
+            case "accountPage":
+                $controller = "AccountController";
+                break;
+            case "navPage":
+                $controller = "NavController";
+                break;
+            case "adminPage":
+            	$package = "Admin";
+                $controller = "AdminRouter";
+                break;
+            case "timesheetPage":
+                $package = "Task";
+               	$controller = "TaskRouter";
+                break;
+            case "logout":
+                $controller = "IndexController";
+                break;
+            case "config":
+            	$controller = "ConfigController";
+            	break;
+            default:
+                $controller = "IndexController";
+                break;
+        }//end switch
 		
         if($package !== 'App')
         {	

@@ -1,9 +1,15 @@
+<header class="page-header relative">
+	<h3>
+		Project Tasks <small>Click 'Create Task' to create a new Task</small>
+	</h3>
+</header>
+
 <a data-toggle="modal" href="#modal_createTask"
-	class="btn btn-primary btn-sm">Add Update</a>
+	class="btn btn-primary btn-sm">Create Task</a>
 <?php include_once 'modal_createTask.php'; ?>
 
 <table
-	class="table table-rowBorder table-responsive table-hover table-zebra">
+	class="table table-rowBorder table-hover table-zebra table-responsive-dropLast2Col">
 
 	<thead>
 		<th class="table-colSmall">Status</th>
@@ -20,22 +26,28 @@
 
 <div class="text-center">
 	<ul class="pagination">
-		<li><a href="#">&laquo;</a></li>
-		<li><a href="#">1</a></li>
-		<li><a href="#">2</a></li>
-		<li><a href="#">3</a></li>
-		<li><a href="#">4</a></li>
-		<li><a href="#">5</a></li>
-		<li><a href="#">&raquo;</a></li>
+		<?php 
+
+		if($data['taskCount']['success'] == true){
+			$amountOfTasks = $data['taskCount']['data'][0];
+
+			$amountOfPages = ceil($amountOfTasks / 5);
+			include 'paginator_generator.php';
+		}else
+		{
+			//echo $data['taskCount']['message'];
+			echo "There was trouble loading the paginator";
+		}
+
+		?>
 	</ul>
 </div>
-
 <script
-	src="App/Package/Task/includes/js/TaskLoaderNEW.js"></script>
+	src="<?php echo SITE_ROOT.AppBaseSTRIPPED; ?>Package/Task/includes/js/TaskLoaderNEW.js"></script>
 <script
-	src="<?php echo AppBaseSTRIPPED; ?>Package/Task/includes/js/TableLoaderNEW.js"></script>
+	src="<?php echo SITE_ROOT.AppBaseSTRIPPED; ?>Package/Task/includes/js/TableLoaderNEW.js"></script>
 <script>
-ajaxBase = "<?php echo AppBaseSTRIPPED; ?>Package/Task/";
+ajaxBase = "<?php echo SITE_ROOT.AppBaseSTRIPPED; ?>Package/Task/";
 
 /* MAIN TASK TABLE CONFIG ARRAY */
 mainTaskTable = {
@@ -50,31 +62,43 @@ mainTaskTable = {
 /**
  * Comment section paginator on click event
  */
-$(function() {
-	$(".pagination li a").click(function() {
-		printTableDataInTable(mainTaskTable, $(this).text());
-	});
+ $(document).on('click', ".pagination li a", function () {
+		event.preventDefault();
+
+		
+		if($(this).text() == "<<")
+		{
+			$(this).parent().siblings().children().css('backgroundColor', 'white');
+			$(this).parent().next().children().css('backgroundColor', '#eee');
+			loadTasks(mainTaskTable, 1);
+		}else if($(this).text() == ">>")
+		{
+			$(this).parent().siblings().children().css('backgroundColor', 'white');
+			$(this).parent().prev().children().css('backgroundColor', '#eee');
+			loadTasks(mainTaskTable, parseInt($(this).parent().prev().find(">:first-child").text()) + 1);
+		}else
+		{
+			$(this).parent().siblings().children().css('backgroundColor', 'white');
+			$(this).css('backgroundColor', '#eee');
+			loadTasks(mainTaskTable, parseInt($(this).text()) + 1);
+		}
 });
 
 /**
  * Create comment button
- * 
- * THIS NEEDS TO BE REMOVED
  */
 $(function() {
 	$("#createTaskButton").click(
 			function() {
-				createTask(mainTaskTable, $("#createTaskTitle").val(), $("#createTaskDscr")
-						.val(), $("#createTaskStatus option:selected").text());
+				createTask(mainTaskTable, $("#modal_taskTitle").val(), $("#modal_taskDscr")
+						.val(), $("#modal_taskStatus option:selected").text());
 			});
 });
 
 /**
  * Page on load
- * 
- * THIS NEEDS TO BE REMOVED
  */
 $(document).ready(function() {
-	printTableDataInTable(mainTaskTable, 1);
+	loadTasks(mainTaskTable, 1);
 });
 </script>
