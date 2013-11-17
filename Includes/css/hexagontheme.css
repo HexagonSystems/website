@@ -317,13 +317,17 @@ table {
 	word-wrap: break-word;
 }
 
+.margin-left-15 {
+	width:20%;
+}
+
 /* MOBILE SCREENS */
 @media screen and (max-width: 767px) {
 	.mobile-center {
 		text-align: center;
 	}
-	.table-responsive-dropLast2Col tr th:nth-last-child(2),.table-responsive-dropLast2Col tr td:nth-last-child(2),.table-responsive-dropLast2Col tr th:last-child,.table-responsive-dropLast2Col tr td:last-child
-		{
+	.table-responsive-dropLast2Col tr th:nth-last-child(4), .table-responsive-dropLast2Col tr td:nth-last-child(4), .table-responsive-dropLast2Col tr th:nth-last-child(2),.table-responsive-dropLast2Col tr td:nth-last-child(2),.table-responsive-dropLast2Col tr th:last-child,.table-responsive-dropLast2Col tr td:last-child
+	{
 		display: none;
 	}
 	.mobile-100width {

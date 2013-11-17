@@ -69,6 +69,7 @@ function loadNewestComments(tableConfig) {
 						jsonData[id]['memberId'], jsonData[id]['date'], true);
 			});
 			assignCommentTagClick();
+			assignTableContentAccordion();
 			if (jsonData.length >= 5) {
 				tableConfig['content'] = tableConfig['content'].slice(0, 5);
 				findLastPage(tableConfig, 1);
@@ -152,7 +153,6 @@ function printSingleComment(tableConfig, commentTag, commentTitle,
 	var tagTD = document.createElement('td');
 	var tagAHREF = document.createElement('a');
 	tagAHREF.title = commentTag;
-	// tagAHREF.href = "#modal_pickSearchMethod";
 	tagAHREF.className = "commentTag";
 	tagAHREF.innerHTML = commentTag;
 	$(tagAHREF).attr("data-toggle", "modal");
@@ -169,7 +169,7 @@ function printSingleComment(tableConfig, commentTag, commentTitle,
 	} else {
 		contentTitle.innerHTML = "Title not set";
 	}
-	contentTitle.innerHTML += "<br/>";
+	contentTitle.innerHTML += "<br/><br/>";
 
 	/* CONTENT */
 	var contentPreview = document.createElement('span');
@@ -188,9 +188,18 @@ function printSingleComment(tableConfig, commentTag, commentTitle,
 	/* CONTENT RESPONSIVE */
 	var contentResponsive = document.createElement('small');
 	contentResponsive.innerHTML = "<br/><br/>Posted by " + commentMember
-			+ " on " + commentDate + "";
+			+ " on " + commentDate;
+	
+	var responsiveTag = document.createElement('i');
+	responsiveTag.appendChild(tagAHREF.cloneNode(true));
+	
+	responsiveTag.className = "visible-xs";
 	contentResponsive.className = "visible-xs";
+	
+	responsiveTag.className += " pull-right margin-left-15";
+	
 	/* CONTENT FINISH */
+	contentTD.appendChild(responsiveTag);
 	contentTD.appendChild(contentTitle);
 	contentTD.appendChild(contentPreview);
 	contentTD.appendChild(contentBreaker);
@@ -252,23 +261,6 @@ function createComment(tableConfig, commentTag, commentTitle, commentContent) {
 		response = data.success;
 		if (response == true) {
 			loadNewestComments(tableConfig);
-			// Run function to check for updats, therefore asking the user to
-			// refresh
-			// Or refresh automatically, or just add the comment in locally,
-			// this will ignore the fact if other comments have been added
-			// around the same time as well
-			// Maybe it could do both, check for new updates, if there arnt any
-			// add this locally, if there are refresh or ask the user to refresh
-			/**
-			 * var tempArray = new Array(); tempArray['tag'] = commentTag;
-			 * tempArray['title'] = commentTitle; tempArray['content'] =
-			 * commentContent; tempArray['memberId'] = tableConfig['memberId'];
-			 * tempArray['date'] = data.data.date;
-			 * tableConfig['content'].unshift(tempArray);
-			 * printSingleComment(tableConfig, commentTag, commentTitle,
-			 * commentContent, tempArray['memberId'], tempArray['date'], true);
-			 * assignTableContentAccordion(); assignCommentTagClick();
-			 */
 		} else {
 			alert(data);
 		}
