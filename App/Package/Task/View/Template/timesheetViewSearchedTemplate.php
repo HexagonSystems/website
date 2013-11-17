@@ -86,8 +86,10 @@
 					</select>
 
 				</div>
-				<div class="visible-xs"><br/><br/><br/></div>
-				
+				<div class="visible-xs">
+					<br /> <br /> <br />
+				</div>
+
 				<div class="mobile-center mobile-100width">
 					<button type="submit" class="btn btn-default">Search</button>
 				</div>
@@ -96,52 +98,53 @@
 	</div>
 </div>
 
-<table id="testtable"
-	class="table table-rowBorder table-responsive table-hover table-zebra">
-
-	<thead>
-		<tr>
-			<?php 
-			if(isset($_GET['searchFor']))
-			{
-				if($this->data['searchResult'] && count($this->data['searchResult']['data']) > 0)
+<div class="table-responsive table-container table-print">
+	<table id="testtable"
+		class="table table-rowBorder table-hover table-zebra">
+		<thead>
+			<tr>
+				<?php 
+				if(isset($_GET['searchFor']))
 				{
-					foreach(array_keys($this->data['searchResult']['data'][0]->toArray()) as $key)
+					if($this->data['searchResult'] && count($this->data['searchResult']['data']) > 0)
 					{
-						include 'timesheetViewSearched_tableHeaderTemplate.php';
+						foreach(array_keys($this->data['searchResult']['data'][0]->toArray()) as $key)
+						{
+							include 'timesheetViewSearched_tableHeaderTemplate.php';
+						}
+					}else
+					{
+						echo "No results found";
 					}
 				}else
 				{
-					echo "No results found";
+					echo "To search please click the 'Search' button";
 				}
-			}else
+
+
+				?>
+			</tr>
+		</thead>
+
+		<tbody id="commentsContainer" class="tbodyFirstLineAccordion">
+			<?php 
+			if($this->data['searchResult'])
 			{
-				echo "To search please click the 'Search' button";
-			}
-
-
-			?>
-		</tr>
-	</thead>
-
-	<tbody id="commentsContainer" class="tbodyFirstLineAccordion">
-		<?php 
-		if($this->data['searchResult'])
-		{
-			foreach($this->data['searchResult']['data'] as $currentObject)
-			{
-				echo '<tr>';
-				$currentObject = $currentObject->toArray();
-				foreach(array_keys($this->data['searchResult']['data'][0]->toArray()) as $key)
+				foreach($this->data['searchResult']['data'] as $currentObject)
 				{
-					include 'timesheetViewSearched_tableBodyTemplate.php';
+					echo '<tr>';
+					$currentObject = $currentObject->toArray();
+					foreach(array_keys($this->data['searchResult']['data'][0]->toArray()) as $key)
+					{
+						include 'timesheetViewSearched_tableBodyTemplate.php';
+					}
+					echo '</tr>';
 				}
-				echo '</tr>';
 			}
-		}
-		?>
-	</tbody>
-</table>
+			?>
+		</tbody>
+	</table>
+</div>
 
 <script>
 function toggleSearchForm() {
