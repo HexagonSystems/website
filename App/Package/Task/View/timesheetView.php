@@ -21,20 +21,27 @@ class timesheetView
      */
     public function __construct($template,$footer,$currentPagePosts)
     {
+        
+        /**
+         * This is hard typing the templates into the View this is probably a bad idea as it assumes
+         * template location and makes it impossible to override.
+         * @author Stephen McMahon
+         */
+        $template = AppBase.'/'.Base.'View/Template/'.$template.'template.php';
         // echo "In Constructor" ;
-        if (file_exists(AppBase.'/'.$template)) {
+        if (file_exists($template)) {
             /**
              * trigger render to include file when this model is destroyed
              * if we render it now, we wouldn't be able to assign variables
              * to the view!
              */
-            $this->render = AppBase.'/'.$template;
+            $this->render = $template;
         }else
         {
-        	echo "FILE DOES NOT EXIST";
-        	echo AppBase.'/'.$template;
+        	echo "FILE DOES NOT EXIST -- ";
+        	echo $template;
         }
-        if (file_exists(AppBase.'/'.$footer)) {
+        if (file_exists(AppBase.'/'.Base.$footer)) {
             /**
              * trigger render to include file when this model is destroyed
              * if we render it now, we wouldn't be able to assign variables
@@ -59,7 +66,7 @@ class timesheetView
     private function printCurrentPagePosts()
     {
         foreach ($this->currentPagePosts as $blog) {
-            include AppBase.'/View/Template/postPreviewTemplate.php';
+            include AppBase.'/'.Base.'View/Template/postPreviewTemplate.php';
         }
     }
     public function __destruct()
@@ -74,7 +81,7 @@ class timesheetView
         } catch (Exception $e) {
 
         }
-        include_once(AppBase.'/'.$this->footer);
+        include_once(AppBase.'/'.Base.$this->footer);
 
     }
 } // end class
