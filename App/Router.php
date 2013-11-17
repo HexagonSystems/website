@@ -20,40 +20,51 @@ class Router
 
         $page = isset($get['location']) ? $get['location'] : 'empty';
 
+        $package = "App";
+
+        $sth = $database->prepare("SELECT * FROM menu");
+        $sth->execute();
+        $pages = $sth->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($pages as $key => $value) {
+            $value['link'] = '/index.php?location='.$value['link'];
+            $pages[$value['name']] = $value;
+            unset($pages[$key]);
+        }
+
         switch ($page) {
-            case "indexPage":
+            case "Index":
                 $controller = "IndexController";
                 break;  
-			case "aboutPage":
+			case "About":
                 $controller = "AboutController";
                 break;  
-			case "projectPage":
+			case "Project":
                 $controller = "ProjectController";
                 break;  
-			case "contactPage":
+			case "Contact":
                 $controller = "ContactController";
+                break;
+            case "Login":
+                $controller = "LoginController";
                 break;
             case "login":
                 $controller = "LoginController";
                 break;
-            case "accountPage":
+            case "Account":
                 $controller = "AccountController";
                 break;
-            case "navPage":
-                $controller = "NavController";
-                break;
-            case "adminPage":
+            case "Admin":
             	$package = "Admin";
                 $controller = "AdminRouter";
                 break;
-            case "timesheetPage":
+            case "Timesheet":
                 $package = "Task";
                	$controller = "TaskRouter";
                 break;
-            case "logout":
+            case "Logout":
                 $controller = "IndexController";
                 break;
-            case "config":
+            case "Config":
             	$controller = "ConfigController";
             	break;
             default:

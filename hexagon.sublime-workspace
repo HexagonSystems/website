@@ -1,0 +1,1188 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"so",
+				"sort"
+			],
+			[
+				"an",
+				"answer"
+			],
+			[
+				"post",
+				"post"
+			],
+			[
+				"requi",
+				"require_once"
+			],
+			[
+				"set",
+				"setUsername  (function)"
+			],
+			[
+				"sess",
+				"sessionDestroy  (function)"
+			],
+			[
+				"assert",
+				"assertEquals"
+			],
+			[
+				"getU",
+				"getEmailFromUsername  (function)"
+			],
+			[
+				"asser",
+				"assertEquals"
+			],
+			[
+				"get",
+				"getUsername  (function)"
+			],
+			[
+				"pas",
+				"password"
+			],
+			[
+				"password",
+				"password_hash"
+			],
+			[
+				"h",
+				"h4	Tag"
+			],
+			[
+				"padding",
+				"padding-top"
+			],
+			[
+				"mar",
+				"margin-top"
+			],
+			[
+				"pad",
+				"padding"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"bac",
+				"background"
+			],
+			[
+				"pro",
+				"protected"
+			],
+			[
+				"co",
+				"controller  (variable)"
+			],
+			[
+				"Hexa",
+				"HexagonSystem-text"
+			],
+			[
+				"ar",
+				"article	Tag"
+			],
+			[
+				"min",
+				"min-width"
+			],
+			[
+				"z",
+				"z-index"
+			],
+			[
+				"hexag",
+				"hexagonText"
+			],
+			[
+				"ma",
+				"max-width"
+			],
+			[
+				"back",
+				"background"
+			],
+			[
+				"margin",
+				"margin-top"
+			],
+			[
+				"tex",
+				"text-align"
+			],
+			[
+				"padd",
+				"padding-top"
+			],
+			[
+				"di",
+				"display"
+			],
+			[
+				"backgroun",
+				"background-color"
+			],
+			[
+				"a",
+				"a"
+			],
+			[
+				"s",
+				"stylesheets"
+			],
+			[
+				"boo",
+				"bootstrap"
+			],
+			[
+				"fon",
+				"font-size"
+			],
+			[
+				"marg",
+				"margin-bottom"
+			],
+			[
+				"ul",
+				"ul"
+			],
+			[
+				"moto",
+				"motorcycle"
+			],
+			[
+				"var",
+				"var_dump"
+			],
+			[
+				"loc",
+				"loc_arr"
+			],
+			[
+				"con",
+				"container"
+			],
+			[
+				"va",
+				"var_dump"
+			],
+			[
+				"php",
+				"php"
+			],
+			[
+				"data",
+				"database"
+			],
+			[
+				"server",
+				"server"
+			],
+			[
+				"re",
+				"req1	require_once …"
+			],
+			[
+				"in",
+				"input	Tag"
+			],
+			[
+				"dea",
+				"dealer_id"
+			],
+			[
+				"for",
+				"foreach	foreach …"
+			],
+			[
+				"deal",
+				"dealer_id"
+			],
+			[
+				"_",
+				"_SERVER"
+			],
+			[
+				"dealer",
+				"dealerCode"
+			],
+			[
+				"new",
+				"newobj"
+			],
+			[
+				"r",
+				"req1	require_once …"
+			],
+			[
+				"print",
+				"print_r"
+			],
+			[
+				"fil",
+				"file_headers"
+			],
+			[
+				"check",
+				"checkdate"
+			],
+			[
+				"sin",
+				"Sinatra"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "App/Router.php",
+			"settings":
+			{
+				"buffer_size": 2176,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Applications/MAMP/bin/php/php5.4.10/conf/php.ini",
+			"settings":
+			{
+				"buffer_size": 41077,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/Ruby/Ruby.sublime-build",
+	"command_palette":
+	{
+		"height": 347.0,
+		"selected_items":
+		[
+			[
+				"packa",
+				"Package Control: Install Package"
+			],
+			[
+				"pac",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"pa",
+				"Package Control: Install Package"
+			],
+			[
+				"pacl",
+				"Package Control: List Packages"
+			],
+			[
+				"Pa",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"package",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 602.0
+	},
+	"console":
+	{
+		"height": 195.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/User/git/Java/EDSL Administrator/src/database/MySQLAccess.java",
+		"/Users/User/git/Java/EDSL Administrator/config.ini",
+		"/Users/User/git/Java/EDSL Administrator/src/database/Division.java",
+		"/Users/User/Documents/Google Drive/crate points.sql",
+		"/Users/User/Documents/Google Drive/crate points (1).sql",
+		"/Users/User/Documents/Google Drive/mySQLfunction TEAMPOINTS.sql",
+		"/Users/User/Documents/Google Drive/getTeamPoints procedure.sql",
+		"/peterstevens/quick dump/news/index.php",
+		"/peterstevens/quick dump/news/index_test.php",
+		"/peterstevens/quick dump/watercraft/PS-Template-watercraft.php",
+		"/peterstevens/quick dump/careers.php",
+		"/peterstevens/quick dump/contact.php",
+		"/peterstevens/quick dump/index.php",
+		"/peterstevens/quick dump/search-results.php",
+		"/peterstevens/quick dump/bikes/bikes.php",
+		"/peterstevens/quick dump/bikes/brands.php",
+		"/peterstevens/quick dump/bikes/cityktm.php",
+		"/peterstevens/quick dump/bikes/lams.php",
+		"/peterstevens/quick dump/bikes/newbikesspecials.php",
+		"/peterstevens/quick dump/bikes/rideexp.php",
+		"/peterstevens/quick dump/bikes/scooters.php",
+		"/peterstevens/quick dump/bikes/search_test.php",
+		"/peterstevens/quick dump/bikes/specials.php",
+		"/peterstevens/quick dump/bikes/suzuki.php",
+		"/peterstevens/quick dump/bikes/used_bike_details.php",
+		"/peterstevens/quick dump/bikes/used_bike_results.php",
+		"/peterstevens/quick dump/bikes/brands/brands.php",
+		"/peterstevens/quick dump/bikes/citytriumph/index.php",
+		"/peterstevens/quick dump/finance/fandi.php",
+		"/peterstevens/quick dump/finance/finance.php",
+		"/peterstevens/quick dump/finance/financeI.php",
+		"/peterstevens/quick dump/finance/insurance.php",
+		"/peterstevens/quick dump/finance/warranty.php",
+		"/peterstevens/quick dump/general/customs.php",
+		"/peterstevens/quick dump/general/dyno.php",
+		"/peterstevens/quick dump/general/halloffame.php",
+		"/peterstevens/quick dump/general/stevostyres.php",
+		"/peterstevens/quick dump/general/tyres.php",
+		"/peterstevens/quick dump/service/dyno.php",
+		"/peterstevens/quick dump/service/hyosung.php",
+		"/peterstevens/quick dump/service/service.php",
+		"/peterstevens/quick dump/service/smash.php",
+		"/peterstevens/quick dump/service/transport.php",
+		"/peterstevens/quick dump/spares/hyosung.php",
+		"/peterstevens/quick dump/spares/obsolete.php",
+		"/peterstevens/quick dump/spares/obsolete.php.old",
+		"/peterstevens/quick dump/spares/overstock.php",
+		"/peterstevens/quick dump/spares/service.php",
+		"/peterstevens/quick dump/spares/spares.php",
+		"/peterstevens/quick dump/watercraft/specials.php",
+		"/peterstevens/quick dump/watercraft/trailers.php",
+		"/peterstevens/quick dump/watercraft/watercraft.php",
+		"/Applications/MAMP/htdocs/hexagon/scrible/index.php",
+		"/Users/User/Desktop/peterstevens.csv",
+		"/private/var/folders/nt/ynb5mrm121b0spdtg22c8q0r0000gn/T/fz3temp-1/bikes.php",
+		"/Users/User/Documents/JavaWorkspace/EDSLjavaprototype/src/database/MySQLAccess.java",
+		"/Users/User/git/Java/EDSL Administrator/bin/config.ini",
+		"/Ruby/tests/sort.rb",
+		"/Applications/MAMP/htdocs/hexagon/App/Router.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Controller/Controller.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Controller/HeadController.php",
+		"/Users/User/Downloads/EDSL_DB_data_ ccpmg501a_18.sql",
+		"/Applications/MAMP/htdocs/hexagon/App/View/View.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Controller/LoginController.php",
+		"/Applications/MAMP/htdocs/hexagon/App/View/Template/LoginTemplate.html",
+		"/Applications/MAMP/htdocs/hexagon/App/Controller/IndexController.php",
+		"/Applications/MAMP/htdocs/hexagon/App/View/Template/IndexTemplate.html",
+		"/Applications/MAMP/htdocs/hexagon/App/Package/Task/View/HeadView.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Package/Task/Controller/HeadController.php",
+		"/Applications/MAMP/htdocs/hexagon/App/View/LoginView.php",
+		"/Applications/MAMP/htdocs/hexagon/App/View/IndexView.php",
+		"/Applications/MAMP/htdocs/hexagon/App/View/Template/nav.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Controller/ProjectsController.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Controller/AdminController.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Controller/ConfigController.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Controller/ContactController.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Controller/AboutController.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Package/Task/TaskRouter.php",
+		"/Applications/MAMP/htdocs/hexagon/App/View/HeadView.php",
+		"/Applications/MAMP/htdocs/hexagon/index.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Package/Task/View/Template/header.php",
+		"/Applications/MAMP/htdocs/hexagon/App/View/Template/nav0.php",
+		"/Applications/MAMP/htdocs/hexagon/App/View/Template/header.php",
+		"/Applications/MAMP/htdocs/hexagon/App/View/Template/IndexTemplate.php",
+		"/Applications/MAMP/htdocs/hexagon/App/View/indexView.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Package/Task/Config/Config.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Config/Config.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Package/Task/Service/Autoloader.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Service/Autoloader.php",
+		"/Applications/MAMP/htdocs/hexagon/App/View/Template/404.html",
+		"/Applications/MAMP/htdocs/hexagon/App/Model/User.php",
+		"/Users/User/Desktop/edsl.sql",
+		"/Users/User/Library/Application Support/Sublime Text 2/Packages/Default/Default (OSX).sublime-keymap",
+		"/Applications/MAMP/htdocs/hexagon/App/Package/Task/View/timesheetView.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Config/LocalConfig.example.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Config/LocalConfig.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Config/Database.example.php",
+		"/Volumes/s205065x/ccpmg501a/www/htdocs/index.html",
+		"/Applications/MAMP/htdocs/hexagon/App/Service/passwordCheck.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Service/password.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Test/model/UserTest.php",
+		"/Users/User/Downloads/databasedesign.sql",
+		"/Applications/MAMP/htdocs/hexagon/App/Model/UserTest.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Test/phpunit/app/config/autoloader.php",
+		"/Applications/MAMP/htdocs/hexagon/App/View/Template/LoginTemplate.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Test/phpunit/app/public/index.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Test/phpunit/app/config/bootstrap.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Test/autoloader.php",
+		"/Applications/MAMP/htdocs/towblog/tests/bootstrap.php",
+		"/Applications/MAMP/htdocs/hexagon/App/View/Template/indexTemplate.php",
+		"/Applications/MAMP/htdocs/towblog/view/LoginView.php",
+		"/Applications/MAMP/htdocs/towblog/controller/LoginController.php",
+		"/Applications/MAMP/htdocs/EDSLWebsite/login.html",
+		"/Applications/MAMP/htdocs/hexagon/App/View/Template/modal_comment.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Package/Task/Model/TaskDA.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Package/Task/Model/TaskAJAX.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Package/Task/Model/Task.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Package/Task/Config/Database.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Package/Task/Controller/Controller.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Package/Task/Controller/TimesheetController.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Package/Task/View/Template/footer.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Package/Task/Model/createCommentAJAX.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Package/Task/Model/Database.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Package/Task/Model/Task_Original.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Package/Task/Model/TaskComment.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Package/Task/Model/TaskCommentDA.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Package/Task/Model/TaskCommentsAJAX.php",
+		"/Applications/MAMP/htdocs/hexagon/App/Package/Task/Model/TaskCommentsHandler.php"
+	],
+	"find":
+	{
+		"height": 66.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			"<open folders>",
+			"/peterstevens/PSIACwarranty",
+			"/peterstevens/PSIACwarrantyHyos",
+			"/peterstevens,/psmblog/wp-content/plugins/contact-form-7",
+			"/peterstevens",
+			"",
+			"/Applications/MAMP/htdocs/TOW Blog 001",
+			"current file,/Applications/MAMP/htdocs/TOW Blog 001",
+			"current file",
+			"",
+			"<open folders>"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"`",
+			"True",
+			"NOT NULL",
+			"INT",
+			"String",
+			"ENUM",
+			"VARCHAR",
+			"ENUM",
+			"VARCHAR",
+			",",
+			"<?php if($_SERVER['SERVER_ADDR'] == '172.16.1.51' || $_SERVER['SERVER_ADDR'] == '10.130.248.243'){ include $_SERVER['DOCUMENT_ROOT'].'/includes/footer.php'; }else{include '\\inetpub\\vs155101\\includes\\footer.php'; } ?>",
+			"<?php if($_SERVER['SERVER_ADDR'] == '172.16.1.51' || $_SERVER['SERVER_ADDR'] == '10.130.248.243'){ include $_SERVER['DOCUMENT_ROOT'].'/includes/header.php'; }else{include '\\inetpub\\vs155101\\includes\\header.php'; } ?>",
+			"if($_SERVER['SERVER_ADDR'] == '172.16.1.51' || $_SERVER['SERVER_ADDR'] == '10.130.248.243'){ ",
+			"$X = 5;\necho 'answer:'.solution($A, $X);\n",
+			"  // $A = array(1,2,5,9,9);\n  \n  // $X = 5;\n  \n  // function solution($A, $X){\n  //   $N = sizeof($A);\n  //   //null array\n  //   if ($N == 0) {\n  //       return -1;\n  //   }\n  //   //iterator\n  //   $l = 0;\n    \n  //   //size of array\n  //   $r = $N - 1;\n  \n  //   while ($l < $r) {\n\n  //       $m = (int)(($l + $r) / 2);\n        \n  //       if ($A[$m] > $X) {\n  //           $r = 2 - 1;\n  //           $r = $m - 1;\n  //       } else {\n  //           $l (0) = $m (5)\n  //           $l = $m;\n  //       }\n  //   }\n  //   if ($A[$l] == $X) {\n  //       return $l;\n  //   }else{\n  //       return -1;\n  //   }\n  // };",
+			"A",
+			"private final String ",
+			"\n$array = array(0, 1, 0, 1, 1);\necho 'one count from test '.;",
+			"ccpmg501a_18",
+			"edsl",
+			"Database connection",
+			"Database",
+			"IndexTemplate",
+			"php",
+			"navigation",
+			"result",
+			"conn",
+			"namespacedclass",
+			"view",
+			"template",
+			"$this->render",
+			"render",
+			"    if (is_readable($model)) {\n        require $model;\n    }elseif (is_readable($controller)) {\n        require $controller;",
+			"AppBase.",
+			"if",
+			"filename",
+			"nav",
+			"template",
+			"        if($template != NULL)\n            $this->template = $template;\n\n",
+			"player",
+			"VHARCHAR",
+			" ",
+			",",
+			" ",
+			",",
+			" ",
+			",",
+			", ",
+			" ",
+			",",
+			"includes",
+			"private",
+			"UC[0-9]* ",
+			"UC[0-9].",
+			"[0-9]\\.[0-9]\\.[0-9] ",
+			"\\",
+			"/",
+			"\\",
+			"\"",
+			"mail",
+			"email",
+			"\n        $this->setPassword($password);",
+			"getAcc",
+			"checkPassword",
+			"password_hash",
+			"userPassword",
+			"users",
+			"DOCUMENT_ROOT",
+			"conn",
+			"private",
+			"sha1",
+			"PDO",
+			"require_once(AppBase.'/Config/Database.php');",
+			"PDO",
+			"Task\\",
+			"\"autoload",
+			" autoload",
+			"AppBase",
+			"$this->",
+			"$array['vars']['vin']   = $db->quote($array['vars']['vin']);",
+			"	",
+			"small",
+			"lg-2",
+			"2",
+			"([A-Z])<td>",
+			"</td>([A-Z])",
+			" ([A-Z])\\n",
+			"([0-9]+) ",
+			"offcanvas",
+			"Hawthorn",
+			"bs-sidebar",
+			" col-md-pull-9",
+			".bs-docs-nav",
+			"bs-docs-nav {",
+			"navbar-inverse",
+			".bs-docs-nav",
+			".bs-docs-nav ",
+			"dist",
+			"../../",
+			"assets",
+			"private",
+			"TOW",
+			"Blog",
+			"TOW",
+			"private",
+			"Includes",
+			"includes",
+			"Includes",
+			"Controller",
+			"controller",
+			"includes",
+			"ROOT",
+			"$_SERVER['DOCUMENT_ROOT']",
+			"model",
+			"#second article p { \n margin-bottom: 25px; \n  text-shadow: 0 -1px 0 rgba(0,0,0,0.5); \n }",
+			"\\{",
+			"{",
+			";",
+			"#no-more-tables",
+			"$( \"#menu\" ).toggleClass( \"active\" );",
+			"12.0",
+			"psiwarrantydev",
+			"dev",
+			"dev.",
+			"Hyosung",
+			"user_nickname",
+			".button",
+			"button"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"<?php include $_SERVER['DOCUMENT_ROOT'].'/includes/footer.php';?>",
+			"<?php include $_SERVER['DOCUMENT_ROOT'].'/includes/header.php'; ?>",
+			"<?php include $_SERVER['DOCUMENT_ROOT'].'/includes/header.php'; ?>\n<?php include $_SERVER['DOCUMENT_ROOT'].'/includes/header.php'; ?>\n<?php include $_SERVER['DOCUMENT_ROOT'].'/includes/header.php'; ?>",
+			"member",
+			"VARCHAR",
+			"",
+			",\\n",
+			"",
+			",\\n",
+			"",
+			",\\n",
+			"",
+			",\\n",
+			"",
+			"\\\\",
+			"//",
+			"\\\\",
+			"'",
+			"self::$",
+			"    ",
+			"$1</td>\\n<td>",
+			"</td>\\n<td>$1",
+			"<td>$1</td>\\n",
+			"<td>$1</td>",
+			"Hexagon Systems",
+			"",
+			"Hexagon Systems",
+			"{ \\n",
+			"{\\n",
+			"; \\n",
+			".res-tables",
+			"13.0",
+			"PSI_Warranty_Dev",
+			"Arctic Cat",
+			".btn",
+			"",
+			".'",
+			"'.",
+			"RewriteRule ^/",
+			"\\.php",
+			"RewriteRule",
+			"/ \\[R=301,L\\]\\n",
+			"",
+			"/brand-locations/",
+			"RedirectMatch 301 ",
+			"                   ",
+			"RedirectMatch 301 ",
+			"",
+			"', '",
+			"",
+			"image",
+			"",
+			"\\n'",
+			"'",
+			"",
+			": ",
+			"",
+			"zendsvr",
+			"file://localhost/Volumes/Share/Stephen's%20iTunes/iTunes/iTunes%20Music/",
+			"file://localhost/Volumes/Share/Stephen's iTunes/iTunes/iTunes%20Music/",
+			"file://localhost/Volumes/Share/Stephen's%20iTunes/iTunes/iTunes%20Music/",
+			"->",
+			"dealer_id",
+			"include_once(APPROOT.\"View",
+			"APPROOT.\"",
+			"Model",
+			"include_once(APPROOT.\"",
+			".xml\">I",
+			"ftp://ftp2.bom.gov.au/anon/gen/fwo/",
+			".xml\">IDV",
+			"ftp://ftp2.bom.gov.au/anon/gen/fwo/",
+			""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": false,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "App/Router.php",
+					"settings":
+					{
+						"buffer_size": 2176,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								422,
+								422
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2.0,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5.0,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10.0,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublime_auto_complete": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": true,
+							"sublimelinter_gutter_marks_theme": "simple",
+							"sublimelinter_mark_style": "none",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/HTML5/Syntaxes/HTML 5.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/Applications/MAMP/bin/php/php5.4.10/conf/php.ini",
+					"settings":
+					{
+						"buffer_size": 41077,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								41045,
+								41049
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": true,
+							"sublimelinter_gutter_marks_theme": "simple",
+							"sublimelinter_mark_style": "none",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 18896.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 38.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 112.0
+	},
+	"output.find_results":
+	{
+		"height": 449.0
+	},
+	"replace":
+	{
+		"height": 76.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 229.0,
+	"status_bar_visible": true
+}

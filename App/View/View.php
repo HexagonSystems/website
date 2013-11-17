@@ -40,7 +40,7 @@ class View
         if (file_exists($template)) {
             $this->template[] = $template;
         }else{
-        	//echo "ERROR in ".__FILE__." on line: ".__LINE__.": File not found at:".$template;
+        	echo "ERROR in ".__FILE__." on line: ".__LINE__.": File not found at:".$template;
             $this->template[] = $this->error['404'];
         }
         if (file_exists($footer)) {
