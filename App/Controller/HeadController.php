@@ -2,11 +2,11 @@
 class HeadController
 {
 	private $header;
-	private $nav;
-	private $fileName = 'Head';
+	private $navigation;
 	
 	public function __construct()
 	{
+
 		$this->header = AppBase.'/View/Template/header.html';
 
 		$this->nav = AppBase.'/View/Template/nav.html';
@@ -27,8 +27,8 @@ class HeadController
 
 	public function invoke()
 	{		
-			//create a new view and pass it our template
-			$view = new HeadView($this->header,$this->nav);
-			$view->assign('navigation', $this->navigation);
+		//create a new view and pass it our template
+		$view = new HeadView($this->header,$this->nav);
+		$view->assign('navigation', $this->navigation);
 	} // end function
 } //end class
