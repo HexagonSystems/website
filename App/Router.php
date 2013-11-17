@@ -32,41 +32,41 @@ class Router
         }
 
         switch ($page) {
-            case "Index":
+            case "indexPage":
                 $controller = "IndexController";
                 break;  
-			case "About":
+            case "aboutPage":
                 $controller = "AboutController";
                 break;  
-			case "Project":
+            case "projectPage":
                 $controller = "ProjectController";
                 break;  
-			case "Contact":
+            case "contactPage":
                 $controller = "ContactController";
-                break;
-            case "Login":
-                $controller = "LoginController";
                 break;
             case "login":
                 $controller = "LoginController";
                 break;
-            case "Account":
+            case "accountPage":
                 $controller = "AccountController";
                 break;
-            case "Admin":
-            	$package = "Admin";
+            case "navPage":
+                $controller = "NavController";
+                break;
+            case "adminPage":
+                $package = "Admin";
                 $controller = "AdminRouter";
                 break;
-            case "Timesheet":
+            case "timesheetPage":
                 $package = "Task";
-               	$controller = "TaskRouter";
+                $controller = "TaskRouter";
                 break;
-            case "Logout":
+            case "logout":
                 $controller = "IndexController";
                 break;
-            case "Config":
-            	$controller = "ConfigController";
-            	break;
+            case "config":
+                $controller = "ConfigController";
+                break;
             default:
                 $controller = "IndexController";
                 break;
