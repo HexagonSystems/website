@@ -83,6 +83,7 @@ if(isset($_GET['timeFrame']))
 foreach($data['timesheetData']->toArray() as $tableUser => $tableData)
 {
 	include 'timesheetDisplayHours_TableTemplate.php';
+	echo "<br/>";
 }
 ?>
 
