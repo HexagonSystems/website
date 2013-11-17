@@ -196,7 +196,7 @@ function printSingleComment(tableConfig, commentTag, commentTitle,
 	responsiveTag.className = "visible-xs";
 	contentResponsive.className = "visible-xs";
 	
-	responsiveTag.className += " pull-right label label-info width-auto margin-left-m";
+	responsiveTag.className += " pull-right label side-border width-auto margin-left-m";
 	
 	/* CONTENT FINISH */
 	contentTD.appendChild(responsiveTag);

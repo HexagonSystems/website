@@ -131,7 +131,7 @@ $(function() {
 		{
 			$(this).parent().siblings().children().css('backgroundColor', 'white');
 			$(this).css('backgroundColor', '#eee');
-			loadComments(mainTaskCommentsTable, parseInt($(this).text()) + 1);
+			loadComments(mainTaskCommentsTable, parseInt($(this).text()));
 		}
 		
 });
