@@ -86,6 +86,85 @@ body {
 	position: relative;
 }
 
+/* TARA CSS*/
+/*INDEX PAGE*/
+.cats{
+	background-image:url('http://localhost/smartgithg/HEXAGONwebsite/Includes/Media/business-cat.jpg');	
+	background-color:#40236b;
+}
+
+/* CONTACT PAGE */
+textarea.form-control{
+	resize: none;
+}
+
+/*PROJECT PAGE*/
+.indiImage
+{
+	background-image:url('http://localhost/smartgithg/HEXAGONwebsite/Includes/Media/test1.png');	
+	background-color:black;
+	height: 150px;
+}
+
+.poker{
+	background-image:url('http://localhost/smartgithg/HEXAGONwebsite/Includes/Media/poker.png');	
+	background-color:black;
+}
+
+.snakes{
+	background-image:url('http://localhost/smartgithg/HEXAGONwebsite/Includes/Media/s&l.png');	
+	background-color:black;
+}
+.dosmon{
+	background-image:url('http://localhost/smartgithg/HEXAGONwebsite/Includes/Media/dosmon.png');	
+	background-color:black;
+}
+
+.individual-proj{
+	height:250px;
+}
+.group-proj{
+	height:400px;
+}
+.project-title{
+	position: absolute;
+	opacity: 0;
+	height:100%;
+	width:100%;
+	color:orange;
+	background-color:black;
+	text-align:center;
+	transition: opacity .75s linear;
+	-webkit-transition: opacity .75s linear;
+	-moz-transition: opacity .75s linear;
+}
+.proj-transition {
+	opacity: 1;
+	width:100%;
+	position: relative;
+	transition:opacity .75s;
+	transition-timing-function:linear;
+	-moz-transition: opacity .75s ;
+	-moz-transition-timing-function: linear;
+	-webkit-transition:opacity .75s;
+	-webkit-transition-timing-function:linear;
+}
+.project-title:hover{
+	opacity: 1 !important;
+}
+.proj-transition:hover {
+	opacity: .5;
+}
+h3.project-title{
+	padding-top:100px;
+}
+h2.project-title{
+	padding-top:200px;
+}
+/* END TARA */
+
+
+
 @media screen and (min-width: 768px) {
 	.bs-header {
 		font-size: 21px;
