@@ -27,7 +27,7 @@
 					data-toggle="dropdown">Alex's Timesheets<b class="caret"></b>
 				</a>
 					<ul class="dropdown-menu">
-						<li><a href="index.php?location=timesheetPage&action=all">Tasks</a></li>
+						<li><a href="index.php?location=timesheetPage">Tasks</a></li>
 						<li role="presentation" class="divider"></li>
 						<li><a href="index.php?location=timesheetPage&action=report">Hours report</a></li>
 						<li role="presentation" class="divider"></li>

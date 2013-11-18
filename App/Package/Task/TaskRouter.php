@@ -15,16 +15,19 @@ class TaskRouter
         $page = isset($getVars['action']) ? $getVars['action'] : 'empty';
 		
 
-        /* CHECK THE USER IS LOGGED IN */
+        /* CHECK THE USER IS LOGGED IN 
         if(! isset($_SESSION['account'])){
         	echo "Please login to view this page";
         	$page = 'empty';
+        } */
+        
+        $accessHandler = new \AccessHandler($conn);
+        if(! ($accessHandler->requireAccess(5)) ) // Require the user to be logged in.
+        {
+        	return false;
         }
         
         switch ($page) {
-        	case "all":
-        		$controller = "AllTimesheetController";
-        		break;
             case "single":
                	$controller = "SingleTimesheetController";
                 break;
@@ -35,7 +38,7 @@ class TaskRouter
             	$controller = "ReportTimesheetController";
             	break;
             default:
-                $controller = "TimesheetController";
+                $controller = "AllTimesheetController";
                 break;
         }//end switch
 

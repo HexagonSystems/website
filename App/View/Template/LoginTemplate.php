@@ -1,6 +1,8 @@
+
+
 <div class="row">
 	<div class="col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
-	  <form class="form-signin" action="index.php?location=login&action=login" method="POST">
+	  <form class="form-signin" action="#" method="POST">
 	  <h2 class="form-signin-heading">Sign in</h2>
 	  <input name="username" type="text" class="form-control" placeholder="username" autofocus="">
 	  <input name="pass" type="password" class="form-control" placeholder="Password">
