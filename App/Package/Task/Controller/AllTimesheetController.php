@@ -28,9 +28,7 @@ class AllTimesheetController extends Controller
 		/* GET HOW MANY TASKS THERE ARE FOR THE PAGEINATOR */
 		$amountOfTasks = $taskHandler->countAllTasks();
 
-		//parent::invoke();
-		
-		echo "<br/><br/>About to call TimesheetView<br/><br/>";
+		parent::invoke();
 
 		//create a new view and pass it our template
 		$view = new TimesheetView($this->template,$this->footer, 0);
