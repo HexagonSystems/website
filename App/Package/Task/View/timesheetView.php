@@ -28,6 +28,9 @@ class TimesheetView
          * @author Stephen McMahon
          */
         $template = AppBase.'/'.Base.'View/Template/'.$template.'template.php';
+        echo "<br/><br/>";
+        echo $template;
+        echo "<br/><br/>";
         // echo "In Constructor" ;
         if (file_exists($template)) {
             /**
