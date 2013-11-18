@@ -13,7 +13,7 @@ class timesheetView
      * Holds render status of view.
     */
     private $render = FALSE;
-    private $footer = FALSE;
+    private $footer = 'footer';
     private $template = FALSE;
     private $currentPagePosts = FALSE;
     /**
@@ -81,7 +81,9 @@ class timesheetView
         } catch (Exception $e) {
 
         }
-        include_once(AppBase.'/'.Base.$this->footer);
+        
+       include_once(AppBase."/View/Template/".$this->footer.".html");
+       
 
     }
 } // end class

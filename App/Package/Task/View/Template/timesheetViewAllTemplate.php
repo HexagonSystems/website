@@ -30,7 +30,6 @@
 
 		if($data['taskCount']['success'] == true){
 			$amountOfTasks = $data['taskCount']['data'][0];
-
 			$amountOfPages = ceil($amountOfTasks / 5);
 			include 'paginator_generator.php';
 		}else
@@ -80,7 +79,7 @@ mainTaskTable = {
 		{
 			$(this).parent().siblings().children().css('backgroundColor', 'white');
 			$(this).css('backgroundColor', '#eee');
-			loadTasks(mainTaskTable, parseInt($(this).text()) + 1);
+			loadTasks(mainTaskTable, parseInt($(this).text()));
 		}
 });
 

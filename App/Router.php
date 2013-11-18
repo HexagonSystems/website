@@ -30,7 +30,7 @@ class Router
             $pages[$value['name']] = $value;
             unset($pages[$key]);
         }
-
+        
         switch ($page) {
             case "indexPage":
                 $controller = "IndexController";

@@ -71,48 +71,44 @@ function loadNewestTasks(tableConfig) {
  * Creates a task in the database
  */
 function createTask(tableConfig, taskTitle, taskDescription, taskStatus) {
-	$
-			.post(
-					ajaxBase + "Model/TaskAJAX.php",
-					{
-						request : "create",
-						memberId : tableConfig['memberId'],
-						title : taskTitle,
-						content : taskDescription,
-						status : taskStatus
-					},
-					function(data) {
-						data = $.parseJSON(data);
-						response = data.success;
-						if (response == true || response == "true") {
-							task = data.task.data;
-							hours = data.hours.data;
-							comment = data.comment.data;
-							/* ASSUME FIRST NAME IS CORRECT */
-							var fakeMemberArray = {};
-							fakeMemberArray[tableConfig['memberId']] = "-";
-							var jsonString = JSON.stringify(fakeMemberArray);
-							fakeJSONObject = JSON.parse(jsonString)
+	$.post(ajaxBase + "Model/TaskAJAX.php", {
+		request : "create",
+		memberId : tableConfig['memberId'],
+		title : taskTitle,
+		content : taskDescription,
+		status : taskStatus
+	}, function(data) {
+		data = $.parseJSON(data);
+		response = data.success;
+		if (response == true || response == "true") {
+			task = data.task.data;
+			hours = data.hours.data;
+			comment = data.comment.data;
+			/* ASSUME FIRST NAME IS CORRECT */
+			var fakeMemberArray = {};
+			fakeMemberArray[tableConfig['memberId']] = "-";
+			var jsonString = JSON.stringify(fakeMemberArray);
+			fakeJSONObject = JSON.parse(jsonString)
 
-							var arrayToUnshift = new Array();
-							arrayToUnshift['id'] = task.id;
-							arrayToUnshift['title'] = task.title;
-							arrayToUnshift['content'] = task.content;
-							arrayToUnshift['status'] = task.status;
-							arrayToUnshift['members'] = fakeJSONObject;
-							arrayToUnshift['lastUpdate'] = comment;
+			var arrayToUnshift = new Array();
+			arrayToUnshift['id'] = task.id;
+			arrayToUnshift['title'] = task.title;
+			arrayToUnshift['content'] = task.content;
+			arrayToUnshift['status'] = task.status;
+			arrayToUnshift['members'] = fakeJSONObject;
+			arrayToUnshift['lastUpdate'] = comment;
 
-							tableConfig['content'].unshift(arrayToUnshift);
+			tableConfig['content'].unshift(arrayToUnshift);
 
-							printSingleTask(tableConfig, task.id, task.title,
-									task.content, task.status, fakeJSONObject,
-									tableConfig['memberFirstName'], comment.date, true);
+			printSingleTask(tableConfig, task.id, task.title, task.content,
+					task.status, fakeJSONObject,
+					tableConfig['memberFirstName'], comment.date, true);
 
-							assignTableContentAccordion();
-						} else {
-							alert("success = " + data.success + " " + data);
-						}
-					});
+			assignTableContentAccordion();
+		} else {
+			alert("success = " + data.success + " " + data);
+		}
+	});
 }
 
 /**
@@ -193,7 +189,28 @@ function printSingleTask(tableConfig, taskId, taskTitle, taskDscr, taskStatus,
 	/* STATUS */
 	var taskStatusTD = document.createElement('td');
 	var taskStatusSpan = document.createElement('span');
-	taskStatusSpan.className = ''; /* SWITCH STATEMENT TO DECIDE THIS */
+	var taskStatusClass = "label label-";
+	switch (taskStatus) {
+	case 'Needs Attention':
+		taskStatusClass += "danger";
+		break;
+	case 'Completed':
+		taskStatusClass += "success";
+		break;
+	case 'In Progress':
+		taskStatusClass += "primary";
+		break;
+	case 'Discontinued':
+		taskStatusClass += "default";
+		break;
+	default:
+		taskStatusClass += "warning";
+	}
+
+	taskStatusSpan.className = taskStatusClass; /*
+												 * SWITCH STATEMENT TO DECIDE
+												 * THIS
+												 */
 	taskStatusSpan.innerHTML = taskStatus;
 	taskStatusTD.appendChild(taskStatusSpan);
 
@@ -220,13 +237,16 @@ function printSingleTask(tableConfig, taskId, taskTitle, taskDscr, taskStatus,
 	taskMemberSingleSpan.innerHTML = taskLastUpdateMemberId;
 	taskLastUpdateTD.appendChild(taskMemberSingleSpan);
 	taskLastUpdateTD.innerHTML += " on " + taskLastUpdateDate;
-	
+
 	/* Title */
 	var taskTitleAHREF = document.createElement('a');
 	taskTitleAHREF.title = taskTitle;
 	taskTitleAHREF.href = "index.php?location=timesheetPage&action=single&param="
 			+ taskId;
-	taskTitleAHREF.innerHTML = "<strong>" + taskTitle + "</strong><br />";
+
+	var taskTitleAHREFInner = document.createElement('strong');
+	taskTitleAHREFInner.innerHTML = taskTitle + "<br/>";
+	taskTitleAHREF.appendChild(taskTitleAHREFInner);
 
 	/* Description */
 	var taskDscrTD = document.createElement('td');
@@ -243,21 +263,31 @@ function printSingleTask(tableConfig, taskId, taskTitle, taskDscr, taskStatus,
 	} else {
 		taskDscrPreview.innerHTML = taskDscr;
 	}
-	
+
 	/* CONTENT RESPONSIVE */
 	var contentResponsive = document.createElement('small');
-	
+
 	var contentResponsiveMembers = document.createElement('p');
-	contentResponsiveMembers.innerHTML = "<br/><br/>Members: " + taskMembersTD.innerHTML;
+	contentResponsiveMembers.innerHTML = "<br/><br/>Members: "
+			+ taskMembersTD.innerHTML;
 	var contentResponsiveLastUpdate = document.createElement('p');
-	contentResponsiveLastUpdate.innerHTML = "Last updated by " + taskLastUpdateTD.innerHTML + "";
-	
+	contentResponsiveLastUpdate.innerHTML = "Last updated by "
+			+ taskLastUpdateTD.innerHTML + "<br/><br/>";
+
 	contentResponsive.appendChild(contentResponsiveMembers);
 	contentResponsive.appendChild(contentResponsiveLastUpdate);
-	
+
+	var contentResponsiveStatus = taskStatusSpan.cloneNode();
+
+	contentResponsiveStatus.className = "visible-xs";
 	contentResponsive.className = "visible-xs";
 
+	contentResponsiveStatus.className += " pull-right width-auto margin-left-m "
+			+ taskStatusClass;
+	contentResponsiveStatus.innerHTML += "<br/>";
+
 	/* CONTENT FINISH */
+	taskDscrTD.appendChild(contentResponsiveStatus);
 	taskDscrTD.appendChild(taskTitleAHREF);
 	taskDscrTD.appendChild(taskDscrPreview);
 	taskDscrTD.appendChild(taskDscrBreaker);

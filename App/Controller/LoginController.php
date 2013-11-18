@@ -2,6 +2,9 @@
 
 class LoginController extends Controller
 {
+	// private $loggedOutView = 'loginView';
+	// private $loggedInView = 'loggedInView';
+	// private $forgottenPassword = 'ResetPassword';
 
 	public function invoke()
 	{
@@ -9,13 +12,43 @@ class LoginController extends Controller
 
 		if (!isset($_GET['action']))
 		{
-			$this->template = 'LoginTemplate';
+			$user = new User($this->database);
+			if(isset($_POST['username']) && isset($_POST['pass']))
+			{
+				$user = $user->loginUser($_POST["username"], $_POST["pass"]);
+				if(!is_a($user, 'User')){
+					//NOt logged In
+					if($user = "verify"){
+						echo "This account has not been verified. Please follow the instructions in your email to validate your account ";
+						$get = array("action" => "mailSent");
+						$verify = new VerifyController($get, $_POST);
+						$verify->setDatabase($this->database);
+						$verify->invoke();
+					}else{
+						echo $user;
+						$this->template = 'view/'.$this->loggedOutView.'Template.php';
+							
+						//create a new view and pass it our template
+						$view = new LoginView($this->template,$this->footer);
+						$content ="";
+						$view->assign('title' , 'Loggged in');
+						$view->assign('content' , $content);
+					}
 
-			//create a new view and pass it our template
-			$view = new LoginView($this->template,$this->footer);
-			$content ="";
-			$view->assign('title' , 'Logged in');
-			$view->assign('content' , $content);
+				}else{
+					$user->sessionCreate();
+					var_dump($_SESSION);
+				}
+			}else
+			{
+				$this->template = 'LoginTemplate';
+
+				//create a new view and pass it our template
+				$view = new LoginView($this->template,$this->footer);
+				$content ="";
+				$view->assign('title' , 'Logged in');
+				$view->assign('content' , $content);
+			}
 		}elseif (isset($_GET['action'])){
 			if($_GET['action'] == 'logout')
 			{
@@ -47,7 +80,7 @@ class LoginController extends Controller
 					$verify->setDatabase($this->database);
 					$verify->invoke();
 				}
-				
+
 			}
 			else if($_GET['action'] == 'login')
 			{
