@@ -191,19 +191,26 @@ function printSingleTask(tableConfig, taskId, taskTitle, taskDscr, taskStatus,
 	var taskStatusSpan = document.createElement('span');
 	var taskStatusClass = "label label-";
 	switch (taskStatus) {
-	case 'Needs Attention': taskStatusClass += "danger";
+	case 'Needs Attention':
+		taskStatusClass += "danger";
 		break;
-	case 'Completed': taskStatusClass += "success";
+	case 'Completed':
+		taskStatusClass += "success";
 		break;
-	case 'In Progress':taskStatusClass += "primary";
+	case 'In Progress':
+		taskStatusClass += "primary";
 		break;
-		default: taskStatusClass += "warning";
+	case 'Discontinued':
+		taskStatusClass += "default";
+		break;
+	default:
+		taskStatusClass += "warning";
 	}
 
 	taskStatusSpan.className = taskStatusClass; /*
-														 * SWITCH STATEMENT TO
-														 * DECIDE THIS
-														 */
+												 * SWITCH STATEMENT TO DECIDE
+												 * THIS
+												 */
 	taskStatusSpan.innerHTML = taskStatus;
 	taskStatusTD.appendChild(taskStatusSpan);
 
@@ -269,14 +276,14 @@ function printSingleTask(tableConfig, taskId, taskTitle, taskDscr, taskStatus,
 
 	contentResponsive.appendChild(contentResponsiveMembers);
 	contentResponsive.appendChild(contentResponsiveLastUpdate);
-	
 
 	var contentResponsiveStatus = taskStatusSpan.cloneNode();
 
 	contentResponsiveStatus.className = "visible-xs";
 	contentResponsive.className = "visible-xs";
 
-	contentResponsiveStatus.className += " pull-right width-auto margin-left-m " + taskStatusClass;
+	contentResponsiveStatus.className += " pull-right width-auto margin-left-m "
+			+ taskStatusClass;
 	contentResponsiveStatus.innerHTML += "<br/>";
 
 	/* CONTENT FINISH */
