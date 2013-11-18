@@ -1,9 +1,8 @@
-
 <?php
 
-class IndexController extends Controller
+class AdminController extends Controller
 {
-	protected $template = 'IndexTemplate';
+	protected $template = 'Index';
 
     public function invoke()
     {

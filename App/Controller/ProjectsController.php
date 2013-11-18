@@ -1,9 +1,9 @@
 
 <?php
 
-class IndexController extends Controller
+class ProjectsController extends Controller
 {
-	protected $template = 'IndexTemplate';
+	protected $template = 'Index';
 
     public function invoke()
     {
