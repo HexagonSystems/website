@@ -21,18 +21,12 @@ class TimesheetView
 	 */
 	public function __construct($template,$footer,$currentPagePosts)
 	{
-		 
-		echo "<br/><br/>";
-		echo Base;
-		echo "<br/><br/>";
 		/**
 		 * This is hard typing the templates into the View this is probably a bad idea as it assumes
 		 * template location and makes it impossible to override.
 		 * @author Stephen McMahon
 		 */
-		$template = AppBase.'/Package/Task/View/Template/'.$template.'template.php';
-		echo "<br/><br/>";
-		echo $template;
+		$template = AppBase.'/Package/Task/View/Template/'.$template.'Template.php';
 		
 		// echo "In Constructor" ;
 		if (file_exists($template)) {
