@@ -13,15 +13,15 @@ class Database
 	/**
 	* Database configeration ia an instance field
 	*/
-	private $db = "example";
+	private $db = "ccpmg501a_18_db1";
 	/**
 	* user configeration ia an instance field
 	*/
-	private $user = "example";
+	private $user = "root";
 	/**
 	* password configeration ia an instance field
 	*/
-	private $pass = "example";
+	private $pass = "";
 	/**
 	* The connection is a static class level variable
 	*/
