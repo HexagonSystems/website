@@ -11,23 +11,14 @@ class HeadView
     /**
      * Holds render status of view.
     */
-    private $render = FALSE;
     private $header = FALSE;
     private $nav = FALSE;
     /**
      * Accept a template to load
      */
-    public function __construct($template,$header,$nav)
+    public function __construct($header,$nav)
     {
-        // echo "In Consttructor" ;
-        if (file_exists($template)) {
-            /**
-             * trigger render to include file when this model is destroyed
-             * if we render it now, we wouldn't be able to assign variables
-             * to the view!
-             */
-            $this->render = $template;
-        }
+
         if (file_exists($header)) {
             /**
              * trigger render to include file when this model is destroyed

@@ -27,23 +27,24 @@ class TaskDA
 		{
 			$statement = "SELECT * FROM
 					(
-					SELECT DISTINCT tskCom.postedDate, tskCom.memberId, tsk.*
+					SELECT DISTINCT tskCom.postedDate, mbr.firstName, tsk.*
 					FROM `taskcomment` tskCom
 					LEFT JOIN `task` tsk
 					ON tskCom.taskId = tsk.taskId
+					LEFT JOIN `member` mbr
+					ON tskCom.memberId = mbr.memberId
 					ORDER BY tskCom.postedDate DESC
-						
 					) AS my_table
 					GROUP BY taskId
 					ORDER BY postedDate DESC
 					LIMIT :starting, :quantity";
 
 			$query = $this->database->prepare($statement);
-				
+
 			$starting = ($starting - 1) * $quantity;
-				
+
 			$quantity += 0;
-				
+
 			$query->bindParam(':starting'   , $starting , \PDO::PARAM_INT);
 			$query->bindParam(':quantity'   , $quantity	, \PDO::PARAM_INT);
 
@@ -64,7 +65,7 @@ class TaskDA
 				$tempObject->setCategory($row['type']);
 				$tempObject->loadMembers();
 				$tempObject->setLastUpdate(array(
-						"memberId" => $row['memberId'],
+						"memberId" => $row['firstName'],
 						"postedDate" => $row['postedDate'],
 				));
 
@@ -75,7 +76,7 @@ class TaskDA
 			return createError($e);
 		}
 	}
-	
+
 	/**
 	 * Gets the amount of Tasks currently available
 	 *
@@ -84,14 +85,17 @@ class TaskDA
 	public function getAllTaskCount()
 	{
 		try {
-			$statement = "SELECT COUNT(*) FROM `task`";
-	
+			$statement = "SELECT COUNT( DISTINCT tsk.taskId )
+					FROM  `taskcomment` tskCom
+					LEFT JOIN  `task` tsk ON tskCom.taskId = tsk.taskId
+					LEFT JOIN  `member` mbr ON tskCom.memberId = mbr.memberId";
+
 			$query = $this->database->prepare($statement);
-				
+
 			$taskCountHolder = array();
 			$taskCountHolder['success'] = true;
 			$taskCountHolder['data'] = array();
-				
+
 			if(!$query->execute())
 			{
 				return $this->createError("SQL had trouble executing");
@@ -173,7 +177,8 @@ class TaskDA
 			$statement = 'SELECT DISTINCT wrk.memberId, mbr.firstName
 					FROM work wrk, member mbr
 					WHERE wrk.taskId = :taskId AND
-					mbr.memberId = wrk.memberId';
+					mbr.memberId = wrk.memberId AND
+					wrk.hours > 0';
 
 			$query = $this->database->prepare($statement);
 
@@ -255,7 +260,7 @@ class TaskDA
 			$query->bindParam(':status'		, $status		, \PDO::PARAM_STR);
 
 			$query->execute();
-				
+
 			$returnArray = array();
 			$returnArray['success'] = true;
 			$returnArray['taskId'] = $this->database->lastInsertId();
@@ -307,7 +312,7 @@ class TaskDA
 
 	/**
 	 * Gets all possible Task status'
-	 * 
+	 *
 	 * @return array
 	 */
 	function getAllTaskStatus()
@@ -318,7 +323,7 @@ class TaskDA
 			$query = $this->database->prepare($statement);
 
 			$query->execute();
-			
+
 			$returnArray = array();
 			$returnArray['success'] = true;
 			$returnArray['data'] = array();
@@ -336,7 +341,7 @@ class TaskDA
 				$regex = "/'(.*?)'/";
 				preg_match_all( $regex , $enumValues, $enum_array );
 				$enum_fields = $enum_array[1];
-				
+
 				foreach($enum_fields as $row){
 					array_push($returnArray['data'], $row);
 				}
@@ -345,8 +350,8 @@ class TaskDA
 			{
 				return $this->createError("No status' found");
 			}
-			
-			
+
+
 		} catch(PDOException $e) {
 			return $this->createError($e);
 		} //end of try/catch statement;

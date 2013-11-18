@@ -1,9 +1,15 @@
+<header class="page-header relative">
+	<h3>
+		Project Tasks <small>Click 'Create Task' to create a new Task</small>
+	</h3>
+</header>
+
 <a data-toggle="modal" href="#modal_createTask"
 	class="btn btn-primary btn-sm">Create Task</a>
 <?php include_once 'modal_createTask.php'; ?>
 
 <table
-	class="table table-rowBorder table-responsive table-hover table-zebra">
+	class="table table-rowBorder table-hover table-zebra table-responsive-dropLast2Col">
 
 	<thead>
 		<th class="table-colSmall">Status</th>
@@ -20,30 +26,25 @@
 
 <div class="text-center">
 	<ul class="pagination">
-		<li><a href="#">&laquo;</a></li>
 		<?php 
 
 		if($data['taskCount']['success'] == true){
 			$amountOfTasks = $data['taskCount']['data'][0];
-
-			$commentCount = ceil($amountOfTasks / 5);
-			for($counter = 0; $counter < $commentCount; $counter++)
-			{
-				echo '<li><a href="#">'.$counter.'</a></li>';
-			}
+			$amountOfPages = ceil($amountOfTasks / 5);
+			include 'paginator_generator.php';
 		}else
 		{
-			echo $data['taskCount']['message'];
+			//echo $data['taskCount']['message'];
+			echo "There was trouble loading the paginator";
 		}
 
 		?>
-		<li><a href="#">&raquo;</a></li>
 	</ul>
 </div>
 <script
-	src="<?php echo SITE_ROOT.AppBaseSTRIPPED; ?>Package/Task/includes/js/TaskLoaderNEW.js"></script>
+	src="//<?php echo SITE_ROOT.AppBaseSTRIPPED; ?>Package/Task/includes/js/TaskLoaderNEW.js"></script>
 <script
-	src="<?php echo SITE_ROOT.AppBaseSTRIPPED; ?>Package/Task/includes/js/TableLoaderNEW.js"></script>
+	src="//<?php echo SITE_ROOT.AppBaseSTRIPPED; ?>Package/Task/includes/js/TableLoaderNEW.js"></script>
 <script>
 ajaxBase = "<?php echo SITE_ROOT.AppBaseSTRIPPED; ?>Package/Task/";
 
@@ -62,7 +63,24 @@ mainTaskTable = {
  */
  $(document).on('click', ".pagination li a", function () {
 		event.preventDefault();
-		loadTasks(mainTaskTable, parseInt($(this).text()) + 1);
+
+		
+		if($(this).text() == "<<")
+		{
+			$(this).parent().siblings().children().css('backgroundColor', 'white');
+			$(this).parent().next().children().css('backgroundColor', '#eee');
+			loadTasks(mainTaskTable, 1);
+		}else if($(this).text() == ">>")
+		{
+			$(this).parent().siblings().children().css('backgroundColor', 'white');
+			$(this).parent().prev().children().css('backgroundColor', '#eee');
+			loadTasks(mainTaskTable, parseInt($(this).parent().prev().find(">:first-child").text()) + 1);
+		}else
+		{
+			$(this).parent().siblings().children().css('backgroundColor', 'white');
+			$(this).css('backgroundColor', '#eee');
+			loadTasks(mainTaskTable, parseInt($(this).text()));
+		}
 });
 
 /**

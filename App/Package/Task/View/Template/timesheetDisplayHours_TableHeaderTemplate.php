@@ -1,5 +1,9 @@
-<th>
+
+<th></th>
 <?php
-echo $date;
+foreach($data['timesheetData']->getDateArray() as $date)
+{
+	include 'timesheetDisplayHours_TableHeaderDataTemplate.php';
+}
 ?>
-</th>
+<th>Total</th>

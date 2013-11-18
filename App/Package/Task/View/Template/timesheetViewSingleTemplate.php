@@ -7,9 +7,16 @@
 	<article>
 		Members
 		<ul>
-			<?php foreach($data['task']->getMembers() as $member) {
-				echo "<li>$member</li>";
-		} ?>
+			<?php
+			if(count($data['task']->getMembers()) == 0)
+			{
+				echo "<li>Add hours to Task to be shown here</li>";
+			}else
+			{
+				foreach($data['task']->getMembers() as $member) {
+					echo "<li>$member</li>";
+				}
+			}?>
 		</ul>
 	</article>
 	<article id="taskDescriptionLocation">
@@ -29,9 +36,8 @@
 <?php include_once 'modal_editTask.php'; ?>
 <?php include_once 'modal_pickSearchMethod.php'; ?>
 
-
 <table id="testtable"
-	class="table table-rowBorder table-responsive table-hover table-zebra">
+	class="table table-rowBorder table-hover table-zebra table-responsive-dropLast2Col">
 
 	<thead>
 		<th class="table-colSmall">Tag</th>
@@ -111,7 +117,23 @@ $(function() {
  */
  $(document).on('click', ".pagination li a", function () {
 		event.preventDefault();
-		loadComments(mainTaskCommentsTable, parseInt($(this).text()) + 1);
+		if($(this).text() == "<<")
+		{
+			$(this).parent().siblings().children().css('backgroundColor', 'white');
+			$(this).parent().next().children().css('backgroundColor', '#eee');
+			loadComments(mainTaskCommentsTable, 1);
+		}else if($(this).text() == ">>")
+		{
+			$(this).parent().siblings().children().css('backgroundColor', 'white');
+			$(this).parent().prev().children().css('backgroundColor', '#eee');
+			loadComments(mainTaskCommentsTable, parseInt($(this).parent().prev().find(">:first-child").text()) + 1);
+		}else
+		{
+			$(this).parent().siblings().children().css('backgroundColor', 'white');
+			$(this).css('backgroundColor', '#eee');
+			loadComments(mainTaskCommentsTable, parseInt($(this).text()));
+		}
+		
 });
 
 

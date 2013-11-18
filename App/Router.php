@@ -20,17 +20,28 @@ class Router
 
         $page = isset($get['location']) ? $get['location'] : 'empty';
 
+        $package = "App";
+
+        $sth = $database->prepare("SELECT * FROM menu");
+        $sth->execute();
+        $pages = $sth->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($pages as $key => $value) {
+            $value['link'] = '/index.php?location='.$value['link'];
+            $pages[$value['name']] = $value;
+            unset($pages[$key]);
+        }
+        
         switch ($page) {
             case "indexPage":
                 $controller = "IndexController";
                 break;  
-			case "aboutPage":
+            case "aboutPage":
                 $controller = "AboutController";
                 break;  
-			case "projectPage":
+            case "projectPage":
                 $controller = "ProjectController";
                 break;  
-			case "contactPage":
+            case "contactPage":
                 $controller = "ContactController";
                 break;
             case "login":
@@ -43,12 +54,12 @@ class Router
                 $controller = "NavController";
                 break;
             case "adminPage":
-            	$package = "Admin";
+                $package = "Admin";
                 $controller = "AdminRouter";
                 break;
             case "timesheetPage":
                 $package = "Task";
-               	$controller = "TaskRouter";
+                $controller = "TaskRouter";
                 break;
             case "logout":
                 $controller = "IndexController";
@@ -64,7 +75,7 @@ class Router
                 break;
         }//end switch
 		
-        if(isset($package))
+        if($package !== 'App')
         {	
             $subRouter = $package.'\\'.$controller;
             //$router = new $subRouter();
@@ -72,6 +83,7 @@ class Router
         }else{
             $controller = new $controller($get, $post);
             $controller->setDatabase($database);
+            $controller->setNavigation($pages);
             $controller->invoke();
         }
     }// end route

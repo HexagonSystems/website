@@ -120,7 +120,6 @@ class TaskHoursDA
 					$statement .= " `date` <= STR_TO_DATE(:endDate, '%Y-%m-%d')";
 				}
 			}
-	
 			$query = $this->database->prepare($statement);
 			
 			if($taskId)
@@ -139,7 +138,6 @@ class TaskHoursDA
 			{
 				$query->bindParam(':endDate'   , $endDate , \PDO::PARAM_STR);
 			}
-			
 			$query->execute();
 	
 			$timesheetHolder = array();

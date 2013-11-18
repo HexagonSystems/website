@@ -1,12 +1,12 @@
 <?php 
-$filename = "LocalConfig.php";
+
+$filename = "App/Config/LocalConfig.php";
 if (file_exists($filename)) {
     require_once($filename);
 } else {
 	
-    $site_base = "HEXAGONwebsite/";
-    $site_root = "localhost/SmartGitHg/$site_base"; //$_SERVER["SERVER_NAME"].dirname($_SERVER["SCRIPT_NAME"]);
-    
+    $site_base = "website/";
+    $site_root = "//mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/$site_base"; //$_SERVER["SERVER_NAME"].dirname($_SERVER["SCRIPT_NAME"]);
     
     define('SITE_ROOT', $site_root);
     define('SITE_BASE', $site_base);
@@ -25,7 +25,7 @@ if (file_exists($filename)) {
 }
 
 require_once(AppBase.'/Service/Autoloader.php');
-require_once(AppBase.'/Config/Database.example.php');
+require_once(AppBase.'/Config/Database.php');
 require_once(AppBase.'/Service/password.php');
 
 require_once(AppBase.'/Package/Task/Config/Config.php');

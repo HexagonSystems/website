@@ -1,11 +1,10 @@
-
-<li><a href="">&laquo;</a>
+<li><a href="#" class="paginatorArrowJump"><<</a>
 </li>
 <?php
-for($counter = 0; $counter < $amountOfPages; $counter++)
+for($counter = 1; $counter < ($amountOfPages + 1); $counter++)
 {
 	echo '<li><a href="#">'.$counter.'</a></li>';
 }
 ?>
-<li><a href="#">&raquo;</a>
+<li><a href="#" class="paginatorArrowJump">>></a>
 </li>

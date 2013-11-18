@@ -45,76 +45,70 @@ function loadTasks(tableConfig, pageNum, forceLoad) {
  * 
  * @param tableConfig
  */
-function loadNewestTasks(tableConfig)
-{
-	$.post(ajaxBase + "Model/TaskAJAX.php",{
-				request : "loadNewest",
-				memberId : tableConfig['memberId'],
-				lastLoaded : tableConfig['content'][0]['id'],
-			},
-			function(data) {
-				nakedJson = $.parseJSON(nakedJson);
-				response = nakedJson.success;
-				if (response == true || response == "true") {
-					var jsonObject = nakedJson.data;
-					updateTableContentArray(tableConfig,
-							jsonObject, pageNum);
-					var arrayToLoopOver = printTableDataInTable(tableConfig, pageNum, true);
-					if (arrayToLoopOver) {
-						printTaskTableData(tableConfig, arrayToLoopOver);
-					} else {
-						loadNewestTasks(tableConfig);
-					}
-				}
-			});
+function loadNewestTasks(tableConfig) {
+	$.post(ajaxBase + "Model/TaskAJAX.php", {
+		request : "loadNewest",
+		memberId : tableConfig['memberId'],
+		lastLoaded : tableConfig['content'][0]['id'],
+	}, function(data) {
+		nakedJson = $.parseJSON(nakedJson);
+		response = nakedJson.success;
+		if (response == true || response == "true") {
+			var jsonObject = nakedJson.data;
+			updateTableContentArray(tableConfig, jsonObject, pageNum);
+			var arrayToLoopOver = printTableDataInTable(tableConfig, pageNum,
+					true);
+			if (arrayToLoopOver) {
+				printTaskTableData(tableConfig, arrayToLoopOver);
+			} else {
+				loadNewestTasks(tableConfig);
+			}
+		}
+	});
 }
 
 /**
  * Creates a task in the database
  */
 function createTask(tableConfig, taskTitle, taskDescription, taskStatus) {
-	$
-			.post(
-					ajaxBase + "Model/TaskAJAX.php",
-					{
-						request : "create",
-						memberId : tableConfig['memberId'],
-						title : taskTitle,
-						content : taskDescription,
-						status : taskStatus
-					},
-					function(data) {
-						data = $.parseJSON(data);
-						response = data.success;
-						if (response == true || response == "true") {
-							task = data.task.data;
-							hours = data.hours.data;
-							comment = data.comment.data;
-							/* ASSUME FIRST NAME IS CORRECT */
-							var fakeMemberArray = {};
-							fakeMemberArray[tableConfig['memberId']] = tableConfig['memberFirstName'];
-							var jsonString = JSON.stringify(fakeMemberArray);
-							fakeJSONObject = JSON.parse(jsonString)
-							
-							var arrayToUnshift = new Array();
-							arrayToUnshift['id'] = task.id;
-							arrayToUnshift['title'] = task.title;
-							arrayToUnshift['content'] = task.content;
-							arrayToUnshift['status'] = task.status;
-							arrayToUnshift['members'] = fakeJSONObject;
-							arrayToUnshift['lastUpdate'] = comment;
-							
-							tableConfig['content'].unshift(arrayToUnshift);
-							
-							printSingleTask(tableConfig, task.id, task.title,
-									task.content, task.status, fakeJSONObject,
-									comment.memberId, comment.date, true);
+	$.post(ajaxBase + "Model/TaskAJAX.php", {
+		request : "create",
+		memberId : tableConfig['memberId'],
+		title : taskTitle,
+		content : taskDescription,
+		status : taskStatus
+	}, function(data) {
+		data = $.parseJSON(data);
+		response = data.success;
+		if (response == true || response == "true") {
+			task = data.task.data;
+			hours = data.hours.data;
+			comment = data.comment.data;
+			/* ASSUME FIRST NAME IS CORRECT */
+			var fakeMemberArray = {};
+			fakeMemberArray[tableConfig['memberId']] = "-";
+			var jsonString = JSON.stringify(fakeMemberArray);
+			fakeJSONObject = JSON.parse(jsonString)
 
-							assignTableContentAccordion();
-						} else {
-							alert("success = " + data.success + " " + data);
-						}
-					});
+			var arrayToUnshift = new Array();
+			arrayToUnshift['id'] = task.id;
+			arrayToUnshift['title'] = task.title;
+			arrayToUnshift['content'] = task.content;
+			arrayToUnshift['status'] = task.status;
+			arrayToUnshift['members'] = fakeJSONObject;
+			arrayToUnshift['lastUpdate'] = comment;
+
+			tableConfig['content'].unshift(arrayToUnshift);
+
+			printSingleTask(tableConfig, task.id, task.title, task.content,
+					task.status, fakeJSONObject,
+					tableConfig['memberFirstName'], comment.date, true);
+
+			assignTableContentAccordion();
+		} else {
+			alert("success = " + data.success + " " + data);
+		}
+	});
 }
 
 /**
@@ -195,16 +189,64 @@ function printSingleTask(tableConfig, taskId, taskTitle, taskDscr, taskStatus,
 	/* STATUS */
 	var taskStatusTD = document.createElement('td');
 	var taskStatusSpan = document.createElement('span');
-	taskStatusSpan.className = ''; /* SWITCH STATEMENT TO DECIDE THIS */
+	var taskStatusClass = "label label-";
+	switch (taskStatus) {
+	case 'Needs Attention':
+		taskStatusClass += "danger";
+		break;
+	case 'Completed':
+		taskStatusClass += "success";
+		break;
+	case 'In Progress':
+		taskStatusClass += "primary";
+		break;
+	case 'Discontinued':
+		taskStatusClass += "default";
+		break;
+	default:
+		taskStatusClass += "warning";
+	}
+
+	taskStatusSpan.className = taskStatusClass; /*
+												 * SWITCH STATEMENT TO DECIDE
+												 * THIS
+												 */
 	taskStatusSpan.innerHTML = taskStatus;
 	taskStatusTD.appendChild(taskStatusSpan);
+
+	/* Members */
+	var taskMembersTD = document.createElement('td');
+	var taskMemberSingleSpan = document.createElement('span');
+	if (taskMembers.length == 0) {
+		taskMemberSingleSpan.innerHTML = "-";
+		taskMembersTD.appendChild(taskMemberSingleSpan);
+	} else {
+		$.each(taskMembers, function(member) {
+			taskMemberSingleSpan.innerHTML = taskMembers[member];
+			taskMembersTD.appendChild(taskMemberSingleSpan);
+			taskMembersTD.innerHTML += ", ";
+		});
+	}
+
+	taskMembersTD.innerHTML = taskMembersTD.innerHTML.slice(0, -2);
+
+	/* Last Update */
+	var taskLastUpdateTD = document.createElement('td');
+
+	var taskMemberSingleSpan = document.createElement('span');
+	taskMemberSingleSpan.innerHTML = taskLastUpdateMemberId;
+	taskLastUpdateTD.appendChild(taskMemberSingleSpan);
+	taskLastUpdateTD.innerHTML += " on " + taskLastUpdateDate;
 
 	/* Title */
 	var taskTitleAHREF = document.createElement('a');
 	taskTitleAHREF.title = taskTitle;
 	taskTitleAHREF.href = "index.php?location=timesheetPage&action=single&param="
 			+ taskId;
-	taskTitleAHREF.innerHTML = taskTitle + "<br />";
+
+	var taskTitleAHREFInner = document.createElement('strong');
+	taskTitleAHREFInner.innerHTML = taskTitle + "<br/>";
+	taskTitleAHREF.appendChild(taskTitleAHREFInner);
 
 	/* Description */
 	var taskDscrTD = document.createElement('td');
@@ -222,35 +264,36 @@ function printSingleTask(tableConfig, taskId, taskTitle, taskDscr, taskStatus,
 		taskDscrPreview.innerHTML = taskDscr;
 	}
 
+	/* CONTENT RESPONSIVE */
+	var contentResponsive = document.createElement('small');
+
+	var contentResponsiveMembers = document.createElement('p');
+	contentResponsiveMembers.innerHTML = "<br/><br/>Members: "
+			+ taskMembersTD.innerHTML;
+	var contentResponsiveLastUpdate = document.createElement('p');
+	contentResponsiveLastUpdate.innerHTML = "Last updated by "
+			+ taskLastUpdateTD.innerHTML + "<br/><br/>";
+
+	contentResponsive.appendChild(contentResponsiveMembers);
+	contentResponsive.appendChild(contentResponsiveLastUpdate);
+
+	var contentResponsiveStatus = taskStatusSpan.cloneNode();
+
+	contentResponsiveStatus.className = "visible-xs";
+	contentResponsive.className = "visible-xs";
+
+	contentResponsiveStatus.className += " pull-right width-auto margin-left-m "
+			+ taskStatusClass;
+	contentResponsiveStatus.innerHTML += "<br/>";
+
 	/* CONTENT FINISH */
+	taskDscrTD.appendChild(contentResponsiveStatus);
 	taskDscrTD.appendChild(taskTitleAHREF);
 	taskDscrTD.appendChild(taskDscrPreview);
 	taskDscrTD.appendChild(taskDscrBreaker);
 	taskDscrTD.appendChild(taskDscrContent);
 	taskDscrTD.className = "actualAccordion";
-
-	/* Members */
-	var taskMembersTD = document.createElement('td');
-	$.each(taskMembers, function(member) {
-		var taskMemberSingleAHREF = document.createElement('a');
-		taskMemberSingleAHREF.title = taskMembers[member];
-		taskMemberSingleAHREF.href = "#";
-		taskMemberSingleAHREF.innerHTML = taskMembers[member];
-		taskMembersTD.appendChild(taskMemberSingleAHREF);
-		taskMembersTD.innerHTML += ", ";
-	});
-
-	taskMembersTD.innerHTML = taskMembersTD.innerHTML.slice(0, -2);
-
-	/* Last Update */
-	var taskLastUpdateTD = document.createElement('td');
-
-	var taskMemberSingleAHREF = document.createElement('a');
-	taskMemberSingleAHREF.title = taskMembers[taskLastUpdateMemberId];
-	taskMemberSingleAHREF.href = "#";
-	taskMemberSingleAHREF.innerHTML = taskMembers[taskLastUpdateMemberId];
-	taskLastUpdateTD.appendChild(taskMemberSingleAHREF);
-	taskLastUpdateTD.innerHTML += " on " + taskLastUpdateDate;
+	taskDscrTD.appendChild(contentResponsive);
 
 	/* APPEND EVERYTHING TO TABLE ROW */
 	tableRow.appendChild(taskStatusTD);
@@ -284,4 +327,3 @@ function printTaskTableData(tableConfig, arrayToLoopOver) {
 	});
 	assignTableContentAccordion();
 }
-

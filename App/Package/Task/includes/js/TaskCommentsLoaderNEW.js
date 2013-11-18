@@ -12,8 +12,6 @@ function loadComments(tableConfig, pageNum, forceLoad) {
 			pageNum : pageNum,
 			qty : 5
 		}, function(nakedJson) {
-			console.log("Loaded comments through AJAX");
-			console.log("Current array = " + tableConfig['content'].toString())
 			nakedJson = $.parseJSON(nakedJson);
 			response = nakedJson.success;
 			if (response == true || response == "true") {
@@ -63,13 +61,15 @@ function loadNewestComments(tableConfig) {
 			console.log("About to print");
 			$.each(jsonData, function(id) {
 				tableConfig['content'].unshift(jsonData[id]); // Add to the
-																// start of the
-																// array
+				// start of the
+				// array
 				console.log("Printing " + jsonData[id]['title']);
 				printSingleComment(tableConfig, jsonData[id]['tag'],
 						jsonData[id]['title'], jsonData[id]['content'],
 						jsonData[id]['memberId'], jsonData[id]['date'], true);
 			});
+			assignCommentTagClick();
+			assignTableContentAccordion();
 			if (jsonData.length >= 5) {
 				tableConfig['content'] = tableConfig['content'].slice(0, 5);
 				findLastPage(tableConfig, 1);
@@ -79,10 +79,11 @@ function loadNewestComments(tableConfig) {
 			var countResponse = nakedJson.count;
 			console.log("About to handle countResponse");
 			if (countResponse.success == true) {
-				console.log("Replacing html " + tableConfig['paginatorLocation']);
-				$(tableConfig['paginatorLocation']).html(countResponse.data.html);
-			}else
-			{
+				console.log("Replacing html "
+						+ tableConfig['paginatorLocation']);
+				$(tableConfig['paginatorLocation']).html(
+						countResponse.data.html);
+			} else {
 				console.log("false");
 			}
 		}
@@ -152,7 +153,6 @@ function printSingleComment(tableConfig, commentTag, commentTitle,
 	var tagTD = document.createElement('td');
 	var tagAHREF = document.createElement('a');
 	tagAHREF.title = commentTag;
-	// tagAHREF.href = "#modal_pickSearchMethod";
 	tagAHREF.className = "commentTag";
 	tagAHREF.innerHTML = commentTag;
 	$(tagAHREF).attr("data-toggle", "modal");
@@ -162,13 +162,14 @@ function printSingleComment(tableConfig, commentTag, commentTitle,
 	var contentTD = document.createElement('td');
 
 	/* CONTENT TITLE */
-	var contentTitle = document.createElement('p');
+	var contentTitle = document.createElement('strong');
 	if (commentTitle !== undefined && commentTitle !== null
 			&& commentTitle !== "") {
 		contentTitle.innerHTML = commentTitle;
 	} else {
 		contentTitle.innerHTML = "Title not set";
 	}
+	contentTitle.innerHTML += "<br/><br/>";
 
 	/* CONTENT */
 	var contentPreview = document.createElement('span');
@@ -184,11 +185,27 @@ function printSingleComment(tableConfig, commentTag, commentTitle,
 		contentPreview.innerHTML = commentContent;
 	}
 
+	/* CONTENT RESPONSIVE */
+	var contentResponsive = document.createElement('small');
+	contentResponsive.innerHTML = "<br/><br/>Posted by " + commentMember
+			+ " on " + commentDate;
+	
+	var responsiveTag = document.createElement('i');
+	responsiveTag.appendChild(tagAHREF.cloneNode(true));
+	
+	responsiveTag.className = "visible-xs";
+	contentResponsive.className = "visible-xs";
+	
+	responsiveTag.className += " pull-right label side-border width-auto margin-left-m";
+	
 	/* CONTENT FINISH */
+	contentTD.appendChild(responsiveTag);
 	contentTD.appendChild(contentTitle);
 	contentTD.appendChild(contentPreview);
 	contentTD.appendChild(contentBreaker);
 	contentTD.appendChild(contentContent);
+	contentTD.appendChild(contentResponsive);
+
 	contentTD.className = "actualAccordion";
 
 	/* MEMBER */
@@ -244,23 +261,6 @@ function createComment(tableConfig, commentTag, commentTitle, commentContent) {
 		response = data.success;
 		if (response == true) {
 			loadNewestComments(tableConfig);
-			// Run function to check for updats, therefore asking the user to
-			// refresh
-			// Or refresh automatically, or just add the comment in locally,
-			// this will ignore the fact if other comments have been added
-			// around the same time as well
-			// Maybe it could do both, check for new updates, if there arnt any
-			// add this locally, if there are refresh or ask the user to refresh
-			/**
-			 * var tempArray = new Array(); tempArray['tag'] = commentTag;
-			 * tempArray['title'] = commentTitle; tempArray['content'] =
-			 * commentContent; tempArray['memberId'] = tableConfig['memberId'];
-			 * tempArray['date'] = data.data.date;
-			 * tableConfig['content'].unshift(tempArray);
-			 * printSingleComment(tableConfig, commentTag, commentTitle,
-			 * commentContent, tempArray['memberId'], tempArray['date'], true);
-			 * assignTableContentAccordion(); assignCommentTagClick();
-			 */
 		} else {
 			alert(data);
 		}
@@ -283,19 +283,7 @@ function addHours(tableConfig, workedDate, workedHours, workedComment) {
 		data = $.parseJSON(data);
 		response = data.success;
 		if (response == true) {
-			// alert(response);
-			commentJSON = data.comment.data;
-			var tempArray = new Array();
-			tempArray['tag'] = commentJSON.tag;
-			tempArray['title'] = commentJSON.title;
-			tempArray['content'] = commentJSON.content;
-			tempArray['memberId'] = tableConfig['memberId'];
-			tempArray['date'] = commentJSON.date;
-			tableConfig['content'].unshift(tempArray);
-			printSingleComment(tableConfig, tempArray['tag'],
-					tempArray['title'], tempArray['content'],
-					tempArray['memberId'], tempArray['date'], true);
-			assignTableContentAccordion()
+			loadNewestComments(tableConfig);
 		} else {
 			alert(data);
 		}

@@ -1,23 +1,56 @@
 
-<h3>Timesheets</h3>
-
-<div class="panel panel-default">
+<header class="page-header relative hidden-print">
+	<h3>
+		Time Sheets <small class="hidden-print">Viewable by week, month or
+			year</small>
+	</h3>
+</header>
+<div class="panel panel-default hidden-print">
 	<div class="panel-heading">Search</div>
 	<div class="panel-body">
 		<form class="form-horizontal" role="form" action="#" method="GET">
 			<input type="hidden" name="location" value="timesheetPage"> <input
-				type="hidden" name="action" value="displayHours">
+				type="hidden" name="action" value="report">
+
 			<div class="form-group">
-				<label for="addHoursDate" class="col-lg-2 control-label">Start Date</label>
-				<div class="col-lg-10">
-					<input type="text" class="form-control" name="startDate"
-						id="displayHours_datePicker" value="1383260400">
+				<label class="col-lg-2 control-label">Display</label>
+				<div class="col-lg-8 inline">
+					<select class="form-control" name="timeFrame">
+						<?php 
+						$weekSelected = false;
+						$monthSelected = false;
+						$yearSelected = false;
+						if(isset($_GET['timeFrame']))
+						{
+							if($_GET['timeFrame'] == 'week')
+							{
+								$weekSelected = true;
+							}else if($_GET['timeFrame'] == 'month')
+							{
+								$monthSelected = true;
+							}else if($_GET['timeFrame'] == 'year')
+							{
+								$yearSelected = true;
+							}
+						}
+						?>
+						<option value="week" <?php if($weekSelected){echo "selected";}?>>Week</option>
+						<option value="month" <?php if($monthSelected){echo "selected";}?>>Month</option>
+						<option value="year" <?php if($yearSelected){echo "selected";}?>>Year</option>
+					</select>
 				</div>
 			</div>
 
 			<div class="form-group">
-				<div class="col-lg-10">
-					<button type="submit">Search</button>
+				<label for="addHoursDate" class="col-lg-2 control-label">Start Date</label>
+
+				<div class="col-lg-8 inline">
+					<div class="input-group">
+						<input type="text" class="form-control" name="startDate"
+							id="displayHours_datePicker"> <span class="input-group-btn">
+							<button type="submit" class="btn btn-default">Search</button>
+						</span>
+					</div>
 				</div>
 			</div>
 		</form>
@@ -25,18 +58,41 @@
 </div>
 
 <?php 
+if(isset($_GET['timeFrame']))
+{
+	switch($_GET['timeFrame'])
+	{
+		case 'year': $reportTitle = "Displaying hours for a year starting from " . date('M, Y', strtotime($data['startDateFormatted']));
+		break;
+		case 'month': $reportTitle = "Displaying hours for the month of " . date('M, Y', strtotime($data['startDateFormatted']));
+		break;
+		case 'week':$reportTitle = "Displaying hours for 7 days starting " . date('d-M-Y', strtotime($data['startDateFormatted']));
+		break;
+		default: $reportTitle = "Please click 'Search' to display hours";
+	}
+}else
+{
+	$reportTitle = "Please click 'Search' to display hours";
+}
+?>
+<h4 class="textAlignCenter hidden-print">
+	<?php echo $reportTitle; ?>
+</h4>
+
+<?php 
 foreach($data['timesheetData']->toArray() as $tableUser => $tableData)
 {
 	include 'timesheetDisplayHours_TableTemplate.php';
+	echo "<br/>";
 }
 ?>
 
 <?php 
 $datePickerDate = "";
 if(isset($_GET['startDate']))
-{	
+{
 	$date = str_replace('-','.',$_GET['startDate']);
-	$datePickerDate = date('Y-m-d',strtotime($date));
+	$datePickerDate = date('m/d/Y',strtotime($date));
 }else
 {
 	$datePickerDate = "-7";
@@ -47,7 +103,7 @@ if(isset($_GET['startDate']))
     $(document).ready(function () {
         $("#displayHours_datePicker").datepicker();
         
-       	$("#displayHours_datePicker").datepicker('setDate', '-7');
+       	$("#displayHours_datePicker").datepicker('setDate', '<?php echo $datePickerDate; ?>');
         $( "#displayHours_datePicker" ).datepicker( "option", "dateFormat", "dd-M-yy" );
     });
 </script>
