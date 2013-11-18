@@ -71,7 +71,7 @@ class ProjectController extends Controller
 			
 			
 			$this->template = 'IndividualProjectTemplate';
-            $view = new View($this->template,$this->footer);
+            $view = new ProjectView($this->template,$this->footer);
 			$content =  $userData;
 			$view->assign('projectData', $content);
 			$content = $files;
@@ -91,7 +91,7 @@ class ProjectController extends Controller
 			
             //create a new view and pass it our template
 			$this->template = 'ProjectTemplate';
-            $view = new View($this->template,$this->footer);
+            $view = new ProjectView($this->template,$this->footer);
 			$content =  $project;
 			$view->assign('projectData', $content);	
         
