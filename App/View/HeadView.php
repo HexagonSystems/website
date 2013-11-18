@@ -53,5 +53,6 @@ class HeadView
         //render view
         include_once($this->header);
         include_once($this->nav);
+        echo $this->nav;
     }
 } //end class
