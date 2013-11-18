@@ -14,22 +14,23 @@ class ArticleEntity
     
     /**
      * Article attributes
-     * 	- id
-     * 	- time
-     *  - content
-     *  - tag
-     *  - category
-     *  - status
-     */
+     */ 		
+	private $content; 
+	private $tag; 
+	private $firstName; 
+	private $lastName; 
+	private $articleId;
+	private $date;
+	private $title;
 
     /**
      * Sets up an empty Article object
      *
      * @param PDO $database Needs a PDO database connection
      */
-    public function __construct()
+    public function __construct(PDO $database)
     {
-
+		$this->database = $database;
     }//end construct
 
     public function setDatabase(PDO $database)
@@ -100,15 +101,102 @@ class ArticleEntity
         return($binded);
     }//end articleNamedParams
 
+	/*****************************************************************************************************/
+	
+	public function getProjectData(){
+		try {
+			$sql = $this->database->query("SELECT a.title, a.articleId, a.content, a.tag, a.date, m.firstName, m.lastName FROM article a 
+											LEFT JOIN memberarticle ma ON a.articleId = ma.articleId 
+											LEFT JOIN member m ON ma.memberId = m.memberId 
+											WHERE a.category = 2 
+											ORDER BY a.articleId, m.firstName;"
+										)->fetchAll();
+			return $sql;
+		
+		} catch (Exception $e) {
+		
+			throw new Exception('Database error:', 0, $e);
+			return false;
+		}
+	}
+	
+	public function getIndividualProjectData($id){
+		try {
+			$sql = $this->database->query("SELECT a.title, a.articleId, a.content, a.tag, a.date, m.firstName, m.lastName FROM article a 
+											LEFT JOIN memberarticle ma ON a.articleId = ma.articleId 
+											LEFT JOIN member m ON ma.memberId = m.memberId 
+											WHERE a.category = 2 
+											AND a.articleId = '$id';")->fetchAll();
+			return $sql;
+		
+		} catch (Exception $e) {
+		
+			throw new Exception('Database error:', 0, $e);
+			return false;
+		}
+	}
+
+	public function getIndividualProjectFiles($titleName){
+		try {
+			$sql = $this->database->query("SELECT a.title, a.content, a.date FROM article a WHERE category = '3' AND tag = '$titleName';")->fetchAll();
+			return $sql;
+		
+		} catch (Exception $e) {
+		
+			throw new Exception('Database error:', 0, $e);
+			return false;
+		}
+	}
+	
+	public function getIndividualProjectObject($articleId, $title, $content, $tag, $date, $firstName, $lastName)
+	{
+		$obj = new ArticleEntity($this->database);
+		
+		$obj->setArticleId($articleId);
+		$obj->setTitle($title);
+		$obj->setContent($content);
+		$obj->setTag($tag);
+		$obj->setDate($date);
+		$obj->setAuthorFirstName($firstName);
+		$obj->setAuthorLastName($lastName);
+		return($obj);
+	}
+	
+	
+	/* php manual*/	
+	function downloadFile($file) 
+	{ 
+		$filename = $file;
+		$file_path = realpath("Media/".$filename);
+		
+		if(file_exists($file_path)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename='.basename($file_path));
+            header('Content-Transfer-Encoding: binary');
+            header('Expires: 0');
+            //header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file_path));
+            ob_clean();
+            flush();
+            readfile($file_path);
+            exit;
+        }
+    }
+	
+	/****************************************************************************************************************************************************/
+	
     //*********SETTERS----------------------
     public function setStatus($param)
     {
         $this->article['status'] = $param;
     }
 
-    public function setTimeStamp($param)
+    public function setDate($param)
     {
-        $this->article['time'] = $param;
+        $this->article['date'] = $param;
     }
 
     public function setContent($param)
@@ -118,7 +206,7 @@ class ArticleEntity
 
     public function setTag($param)
     {
-        $this->article['creationDate'] = $param;
+        $this->article['tag'] = $param;
     }
 
     public function setCategory($param)
@@ -126,15 +214,43 @@ class ArticleEntity
         $this->article['category'] = $param;
     }
 
+	public function setTitle($param)
+    {
+        $this->article['title'] = $param;
+    }
+	
+	public function setArticleId($param)
+    {
+        $this->article['articleId'] = $param;
+    }
+	
+	public function setAuthorFirstName($param)
+    {
+        $this->article['firstName'] = $param;
+    }
+	public function setAuthorLastName($param)
+    {
+        $this->article['lastName'] = $param;
+    }
     //*********GETTERS--------------
+	public function getAuthorFirstName()
+    {
+        return($this->article['firstName']);
+    }
+	
+	public function getAuthorLastName()
+    {
+        return($this->article['lastName']);
+    }
+	
     public function getStatus()
     {
         return($this->article['status']);
     }
 
-    public function getTimeStamp()
+    public function getDate()
     {
-        return($this->article['time']);
+        return($this->article['date']);
     }
 
     public function getContent()
@@ -142,6 +258,11 @@ class ArticleEntity
         return($this->article['content']);
     }
 
+	public function getTitle()
+    {
+        return($this->article['title']);
+    }
+	
     public function getTag()
     {
         return($this->article['tag']);
@@ -150,5 +271,10 @@ class ArticleEntity
     public function getCategory()
     {
         return($this->article['category']);
+    }
+	
+	public function getArticleId()
+    {
+		return($this->article['articleId']);
     }
 }//end article class
