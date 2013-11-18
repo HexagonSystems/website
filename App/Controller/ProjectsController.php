@@ -1,6 +1,7 @@
+
 <?php
 
-class AboutController extends Controller
+class ProjectsController extends Controller
 {
 	protected $template = 'Index';
 
