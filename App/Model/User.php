@@ -333,7 +333,7 @@ class User
 	* Retrive all the data in the member table
 	* @param 
 	*/
-	/*******TARA**************WEIRD OBJECT*******************************************************************************************************************************/
+	/*******TARA************** OBJECT*********************************************************************************************************/
 	public function getAllMembers()
 	{
 		try {
@@ -359,6 +359,23 @@ class User
 		
 		return($obj);
 		
+	}
+	
+	public function getUserProjectData($articleId)
+	{
+		try {
+			$sql = $this->database->query("SELECT m.firstName, m.lastName, m.email FROM member m 
+											LEFT JOIN memberarticle ma ON m.memberId = ma.memberId 
+											LEFT JOIN article a ON  ma.articleId = a.articleId
+											WHERE a.category = 2 AND a.articleId = '$articleId';"
+										)->fetchAll();
+			return $sql;
+			
+		} catch (Exception $e) {
+		
+			throw new Exception('Database error:', 0, $e);
+			return false;
+		}
 	}
 	/****************************************************************************************************************************************************/
 	
