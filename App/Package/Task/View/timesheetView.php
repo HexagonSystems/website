@@ -31,7 +31,7 @@ class TimesheetView
         echo "<br/><br/>";
         echo $template;
         echo "<br/><br/>";
-        echo $Base;
+        echo Base;
         echo "<br/><br/>";
         // echo "In Constructor" ;
         if (file_exists($template)) {
