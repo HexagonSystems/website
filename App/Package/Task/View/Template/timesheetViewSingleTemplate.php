@@ -126,7 +126,7 @@ $(function() {
 		{
 			$(this).parent().siblings().children().css('backgroundColor', 'white');
 			$(this).parent().prev().children().css('backgroundColor', '#eee');
-			loadComments(mainTaskCommentsTable, parseInt($(this).parent().prev().find(">:first-child").text()) + 1);
+			loadComments(mainTaskCommentsTable, parseInt($(this).parent().prev().find(">:first-child").text()));
 		}else
 		{
 			$(this).parent().siblings().children().css('backgroundColor', 'white');
