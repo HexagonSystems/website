@@ -3,7 +3,7 @@ namespace Task;
 /**
  * Handles the view functionality of our MVC framework
  */
-class timesheetView
+class TimesheetView
 {
     /**
      * Holds variables assigned to template
