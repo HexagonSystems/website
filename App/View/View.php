@@ -27,10 +27,10 @@ class View
         
         //Defaults set
         $this->error[404] = AppBase.$this->error[404];
-        $footer = AppBase."/View/Template/".$footer.".php";
+        $footer = AppBase."/View/Template/".$footer.".html";
 
         //Place the template in the file structure
-        $template = AppBase."/View/Template/".$template.".php";
+        $template = AppBase."/View/Template/".$template.".html";
         
         /**
          * trigger render to include file when this model is destroyed
@@ -40,7 +40,7 @@ class View
         if (file_exists($template)) {
             $this->template[] = $template;
         }else{
-        	//echo "ERROR in ".__FILE__." on line: ".__LINE__.": File not found at:".$template;
+        	echo "ERROR in ".__FILE__." on line: ".__LINE__.": File not found at:".$template;
             $this->template[] = $this->error['404'];
         }
         if (file_exists($footer)) {

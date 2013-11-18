@@ -3,7 +3,7 @@
 
 class IndexController extends Controller
 {
-	protected $template = 'Index';
+	protected $template = 'IndexTemplate';
 
     public function invoke()
     {

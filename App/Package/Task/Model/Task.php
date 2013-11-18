@@ -56,6 +56,11 @@ class Task extends \ArticleEntity
 	{
 		$this->article['id'] = $param;
 	}
+	
+	public function setTimeStamp($param)
+	{
+		$this->article['time'] = $param;
+	}
 
 	public function setTitle($param)
 	{
