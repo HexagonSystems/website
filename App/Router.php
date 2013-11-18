@@ -56,6 +56,9 @@ class Router
             case "config":
             	$controller = "ConfigController";
             	break;
+			case "siteMap":
+            	$controller = "SiteMapController";
+            	break;
             default:
                 $controller = "IndexController";
                 break;

@@ -1,7 +1,6 @@
-
 <?php
 
-class AboutController extends Controller
+class SiteMapController extends Controller
 {
 
     public function invoke()
@@ -10,17 +9,17 @@ class AboutController extends Controller
         
         if (!isset($this->get['action'])) {
 
-			$articleBio = new ArticleBio();
+			/*$articleBio = new ArticleBio();
 			$articleBio->setDatabase($this->database);
 			$resultSet = $articleBio->getAllBios();
-
+*/
 			
 			
-			$this->template = 'AboutTemplate';
+			$this->template = 'SiteMapTemplate';
 			$view = new AboutView($this->template, $this->footer);
-
+/*
 			$content =  $resultSet;
-			$view->assign('resultSet' , $content);
+			$view->assign('resultSet' , $content);*/
 		}
     } // end function
 }

@@ -26,10 +26,11 @@ class ArticleDA
 			$sql = "SELECT a.title, a.content, m.memberId, m.firstName, m.lastName FROM article a 
 					LEFT JOIN memberarticle ma ON a.articleId = ma.articleId 
 					LEFT JOIN member m ON ma.memberId = m.memberId 
-					WHERE a.category = '1';";
+					WHERE a.category = '1'
+					ORDER BY m.lastName;";
 			$result = $this->database->prepare($sql);
 			$result->execute();
-			$resultset = $result->fetchAll();
+			$resultset = $result->fetchAll(PDO::FETCH_ASSOC);
 			return $resultset;
 		}
 		catch(PDOException $e)

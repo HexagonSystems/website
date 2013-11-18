@@ -80,13 +80,7 @@ class View
      */
     protected function render(){
         //render view
-        foreach ($this->template as $key => $value) {
-            try {
-                include_once($value);
-            } catch (Exception $e) {
-                include_once($this->error['404']);
-            }
-        }
+       
     }
 
     /**
@@ -105,9 +99,16 @@ class View
     public function __destruct()
     {
         //parse data variables into local variables, so that they render to the view
+		
         $data = $this->data;
-
-        $this->render();
+		
+		 foreach ($this->template as $key => $value) {
+            try {
+                include_once($value);
+            } catch (Exception $e) {
+                include_once($this->error['404']);
+            }
+        }
 
         $this->renderFooter();
 
