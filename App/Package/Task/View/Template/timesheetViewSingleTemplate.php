@@ -77,6 +77,14 @@
 	</ul>
 </div>
 
+<div
+	id="googlePieChart" style="width: 900px; height: 500px;"></div>
+
+<script
+	type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script
+	type="text/javascript"
+	src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script
 	src="<?php echo SITE_ROOT.AppBaseSTRIPPED; ?>Package/Task/includes/js/TaskCommentsLoaderNEW.js"></script>
 <script
@@ -174,6 +182,76 @@ $(function() {
 			});
 });
 
+function loadGoogleChartsPieHours(tableConfig) {
+	$.ajax({
+       type: "POST",
+       dataType: "json",
+        data: {request : "userContribution", memberId : tableConfig['memberId'], taskId : tableConfig['taskId']},
+		url: ajaxBase + "Model/TaskAJAX.php",
+        success: function(resultData){
+            google.setOnLoadCallback(drawChart(resultData));                                                   
+        }
+    }); 
+    
+    function drawChart(jsonData) {
+    	// Create our data table out of JSON data loaded from server.
+      var data = new google.visualization.DataTable(jsonData);
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.PieChart(document.getElementById('googlePieChart'));
+      chart.draw(data, {width: 400, height: 240});
+    }
+
+}
+
+function load_page_data(tableConfig){
+console.log("loadingPageData");
+
+    $.ajax({
+    	type: "POST",
+        url: ajaxBase + "Model/TaskHoursAJAX.php",
+        data: {request : "hoursContribution", memberId : tableConfig['memberId'], taskId : tableConfig['taskId']},
+        async: false,
+        success: function(data){
+        console.log(data);
+            if(data){
+                chart_data = $.parseJSON(data);
+                var dataArray = new Array();
+               $.each(chart_data['data'], function(member) {
+	               var tempArray = new Array();
+	               tempArray.push(member);
+	               tempArray.push(parseInt(chart_data['data'][member]));
+	               dataArray.push(tempArray);
+               });
+                drawChart(dataArray, "Member Contribution", "Hours");
+            }else
+            {
+            	console.log("error " + data);
+            }
+        },
+    });
+}
+
+function drawChart(chart_data, chart1_main_title, chart1_vaxis_title) {
+console.log(chart_data);
+
+
+   var chart1_data = new google.visualization.DataTable(chart_data);
+   chart1_data.addColumn('string', 'Member');
+    chart1_data.addColumn('number', 'Hours');
+    chart1_data.addRows(chart_data);
+    var chart1_options = {
+        title: chart1_main_title,
+        backgroundColor: 'transparent',
+        legend: true
+    };
+
+    var chart1_chart = new google.visualization.PieChart(document.getElementById('googlePieChart'));
+    chart1_chart.draw(chart1_data, chart1_options);
+}
+
+google.load("visualization", "1", {packages:["corechart"]});
+
 /**
  * Page on load
  */
@@ -183,5 +261,10 @@ $(document).ready(function() {
 	$("#addHoursDatePicker").datepicker();
 	$("#addHoursDatePicker").datepicker('setDate', new Date());
     $( "#addHoursDatePicker" ).datepicker( "option", "dateFormat", "dd-M-yy" );
+    
+    
+	google.setOnLoadCallback(load_page_data(mainTaskCommentsTable));
+    
+    
 });
 </script>
