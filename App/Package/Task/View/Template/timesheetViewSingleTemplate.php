@@ -25,7 +25,7 @@
 </header>
 
 <!-- Button trigger modal -->
-<div class="panel panel-default">
+<div class="panel panel-default hidden-print">
 	<div class="panel-heading">Task Controls</div>
 	<div role="form" class="form-inline panel-body">
 		<div class="form-group inline col-xs-12 col-sm-4 col-lg-3">
@@ -130,18 +130,18 @@ $(function() {
 		event.preventDefault();
 		if($(this).text() == "<<")
 		{
-			$(this).parent().siblings().children().css('backgroundColor', 'white');
-			$(this).parent().next().children().css('backgroundColor', '#eee');
+			$(this).parent().siblings().children().removeClass("paginator-selected");
+			$(this).parent().next().children().addClass("paginator-selected");
 			loadComments(mainTaskCommentsTable, 1);
 		}else if($(this).text() == ">>")
 		{
-			$(this).parent().siblings().children().css('backgroundColor', 'white');
-			$(this).parent().prev().children().css('backgroundColor', '#eee');
+			$(this).parent().siblings().children().removeClass("paginator-selected");
+			$(this).parent().prev().children().addClass("paginator-selected");
 			loadComments(mainTaskCommentsTable, parseInt($(this).parent().prev().find(">:first-child").text()));
 		}else
 		{
-			$(this).parent().siblings().children().css('backgroundColor', 'white');
-			$(this).css('backgroundColor', '#eee');
+			$(this).parent().siblings().children().removeClass("paginator-selected");
+			$(this).addClass("paginator-selected");
 			loadComments(mainTaskCommentsTable, parseInt($(this).text()));
 		}
 		
