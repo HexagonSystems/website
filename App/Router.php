@@ -26,7 +26,7 @@ class Router
         $sth->execute();
         $pages = $sth->fetchAll(PDO::FETCH_ASSOC);
         foreach ($pages as $key => $value) {
-            $value['link'] = '/index.php?location='.$value['link'];
+            $value['link'] = 'index.php?location='.$value['link'];
             $pages[$value['name']] = $value;
             unset($pages[$key]);
         }

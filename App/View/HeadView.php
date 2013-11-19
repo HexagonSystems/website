@@ -20,26 +20,19 @@ class HeadView
     {
 
         if (file_exists($header)) {
-            /**
-             * trigger render to include file when this model is destroyed
-             * if we render it now, we wouldn't be able to assign variables
-             * to the view!
-             */
+
             $this->header = $header;
         }
         if (file_exists($nav)) {
-            /**
-             * trigger render to include file when this model is destroyed
-             * if we render it now, we wouldn't be able to assign variables
-             * to the view!
-             */
+
             $this->nav = $nav;
         }
     }
-    /*** Receives assignments from controller and stores in local data array
+    /** 
+     * Receives assignments from controller and stores in local data array
      *
-    * @param $variable
-    * @param $value
+     * @param $variable
+     * @param $value
     */
     public function assign($variable , $value)
     {
@@ -47,9 +40,8 @@ class HeadView
     }
     public function __destruct()
     {
-        //parse data variables into local variables, so that they render to the view
+        
         $data = $this->data;
-        //echo "In Destructor" ;
         //render view
         include_once($this->header);
         include_once($this->nav);
