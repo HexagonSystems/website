@@ -25,10 +25,12 @@ class Router
         $sth = $database->prepare("SELECT * FROM menu");
         $sth->execute();
         $pages = $sth->fetchAll(PDO::FETCH_ASSOC);
+
+        $nav = array();
+
         foreach ($pages as $key => $value) {
-            $value['link'] = '/index.php?location='.$value['link'];
-            $pages[$value['name']] = $value;
-            unset($pages[$key]);
+            $value['link'] = 'index.php?location='.$value['link'];
+            $nav[$value['menuId']] = $value;
         }
         
         switch ($page) {
@@ -83,7 +85,7 @@ class Router
         }else{
             $controller = new $controller($get, $post);
             $controller->setDatabase($database);
-            $controller->setNavigation($pages);
+            $controller->setNavigation($nav);
             $controller->invoke();
         }
     }// end route

@@ -17,12 +17,38 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <nav class="collapse navbar-collapse topmenu">
           <ul class="nav navbar-nav">
-          <?php foreach ($data['navigation'] as $name => $details) : ?>
-              <li><a href="<?php echo SITE_ROOT . $details['link']; ?>"><?php echo $details['name']; ?></a></li>
-          <?php endforeach; ?>
+       <?php foreach ($data['navigation'] as $navItem) : 
+                  
+                  if($navItem['inMenu'] == 0 && isset($navItem['children'])) :
+
+                  echo '<li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown"> '.$navItem['name'].' <span class="caret"></span></a>
+                          <ul class="dropdown-menu">
+                            <li><a href="'.SITE_ROOT.$navItem['link'].'">'.$navItem['name'].'</a>';
+                    foreach ($navItem['children'] as $subNavItem) : 
+                        
+                        echo '<li><a href="'.SITE_ROOT.$subNavItem['link'].'">SUB '.$subNavItem['name'].'</a></li>';
+                    
+                    endforeach;
+                    
+                    echo '</ul></li>';
+
+                  elseif($navItem['inMenu'] == 0) :
+                  
+                     echo '<li><a href="'.SITE_ROOT.$navItem['link'].'">'.$navItem['name'].'</a></li>';
+
+                  endif;
+              
+              endforeach; ?>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-                <li><a href="index.php?location=login">Login</a></li>
+          <?php foreach ($data['navigation'] as $navItem) : ?>
+              <?php if($navItem['acl'] != 1 || $data['user'] == 'loggedIn') : 
+                  if($navItem['inMenu'] == 1) : ?>
+                    <li><a href="//<?php echo SITE_ROOT . $navItem['link']; ?>"><?php echo $navItem['name']; ?></a></li>
+                <?php endif; ?>
+              <?php endif; ?>
+          <?php endforeach; ?>
           </ul>
         </nav><!-- /.navbar-collapse -->
       </div>
