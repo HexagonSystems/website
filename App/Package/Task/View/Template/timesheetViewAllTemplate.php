@@ -4,50 +4,59 @@
 	</h3>
 </header>
 
+<div class="panel panel-default">
+	<div class="panel-heading">Task Controls</div>
 
-<div role="form" class="form-inline">
-	<div class="form-group inline pull-left">
-		<a data-toggle="modal" href="#modal_createTask"
-			class="btn btn-primary btn-sm form-control">Create Task</a>
-	</div>
+	<div role="form" class="form-inline panel-body">
+		<div class="form-group inline col-xs-14 col-sm-2 col-lg-2">
+			<a data-toggle="modal" href="#modal_createTask"
+				class="btn btn-primary btn-sm form-control">Create Task</a>
+		</div>
 
-	<?php include_once 'modal_createTask.php'; ?>
-	<div class="form-group pull-right">
 
-		<select class="form-control inline" id="taskAll_filter">
-			<option value="empty">No Filter</option>
-			<?php 
-			if(isset($data['allTaskStatus']))
-			{
-				if($data['allTaskStatus']['success'] == true)
+		<?php include_once 'modal_createTask.php'; ?>
+
+
+
+
+		<div class="form-group col-xs-6 col-lg-8 col-sm-8">
+
+			<select class="form-control inline" id="taskAll_filter">
+				<option value="empty">No Filter</option>
+				<?php 
+				if(isset($data['allTaskStatus']))
 				{
-					foreach($data['allTaskStatus']['data'] as $statusOption)
+					if($data['allTaskStatus']['success'] == true)
 					{
-						if(isset($taskStatus))
+						foreach($data['allTaskStatus']['data'] as $statusOption)
 						{
-							if($statusOption == $taskStatus){
+							if(isset($taskStatus))
+							{
+								if($statusOption == $taskStatus){
 								echo '<option value="'.$statusOption.'" selected="selected">'.$statusOption.'</option>';
 							} else {
 					echo '<option value="'.$statusOption.'">'.$statusOption.'</option>';
 				}
-						}else
-						{
-							echo '<option value="'.$statusOption.'">'.$statusOption.'</option>';
+							}else
+							{
+								echo '<option value="'.$statusOption.'">'.$statusOption.'</option>';
+							}
+
 						}
-
+					}else
+					{
+						echo $data['allTaskStatus']['message'];
+						/* DISPLAY ERROR */
 					}
-				}else
-				{
-					echo $data['allTaskStatus']['message'];
-					/* DISPLAY ERROR */
 				}
-			}
 
-			?>
-		</select>
-	</div>
-	<div class="form-group pull-right">
-		<button class="btn btn-primary form-control" id="filterReload">Reload</button>
+				?>
+			</select>
+		</div>
+
+		<div class="form-group col-xs-6 col-lg-2 col-sm-2">
+			<button class="btn btn-primary form-control" id="filterReload">Filter</button>
+		</div>
 	</div>
 </div>
 
