@@ -18,7 +18,8 @@ function loadTasks(tableConfig, pageNum, forceLoad) {
 			request : "load",
 			memberId : tableConfig['memberId'],
 			pageNum : pageNum,
-			qty : tableConfig['quantity_per_page']
+			qty : tableConfig['quantity_per_page'],
+			taskFilter : tableConfig['taskFilter']
 		}, function(nakedJson) {
 			nakedJson = $.parseJSON(nakedJson);
 			response = nakedJson.success;
@@ -29,13 +30,30 @@ function loadTasks(tableConfig, pageNum, forceLoad) {
 				if (arrayToLoopOver) {
 					printTaskTableData(tableConfig, arrayToLoopOver);
 				} else {
-					loadTasks(tableConfig, pageNum);
+					loadTasks(tableConfig, pageNum, false);
 				}
 			}
 		});
 	} else {
 		printTaskTableData(tableConfig, arrayToLoopOver);
 	}
+}
+
+function updatePaginator(tableConfig) {
+	$.post(ajaxBase + "Model/TaskAJAX.php", {
+		request : "count",
+		memberId : tableConfig['memberId'],
+		status : tableConfig['taskFilter']
+	}, function(nakedJson) {
+		nakedJson = $.parseJSON(nakedJson);
+		/* PAGINATOR */
+		if (nakedJson.success == true || nakedJson.success == "true") {
+			var countData = nakedJson.data;
+			$(tableConfig['paginatorLocation']).html(countData.html);
+		} else {
+			console.log("Failing " + nakedJson);
+		}
+	});
 }
 
 /**

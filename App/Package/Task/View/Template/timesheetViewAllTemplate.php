@@ -4,9 +4,52 @@
 	</h3>
 </header>
 
-<a data-toggle="modal" href="#modal_createTask"
-	class="btn btn-primary btn-sm">Create Task</a>
-<?php include_once 'modal_createTask.php'; ?>
+
+<div role="form" class="form-inline">
+	<div class="form-group inline pull-left">
+		<a data-toggle="modal" href="#modal_createTask"
+			class="btn btn-primary btn-sm form-control">Create Task</a>
+	</div>
+
+	<?php include_once 'modal_createTask.php'; ?>
+	<div class="form-group pull-right">
+
+		<select class="form-control inline" id="taskAll_filter">
+			<option value="empty">No Filter</option>
+			<?php 
+			if(isset($data['allTaskStatus']))
+			{
+				if($data['allTaskStatus']['success'] == true)
+				{
+					foreach($data['allTaskStatus']['data'] as $statusOption)
+					{
+						if(isset($taskStatus))
+						{
+							if($statusOption == $taskStatus){
+								echo '<option value="'.$statusOption.'" selected="selected">'.$statusOption.'</option>';
+							} else {
+					echo '<option value="'.$statusOption.'">'.$statusOption.'</option>';
+				}
+						}else
+						{
+							echo '<option value="'.$statusOption.'">'.$statusOption.'</option>';
+						}
+
+					}
+				}else
+				{
+					echo $data['allTaskStatus']['message'];
+					/* DISPLAY ERROR */
+				}
+			}
+
+			?>
+		</select>
+	</div>
+	<div class="form-group pull-right">
+		<button class="btn btn-primary form-control" id="filterReload">Reload</button>
+	</div>
+</div>
 
 <table
 	class="table table-rowBorder table-hover table-zebra table-responsive-dropLast2Col">
@@ -25,7 +68,7 @@
 </table>
 
 <div class="text-center">
-	<ul class="pagination">
+	<ul class="pagination" id="allTasksPaginator">
 		<?php 
 
 		if($data['taskCount']['success'] == true){
@@ -55,7 +98,9 @@ mainTaskTable = {
 		'last_page'			:	-1,
 		'memberId'			:	<?php echo unserialize($_SESSION['accountObject'])->getMemberId(); ?>,
 		'memberFirstName'	: 	"<?php echo unserialize($_SESSION['accountObject'])->getFirstName(); ?>",
-		'content'			:	new Array()
+		'content'			:	new Array(),
+		'taskFilter'		:	false,
+		'paginatorLocation'	:	"#allTasksPaginator"
 };
 
 /**
@@ -91,6 +136,27 @@ $(function() {
 			function() {
 				createTask(mainTaskTable, $("#modal_taskTitle").val(), $("#modal_taskDscr")
 						.val(), $("#modal_taskStatus option:selected").text());
+			});
+});
+
+$(function() {
+	$("#filterReload").click(
+			function() {
+				if($("#taskAll_filter option:selected").text() == "No Filter")
+				{
+					mainTaskTable['taskFilter'] = false;
+				}else
+				{
+					mainTaskTable['taskFilter'] = $("#taskAll_filter option:selected").text();
+				}
+				
+				emptyTableBody(mainTaskTable);
+				
+				mainTaskTable['content'] = new Array();
+				mainTaskTable['last_page'] = -1;
+
+				updatePaginator(mainTaskTable);
+				loadTasks(mainTaskTable, 1, true);
 			});
 });
 

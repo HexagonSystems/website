@@ -21,7 +21,7 @@ class TaskDA
 	 * @return array Array of Member Ids
 	 * @throws Exception \PDO expection
 	 */
-	public function loadTasks($starting, $quantity)
+	public function loadTasks($starting, $quantity, $status = false)
 	{
 		try
 		{
@@ -32,13 +32,18 @@ class TaskDA
 					LEFT JOIN `task` tsk
 					ON tskCom.taskId = tsk.taskId
 					LEFT JOIN `member` mbr
-					ON tskCom.memberId = mbr.memberId
-					ORDER BY tskCom.postedDate DESC
+					ON tskCom.memberId = mbr.memberId ";
+			
+			if($status != 'false')
+			{
+				$statement .= "WHERE tsk.status = :status ";
+			}
+			
+			$statement .= "ORDER BY tskCom.postedDate DESC
 					) AS my_table
 					GROUP BY taskId
 					ORDER BY postedDate DESC
 					LIMIT :starting, :quantity";
-
 			$query = $this->database->prepare($statement);
 
 			$starting = ($starting - 1) * $quantity;
@@ -47,6 +52,10 @@ class TaskDA
 
 			$query->bindParam(':starting'   , $starting , \PDO::PARAM_INT);
 			$query->bindParam(':quantity'   , $quantity	, \PDO::PARAM_INT);
+			if($status != 'false')
+			{
+				$query->bindParam(':status'   , $status	, \PDO::PARAM_STR);
+			}
 
 			$query->execute();
 
@@ -82,15 +91,25 @@ class TaskDA
 	 *
 	 * @return string|multitype:multitype: boolean
 	 */
-	public function getAllTaskCount()
+	public function getAllTaskCount($status = false)
 	{
 		try {
 			$statement = "SELECT COUNT( DISTINCT tsk.taskId )
 					FROM  `taskcomment` tskCom
 					LEFT JOIN  `task` tsk ON tskCom.taskId = tsk.taskId
 					LEFT JOIN  `member` mbr ON tskCom.memberId = mbr.memberId";
+			
+			if($status != false)
+			{
+				$statement .= " WHERE tsk.status = :status ";
+			}
 
 			$query = $this->database->prepare($statement);
+			
+			if($status != false)
+			{
+				$query->bindParam(':status'   , $status	, \PDO::PARAM_STR);
+			}
 
 			$taskCountHolder = array();
 			$taskCountHolder['success'] = true;
