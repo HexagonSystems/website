@@ -98,7 +98,7 @@
 	</div>
 </div>
 
-<div class="table-responsive table-container table-print">
+<div class="table-responsive table-print">
 	<table id="testtable"
 		class="table table-rowBorder table-hover table-zebra">
 		<thead>

@@ -88,83 +88,92 @@ body {
 
 /* TARA CSS*/
 /*INDEX PAGE*/
-.cats{
-	background-image:url('http://localhost/smartgithg/HEXAGONwebsite/Includes/Media/business-cat.jpg');	
-	background-color:#40236b;
+.cats {
+	background-image:
+		url('http://localhost/smartgithg/HEXAGONwebsite/Includes/Media/business-cat.jpg');
+	background-color: #40236b;
 }
 
 /* CONTACT PAGE */
-textarea.form-control{
+textarea.form-control {
 	resize: none;
 }
 
 /*PROJECT PAGE*/
-.indiImage
-{
-	background-image:url('http://localhost/smartgithg/HEXAGONwebsite/Includes/Media/test1.png');	
-	background-color:black;
+.indiImage {
+	background-image:
+		url('http://localhost/smartgithg/HEXAGONwebsite/Includes/Media/test1.png');
+	background-color: black;
 	height: 150px;
 }
 
-.poker{
-	background-image:url('http://localhost/smartgithg/HEXAGONwebsite/Includes/Media/poker.png');	
-	background-color:black;
+.poker {
+	background-image:
+		url('http://localhost/smartgithg/HEXAGONwebsite/Includes/Media/poker.png');
+	background-color: black;
 }
 
-.snakes{
-	background-image:url('http://localhost/smartgithg/HEXAGONwebsite/Includes/Media/s&l.png');	
-	background-color:black;
-}
-.dosmon{
-	background-image:url('http://localhost/smartgithg/HEXAGONwebsite/Includes/Media/dosmon.png');	
-	background-color:black;
+.snakes {
+	background-image:
+		url('http://localhost/smartgithg/HEXAGONwebsite/Includes/Media/s&l.png');
+	background-color: black;
 }
 
-.individual-proj{
-	height:250px;
+.dosmon {
+	background-image:
+		url('http://localhost/smartgithg/HEXAGONwebsite/Includes/Media/dosmon.png');
+	background-color: black;
 }
-.group-proj{
-	height:400px;
+
+.individual-proj {
+	height: 250px;
 }
-.project-title{
+
+.group-proj {
+	height: 400px;
+}
+
+.project-title {
 	position: absolute;
 	opacity: 0;
-	height:100%;
-	width:100%;
-	color:orange;
-	background-color:black;
-	text-align:center;
+	height: 100%;
+	width: 100%;
+	color: orange;
+	background-color: black;
+	text-align: center;
 	transition: opacity .75s linear;
 	-webkit-transition: opacity .75s linear;
 	-moz-transition: opacity .75s linear;
 }
+
 .proj-transition {
 	opacity: 1;
-	width:100%;
+	width: 100%;
 	position: relative;
-	transition:opacity .75s;
-	transition-timing-function:linear;
-	-moz-transition: opacity .75s ;
+	transition: opacity .75s;
+	transition-timing-function: linear;
+	-moz-transition: opacity .75s;
 	-moz-transition-timing-function: linear;
-	-webkit-transition:opacity .75s;
-	-webkit-transition-timing-function:linear;
+	-webkit-transition: opacity .75s;
+	-webkit-transition-timing-function: linear;
 }
-.project-title:hover{
+
+.project-title:hover {
 	opacity: 1 !important;
 }
+
 .proj-transition:hover {
 	opacity: .5;
 }
-h3.project-title{
-	padding-top:100px;
+
+h3.project-title {
+	padding-top: 100px;
 }
-h2.project-title{
-	padding-top:200px;
+
+h2.project-title {
+	padding-top: 200px;
 }
 /* END TARA */
-
-
-
 @media screen and (min-width: 768px) {
 	.bs-header {
 		font-size: 21px;
@@ -370,13 +379,13 @@ h2.project-title{
 }
 
 .table-container {
-	overflow:auto;
+	overflow: auto;
 }
 
 .table-container td {
-	word-wrap:break-word;
-	max-width:350px;
-	min-width:50px;
+	word-wrap: break-word;
+	max-width: 350px;
+	min-width: 50px;
 }
 
 .table-zebra tbody tr:nth-child(odd) {
@@ -398,24 +407,24 @@ h2.project-title{
 }
 
 .width-auto {
-	width:auto !important;
+	width: auto !important;
 }
 
 .print-multiple-header:nth-of-type(0) {
 	display: none;
 }
 
-table, th, td, tr, thead {
+table,th,td,tr,thead {
 	word-wrap: break-word !important;
 }
 
 .margin-left-m {
-	margin-left:2em;
+	margin-left: 2em;
 }
 
 .side-border {
-	border-left:1px solid black;
-	border-right:1px solid black;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
 }
 
 /* MOBILE SCREENS */
@@ -423,8 +432,8 @@ table, th, td, tr, thead {
 	.mobile-center {
 		text-align: center;
 	}
-	.table-responsive-dropLast2Col tr th:nth-last-child(4), .table-responsive-dropLast2Col tr td:nth-last-child(4), .table-responsive-dropLast2Col tr th:nth-last-child(2),.table-responsive-dropLast2Col tr td:nth-last-child(2),.table-responsive-dropLast2Col tr th:last-child,.table-responsive-dropLast2Col tr td:last-child
-	{
+	.table-responsive-dropLast2Col tr th:nth-last-child(4),.table-responsive-dropLast2Col tr td:nth-last-child(4),.table-responsive-dropLast2Col tr th:nth-last-child(2),.table-responsive-dropLast2Col tr td:nth-last-child(2),.table-responsive-dropLast2Col tr th:last-child,.table-responsive-dropLast2Col tr td:last-child
+		{
 		display: none;
 	}
 	.mobile-100width {
@@ -433,6 +442,10 @@ table, th, td, tr, thead {
 	}
 	.mobile-100width>* {
 		width: 100%;
+	}
+	.table-responsive *{
+		word-wrap: break-word !important;
+		white-space: normal !important;
 	}
 }
 
