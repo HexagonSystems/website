@@ -1,16 +1,27 @@
+
 <?php
 
 class AboutController extends Controller
 {
-	protected $template = 'Index';
 
     public function invoke()
     {
         parent::invoke();
         
-        //create a new view and pass it our template
-        $view = new IndexView($this->template,$this->footer);
-        
+        if (!isset($this->get['action'])) {
+
+			$articleBio = new ArticleBio();
+			$articleBio->setDatabase($this->database);
+			$resultSet = $articleBio->getAllBios();
+
+			
+			
+			$this->template = 'AboutTemplate';
+			$view = new AboutView($this->template, $this->footer);
+
+			$content =  $resultSet;
+			$view->assign('resultSet' , $content);
+		}
     } // end function
 }
 

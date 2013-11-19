@@ -74,7 +74,7 @@ mainTaskTable = {
 		{
 			$(this).parent().siblings().children().css('backgroundColor', 'white');
 			$(this).parent().prev().children().css('backgroundColor', '#eee');
-			loadTasks(mainTaskTable, parseInt($(this).parent().prev().find(">:first-child").text()) + 1);
+			loadTasks(mainTaskTable, parseInt($(this).parent().prev().find(">:first-child").text()));
 		}else
 		{
 			$(this).parent().siblings().children().css('backgroundColor', 'white');
