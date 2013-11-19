@@ -42,6 +42,14 @@ class HeadView
     {
         
         $data = $this->data;
+
+        foreach ($data['navigation'] as $key => $navItem) {
+            if($navItem['parentId'] != null){
+                $data['navigation'][$navItem['parentId']]['children'][] = $navItem;
+                unset($data['navigation'][$key]);
+            }
+        }
+
         //render view
         include_once($this->header);
         include_once($this->nav);

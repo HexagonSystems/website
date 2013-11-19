@@ -68,14 +68,19 @@ class Controller
     public function invoke()
     {
         if($this->navigation == null){
+
             $sth = $this->database->prepare("SELECT * FROM menu");
             $sth->execute();
-            $this->navigation = $sth->fetchAll(\PDO::FETCH_ASSOC);
-            foreach ($this->navigation as $key => $value) {
-                $value['link'] = '/index.php?location='.$value['link'];
-                $this->navigation[$value['name']] = $value;
-                unset($this->navigation[$key]);
+            $pages = $sth->fetchAll(PDO::FETCH_ASSOC);
+
+            $nav = array();
+
+            foreach ($pages as $key => $value) {
+                $value['link'] = 'index.php?location='.$value['link'];
+                $nav[$value['menuId']] = $value;
             }
+
+            $this->navigation = $nav;
         }
 
         $this->header->setNavigation($this->navigation);
