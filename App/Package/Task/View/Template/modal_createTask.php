@@ -1,5 +1,4 @@
 
-
 <!-- Modal -->
 <div class="modal fade" id="modal_createTask"
 	tabindex="-1" role="dialog" aria-labelledby="addTaskInput"

@@ -12,13 +12,6 @@
 			<a data-toggle="modal" href="#modal_createTask"
 				class="btn btn-primary btn-sm form-control">Create Task</a>
 		</div>
-
-
-		<?php include_once 'modal_createTask.php'; ?>
-
-
-
-
 		<div class="form-group col-xs-6 col-lg-8 col-sm-8">
 
 			<select class="form-control inline" id="taskAll_filter">
@@ -59,6 +52,9 @@
 		</div>
 	</div>
 </div>
+
+
+<?php include_once 'modal_createTask.php'; ?>
 
 <table
 	class="table table-rowBorder table-hover table-zebra table-responsive-dropLast2Col">
