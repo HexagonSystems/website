@@ -103,6 +103,12 @@ class ArticleEntity
 
 	/*****************************************************************************************************/
 	
+	function html($text)
+	{	
+		$char = htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+		return $char;
+	}
+	
 	public function getProjectData(){
 		try {
 			$sql = $this->database->query("SELECT a.title, a.articleId, a.content, a.tag, a.date, m.firstName, m.lastName FROM article a 
@@ -162,6 +168,44 @@ class ArticleEntity
 		return($obj);
 	}
 	
+	public function getArticleObject($articleId, $category, $title, $content, $tag, $date, $status)
+	{
+		$obj = new ArticleEntity($this->database);
+		
+		$obj->setArticleId($articleId);
+		$obj->setCategory($category);
+		$obj->setTitle($title);
+		$obj->setContent($content);
+		$obj->setTag($tag);
+		$obj->setDate($date);
+		$obj->setStatus($status);
+		return($obj);
+	}
+	
+	function getAllArticles(){
+		try {
+			$sql = $this->database->query("SELECT * FROM article WHERE category = '1'
+											OR category = '2' ORDER BY category, title;")->fetchAll();
+			return $sql;
+		
+		} catch (Exception $e) {
+		
+			throw new Exception('Database error:', 0, $e);
+			return false;
+		}
+	}
+	
+	public function getProjectDataToEdit($id){
+		try {
+			$sql = $this->database->query("SELECT * FROM article WHERE articleId = '$id';")->fetchAll();
+			return $sql;
+		
+		} catch (Exception $e) {
+		
+			throw new Exception('Database error:', 0, $e);
+			return false;
+		}
+	}
 	
 	/* php manual*/	
 	function downloadFile($file) 
@@ -186,6 +230,48 @@ class ArticleEntity
         }
     }
 	
+	function saveChanges($formData)
+	{
+		try
+		{
+			$sql = "UPDATE `article` SET 
+					`title`		= :title,
+					`content`	= :content,
+					`category`	= :category,
+					`tag`		= :tag,
+					`date`		= :date
+					WHERE `articleId` = :articleId";
+			$data = $this->database->prepare($sql);
+			$data->bindValue(':title', $this->html($formData['title']));
+			$data->bindValue(':content', $this->html($formData['content']));
+			$data->bindValue(':category', $this->html($formData['category']));
+			$data->bindValue(':tag', $this->html($formData['tag']));
+			$data->bindValue(':date', $this->html($formData['date']));
+			$data->bindValue(':articleId', $this->html($formData['articleId']));
+			$result = $data->execute();
+			
+			if($result == true)
+			{	
+				return("Saved");
+			}
+		}
+		catch (PDOException $e) {
+			echo $e->getMessage();
+			return;
+		}
+	}
+
+	function uploadFile($post, $file)
+	{
+		$date = date('Y-m-d', time());
+		
+		echo " TITLE " . $this->html($post['title']);
+		echo " CONTENT " . $this->html($file['file']['name']);
+		echo " catAGORY = 3";
+		echo " tag ". $this->html($post['projectName']);
+		echo " date ". $date;
+		echo "status = Completed";
+	}
 	/****************************************************************************************************************************************************/
 	
     //*********SETTERS----------------------
