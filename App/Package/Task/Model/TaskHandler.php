@@ -33,18 +33,18 @@ class TaskHandler
 		$this->databaseHolder = $database;
 	}
 	
-	public function countAllTasks()
+	public function countAllTasks($status = false)
 	{
-		return $this->taskDA->getAllTaskCount();
+		return $this->taskDA->getAllTaskCount($status);
 	}
 
-	public function loadTasks($page, $quantity)
+	public function loadTasks($page, $quantity, $filter = false)
 	{
 		if($page > 0)
 		{
 			if($quantity > 0)
 			{
-				$tempArray = $this->taskDA->loadTasks($page, $quantity);
+				$tempArray = $this->taskDA->loadTasks($page, $quantity, $filter);
 				return $tempArray;
 			}else
 			{

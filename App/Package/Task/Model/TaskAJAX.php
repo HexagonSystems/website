@@ -66,7 +66,11 @@ if(!isset($_POST['request']))
 		case "load":
 			if(commonTaskAttributesExist() && loadTaskAttributesExist())
 			{
-				$response = $taskHandler->loadTasks($_POST['pageNum'], $_POST['qty']);
+				if($_POST['taskFilter'] == 'false' || $_POST['taskFilter'] == 'No Filter')
+				{
+					$_POST['taskFilter'] == false;
+				}
+				$response = $taskHandler->loadTasks($_POST['pageNum'], $_POST['qty'], $_POST['taskFilter']);
 				if($response['success'] == true)
 				{
 					for($counter = 0; $counter < sizeof($response['data']); $counter++)
@@ -97,10 +101,40 @@ if(!isset($_POST['request']))
 			echo $response;
 		}else
 		{
-			echo json_encode(returnError("Missing attributes for edit comments request" + var_dump($_POST)));
-			
+			echo json_encode(returnError("Missing attributes for edit comments request " . var_dump($_POST)));
+				
 		}
 		break;
+		case 'count': if(commonTaskAttributesExist() && countTasksAttributesExist())
+		{
+			
+			$status = $_POST['status'];
+			if($status == 'false')
+			{
+				$status = false;
+			}
+			
+			$response = $taskHandler->countAllTasks($status);
+			
+			if($response['success'])
+			{
+				$totalTasks = $response['data'][0];
+				$amountOfPages = ceil($totalTasks / 5);
+				ob_start();
+				include '../View/Template/paginator_generator.php';
+				$newPaginator = ob_get_contents();
+				ob_end_clean();
+				$response['data'] = array();
+				$response['data']['html'] = $newPaginator;
+				$response['data']['total'] = $totalTasks;
+			}
+			
+			$response = json_encode($response);
+			echo $response;
+		}else
+		{
+			echo json_encode(returnError("Missing attributes for count tasks request " . var_dump($_POST)));
+		}
 	}
 }
 
@@ -121,7 +155,7 @@ function commonTaskAttributesExist()
 }
 
 /**
- * Checks for the requied post data for creating a comment
+ * Checks for the required post data for creating a comment
  *
  * @return boolean
  */
@@ -137,13 +171,29 @@ function createTaskAttributesExist()
 }
 
 /**
+ * Checks for the required post data for creating a comment
+ *
+ * @return boolean
+ */
+function countTasksAttributesExist()
+{
+	if(isset($_POST['status']))
+	{
+		return true;
+	}else
+	{
+		return false;
+	}
+}
+
+/**
  * Checks for the required post data for loading comments
  *
  * @return boolean
  */
 function loadTaskAttributesExist()
 {
-	if(isset($_POST['pageNum']) && isset($_POST['qty']))
+	if(isset($_POST['pageNum']) && isset($_POST['qty']) && isset($_POST['taskFilter']))
 	{
 		return true;
 	}else

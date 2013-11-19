@@ -124,7 +124,6 @@ function printTableDataInTable(tableConfig, pageNum, emptyBeforeReturn) {
 		if (emptyBeforeReturn != false) {
 			emptyTableBody(tableConfig);
 		}
-
 		return arrayToLoopOver;
 	}
 
