@@ -2,9 +2,7 @@
 <div class="form-group">
 	<label for="modal_taskTitle" class="col-lg-2 control-label">Title</label>
 	<div class="col-lg-10">
-		<input type="text" class="form-control" id="modal_taskTitle"
-			placeholder="Task title" value="<?php echo $taskTitle; ?>">
-		</script>
+		<input type="text" class="form-control" id="modal_taskTitle" placeholder="Task title" value="<?php echo $taskTitle; ?>">
 	</div>
 </div>
 <div class="form-group">
