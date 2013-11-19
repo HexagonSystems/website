@@ -1,7 +1,6 @@
 <section>
 	<h1>Our Work</h1>
 	<?php
-	/*IF SCREEN SIZE LOWER - NODE INSERT PROJ NAME???? ====== VISIBLE/HIDDEN DIV*/
 	
 	foreach ($data['projectData'] as $number=>$content)   
 	{
