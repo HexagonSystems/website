@@ -188,7 +188,7 @@ class ArticleEntity
 		return($obj);
 	}
 	
-	function getAllArticles(){
+	public function getAllArticles(){
 		try {
 			$sql = $this->database->query("SELECT * FROM article WHERE category = '1'
 											OR category = '2' ORDER BY category, title;")->fetchAll();
@@ -218,11 +218,12 @@ class ArticleEntity
 	{ 
 		$filename = $file;
 		$file_path = realpath("Media/".$filename);
-		
+	
 		if(file_exists($file_path)) {
             header('Content-Description: File Transfer');
             header('Content-Type: application/octet-stream');
-            header('Content-Disposition: attachment; filename='.basename($file_path));
+           // header('Content-Disposition: attachment; filename='.basename($file_path));
+            header('Content-Disposition: attachment; filename='.urlencode($file_path));
             header('Content-Transfer-Encoding: binary');
             header('Expires: 0');
             header('Cache-Control: must-revalidate');
@@ -235,7 +236,7 @@ class ArticleEntity
         }
     }
 	
-	function saveChanges($formData)
+	public function saveChanges($formData)
 	{
 		try
 		{
@@ -265,7 +266,7 @@ class ArticleEntity
 		}
 	}
 
-	function uploadFile($file)
+	public function uploadFile($file)
 	{
 		/*
 		* IMAGE ERRORS																
@@ -371,7 +372,7 @@ class ArticleEntity
 	 * @author Tara
 	 * @return array
 	 */
-	function getEnumStatus()
+	public function getEnumStatus()
 	{
 		$statement = "SHOW COLUMNS FROM `article` WHERE FIELD = 'status'";
 
