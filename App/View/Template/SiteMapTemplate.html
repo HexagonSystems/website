@@ -1,0 +1,21 @@
+<section>
+	<?php
+		if(! isset($_SESSION['account'])){
+	?>
+			<a href="index.php?location=indexPage">Home Page</a> <br/>
+			<a href="index.php?location=login">Login</a> <br/>
+			<a href="index.php?location=projectPage">Projects</a> <br/>
+			<a href="index.php?location=aboutPage">About</a> <br/>
+			<a href="index.php?location=contactPage">Contact Us</a> <br/>
+	<?php
+		}else{
+	?>
+	<a href="index.php?location=indexPage">Home Page</a> <br/>
+	<a href="index.php?location=projectPage">Projects</a> <br/>
+	<a href="index.php?location=aboutPage">About</a> <br/>
+	<a href="index.php?location=contactPage">Contact Us</a> <br/>
+	
+	<a href="index.php?location=timesheetPage">Task</a> <br/>
+	<a href="index.php?location=adminPage">Admin</a> <br/>
+	<?php }?>
+</section>

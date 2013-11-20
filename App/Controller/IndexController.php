@@ -10,7 +10,7 @@ class IndexController extends Controller
         parent::invoke();
         
         if (!isset($this->get['action'])) {
-			$this->template = 'indexTemplate';
+			$this->template = 'IndexTemplate';
             //create a new view and pass it our template
             $view = new IndexView($this->template,$this->footer);
         }
