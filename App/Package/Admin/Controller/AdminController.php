@@ -11,7 +11,6 @@ class AdminController extends Controller
 	
 	public function invoke()
 	{
-		
 		$getVars = $_GET;
         $page = isset($getVars['action']) ? $getVars['action'] : 'empty';
 		$article = new \ArticleEntity($this->database);
@@ -26,7 +25,8 @@ class AdminController extends Controller
 			$projectarry = $article->getAllArticles();
 			foreach ($projectarry as $row)
 			{
-				$projObj[] = $article->getArticleObject($row['articleId'], $row['category'],$row['title'],$row['content'],$row['tag'],$row['date'],$row['status']);
+				$content = $article->htmlOut($row['content']);
+				$projObj[] = $article->getArticleObject($row['articleId'], $row['category'],$row['title'], $content ,$row['tag'],$row['date'],$row['status']);
 			}
 				
 			//create a new view and pass it our template
@@ -48,10 +48,13 @@ class AdminController extends Controller
 					
 					$title = $singleArticle[0]['title'];
 					$files[] = $article->getIndividualProjectFiles($title);
+					$allStatus = $article->getEnumStatus();
 					
 					$view = new AdminView($this->template, $this->footer, 0);
 					$view->assign('proj' , $singleArticleObj);
-/**/					$view->assign('files' , $files);
+					$view->assign('select' , $allStatus);
+					$view->assign('files' , $files);
+
 				}
 				else if ($_POST['alter'] == 'Upload File')
 				{
@@ -65,10 +68,9 @@ class AdminController extends Controller
 					$title = $singleArticle[0]['title'];
 					$files[] = $article->getIndividualProjectFiles($title);
 					
-					
 					$view = new AdminView($this->template, $this->footer, 0);
+					$view->assign('proj' , $singleArticleObj);
 					$view->assign('files' , $files);
-/**/					$view->assign('proj' , $singleArticleObj);
 				}
 				else{
 					header('Location: index.php?location=adminPage');
@@ -79,27 +81,39 @@ class AdminController extends Controller
 				if ($_POST['action'] == 'Cancel')
 				{
 					header('Location: index.php?location=adminPage');
+					exit();
 				}
-/**/				elseif ($_POST['action'] == 'Save') /*********************************************************** needs select data and confirmation note */
+				elseif ($_POST['action'] == 'Save')
 				{
 					$result = $article->saveChanges($_POST);
-					//header('Location: index.php?location=adminPage&&action=alter');
+					$_SESSION['fileMsg'] = "<p class='text-success'>You changes were successfully made.</p>";
+					header('Location: index.php?location=adminPage&&action=alter');
+					exit();
 				}
 				elseif($_POST['action'] == 'Upload')
 				{
-					echo "<pre>";
-					var_dump($_POST);
-					var_dump($_FILES);
-					$result = $article->uploadFile($_POST, $_FILES);
-					//auto add tag as proj title
-					//auto add catagory as 3
-					//auto add date as today
-					//auto add content as filename
-					//auto add status to completed
+					$result = $article->uploadFile($_FILES);
+					if($result != null)
+					{
+						$upload = $article->createArticle($_POST, $result);
+						if ($upload)
+						{
+								$_SESSION['fileMsg'] = "<p class='text-success'>You file was uploaded successfully.</p>";
+								header('Location: index.php?location=adminPage');
+								exit();
+						}
+					}
+					else
+					{
+							$_SESSION['fileMsg'] = "<p class='text-danger'>There was an error with your upload.</p>";
+							header('Location: index.php?location=adminPage');
+							exit();
+					}
 				}
 				else
 				{
 					header('Location: index.php?location=adminPage');
+					exit();
 				}
 			}
 		}

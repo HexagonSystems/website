@@ -1,5 +1,12 @@
 <section>
 <h1>Edit Site Information</h1>
+<?php
+if(isset($_SESSION['fileMsg'])) 
+{ 
+	echo $_SESSION['fileMsg']; 
+	unset($_SESSION['fileMsg']);
+}
+?>
 <div class="table-responsive">
 	<table class="table table-hover">
 		<thead>

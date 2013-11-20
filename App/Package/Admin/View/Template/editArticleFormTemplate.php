@@ -27,9 +27,22 @@
 			<label for="status" class="col-sm-2 control-label">Status</label>
 			<div class="col-sm-10">
 				<select name='status' id='status' class="form-control"> 
-					<?php/* foreach ($list as $key) {
-					echo "<option value='$key'>$key</option>";
-					}*/ ?>
+				<option value=""></option>
+					<?php
+					$currentStatus = $data['proj']->getStatus();
+					echo $currentStatus;
+					foreach($data['select'] as $statusOption)
+					{
+						if($statusOption == $currentStatus)
+						{
+							echo '<option value="'.$statusOption.'" selected="selected">'.$statusOption.'</option>';
+						} 
+						else 
+						{
+							echo '<option value="'.$statusOption.'">'.$statusOption.'</option>';
+						}
+					}
+					?>
 				</select>
 			</div>
 		</div><!-- end status group -->
@@ -48,25 +61,23 @@
 			</div>
 		</div><!-- end date group -->
 		
-		
+		<?php 	
+		if (!empty($data['files'][0])) {
+		?>
 		<div class="form-group">
 			<label for="files" class="col-sm-2 control-label">Files</label>
 			<div class="col-sm-10">
-				<?php 				
-				/*if (!isset ($data['files'][0]))
+				<?php 	
+				foreach($data['files'][0] as $index=>$file)
 				{
-					foreach ($data['files'] as $key => $row ) 
-					{
-						//echo "<pre>";
-						//var_dump($data['files']);
-						
-						echo "<p>". $row[$key]['content']."<br/>"; //$row[1]['content']
-					}
-				}*/
+					echo $file['title']. "<br/>";
+				}
 				?>
 			</div>
-		</div>
-		
+		</div><!-- end list of files group -->
+		<?php 	
+		} //end if files
+		?>
 		<div class="form-group">
 			<div ><!--class="col-lg-offset-3"-->
 				<div class=" col-lg-4">
