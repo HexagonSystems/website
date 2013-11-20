@@ -18,42 +18,10 @@ class ProjectController extends Controller
 			$userData = array();
 			switch ($page) {
 				case "6":
-					$data = $article->getIndividualProjectData($page);
-					foreach($data as $key => $row)
-					{
-						$userData[] = $article->getIndividualProjectObject($row['articleId'], $row['title'], $row['content'], $row['tag'], $row['date'], $row['firstName'], $row['lastName']);
-					}
-					$title = $data[0]['title'];
-					$files = $article->getIndividualProjectFiles($title);	
-					break;
-				case "3":
-					$data = $article->getIndividualProjectData($page);
-					foreach($data as $key => $row)
-					{
-						$userData[] = $article->getIndividualProjectObject($row['articleId'], $row['title'], $row['content'], $row['tag'], $row['date'], $row['firstName'], $row['lastName']);
-					}
-					$title = $data[0]['title'];
-					$files = $article->getIndividualProjectFiles($title);	
-					break;
-				case "4":
-					$data = $article->getIndividualProjectData($page);
-					foreach($data as $key => $row)
-					{
-						$userData[] = $article->getIndividualProjectObject($row['articleId'], $row['title'], $row['content'], $row['tag'], $row['date'], $row['firstName'], $row['lastName']);
-					}
-					$title = $data[0]['title'];
-					$files = $article->getIndividualProjectFiles($title);	
-					break;
-				case "5":
-					$data = $article->getIndividualProjectData($page);
-					foreach($data as $key => $row)
-					{
-						$userData[] = $article->getIndividualProjectObject($row['articleId'], $row['title'], $row['content'], $row['tag'], $row['date'], $row['firstName'], $row['lastName']);
-					}
-					$title = $data[0]['title'];
-					$files = $article->getIndividualProjectFiles($title);	
-					break;	
 				case "7":
+				case "8":
+				case "9":
+				case "10":
 					$data = $article->getIndividualProjectData($page);
 					foreach($data as $key => $row)
 					{
