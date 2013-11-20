@@ -13,9 +13,9 @@
 				type="hidden" name="action" value="report">
 
 			<div class="form-group">
-				<label class="col-lg-2 control-label">Display</label>
+				<label class="col-lg-2 control-label" for="displayHours_timeframePicker">Display</label>
 				<div class="col-lg-8 inline">
-					<select class="form-control" name="timeFrame">
+					<select class="form-control" name="timeFrame" id="displayHours_timeframePicker">
 						<?php 
 						$weekSelected = false;
 						$monthSelected = false;
@@ -42,7 +42,7 @@
 			</div>
 
 			<div class="form-group">
-				<label for="addHoursDate" class="col-lg-2 control-label">Start Date</label>
+				<label for="displayHours_datePicker" class="col-lg-2 control-label">Start Date</label>
 
 				<div class="col-lg-8 inline">
 					<div class="input-group">

@@ -4,7 +4,9 @@
 	<div class="table-responsive table-print">
 		<table class="table table-rowBorder table-hover table-zebra">
 			<thead>
-				<?php include 'timesheetDisplayHours_TableHeaderTemplate.php'; ?>
+				<tr>
+					<?php include 'timesheetDisplayHours_TableHeaderTemplate.php'; ?>
+				</tr>
 			</thead>
 
 			<tbody>
@@ -13,7 +15,7 @@
 				foreach($tableData as $tableTaskId => $tableInnerData)
 				{
 					echo "<tr>";
-					echo "<th><a href='index.php?location=timesheetPage&action=single&param=$tableTaskId'>".$data['timesheetData']->getTaskName($tableTaskId)."</a></th>";
+					echo "<th><a href='index.php?location=timesheetPage&amp;action=single&amp;param=$tableTaskId'>".$data['timesheetData']->getTaskName($tableTaskId)."</a></th>";
 					include 'timesheetDisplayHours_TableBodyTemplate.php';
 					echo "<td>".$data['timesheetData']->getTaskTotal($tableUser, $tableTaskId)."</td>";
 					echo '</tr>';
