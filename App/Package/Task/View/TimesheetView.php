@@ -26,7 +26,7 @@ class TimesheetView
 		 * template location and makes it impossible to override.
 		 * @author Stephen McMahon
 		 */
-		$template = AppBase.'/Package/Task/View/Template/'.$template.'Template.php';
+		$template = AppBase.'/'.Base.'View/Template/'.$template.'Template.php';
 		
 		// echo "In Constructor" ;
 		if (file_exists($template)) {
@@ -41,7 +41,7 @@ class TimesheetView
 			echo "FILE DOES NOT EXIST -- ";
 			echo $template;
 		}
-		if (file_exists(AppBase.'/'.Base.$footer)) {
+		if (file_exists(AppBase.'/View/Template/'.$footer.".html")) {
 			/**
 			 * trigger render to include file when this model is destroyed
 			 * if we render it now, we wouldn't be able to assign variables

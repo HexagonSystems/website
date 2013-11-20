@@ -52,6 +52,7 @@ function loadNewestComments(tableConfig) {
 		lastLoaded : tableConfig['content'][0]['date'],
 		qty : 5
 	}, function(nakedJson) {
+		console.log("Finished loading newest comments");
 		console.log(nakedJson);
 		nakedJson = $.parseJSON(nakedJson);
 		response = nakedJson.success;
@@ -63,7 +64,6 @@ function loadNewestComments(tableConfig) {
 				tableConfig['content'].unshift(jsonData[id]); // Add to the
 				// start of the
 				// array
-				console.log("Printing " + jsonData[id]['title']);
 				printSingleComment(tableConfig, jsonData[id]['tag'],
 						jsonData[id]['title'], jsonData[id]['content'],
 						jsonData[id]['memberId'], jsonData[id]['date'], true);
@@ -79,12 +79,10 @@ function loadNewestComments(tableConfig) {
 			var countResponse = nakedJson.count;
 			console.log("About to handle countResponse");
 			if (countResponse.success == true) {
-				console.log("Replacing html "
-						+ tableConfig['paginatorLocation']);
 				$(tableConfig['paginatorLocation']).html(
 						countResponse.data.html);
 			} else {
-				console.log("false");
+				console.log("Paginator update failed");
 			}
 		}
 	});
@@ -257,6 +255,7 @@ function createComment(tableConfig, commentTag, commentTitle, commentContent) {
 		content : commentContent,
 		tag : commentTag
 	}, function(data) {
+		console.log(data);
 		data = $.parseJSON(data);
 		response = data.success;
 		if (response == true) {
@@ -266,7 +265,6 @@ function createComment(tableConfig, commentTag, commentTitle, commentContent) {
 		}
 	});
 }
-
 /**
  * Adds hours into the database
  */

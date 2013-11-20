@@ -26,7 +26,7 @@ class AllTimesheetController extends Controller
 		}
 		
 		/* GET HOW MANY TASKS THERE ARE FOR THE PAGEINATOR */
-		$amountOfTasks = $taskHandler->countAllTasks();
+		$amountOfTasks = $taskHandler->countAllTasks(false);
 
 		parent::invoke();
 

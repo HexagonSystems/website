@@ -4,18 +4,68 @@
 	</h3>
 </header>
 
-<a data-toggle="modal" href="#modal_createTask"
-	class="btn btn-primary btn-sm">Create Task</a>
+<div class="panel panel-default">
+	<div class="panel-heading">Task Controls</div>
+
+	<div role="form" class="form-inline panel-body">
+		<div class="form-group inline col-xs-14 col-sm-2 col-lg-2">
+			<a data-toggle="modal" href="#modal_createTask"
+				class="btn btn-primary btn-sm form-control">Create Task</a>
+		</div>
+		<div class="form-group col-xs-6 col-lg-8 col-sm-8">
+
+			<select class="form-control inline" id="taskAll_filter">
+				<option value="empty">No Filter</option>
+				<?php 
+				if(isset($data['allTaskStatus']))
+				{
+					if($data['allTaskStatus']['success'] == true)
+					{
+						foreach($data['allTaskStatus']['data'] as $statusOption)
+						{
+							if(isset($taskStatus))
+							{
+								if($statusOption == $taskStatus){
+								echo '<option value="'.$statusOption.'" selected="selected">'.$statusOption.'</option>';
+							} else {
+					echo '<option value="'.$statusOption.'">'.$statusOption.'</option>';
+				}
+							}else
+							{
+								echo '<option value="'.$statusOption.'">'.$statusOption.'</option>';
+							}
+
+						}
+					}else
+					{
+						echo $data['allTaskStatus']['message'];
+						/* DISPLAY ERROR */
+					}
+				}
+
+				?>
+			</select>
+		</div>
+
+		<div class="form-group col-xs-6 col-lg-2 col-sm-2">
+			<button class="btn btn-primary form-control" id="filterReload">Filter</button>
+		</div>
+	</div>
+</div>
+
+
 <?php include_once 'modal_createTask.php'; ?>
 
 <table
 	class="table table-rowBorder table-hover table-zebra table-responsive-dropLast2Col">
 
 	<thead>
-		<th class="table-colSmall">Status</th>
-		<th class="table-colLarge">Task</th>
-		<th class="table-colMedium">Members</th>
-		<th class="table-colMedium">Last Update</th>
+		<tr>
+			<th class="table-colSmall">Status</th>
+			<th class="table-colLarge">Task</th>
+			<th class="table-colMedium">Members</th>
+			<th class="table-colMedium">Last Update</th>
+		</tr>
 	</thead>
 
 	<tbody id="tasksContainer" class="tbodyFirstLineAccordion">
@@ -25,7 +75,7 @@
 </table>
 
 <div class="text-center">
-	<ul class="pagination">
+	<ul class="pagination" id="allTasksPaginator">
 		<?php 
 
 		if($data['taskCount']['success'] == true){
@@ -55,7 +105,9 @@ mainTaskTable = {
 		'last_page'			:	-1,
 		'memberId'			:	<?php echo unserialize($_SESSION['accountObject'])->getMemberId(); ?>,
 		'memberFirstName'	: 	"<?php echo unserialize($_SESSION['accountObject'])->getFirstName(); ?>",
-		'content'			:	new Array()
+		'content'			:	new Array(),
+		'taskFilter'		:	false,
+		'paginatorLocation'	:	"#allTasksPaginator"
 };
 
 /**
@@ -67,18 +119,18 @@ mainTaskTable = {
 		
 		if($(this).text() == "<<")
 		{
-			$(this).parent().siblings().children().css('backgroundColor', 'white');
-			$(this).parent().next().children().css('backgroundColor', '#eee');
+			$(this).parent().siblings().children().removeClass("paginator-selected");
+			$(this).parent().next().children().addClass("paginator-selected");
 			loadTasks(mainTaskTable, 1);
 		}else if($(this).text() == ">>")
 		{
-			$(this).parent().siblings().children().css('backgroundColor', 'white');
-			$(this).parent().prev().children().css('backgroundColor', '#eee');
+			$(this).parent().siblings().children().removeClass("paginator-selected");
+			$(this).parent().prev().children().addClass("paginator-selected");
 			loadTasks(mainTaskTable, parseInt($(this).parent().prev().find(">:first-child").text()));
 		}else
 		{
-			$(this).parent().siblings().children().css('backgroundColor', 'white');
-			$(this).css('backgroundColor', '#eee');
+			$(this).parent().siblings().children().removeClass("paginator-selected");
+			$(this).addClass("paginator-selected");
 			loadTasks(mainTaskTable, parseInt($(this).text()));
 		}
 });
@@ -91,6 +143,27 @@ $(function() {
 			function() {
 				createTask(mainTaskTable, $("#modal_taskTitle").val(), $("#modal_taskDscr")
 						.val(), $("#modal_taskStatus option:selected").text());
+			});
+});
+
+$(function() {
+	$("#filterReload").click(
+			function() {
+				if($("#taskAll_filter option:selected").text() == "No Filter")
+				{
+					mainTaskTable['taskFilter'] = false;
+				}else
+				{
+					mainTaskTable['taskFilter'] = $("#taskAll_filter option:selected").text();
+				}
+				
+				emptyTableBody(mainTaskTable);
+				
+				mainTaskTable['content'] = new Array();
+				mainTaskTable['last_page'] = -1;
+
+				updatePaginator(mainTaskTable);
+				loadTasks(mainTaskTable, 1, true);
 			});
 });
 

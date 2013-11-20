@@ -25,12 +25,23 @@
 </header>
 
 <!-- Button trigger modal -->
-<a data-toggle="modal" href="#modal_comment"
-	class="btn btn-primary btn-sm">Add Update</a>
-<a data-toggle="modal" href="#modal_hours"
-	class="btn btn-primary btn-sm">Add Hours</a>
-<a data-toggle="modal" href="#modal_editTask"
-	class="btn btn-primary btn-sm">Edit Task</a>
+<div class="panel panel-default hidden-print">
+	<div class="panel-heading">Task Controls</div>
+	<div role="form" class="form-inline panel-body">
+		<div class="form-group inline col-xs-12 col-sm-4 col-lg-3">
+			<a data-toggle="modal" href="#modal_comment"
+				class="btn btn-primary btn-sm form-control">Add Update</a>
+		</div>
+		<div class="form-group inline col-xs-12 col-sm-4 col-lg-3">
+			<a data-toggle="modal" href="#modal_hours"
+				class="btn btn-primary btn-sm form-control">Add Hours</a>
+		</div>
+		<div class="form-group inline col-xs-12 col-sm-4 col-lg-3">
+			<a data-toggle="modal" href="#modal_editTask"
+				class="btn btn-primary btn-sm form-control">Edit Task</a>
+		</div>
+	</div>
+</div>
 <?php include_once 'modal_comment.php'; ?>
 <?php include_once 'modal_hours.php'; ?>
 <?php include_once 'modal_editTask.php'; ?>
@@ -40,10 +51,12 @@
 	class="table table-rowBorder table-hover table-zebra table-responsive-dropLast2Col">
 
 	<thead>
-		<th class="table-colSmall">Tag</th>
-		<th class="table-colLarge">Update</th>
-		<th class="table-colMedium">Posted By</th>
-		<th class="table-colMedium">Posted on</th>
+		<tr>
+			<th class="table-colSmall">Tag</th>
+			<th class="table-colLarge">Update</th>
+			<th class="table-colMedium">Posted By</th>
+			<th class="table-colMedium">Posted on</th>
+		</tr>
 	</thead>
 
 	<tbody id="commentsContainer" class="tbodyFirstLineAccordion">
@@ -119,18 +132,18 @@ $(function() {
 		event.preventDefault();
 		if($(this).text() == "<<")
 		{
-			$(this).parent().siblings().children().css('backgroundColor', 'white');
-			$(this).parent().next().children().css('backgroundColor', '#eee');
+			$(this).parent().siblings().children().removeClass("paginator-selected");
+			$(this).parent().next().children().addClass("paginator-selected");
 			loadComments(mainTaskCommentsTable, 1);
 		}else if($(this).text() == ">>")
 		{
-			$(this).parent().siblings().children().css('backgroundColor', 'white');
-			$(this).parent().prev().children().css('backgroundColor', '#eee');
+			$(this).parent().siblings().children().removeClass("paginator-selected");
+			$(this).parent().prev().children().addClass("paginator-selected");
 			loadComments(mainTaskCommentsTable, parseInt($(this).parent().prev().find(">:first-child").text()));
 		}else
 		{
-			$(this).parent().siblings().children().css('backgroundColor', 'white');
-			$(this).css('backgroundColor', '#eee');
+			$(this).parent().siblings().children().removeClass("paginator-selected");
+			$(this).addClass("paginator-selected");
 			loadComments(mainTaskCommentsTable, parseInt($(this).text()));
 		}
 		
@@ -163,6 +176,7 @@ $(function() {
 			});
 });
 
+
 /**
  * Page on load
  */
@@ -172,5 +186,9 @@ $(document).ready(function() {
 	$("#addHoursDatePicker").datepicker();
 	$("#addHoursDatePicker").datepicker('setDate', new Date());
     $( "#addHoursDatePicker" ).datepicker( "option", "dateFormat", "dd-M-yy" );
+
+	
+    
+    
 });
 </script>

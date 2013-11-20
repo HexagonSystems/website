@@ -103,6 +103,18 @@ class ArticleEntity
 
 	/*****************************************************************************************************/
 	
+	function html($text)
+	{	
+		$char = htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+		return $char;
+	}
+	
+	function htmlOut($text)
+	{
+		$char = htmlspecialchars_decode($text, ENT_NOQUOTES);
+		return $char;
+	}
+	
 	public function getProjectData(){
 		try {
 			$sql = $this->database->query("SELECT a.title, a.articleId, a.content, a.tag, a.date, m.firstName, m.lastName FROM article a 
@@ -120,7 +132,7 @@ class ArticleEntity
 		}
 	}
 	
-	public function getIndividualProjectData($id){
+/**/	public function getIndividualProjectData($id){
 		try {
 			$sql = $this->database->query("SELECT a.title, a.articleId, a.content, a.tag, a.date, m.firstName, m.lastName FROM article a 
 											LEFT JOIN memberarticle ma ON a.articleId = ma.articleId 
@@ -136,7 +148,7 @@ class ArticleEntity
 		}
 	}
 
-	public function getIndividualProjectFiles($titleName){
+/**/	public function getIndividualProjectFiles($titleName){
 		try {
 			$sql = $this->database->query("SELECT a.title, a.content, a.date FROM article a WHERE category = '3' AND tag = '$titleName';")->fetchAll();
 			return $sql;
@@ -162,6 +174,45 @@ class ArticleEntity
 		return($obj);
 	}
 	
+	public function getArticleObject($articleId, $category, $title, $content, $tag, $date, $status)
+	{
+		$obj = new ArticleEntity($this->database);
+		
+		$obj->setArticleId($articleId);
+		$obj->setCategory($category);
+		$obj->setTitle($title);
+		$obj->setContent($content);
+		$obj->setTag($tag);
+		$obj->setDate($date);
+		$obj->setStatus($status);
+		return($obj);
+	}
+	
+	function getAllArticles(){
+		try {
+			$sql = $this->database->prepare("SELECT * FROM `article` WHERE category = '1' OR category = '2' ORDER BY category, title;");
+			$sql->execute();
+			$sql = $sql->fetchAll();
+			return $sql;
+		
+		} catch (Exception $e) {
+		
+			throw new Exception('Database error:', 0, $e);
+			return false;
+		}
+	}
+	
+/**/	public function getProjectDataToEdit($id){
+		try {
+			$sql = $this->database->query("SELECT * FROM article WHERE articleId = '$id';")->fetchAll();
+			return $sql;
+			
+		} catch (Exception $e) {
+		
+			throw new Exception('Database error:', 0, $e);
+			return false;
+		}
+	}
 	
 	/* php manual*/	
 	function downloadFile($file) 
@@ -175,7 +226,6 @@ class ArticleEntity
             header('Content-Disposition: attachment; filename='.basename($file_path));
             header('Content-Transfer-Encoding: binary');
             header('Expires: 0');
-            //header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
             header('Cache-Control: must-revalidate');
             header('Pragma: public');
             header('Content-Length: ' . filesize($file_path));
@@ -186,6 +236,179 @@ class ArticleEntity
         }
     }
 	
+	function saveChanges($formData)
+	{
+		try
+		{
+			$sql = "UPDATE `article` SET 
+					`title`		= :title,
+					`content`	= :content,
+					`category`	= :category,
+					`tag`		= :tag,
+					`date`		= :date,
+					`status`		= :status
+					WHERE `articleId` = :articleId";
+			$data = $this->database->prepare($sql);
+			$data->bindValue(':title', $this->html($formData['title']));
+			$data->bindValue(':content', $this->html($formData['content']));
+			$data->bindValue(':category', $this->html($formData['category']));
+			$data->bindValue(':tag', $this->html($formData['tag']));
+			$data->bindValue(':date', $this->html($formData['date']));
+			$data->bindValue(':status', $this->html($formData['status']));
+			$data->bindValue(':articleId', $this->html($formData['articleId']));
+			$result = $data->execute();
+			
+			return;
+		}
+		catch (PDOException $e) {
+			echo $e->getMessage();
+			return;
+		}
+	}
+
+	function uploadFile($file)
+	{
+		/*
+		* IMAGE ERRORS																
+		* 0 Upload successful														
+		* 1 File exceeds maximum upload size specified in php.ini (default 2MB)		
+		* 2 File exceeds size specified by MAX_FILE_SIZE							
+		* 3 File only partially uploaded											
+		* 4 Form submitted with no file specified									
+		* 6 No temporary folder														
+		* 7 Cannot write file to disk												
+		* 8 Upload stopped by an unspecified PHP extension							
+		*/
+		
+		
+		//$destination = SITE_ROOT."Media/";
+		$destination = "G:\\xampp\htdocs\SmartGitHg\HEXAGONwebsite\Media\\";
+		
+		//any size
+		$typeOK = false;
+		$permitted = array('image/gif','image/jpeg', 'image/pjpeg', 'image/png', 'application/pdf', 'application/zip', 'application/x-zip', 'application/x-zip-compressed', 'application/x-rar-compressed', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/plain');
+		foreach ($permitted as $type) 
+		{
+			if ($type == $file['file']['type']) 
+			{
+				$typeOK = true;
+				break;
+			}
+		}
+		
+		if ($typeOK)
+		{
+			$fileName = str_replace(' ','_',$file['file']['name']);
+			if ($file['file']['error'] !== UPLOAD_ERR_OK) {
+				return;
+			}
+			else
+			{
+				$success = move_uploaded_file($file['file']['tmp_name'], $destination.$fileName);
+			}
+		}
+		else{
+			return;
+		}
+		return $fileName;
+	}
+	
+	public function createArticle($post, $fileName)
+	{
+		$date = date('Y-m-d', time());
+		
+		try
+		{
+			$sql = "INSERT INTO `article` SET 
+					`title`		= :title,
+					`content`	= :content,
+					`category`	= :category,
+					`tag`		= :tag,
+					`date`		= :date,
+					`status`	= :status";
+			$data = $this->database->prepare($sql);
+			$data->bindValue(':title', $this->html($post['title']));
+			$data->bindValue(':content', $this->html($fileName));
+			$data->bindValue(':category', '3');
+			$data->bindValue(':tag', $this->html($post['projectName']));
+			$data->bindValue(':date', $date);
+			$data->bindValue(':status', 'Completed');
+			$result = $data->execute();
+
+		}
+		catch (PDOException $e) {
+			echo $e->getMessage();
+			return;
+		}
+		
+		$lastArticleId = $this->database->lastInsertId();
+		echo $lastArticleId;
+		
+		try
+		{
+			$sql = "INSERT INTO `memberarticle` SET 
+					`articleId`	= :articleId,
+					`memberId`	= :memberId";
+			$data = $this->database->prepare($sql);
+			$data->bindValue(':articleId', $this->html($lastArticleId));
+			$data->bindValue(':memberId', $this->html($post['memberId']));
+			$result = $data->execute();
+
+			if($result == true)
+			{	
+				return true;
+			}
+		}
+		catch (PDOException $e) {
+			echo $e->getMessage();
+			return;
+		}
+		
+	}
+	
+	/**
+	 * Gets all possible Task status'
+	 * @author Alex
+	 * @author Tara
+	 * @return array
+	 */
+	function getEnumStatus()
+	{
+		$statement = "SHOW COLUMNS FROM `article` WHERE FIELD = 'status'";
+
+		try{
+			$query = $this->database->prepare($statement);
+
+			$query->execute();
+			$returnArray = array();
+			/*
+			 * Inspiration for code http://akinas.com/pages/en/blog/mysql_enum/
+			* Regex taken straight from website
+			* 19/04/2013
+			*/
+			if($query->rowCount())
+			{
+				foreach($query as $row){
+					$enumValues = $row[1];
+				}
+					
+				$regex = "/'(.*?)'/";
+				preg_match_all( $regex , $enumValues, $enum_array );
+				$enum_fields = $enum_array[1];
+
+				foreach($enum_fields as $row){
+					array_push($returnArray, $row);
+				}
+				return $returnArray;
+			}else
+			{
+				return $this->createError("No status' found");
+			}
+		} 
+		catch(PDOException $e) {
+			return $this->createError($e);
+		} //end of try/catch statement;
+	}
 	/****************************************************************************************************************************************************/
 	
     //*********SETTERS----------------------

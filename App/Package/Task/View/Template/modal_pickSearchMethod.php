@@ -12,10 +12,10 @@
 			</div>
 			<div class="modal-body">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<a href="index.php?location=timesheetPage&action=search&tag_searchBy=text&task_value=<?php echo $_GET['param']; ?>&task_searchBy=id&searchFor=tag"
+				<a href="index.php?location=timesheetPage&amp;action=search&amp;tag_searchBy=text&amp;task_value=<?php echo $_GET['param']; ?>&amp;task_searchBy=id&amp;amp;amp;searchFor=tag"
 					class="btn btn-primary btn-sm searchModalButton">Find in this Task</a>
 					
-					<a href="index.php?location=timesheetPage&action=search&tag_searchBy=text&searchFor=tag"
+					<a href="index.php?location=timesheetPage&amp;action=search&amp;tag_searchBy=text&amp;searchFor=tag"
 					class="btn btn-primary btn-sm searchModalButton">Find in all Tasks</a>
 			</div>
 			<div class="modal-footer"></div>
