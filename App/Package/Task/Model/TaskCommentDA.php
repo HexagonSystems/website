@@ -21,7 +21,6 @@ class TaskCommentDA
 	function createComment($taskId, $memberId, $tag, $title, $content, $time)
 	{
 		try {
-	
 			$statement = 'INSERT INTO `taskcomment`
 					(taskId, memberId, title, content, tag, postedDate)
 					VALUES
@@ -36,10 +35,16 @@ class TaskCommentDA
 			$query->bindParam(':tag'   , $tag , \PDO::PARAM_STR);
 			$query->bindParam(':postedDate'   , $time , \PDO::PARAM_INT);
 			/* MIGHT NEED TO GET AUTO INCREMENT COMMENT ID HERE */
-			$query->execute();
-			return array('success' => true);
+			if($query->execute())
+			{
+				return array('success' => true);
+			}else
+			{
+				return $this->createError($query->errorInfo());
+			}
+			
 		} catch (PDOException $e) {
-			return createError($e);
+			return $this->createError($e);
 		}
 	}
 	
@@ -107,7 +112,7 @@ class TaskCommentDA
 			// echo json_encode($commentHolder);
 			return $commentHolder;
 		} catch (PDOException $e) {
-			return createError($e);
+			return $this->createError($e);
 		}
 	}//end loadComments
 	
@@ -163,7 +168,7 @@ class TaskCommentDA
 			// echo json_encode($commentHolder);
 			return $commentHolder;
 		} catch (PDOException $e) {
-			return createError($e);
+			return $this->createError($e);
 		}
 	}//end loadComments
 	
@@ -202,7 +207,7 @@ class TaskCommentDA
 			}
 			return $commentCountHolder;
 		} catch (PDOException $e) {
-			return createError($e);
+			return $this->createError($e);
 		}
 	}//end loadComments
 	
