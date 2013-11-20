@@ -184,8 +184,10 @@ class ArticleEntity
 	
 	function getAllArticles(){
 		try {
-			$sql = $this->database->query("SELECT * FROM article WHERE category = '1'
-											OR category = '2' ORDER BY category, title;")->fetchAll();
+			$sql = $this->database->prepare("SELECT * FROM article WHERE category = '1'
+											OR category = '2' ORDER BY category, title;");
+			$sql->execute();
+			$sql->fetchAll();
 			return $sql;
 		
 		} catch (Exception $e) {
