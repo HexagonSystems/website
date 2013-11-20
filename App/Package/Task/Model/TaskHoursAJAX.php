@@ -21,7 +21,7 @@ if(!isset($_POST['request']))
 	require_once '../../../../App/Config/Config.php';
 	$taskHandler = new TaskHoursHandler();
 	$taskHandler->setDatabase(\DataBase::getConnection());
-	
+
 	$returnValue = "";
 	switch($_POST['request'])
 	{
@@ -29,7 +29,7 @@ if(!isset($_POST['request']))
 			if(commonAttributesExist() && addHoursAttributesExists())
 			{
 				$returnValue = $taskHandler->addHours($_POST['taskId'], $_POST['memberId'], $_POST['memberFirstName'], $_POST['workedDate'], $_POST['workedHours'], $_POST['workedComment']);
-				
+
 				if($returnValue['success'] == true)
 				{
 					$tempTaskComment = $returnValue['comment']['data'];
@@ -40,8 +40,19 @@ if(!isset($_POST['request']))
 				$returnValue = produceError("Missing attributes for adding hours request");
 			}
 			break;
+		case "hoursContribution":
+			if(commonAttributesExist() && hoursContributionAttributesExists())
+			{
+				$returnValue = $taskHandler->getMembersContributionToTask($_POST['taskId']);
+			}else
+			{
+				$returnValue = produceError("Missing attributes for adding hours request");
+			}
+			break;
+		default: $returnValue = produceError("Invalid request");
+
 	}
-	
+
 	echo json_encode($returnValue);
 }
 
@@ -75,12 +86,26 @@ function addHoursAttributesExists()
 			return true;
 		}else
 		{
-			echo "Missing workedHours";
 			return false;
 		}
 	}else
 	{
-		echo "Missing workedDate";
+		return false;
+	}
+}
+
+/**
+ * Checks for the required post data for getting the hours contributed to a Task
+ *
+ * @return boolean
+ */
+function hoursContributionAttributesExists()
+{
+	if(isset($_POST['taskId']))
+	{
+		return true;
+	}else
+	{
 		return false;
 	}
 }
@@ -90,11 +115,12 @@ function addHoursAttributesExists()
  *
  * @return string
  */
-function missingError($error)
+function produceError($error)
 {
 	$errorHolder = array();
 	$errorHolder['success'] = false;
 	$errorHolder['error'] = $error;
+	return $errorHolder;
 }
 
 ?>

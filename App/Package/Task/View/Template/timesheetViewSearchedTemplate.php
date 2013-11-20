@@ -46,7 +46,7 @@
 				</div>
 			</div>
 			<div class="form-group" id="searchFormMember">
-				<label for="addHoursDate"
+				<label for="member_value"
 					class="col-lg-2 col-md-2 col-sm-2 col-xs-3 control-label">Member</label>
 				<div class="col-xs-9 col-sm-8 col-md-8 col-lg-8">
 					<input type="text" class="form-control" name="member_value"
@@ -65,7 +65,7 @@
 			</div>
 
 			<div class="form-group">
-				<label for="addHoursDate"
+				<label for="chooseSearchOption"
 					class="col-lg-2 col-md-2 col-sm-2 col-xs-3 control-label">Search
 					for</label>
 				<div class="col-lg-8 col-sm-8 col-md-8 col-xs-9">

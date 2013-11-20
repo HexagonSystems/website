@@ -20,6 +20,8 @@ class AdminController extends Controller
 			$this->template = $this->template_edit;
 			parent::invoke();
 			
+			$projObj = array();
+			
 			$projectarry = $article->getAllArticles();
 			foreach ($projectarry as $row)
 			{
