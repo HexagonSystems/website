@@ -27,6 +27,15 @@ class TaskHoursHandler
 		$this->databaseHolder = $database;
 	}
 	
+	/**
+	 * Contacts the TaskHoursDA class and requests to load the hours for the given attributes
+	 * 
+	 * @param int $taskId
+	 * @param int $memberId
+	 * @param Date $startDate
+	 * @param Date $endDate
+	 * @return multitype:multitype: boolean
+	 */
 	public function loadHours($taskId, $memberId, $startDate, $endDate)
 	{
 		return $this->taskHoursDA->loadHours($taskId, $memberId, $startDate, $endDate);
@@ -37,7 +46,7 @@ class TaskHoursHandler
 	 *
 	 * @param int $taskId
 	 * @param int $memberId
-	 * @param unknown $workedDate
+	 * @param Date $workedDate
 	 * @param int $workedHours
 	 */
 	function addHours($taskId, $memberId, $memberName, $workedDate, $workedHours, $workedComment)
@@ -81,6 +90,17 @@ class TaskHoursHandler
 		{
 			return $hoursDAReturn;
 		}
+	}
+	
+	/**
+	 * Contacts the TaskHoursDA class, requests to get each member's
+	 * contribution to a certain Task.
+	 * 
+	 * @param int $taskId
+	 */
+	public function getMembersContributionToTask($taskId)
+	{
+		return $this->taskHoursDA->getMemberContributionToTask($taskId);
 	}
 
 	/**
