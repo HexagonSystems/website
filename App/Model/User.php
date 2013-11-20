@@ -337,7 +337,7 @@ class User
 	public function getAllMembers()
 	{
 		try {
-			$sql = $this->database->query("SELECT * FROM member")->fetchAll();
+			$sql = $this->database->query("SELECT memberId, firstName, lastName, email, phoneNo FROM member")->fetchAll();
 			return $sql;
 			
 		} catch (Exception $e) {
