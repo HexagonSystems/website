@@ -47,38 +47,55 @@
 <?php include_once 'modal_editTask.php'; ?>
 <?php include_once 'modal_pickSearchMethod.php'; ?>
 
-<table id="testtable"
-	class="table table-rowBorder table-hover table-zebra table-responsive-dropLast2Col">
 
-	<thead>
-		<th class="table-colSmall">Tag</th>
-		<th class="table-colLarge">Update</th>
-		<th class="table-colMedium">Posted By</th>
-		<th class="table-colMedium">Posted on</th>
-	</thead>
 
-	<tbody id="commentsContainer" class="tbodyFirstLineAccordion">
-		<!-- Comments will be loaded here through AJAX -->
-	</tbody>
-</table>
+<h3>
+	<span>User Contribution</span> <small> Pie Chart</small>
+</h3>
 
-<div class="text-center">
-	<ul class="pagination" id="taskCommentPaginator">
-		<?php 
-		if($data['task']->getCommentCount() != null)
-		{
-			$amountOfPages = ceil($data['task']->getCommentCount() / 5);
-			include 'paginator_generator.php';
-		}else
-		{
-			echo "There was trouble loading the paginator";
-		}
-		?>
-	</ul>
+<!-- Nav tabs -->
+<ul class="nav nav-tabs">
+	<li class="active"><a href="#comments" data-toggle="tab">Comments</a></li>
+	<li><a href="#userContribution" data-toggle="tab">Contribution</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content" id="mainTab">
+	<div class="tab-pane active" id="comments">
+		<table id="testtable"
+			class="table table-rowBorder table-hover table-zebra table-responsive-dropLast2Col">
+
+			<thead>
+				<th class="table-colSmall">Tag</th>
+				<th class="table-colLarge">Update</th>
+				<th class="table-colMedium">Posted By</th>
+				<th class="table-colMedium">Posted on</th>
+			</thead>
+
+			<tbody id="commentsContainer" class="tbodyFirstLineAccordion">
+				<!-- Comments will be loaded here through AJAX -->
+			</tbody>
+		</table>
+
+		<div class="text-center">
+			<ul class="pagination" id="taskCommentPaginator">
+				<?php 
+				if($data['task']->getCommentCount() != null)
+				{
+					$amountOfPages = ceil($data['task']->getCommentCount() / 5);
+					include 'paginator_generator.php';
+				}else
+				{
+					echo "There was trouble loading the paginator";
+				}
+				?>
+			</ul>
+		</div>
+	</div>
+	<div class="tab-pane" id="userContribution">
+		<div id="googlePieChart" style="width: 100%;"></div>
+	</div>
 </div>
-
-<div
-	id="googlePieChart" style="width: 900px; height: 500px;"></div>
 
 <script
 	type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -182,6 +199,7 @@ $(function() {
 			});
 });
 
+/* GOOGLE CHARTS FUNCTIONS */
 function loadGoogleChartsPieHours(tableConfig) {
 	$.ajax({
        type: "POST",
@@ -224,6 +242,9 @@ console.log("loadingPageData");
 	               dataArray.push(tempArray);
                });
                 drawChart(dataArray, "Member Contribution", "Hours");
+                $(window).resize(function(){
+                	drawChart(dataArray, "Member Contribution", "Hours");
+                  });
             }else
             {
             	console.log("error " + data);
@@ -261,9 +282,17 @@ $(document).ready(function() {
 	$("#addHoursDatePicker").datepicker();
 	$("#addHoursDatePicker").datepicker('setDate', new Date());
     $( "#addHoursDatePicker" ).datepicker( "option", "dateFormat", "dd-M-yy" );
-    
+
+    /* TABS */
+    $('#mainTab a').click(function (e) {
+      e.preventDefault()
+      $(this).tab('show')
+    });
+
     
 	google.setOnLoadCallback(load_page_data(mainTaskCommentsTable));
+
+	
     
     
 });
