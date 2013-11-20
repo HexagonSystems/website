@@ -117,18 +117,18 @@ mainTaskTable = {
 		
 		if($(this).text() == "<<")
 		{
-			$(this).parent().siblings().children().css('backgroundColor', 'white');
-			$(this).parent().next().children().css('backgroundColor', '#eee');
+			$(this).parent().siblings().children().removeClass("paginator-selected");
+			$(this).parent().next().children().addClass("paginator-selected");
 			loadTasks(mainTaskTable, 1);
 		}else if($(this).text() == ">>")
 		{
-			$(this).parent().siblings().children().css('backgroundColor', 'white');
-			$(this).parent().prev().children().css('backgroundColor', '#eee');
+			$(this).parent().siblings().children().removeClass("paginator-selected");
+			$(this).parent().prev().children().addClass("paginator-selected");
 			loadTasks(mainTaskTable, parseInt($(this).parent().prev().find(">:first-child").text()));
 		}else
 		{
-			$(this).parent().siblings().children().css('backgroundColor', 'white');
-			$(this).css('backgroundColor', '#eee');
+			$(this).parent().siblings().children().removeClass("paginator-selected");
+			$(this).addClass("paginator-selected");
 			loadTasks(mainTaskTable, parseInt($(this).text()));
 		}
 });
