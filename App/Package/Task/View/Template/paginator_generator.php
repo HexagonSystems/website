@@ -1,4 +1,4 @@
-<li><a href="#" class="paginatorArrowJump"><<</a>
+<li><a href="#" class="paginatorArrowJump">&#60;&#60;</a>
 </li>
 <?php
 for($counter = 1; $counter < ($amountOfPages + 1); $counter++)
@@ -13,5 +13,5 @@ for($counter = 1; $counter < ($amountOfPages + 1); $counter++)
 	
 }
 ?>
-<li><a href="#" class="paginatorArrowJump">>></a>
+<li><a href="#" class="paginatorArrowJump">&#62;&#62;</a>
 </li>

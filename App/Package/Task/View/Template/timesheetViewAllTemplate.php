@@ -60,10 +60,12 @@
 	class="table table-rowBorder table-hover table-zebra table-responsive-dropLast2Col">
 
 	<thead>
-		<th class="table-colSmall">Status</th>
-		<th class="table-colLarge">Task</th>
-		<th class="table-colMedium">Members</th>
-		<th class="table-colMedium">Last Update</th>
+		<tr>
+			<th class="table-colSmall">Status</th>
+			<th class="table-colLarge">Task</th>
+			<th class="table-colMedium">Members</th>
+			<th class="table-colMedium">Last Update</th>
+		</tr>
 	</thead>
 
 	<tbody id="tasksContainer" class="tbodyFirstLineAccordion">

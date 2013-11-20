@@ -51,10 +51,12 @@
 	class="table table-rowBorder table-hover table-zebra table-responsive-dropLast2Col">
 
 	<thead>
-		<th class="table-colSmall">Tag</th>
-		<th class="table-colLarge">Update</th>
-		<th class="table-colMedium">Posted By</th>
-		<th class="table-colMedium">Posted on</th>
+		<tr>
+			<th class="table-colSmall">Tag</th>
+			<th class="table-colLarge">Update</th>
+			<th class="table-colMedium">Posted By</th>
+			<th class="table-colMedium">Posted on</th>
+		</tr>
 	</thead>
 
 	<tbody id="commentsContainer" class="tbodyFirstLineAccordion">
