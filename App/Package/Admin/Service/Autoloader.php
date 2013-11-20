@@ -2,7 +2,10 @@
 namespace Admin;
 function autoload($className) {
     //Sub string the package name off the class in this case "Task\"
-    $className = substr($className, 5);
+	echo $className."     ";
+    $className = substr($className, 6);
+    echo $className."<br/><br/>";
+    
 
     $router     = AppBase.'/'.Base.'/'.$className.'.php';
     $model      = AppBase.'/'.Base.'/Model/'.$className.'.php';
