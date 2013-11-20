@@ -26,7 +26,7 @@ class TimesheetView
 		 * template location and makes it impossible to override.
 		 * @author Stephen McMahon
 		 */
-		$template = AppBase.'/Package/Task/View/Template/'.$template.'Template.php';
+		$template = AppBase.'/'.Base.'View/Template/'.$template.'Template.php';
 		
 		// echo "In Constructor" ;
 		if (file_exists($template)) {

@@ -348,6 +348,11 @@ h2.project-title {
 /**
  * Tables
  */
+ 
+table,th,td,tr,thead {
+	word-wrap: break-word !important;
+}
+
 .table {
 	width: 100%;
 }
@@ -396,6 +401,7 @@ h2.project-title {
 	width: 100%;
 }
 
+/* OTHER STUFF */
 .boxsizingBorder {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -414,9 +420,6 @@ h2.project-title {
 	display: none;
 }
 
-table,th,td,tr,thead {
-	word-wrap: break-word !important;
-}
 
 .margin-left-m {
 	margin-left: 2em;
@@ -425,6 +428,12 @@ table,th,td,tr,thead {
 .side-border {
 	border-left: 1px solid black;
 	border-right: 1px solid black;
+}
+
+/* BUTTON SELECTED STATE - used for paginators */
+.paginator-selected {
+	background-color: #eee !important;
+	background:#eee;
 }
 
 /* MOBILE SCREENS */

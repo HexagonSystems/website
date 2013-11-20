@@ -1,7 +1,8 @@
 <?php
 namespace Admin;
-class HeadController
+class HeadController extends \HeadController
 {
+	/*
 	private $header;
 	private $nav;
 	private $fileName = 'Head';
@@ -15,18 +16,18 @@ class HeadController
 		}
 		else if(isset($_SESSION['account'])){
 			/* PLEASE FIX UP THIS NAV SECTION, TEMP WORK AROUND TO DISPLAY USER'S FIRST NAME IN PLACE */
-			$this->nav = Base.'/View/Template/nav5_2.php';
-		}else{
-			$this->nav = Base.'/View/Template/nav0.php';
-		}
+		//	$this->nav = Base.'/View/Template/nav5_2.php';
+		//}else{
+		//	$this->nav = Base.'/View/Template/nav0.php';
+		//}
 
-	} //end constructor
-	public function invoke()
-	{
-		$this->template = Base.'/View/Template/'.$this->fileName.'Template.php';
-			
-		//create a new view and pass it our template
-		$view = new HeadView($this->template,$this->header,$this->nav);
-
-	} // end function
+	//} //end constructor
+	//public function invoke()
+	//{
+	//	$this->template = Base.'/View/Template/'.$this->fileName.'Template.php';
+	//		
+	//	//create a new view and pass it our template
+	//	$view = new HeadView($this->template,$this->header,$this->nav);
+//
+//	} // end function
 } //end class
