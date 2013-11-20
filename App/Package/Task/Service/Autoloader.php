@@ -2,9 +2,7 @@
 namespace Task;
 function autoload($className) {
     //Sub string the package name off the class in this case "Task\"
-    echo $className."     ";
     $className = substr($className, 5);
-    echo $className."<br/><br/>";
 
     $router     = AppBase.'/'.Base.'/'.$className.'.php';
     $model      = AppBase.'/'.Base.'/Model/'.$className.'.php';
