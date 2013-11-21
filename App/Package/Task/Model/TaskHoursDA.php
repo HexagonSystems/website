@@ -180,7 +180,7 @@ class TaskHoursDA
 			$hoursContributionHolder['data'] = array();
 
 			foreach ($query as $row) {
-				$hoursContributionHolder['data'][$row['firstName']] = $row['workedHours'];
+				$hoursContributionHolder['data'][htmlentities($row['firstName'])] = $row['workedHours'];
 			}
 
 			// echo json_encode($commentHolder);

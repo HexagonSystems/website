@@ -66,12 +66,12 @@ class TaskHours
 		//$this->setId($tempArray['workId']);
 		$tempTaskArray = array(
 				'id'	=> $tempArray['taskId'],
-				'value'	=> $tempArray['name']
+				'value'	=> htmlentities($tempArray['name'])
 		);
 		$this->setTask($tempTaskArray);
 		$tempMemberArray = array(
 				'id'	=> $tempArray['memberId'],
-				'value'	=> $tempArray['firstName']
+				'value'	=> htmlentities($tempArray['firstName'])
 		);
 		$this->setMember($tempMemberArray);
 		$this->setHours($tempArray['hours']);

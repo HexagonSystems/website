@@ -100,10 +100,10 @@ class TaskCommentDA
 			foreach ($query as $row) {
 				$tempTaskComment = new TaskComment();
 				$tempTaskComment->setId($row['commentId']);
-				$tempTaskComment->setTag($row['tag']);
-				$tempTaskComment->setTitle($row['title']);
-				$tempTaskComment->setContent($row['content']);
-				$tempTaskComment->setMemberId($row['firstName']);
+				$tempTaskComment->setTag(htmlentities($row['tag']));
+				$tempTaskComment->setTitle(htmlentities($row['title']));
+				$tempTaskComment->setContent(htmlentities($row['content']));
+				$tempTaskComment->setMemberId(htmlentities($row['firstName']));
 				$tempTaskComment->setDate($row['postedDate']);
 	
 				array_push($commentHolder['data'], $tempTaskComment);
@@ -156,10 +156,10 @@ class TaskCommentDA
 			foreach ($query as $row) {
 				$tempTaskComment = new TaskComment();
 				$tempTaskComment->setId($row['commentId']);
-				$tempTaskComment->setTag($row['tag']);
-				$tempTaskComment->setTitle($row['title']);
-				$tempTaskComment->setContent($row['content']);
-				$tempTaskComment->setMemberId($row['firstName']);
+				$tempTaskComment->setTag(htmlentities($row['tag']));
+				$tempTaskComment->setTitle(htmlentities($row['title']));
+				$tempTaskComment->setContent(htmlentities($row['content']));
+				$tempTaskComment->setMemberId(htmlentities($row['firstName']));
 				$tempTaskComment->setDate($row['postedDate']);
 	
 				array_push($commentHolder['data'], $tempTaskComment);
@@ -231,11 +231,11 @@ class TaskCommentDA
 	{
 		try {
 				
-			$statement = 'INSERT INTO `work`
+			$statement = "INSERT INTO `work`
 					(taskId, memberId, hours, date)
 					VALUES
 					(:taskId, :memberId, :hours, :date)
-					ON DUPLICATE KEY UPDATE hours = hours + :hours';
+					ON DUPLICATE KEY UPDATE hours = hours + :hours";
 	
 			$query = DataBase::getConnection()->prepare($statement);
 				
