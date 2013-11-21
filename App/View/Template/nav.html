@@ -21,15 +21,15 @@
                   
                   if($navItem['inMenu'] == 0 && isset($navItem['children'])) :
 
-                  echo '<li class="dropdown">
+                    echo '<li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown"> '.$navItem['name'].' <span class="caret"></span></a>
                           <ul class="dropdown-menu">
                             <li><a href="'.SITE_ROOT.$navItem['link'].'">'.$navItem['name'].'</a>';
                     foreach ($navItem['children'] as $subNavItem) : 
                         
-                        echo '<li><a href="'.SITE_ROOT.$subNavItem['link'].'">SUB '.$subNavItem['name'].'</a></li>';
+                        echo '<li><a href="'.SITE_ROOT.$subNavItem['link'].'">'.$subNavItem['name'].'</a></li>';
                     
-                    endforeach;
+                    endforeach;//($navItem['children'] as $subNavItem)
                     
                     echo '</ul></li>';
 
@@ -37,19 +37,39 @@
                   
                      echo '<li><a href="'.SITE_ROOT.$navItem['link'].'">'.$navItem['name'].'</a></li>';
 
-                  endif;
+                  endif;//($navItem['inMenu'] == 0 && isset($navItem['children']))
               
-              endforeach; ?>
+              endforeach;//($data['navigation'] as $navItem) ?>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-          <?php foreach ($data['navigation'] as $navItem) : ?>
-              <?php if($navItem['acl'] != 1 || $data['user'] == 'loggedIn') : 
-                  if($navItem['inMenu'] == 1) : ?>
-                    <li><a href="//<?php echo SITE_ROOT . $navItem['link']; ?>"><?php echo $navItem['name']; ?></a></li>
-                <?php endif; ?>
-              <?php endif; ?>
-          <?php endforeach; ?>
-          </ul>
+       <?php foreach ($data['navigation'] as $navItem) : 
+                if($navItem['acl'] != 1 || $data['user'] == 'loggedIn') : 
+
+                  if($navItem['inMenu'] == 1 && isset($navItem['children'])) :
+
+                    echo '<li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown"> '.$navItem['name'].' <span class="caret"></span></a>
+                          <ul class="dropdown-menu">
+                            <li><a href="'.SITE_ROOT.$navItem['link'].'">'.$navItem['name'].'</a>';
+
+                    foreach ($navItem['children'] as $subNavItem) : 
+                        
+                        echo '<li><a href="'.SITE_ROOT.$subNavItem['link'].'">'.$subNavItem['name'].'</a></li>';
+                    
+                    endforeach;//($navItem['children'] as $subNavItem)
+                    
+                    echo '</ul></li>';
+
+                  elseif($navItem['inMenu'] == 1) :
+                  
+                     echo '<li><a href="'.SITE_ROOT.$navItem['link'].'">'.$navItem['name'].'</a></li>';
+
+                  endif;//($navItem['inMenu'] == 0 && isset($navItem['children']))
+
+                endif;//($navItem['acl'] != 1 || $data['user'] == 'loggedIn')
+              
+              endforeach;//($data['navigation'] as $navItem) ?>
+            </ul>
         </nav><!-- /.navbar-collapse -->
       </div>
     </header>
