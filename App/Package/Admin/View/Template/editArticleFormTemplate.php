@@ -17,9 +17,10 @@
 		</div><!-- end content group -->
 		
 		<div class="form-group">
-			<label for="category" class="col-sm-2 control-label">Category Code</label> tooltip about catagory
+			<label for="category" class="col-sm-2 control-label">Category Code</label>
 			<div class="col-sm-10">
 				<input class="form-control" type="text" id="category" name="category" value="<?php echo $data['proj']->getCategory(); ?>" title="Category" required />
+				<span class="help-block">Categories: 1 = Bio, 2 = Project, 3 = File</span>
 			</div>
 		</div><!-- end category group -->
 		
@@ -79,13 +80,13 @@
 		} //end if files
 		?>
 		<div class="form-group">
-			<div ><!--class="col-lg-offset-3"-->
-				<div class=" col-lg-4">
-					<input class="btn btn-default btn-block" name="action" type="submit" value="Cancel" />
+			<div class="col-lg-offset-2">
+				<div class="pull-left">
+					<input class="btn btn-default btn-group" name="action" type="submit" value="Cancel" />
 				</div>
-				<div class=" col-lg-4">
+				<div class="pull-right">
 					<input name="articleId" type="hidden" value="<?php echo $data['proj']->getArticleId();?>" />
-					<input class="btn btn-default btn-block" name="action" type="submit" value="Save" />
+					<input class="btn btn-default btn-group" name="action" type="submit" value="Save" />
 				</div>
 			</div>
 		</div>

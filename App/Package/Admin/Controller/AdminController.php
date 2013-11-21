@@ -25,8 +25,7 @@ class AdminController extends Controller
 			$projectarry = $article->getAllArticles();
 			foreach ($projectarry as $row)
 			{
-				$content = $article->htmlOut($row['content']);
-				$projObj[] = $article->getArticleObject($row['articleId'], $row['category'],$row['title'], $content ,$row['tag'],$row['date'],$row['status']);
+				$projObj[] = $article->getArticleObject($row['articleId'], $row['category'],$row['title'], $row['content'] ,$row['tag'],$row['date'],$row['status']);
 			}
 				
 			//create a new view and pass it our template
@@ -56,7 +55,7 @@ class AdminController extends Controller
 					$view->assign('files' , $files);
 
 				}
-				else if ($_POST['alter'] == 'Upload File')
+				else if ($_POST['alter'] == 'Upload')
 				{
 					$this->template = $this->template_addFile;
 					parent::invoke();
