@@ -25,21 +25,23 @@ class TaskDA
 	{
 		try
 		{
-			$statement = "SELECT * FROM
+			$statement = "
+					SELECT * FROM
 					(
-					SELECT DISTINCT tskCom.postedDate, mbr.firstName, tsk.*
-					FROM `taskcomment` tskCom
-					LEFT JOIN `task` tsk
-					ON tskCom.taskId = tsk.taskId
-					LEFT JOIN `member` mbr
-					ON tskCom.memberId = mbr.memberId ";
+						SELECT DISTINCT tskCom.postedDate, mbr.firstName, tsk.*
+						FROM `taskcomment` tskCom
+						LEFT JOIN `task` tsk
+						ON tskCom.taskId = tsk.taskId
+						LEFT JOIN `member` mbr
+						ON tskCom.memberId = mbr.memberId ";
 			
 			if($status != 'false')
 			{
 				$statement .= "WHERE tsk.status = :status ";
 			}
 			
-			$statement .= "ORDER BY tskCom.postedDate DESC
+			$statement .= "
+						ORDER BY tskCom.postedDate DESC
 					) AS my_table
 					GROUP BY taskId
 					ORDER BY postedDate DESC
@@ -67,10 +69,10 @@ class TaskDA
 				$tempObject = new Task();
 				$tempObject->setDatabase($this->database);
 				$tempObject->setId($row['taskId']);
-				$tempObject->setTitle($row['name']);
+				$tempObject->setTitle(htmlentities($row['name']));
 				$tempObject->setTimeStamp($row['entryDate']);
 				$tempObject->setStatus($row['status']);
-				$tempObject->setContent($row['details']);
+				$tempObject->setContent(htmlentities($row['details']));
 				$tempObject->setCategory($row['type']);
 				$tempObject->loadMembers();
 				$tempObject->setLastUpdate(array(
@@ -163,10 +165,10 @@ class TaskDA
 				$tempTask = new Task();
 				$tempTask->setDatabase($this->database);
 				$tempTask->setId($row['taskId']);
-				$tempTask->setTitle($row['name']);
+				$tempTask->setTitle(htmlentities($row['name']));
 				$tempTask->setTimeStamp($row['entryDate']);
 				$tempTask->setStatus($row['status']);
-				$tempTask->setContent($row['details']);
+				$tempTask->setContent(htmlentities($row['details']));
 				$tempTask->setCategory($row['type']);
 				$tempTask->loadMembers();
 				return $tempTask;
@@ -193,11 +195,11 @@ class TaskDA
 	{
 		try {
 
-			$statement = 'SELECT DISTINCT wrk.memberId, mbr.firstName
+			$statement = "SELECT DISTINCT wrk.memberId, mbr.firstName
 					FROM work wrk, member mbr
 					WHERE wrk.taskId = :taskId AND
 					mbr.memberId = wrk.memberId AND
-					wrk.hours > 0';
+					wrk.hours > 0";
 
 			$query = $this->database->prepare($statement);
 
@@ -207,7 +209,7 @@ class TaskDA
 
 			$arrayOfMembers = array();
 			foreach ($query as $row) {
-				$arrayOfMembers[$row['memberId']] = $row['firstName'];
+				$arrayOfMembers[$row['memberId']] = htmlentities($row['firstName']);
 			}
 			//print_r($arrayOfPosts);
 			return $arrayOfMembers;
@@ -231,8 +233,8 @@ class TaskDA
 	public function loadUpdates($id, $quantity = 5, $startFrom = 0)
 	{
 		try {
-
-			$statement = 	"SELECT DISTINCT wrk.memberId, wrk.date, mbr.firstName
+			echo "CALLED!!!!!";
+			$statement = "SELECT DISTINCT wrk.memberId, wrk.date, mbr.firstName
 					FROM work wrk, member mbr
 					WHERE wrk.taskId = :taskId
 					AND mbr.memberId = wrk.memberId

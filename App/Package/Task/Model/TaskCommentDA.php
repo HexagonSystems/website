@@ -21,7 +21,6 @@ class TaskCommentDA
 	function createComment($taskId, $memberId, $tag, $title, $content, $time)
 	{
 		try {
-	
 			$statement = 'INSERT INTO `taskcomment`
 					(taskId, memberId, title, content, tag, postedDate)
 					VALUES
@@ -36,10 +35,16 @@ class TaskCommentDA
 			$query->bindParam(':tag'   , $tag , \PDO::PARAM_STR);
 			$query->bindParam(':postedDate'   , $time , \PDO::PARAM_INT);
 			/* MIGHT NEED TO GET AUTO INCREMENT COMMENT ID HERE */
-			$query->execute();
-			return array('success' => true);
+			if($query->execute())
+			{
+				return array('success' => true);
+			}else
+			{
+				return $this->createError($query->errorInfo());
+			}
+			
 		} catch (PDOException $e) {
-			return createError($e);
+			return $this->createError($e);
 		}
 	}
 	
@@ -95,10 +100,10 @@ class TaskCommentDA
 			foreach ($query as $row) {
 				$tempTaskComment = new TaskComment();
 				$tempTaskComment->setId($row['commentId']);
-				$tempTaskComment->setTag($row['tag']);
-				$tempTaskComment->setTitle($row['title']);
-				$tempTaskComment->setContent($row['content']);
-				$tempTaskComment->setMemberId($row['firstName']);
+				$tempTaskComment->setTag(htmlentities($row['tag']));
+				$tempTaskComment->setTitle(htmlentities($row['title']));
+				$tempTaskComment->setContent(htmlentities($row['content']));
+				$tempTaskComment->setMemberId(htmlentities($row['firstName']));
 				$tempTaskComment->setDate($row['postedDate']);
 	
 				array_push($commentHolder['data'], $tempTaskComment);
@@ -107,7 +112,7 @@ class TaskCommentDA
 			// echo json_encode($commentHolder);
 			return $commentHolder;
 		} catch (PDOException $e) {
-			return createError($e);
+			return $this->createError($e);
 		}
 	}//end loadComments
 	
@@ -151,10 +156,10 @@ class TaskCommentDA
 			foreach ($query as $row) {
 				$tempTaskComment = new TaskComment();
 				$tempTaskComment->setId($row['commentId']);
-				$tempTaskComment->setTag($row['tag']);
-				$tempTaskComment->setTitle($row['title']);
-				$tempTaskComment->setContent($row['content']);
-				$tempTaskComment->setMemberId($row['firstName']);
+				$tempTaskComment->setTag(htmlentities($row['tag']));
+				$tempTaskComment->setTitle(htmlentities($row['title']));
+				$tempTaskComment->setContent(htmlentities($row['content']));
+				$tempTaskComment->setMemberId(htmlentities($row['firstName']));
 				$tempTaskComment->setDate($row['postedDate']);
 	
 				array_push($commentHolder['data'], $tempTaskComment);
@@ -163,7 +168,7 @@ class TaskCommentDA
 			// echo json_encode($commentHolder);
 			return $commentHolder;
 		} catch (PDOException $e) {
-			return createError($e);
+			return $this->createError($e);
 		}
 	}//end loadComments
 	
@@ -202,7 +207,7 @@ class TaskCommentDA
 			}
 			return $commentCountHolder;
 		} catch (PDOException $e) {
-			return createError($e);
+			return $this->createError($e);
 		}
 	}//end loadComments
 	
@@ -226,11 +231,11 @@ class TaskCommentDA
 	{
 		try {
 				
-			$statement = 'INSERT INTO `work`
+			$statement = "INSERT INTO `work`
 					(taskId, memberId, hours, date)
 					VALUES
 					(:taskId, :memberId, :hours, :date)
-					ON DUPLICATE KEY UPDATE hours = hours + :hours';
+					ON DUPLICATE KEY UPDATE hours = hours + :hours";
 	
 			$query = DataBase::getConnection()->prepare($statement);
 				
