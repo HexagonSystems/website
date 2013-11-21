@@ -6,9 +6,19 @@ $ERROR_MISSING_ATTRIBUTES = "Required attributes not found";
  */
 
 /**
- * The request will be either:
- * 	- create
- *  - load
+ * Task AJAX
+ * 
+ * This class at the moment is designed to be used by the javascript functions for Task and TaskComments.
+ * 
+ * The functions that this class supports are:
+ * 	- Creating TaskComments
+ * 	- Loading TaskComments
+ * 	- Loading the newest TaskComments
+ * 	- Adding hours to TaskComments @deprecated
+ * 
+ * Please note, all TaskComments are a child of a Task
+ * 
+ * @author Alex Robinson <alex-robinson@live.com>
  */
 if(!isset($_POST['request']))
 {

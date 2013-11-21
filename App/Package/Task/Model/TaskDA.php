@@ -292,6 +292,14 @@ class TaskDA
 		}
 	}
 
+	/**
+	 * Extracts the given Task object's data and passes it through to the createTask() method.
+	 * 
+	 * @param Task $taskObject
+	 * @return multitype:boolean NULL
+	 *
+	 * @author Alex Robinson <alex-robinson@live.com>
+	 */
 	function createTaskFromObject($taskObject)
 	{
 		/* MAYBE DO A CHECK HERE IF THE MEMBER HAS THE CORRECT ACCESS LEVEL */
