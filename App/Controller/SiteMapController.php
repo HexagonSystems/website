@@ -2,7 +2,6 @@
 
 class SiteMapController extends Controller
 {
-
     public function invoke()
     {
         parent::invoke();
