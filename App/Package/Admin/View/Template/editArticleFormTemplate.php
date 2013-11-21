@@ -79,13 +79,13 @@
 		} //end if files
 		?>
 		<div class="form-group">
-			<div ><!--class="col-lg-offset-3"-->
-				<div class=" col-lg-4">
-					<input class="btn btn-default btn-block" name="action" type="submit" value="Cancel" />
+			<div class="col-lg-offset-2">
+				<div class="pull-left">
+					<input class="btn btn-default" name="action" type="submit" value="Cancel" />
 				</div>
-				<div class=" col-lg-4">
+				<div class="pull-right">
 					<input name="articleId" type="hidden" value="<?php echo $data['proj']->getArticleId();?>" />
-					<input class="btn btn-default btn-block" name="action" type="submit" value="Save" />
+					<input class="btn btn-default" name="action" type="submit" value="Save" />
 				</div>
 			</div>
 		</div>
