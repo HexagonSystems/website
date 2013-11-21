@@ -30,9 +30,6 @@ class ProjectController extends Controller
 					$title = $data[0]['title'];
 					$files = $article->getIndividualProjectFiles($title);						
 					break;
-				case "".$page."":
-					$download = $article->downloadFile($page);
-					break;
 				default:
 					$page = null;
 			}//end switch
