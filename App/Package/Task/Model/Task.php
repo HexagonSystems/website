@@ -1,5 +1,18 @@
 <?php
 namespace Task;
+
+/**
+ * Task
+ * 
+ * This class holds all of the sets and gets for Tasks.
+ * Although this class still has some actual methods like loadMembers() and loadCommentCount(), these methods are being moved
+ * into dedicated handlers for each type of Task intereaction (TaskCommentsHandler, etc).
+ * 
+ * So please keep in mind a few of these methods have already been deprecated and others may be moved eventually depending on
+ * time restraints.
+ * 
+ * @author Alex Robinson <alex-robinson@live.com>
+ */
 class Task extends \ArticleEntity
 {
 	private $taskDA;
@@ -18,6 +31,11 @@ class Task extends \ArticleEntity
 		parent::setDatabase($database);
 	}
 
+	/**
+	 * Loads the members from the DA and inserts it into this object
+	 * 
+	 * @author Alex Robinson <alex-robinson@live.com>
+	 */
 	public function loadMembers()
 	{
 		$tempArrayOfMembers = $this->taskDA->loadMembers($this->getId());
@@ -36,6 +54,8 @@ class Task extends \ArticleEntity
 	 * Will only load from the database if not already loaded or if $forceReload is set to true.
 	 *
 	 * @param boolean $forceReload
+	 * 
+	 * @author Alex Robinson <alex-robinson@live.com>
 	 */
 	public function loadCommentCount() {
 		$this->taskCommentDA = new TaskCommentDA();
@@ -110,21 +130,55 @@ class Task extends \ArticleEntity
 
 	}
 
+	/**
+	 * Returns the Task's updates
+	 * 
+	 * @return array
+	 * @deprecated Comments are now handled with the TaskComment / TaskCommentHandler classes
+	 * 
+	 * @author Alex Robinson <alex-robinson@live.com>
+	 */
 	public function getUpdates()
 	{
 		return($this->article['updates']);
 	}
-
+	
+	/**
+	 * Returns the last inserted comment
+	 * 
+	 * @return array Holds last comment information  
+	 * 
+	 * @author Alex Robinson <alex-robinson@live.com>
+	 */
 	public function getLastUpdate()
 	{
 		return $this->article['lastUpdate'];
 	}
 
+	/**
+	 * Returns a comments that have been stored in this Task
+	 * 
+	 * @param number $startFrom
+	 * @param number $quantity
+	 * @deprecated Comments are now handled with the TaskComment / TaskCommentHandler classes
+	 * 
+	 * @author Alex Robinson <alex-robinson@live.com>
+	 */
 	public function getComments($startFrom = 0, $quantity = 5)
 	{
 		// return($this->article['comments']);
 	}
 
+	/**
+	 * Returns a custom field that would be stored inside updates
+	 * 
+	 * @param String $updatePlacement
+	 * @param String $attribute
+	 * @return string
+	 * @deprecated Comments are now handled with the TaskComment / TaskCommentHandler classes
+	 * 
+	 * @author Alex Robinson <alex-robinson@live.com>
+	 */
 	public function getUpdateAttribute($updatePlacement, $attribute)
 	{
 		if(array_key_exists($updatePlacement, $this->article['updates']))
@@ -144,6 +198,8 @@ class Task extends \ArticleEntity
 	 * Please call loadCommentCount() before using this method.
 	 * 
 	 * @return boolean
+	 * 
+	 * @author Alex Robinson <alex-robinson@live.com>
 	 */
 	public function getCommentCount()
 	{
@@ -155,7 +211,14 @@ class Task extends \ArticleEntity
 			return false;
 		}
 	}
-
+	
+	/**
+	 * Returns the array all of the Task's data is stored in
+	 * 
+	 * @return array
+	 * 
+	 * @author Alex Robinson <alex-robinson@live.com>
+	 */
 	public function toArray()
 	{
 		return $this->article;
@@ -167,6 +230,8 @@ class Task extends \ArticleEntity
 	 * This is a hacked method, if anyone can come up with some better, please let me know.
 	 *
 	 * @param array $row
+	 * 
+	 * @author Alex Robinson <alex-robinson@live.com>
 	 */
 	public function buildFromQueryRow($row)
 	{

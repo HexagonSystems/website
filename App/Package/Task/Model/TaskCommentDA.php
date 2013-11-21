@@ -34,7 +34,7 @@ class TaskCommentDA
 			$query->bindParam(':content'   , $content , \PDO::PARAM_STR);
 			$query->bindParam(':tag'   , $tag , \PDO::PARAM_STR);
 			$query->bindParam(':postedDate'   , $time , \PDO::PARAM_INT);
-			/* MIGHT NEED TO GET AUTO INCREMENT COMMENT ID HERE */
+			
 			if($query->execute())
 			{
 				return array('success' => true);
@@ -48,8 +48,13 @@ class TaskCommentDA
 		}
 	}
 	
-	/*
-	 * TEMP FUNCTION, PLEASE FIX AT A LATER DATE
+	/**
+	 * Extracts the required information from a TaskComment object and passes it through to the createComment() method
+	 * 
+	 * @param unknown $tempTaskComment
+	 * @return Ambigous <multitype:boolean , string>
+	 *
+	 * @author Alex Robinson <alex-robinson@live.com>
 	 */
 	public function createCommentFromObject($tempTaskComment)
 	{
@@ -57,7 +62,7 @@ class TaskCommentDA
 	}
 	
 	/**
-	 * Loads an existing post from the database
+	 * Loads an existing comment from the database
 	 *
 	 * @param int $taskId the id number of the post
 	 * @param int $memberId
@@ -65,6 +70,8 @@ class TaskCommentDA
 	 * @param int $qty
 	 *
 	 * @return boolean True for loaded false for DB connection error
+	 *
+	 * @author Alex Robinson <alex-robinson@live.com>
 	 */
 	public function loadComments($taskId, $memberId, $pageNum, $qty)
 	{
@@ -117,11 +124,15 @@ class TaskCommentDA
 	}//end loadComments
 	
 	/**
-	 * Loads
-	 * @param int $taskId
-	 * @param int $memberId
-	 * @param Date lastLoaded
+	 * Loads the newest comments for the specified Task from the database
+	 * 
+	 * @param int $taskId The Task's id you want to load the newest comments for
+	 * @param int $memberId Not needed anymore
+	 * @param Date lastLoaded The date of the last loaded comment
+	 * 
 	 * @return string|multitype:multitype: boolean
+	 *
+	 * @author Alex Robinson <alex-robinson@live.com>
 	 */
 	public function loadNewestComments($taskId, $memberId, $lastLoaded, $qty)
 	{
@@ -175,8 +186,11 @@ class TaskCommentDA
 	/**
 	 * Gets the amount of comments that are in the specified Task
 	 * 
-	 * @param unknown $taskId
+	 * @param int $taskId
+	 * 
 	 * @return string|multitype:multitype: boolean
+	 *
+	 * @author Alex Robinson <alex-robinson@live.com>
 	 */
 	public function getCommentCount($taskId)
 	{
@@ -211,8 +225,14 @@ class TaskCommentDA
 		}
 	}//end loadComments
 	
-	/*
-	 * THIS IS A TEMP FUNCTION, PLEASE FIX UP LATER
+	/**
+	 * Extracts the required information from the TaskHours object and passes it through to the AddHours() method.
+	 * 
+	 * @param int $tempTask
+	 * @return multitype:boolean
+	 * @deprecated This is now handled in the TaskHoursDA class
+	 *
+	 * @author Alex Robinson <alex-robinson@live.com>
 	 */
 	function addHoursShort($tempTask)
 	{
@@ -226,6 +246,9 @@ class TaskCommentDA
 	 * @param int $memberId
 	 * @param date $workedDate
 	 * @param int $workedHours
+	 * @deprecated This is now handled in the TaskHoursDA class
+	 *
+	 * @author Alex Robinson <alex-robinson@live.com>
 	 */
 	function addHours($taskId, $memberId, $workedDate, $workedHours)
 	{
