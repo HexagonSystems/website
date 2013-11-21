@@ -284,7 +284,7 @@ class ArticleEntity
 		
 		
 		//$destination = SITE_ROOT."Media/";
-		$destination = "G:\\xampp\htdocs\SmartGitHg\HEXAGONwebsite\Media\\";
+		$destination = "https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/";
 		
 		//any size
 		$typeOK = false;
