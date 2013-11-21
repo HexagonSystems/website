@@ -55,7 +55,7 @@ class AdminController extends Controller
 					$view->assign('files' , $files);
 
 				}
-				else if ($_POST['alter'] == 'Upload File')
+				else if ($_POST['alter'] == 'Upload')
 				{
 					$this->template = $this->template_addFile;
 					parent::invoke();
