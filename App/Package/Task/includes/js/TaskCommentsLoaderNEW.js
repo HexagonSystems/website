@@ -52,6 +52,7 @@ function loadNewestComments(tableConfig) {
 		lastLoaded : tableConfig['content'][0]['date'],
 		qty : 5
 	}, function(nakedJson) {
+		console.log("Finished loading newest comments");
 		console.log(nakedJson);
 		nakedJson = $.parseJSON(nakedJson);
 		response = nakedJson.success;
@@ -254,6 +255,7 @@ function createComment(tableConfig, commentTag, commentTitle, commentContent) {
 		content : commentContent,
 		tag : commentTag
 	}, function(data) {
+		console.log(data);
 		data = $.parseJSON(data);
 		response = data.success;
 		if (response == true) {
@@ -263,7 +265,6 @@ function createComment(tableConfig, commentTag, commentTitle, commentContent) {
 		}
 	});
 }
-
 /**
  * Adds hours into the database
  */

@@ -22,25 +22,29 @@ class AdminView
     public function __construct($template,$footer,$currentPagePosts)
     {
         // echo "In Constructor" ;
-        if (file_exists(AppBase.'/'.$template)) {
+    	$template = AppBase.'/'.Base.'/View/Template/'.$template.'Template.php';
+        if (file_exists($template)) {
             /**
              * trigger render to include file when this model is destroyed
              * if we render it now, we wouldn't be able to assign variables
              * to the view!
              */
-            $this->render = AppBase.'/'.$template;
+            $this->render = $template;
         }else
         {
         	echo "FILE DOES NOT EXIST";
-        	echo AppBase.'/'.$template;
+        	echo $template;
         }
-        if (file_exists(AppBase.'/'.$footer)) {
+        if (file_exists(AppBase.'/View/Template/'.$footer.".html")) {
             /**
              * trigger render to include file when this model is destroyed
              * if we render it now, we wouldn't be able to assign variables
              * to the view!
              */
-            $this->footer = $footer;
+            $this->footer = AppBase.'/View/Template/'.$footer.".html";
+        }else
+        {
+        	echo "Failed loading footer " . AppBase.'/View/Template/'.$footer;
         }
         if ($currentPagePosts) {
             $this->currentPagePosts = $currentPagePosts;
@@ -74,7 +78,7 @@ class AdminView
         } catch (Exception $e) {
 
         }
-        include_once(AppBase.'/'.$this->footer);
+        include_once($this->footer);
 
     }
 } // end class
