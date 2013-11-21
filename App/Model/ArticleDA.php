@@ -23,7 +23,7 @@ class ArticleDA
 	{
 		try
 		{	
-			$sql = "SELECT a.title, a.content, m.memberId, m.firstName, m.lastName FROM article a 
+			$sql = "SELECT a.title, a.content, m.memberId, m.firstName, m.lastName, m.email FROM article a 
 					LEFT JOIN memberarticle ma ON a.articleId = ma.articleId 
 					LEFT JOIN member m ON ma.memberId = m.memberId 
 					WHERE a.category = '1'
@@ -38,5 +38,6 @@ class ArticleDA
 			return $e->getMessage();
 		}
 	}
+
 }
 ?>
