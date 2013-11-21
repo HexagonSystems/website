@@ -251,13 +251,13 @@ class ArticleEntity
 					`status`		= :status
 					WHERE `articleId` = :articleId";
 			$data = $this->database->prepare($sql);
-			$data->bindValue(':title', $this->html($formData['title']));
-			$data->bindValue(':content', $this->html($formData['content']));
-			$data->bindValue(':category', $this->html($formData['category']));
-			$data->bindValue(':tag', $this->html($formData['tag']));
-			$data->bindValue(':date', $this->html($formData['date']));
-			$data->bindValue(':status', $this->html($formData['status']));
-			$data->bindValue(':articleId', $this->html($formData['articleId']));
+			$data->bindValue(':title', $formData['title']);
+			$data->bindValue(':content', $formData['content']);
+			$data->bindValue(':category', $formData['category']);
+			$data->bindValue(':tag', $formData['tag']);
+			$data->bindValue(':date', $formData['date']);
+			$data->bindValue(':status', $formData['status']);
+			$data->bindValue(':articleId', $formData['articleId']);
 			$result = $data->execute();
 			
 			return;
@@ -283,9 +283,7 @@ class ArticleEntity
 		*/
 		
 		
-		//$destination = "https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/";
 		$destination = "Media/";
-
 		
 		//any size
 		$typeOK = false;
