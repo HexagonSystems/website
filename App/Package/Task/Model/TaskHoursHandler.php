@@ -93,6 +93,58 @@ class TaskHoursHandler
 	}
 	
 	/**
+	 * Wipes the hour for a member on the given date.
+	 * 
+	 * After the hours have been wiped a TaskComment will be inserted into the database which should explain the wipe.
+	 * 
+	 * @param unknown $taskId
+	 * @param unknown $memberId
+	 * @param unknown $memberName
+	 * @param unknown $workedDate
+	 */
+	function wipeHoursForDate($taskId, $memberId, $memberName, $workedDate, $workedComment)
+	{
+		$masterResponse = array();
+	
+		/* CREATE HOURS OBJECT */
+		$tempDate = new TaskHours();
+		$tempDate->setTask(array('id' => $taskId));
+		$tempDate->setMember(array('id' => $memberId));
+		$tempDate->setDate($workedDate);
+	
+		$hoursDAReturn = $this->taskHoursDA->wipeHoursFromObject($tempDate);
+	
+		if($hoursDAReturn['success'] === true)
+		{
+			/* ADD TASK TO MASTER RESPONSE */
+			$masterResponse['hours']['success'] = true;
+			$masterResponse['hours']['data'] = $tempDate;
+				
+			/* STRUCTURING DATA TO GO INTO CREATE TASK COMMENT */
+			$tempTaskCommentTag = "wipedHours";
+			$tempTaskCommentTitle = "I have wiped hours for the date ".$workedDate;
+				
+			/* CREATE THE COMMENT IN THE DATABASE */
+			$taskCommentsHandler = new TaskCommentsHandler();
+			$taskCommentsHandler->setDatabase($this->databaseHolder);
+			$commentHandlerResponse = $taskCommentsHandler->createComment($taskId, $memberId, $tempTaskCommentTag, $tempTaskCommentTitle, $workedComment);
+				
+			if($commentHandlerResponse['success'] == false)
+			{
+				return $commentHandlerResponse;
+			}else
+			{
+				$masterResponse['comment'] = $commentHandlerResponse;
+				$masterResponse['success'] = true;
+				return $masterResponse;
+			}
+		}else
+		{
+			return $hoursDAReturn;
+		}
+	}
+	
+	/**
 	 * Contacts the TaskHoursDA class, requests to get each member's
 	 * contribution to a certain Task.
 	 * 

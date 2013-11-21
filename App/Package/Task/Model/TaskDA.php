@@ -229,6 +229,7 @@ class TaskDA
 	 *
 	 * @return array Array of comments
 	 * @throws Exception \PDO expection
+	 * @deprecated
 	 */
 	public function loadUpdates($id, $quantity = 5, $startFrom = 0)
 	{

@@ -29,6 +29,8 @@
   ajaxUrl = "//<?php echo SITE_ROOT.Task\Base; ?>/Model/TaskAJAX.php";
 
   </script>
+  <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>
   <!--<script src="//<?php echo SITE_ROOT.Task\Base; ?>/includes/js/TaskLoader.js"></script>-->
   <!--<script src="//<?php echo SITE_ROOT.Task\Base; ?>/includes/js/TableLoader.js"></script>-->
   <!--<script src="//<?php echo SITE_ROOT.Task\Base; ?>/includes/js/TaskCommentsLoader.js"></script>-->
