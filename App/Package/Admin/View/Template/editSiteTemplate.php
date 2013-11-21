@@ -33,7 +33,7 @@ if(isset($_SESSION['fileMsg']))
 			}
 			if ($category == 2){
 				$category = "Project";
-				$action = "<input class='btn btn-default btn-block' name='alter' type='submit' value='Edit'/><input class='btn btn-default btn-block' name='alter' type='submit' value='Upload File'/>";
+				$action = "<input class='btn btn-default btn-block' name='alter' type='submit' value='Edit'/><input class='btn btn-default btn-block' name='alter' type='submit' value='Upload'/>";
 			}
 			?>
 			<tr>

@@ -24,26 +24,25 @@
 		
 		<div class="form-group">
 			<label for="title" class="col-sm-2 control-label">Title</label> 
-			<div class="col-sm-10 col-lg-4 ">
+			<div class="col-sm-10 col-lg-10">
 				<input class="form-control" type="text" id="title" name="title" title="Title" required />
 			</div>
 		</div><!-- end title group -->
 		
 		<div class="form-group">
 			<label for="file" class="col-sm-2 control-label">File to Upload</label> 
-			<strong><abbr title=".gif .jpeg .png .txt .pdf .zip .doc .xls .docx .xlsx">File Types </abbr></strong>
-			<div class="col-sm-4">
+			<div class="col-sm-10 col-lg-10">
 				<input type="file" id="file" name="file" title="File to Upload" required />
 				<span class="help-block">The accepted file types are: .gif .jpeg .png .txt .pdf .zip .doc .xls .docx .xlsx</span>
 			</div>
 		</div><!-- end file group -->
 		
 		<div class="form-group">
-			<div ><!--class="col-lg-offset-3"-->
-				<div class=" col-lg-4">
+			<div class="col-lg-offset-2">
+				<div class="pull-left">
 					<input class="btn btn-default btn-block" name="action" type="submit" value="Cancel" />
 				</div>
-				<div class=" col-lg-4">
+				<div class="pull-right">
 					<input name="articleId" type="hidden" value="<?php echo $data['proj']->getArticleId();?>" />
 					<input name="memberId" type="hidden" value="<?php echo unserialize($_SESSION['accountObject'])->getMemberId();?>" />
 					<input name="projectName" type="hidden" value="<?php echo $data['proj']->getTitle();?>" />
