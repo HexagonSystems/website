@@ -1,6 +1,6 @@
 <section>
 	<h1> Contact Us</h1>
-	<form class="col-sm-12 col-lg-8 form-horizontal" name="contactUsForm" action="index.php?location=contactPage&&action=email"  method="post">
+	<form class="col-sm-12 col-lg-8 form-horizontal" name="contactUsForm" id="contactUsForm" action="index.php?location=contactPage&&action=email"  method="post">
 		<div class="form-group">
 			<label for="email" class="col-sm-2 control-label">Email</label>
 			<div class="col-sm-10">
@@ -18,7 +18,7 @@
 		<div class="form-group">
 			<label for="msg" class="col-sm-2 control-label">Message</label>
 			<div class="col-sm-10">
-				<textarea class="form-control" id="msg" name="msg" type="textarea" rows="6" placeholder="Message" required></textarea> <!--max length??-->
+				<textarea class="form-control" id="msg" name="msg" type="textarea" rows="6" placeholder="Message" required></textarea>
 			</div>
 		</div>
 		
@@ -62,3 +62,47 @@
 	}
 	?> <!-- end foreach-->
 </section>
+<script>
+/**
+*
+* Validate the contactUsForm
+*/
+var container = $('div.error');
+
+$(document).ready(function(){
+	errorLabelContainer: $("#contactUsForm div.error")
+	$("#contactUsForm").validate({
+		
+		errorContainer: container,
+		errorLabelContainer: $("div", container),
+		wrapper: 'p',
+		rules: {
+			email: {
+				required: true,
+				email: true
+			},
+			name: {
+				required: true,
+				letterswithbasicpunc: true 
+			},
+			msg: {
+				required: true
+			}
+		},
+		messages: {
+			email: {
+				required: 'Please enter your email address.',
+				email: 'Please enter a valid email address.'
+			},
+			name: {
+				required: 'Please enter your name.',
+				letterswithbasicpunc: 'Please enter letters only.'
+			},
+			msg: {
+				required: 'Please enter your message to us.'
+			}
+		}
+	});
+});
+
+</script>
