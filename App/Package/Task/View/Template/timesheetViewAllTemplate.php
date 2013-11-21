@@ -113,7 +113,7 @@ mainTaskTable = {
 /**
  * Comment section paginator on click event
  */
- $(document).on('click', ".pagination li a", function () {
+ $(document).on('click', ".pagination li a", function ( event ) {
 		event.preventDefault();
 
 		
