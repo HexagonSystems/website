@@ -213,7 +213,7 @@ class ArticleEntity
 		}
 	}
 	
-	/* php manual*/	
+	/* php manual
 	function downloadFile($file) 
 	{ 
 		$filename = $file;
@@ -235,6 +235,7 @@ class ArticleEntity
             exit;
         }
     }
+	*/
 	
 	public function saveChanges($formData)
 	{
@@ -305,6 +306,10 @@ class ArticleEntity
 			else
 			{
 				$success = move_uploaded_file($file['file']['tmp_name'], $destination.$fileName);
+				if($success == false)
+				{
+					return;
+				}
 			}
 		}
 		else{
