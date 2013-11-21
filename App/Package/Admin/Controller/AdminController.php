@@ -23,8 +23,7 @@ class AdminController extends Controller
 			$projectarry = $article->getAllArticles();
 			foreach ($projectarry as $row)
 			{
-				$content = $article->htmlOut($row['content']);
-				$projObj[] = $article->getArticleObject($row['articleId'], $row['category'],$row['title'], $content ,$row['tag'],$row['date'],$row['status']);
+				$projObj[] = $article->getArticleObject($row['articleId'], $row['category'],$row['title'], $row['content'] ,$row['tag'],$row['date'],$row['status']);
 			}
 				
 			//create a new view and pass it our template
