@@ -87,13 +87,6 @@ body {
 }
 
 /* TARA CSS*/
-/*INDEX PAGE*/
-.cats {
-	background-image:
-		url('http://localhost/smartgithg/HEXAGONwebsite/Includes/Media/business-cat.jpg');
-	background-color: #40236b;
-}
-
 /* CONTACT PAGE */
 textarea.form-control {
 	resize: none;
