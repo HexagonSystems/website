@@ -295,7 +295,7 @@ function printSingleTask(tableConfig, taskId, taskTitle, taskDscr, taskStatus,
 	contentResponsive.appendChild(contentResponsiveMembers);
 	contentResponsive.appendChild(contentResponsiveLastUpdate);
 
-	var contentResponsiveStatus = taskStatusSpan.cloneNode();
+	var contentResponsiveStatus = taskStatusSpan.cloneNode(true);
 
 	contentResponsiveStatus.className = "visible-xs";
 	contentResponsive.className = "visible-xs";
