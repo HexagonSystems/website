@@ -101,27 +101,32 @@ textarea.form-control {
 
 /*PROJECT PAGE*/
 .indiImage {
-	background-image:
-		url('http://localhost/smartgithg/HEXAGONwebsite/Includes/Media/test1.png');
+	background-image: url('https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/test1.png');
 	background-color: black;
 	height: 150px;
 }
+.edsl{
+	background-image: url('https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/poker.png');
+	background-color: black;
+}
+
+.battle{
+	background-image: url('https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/poker.png');
+	background-color: black;
+}
 
 .poker {
-	background-image:
-		url('http://localhost/smartgithg/HEXAGONwebsite/Includes/Media/poker.png');
+	background-image: url('https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/poker.png');
 	background-color: black;
 }
 
 .snakes {
-	background-image:
-		url('http://localhost/smartgithg/HEXAGONwebsite/Includes/Media/s&l.png');
+	background-image: url('https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/s&l.png');
 	background-color: black;
 }
 
 .dosmon {
-	background-image:
-		url('http://localhost/smartgithg/HEXAGONwebsite/Includes/Media/dosmon.png');
+	background-image: url('https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/dosmon.png');
 	background-color: black;
 }
 
