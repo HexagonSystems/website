@@ -31,7 +31,7 @@ class ContactController extends Controller
 					$content = $_POST['email']."\r\n". $_POST['name']."\r\n".$_POST['msg']."\r\n";
 					$headers = "From: web@hexagon.com.au";
 					//writes email to G:\xampp\mailoutput
-					mail($sendTo, $subject, $content, $headers);
+					mail($sendTo, $subject, $content, $headers, "-r 1624970@student.swin.edu.au");
 					
 					$emailSuccessful=true;
 					$this->template = 'ContactTemplate';
