@@ -37,7 +37,7 @@ class TaskHoursDA
 					(taskId, memberId, hours, date)
 					VALUES
 					(:taskId, :memberId, :hours, :date)
-					ON DUPLICATE KEY UPDATE hours = hours + :hours';
+					ON DUPLICATE KEY UPDATE hours = LEAST(GREATEST((hours + :hours), 0), 24)';
 
 			$query = $this->database->prepare($statement);
 
