@@ -1,21 +1,36 @@
 <section>
+
+	
+
 	<?php
-		if(! isset($_SESSION['account'])){
+		if(! isset($_SESSION['account'])){ // if you are logged out
 	?>
+		<p>
+			This is our sitemap, if you log in other pages are available
+		</p>
+			
 			<a href="index.php?location=indexPage">Home Page</a> <br/>
 			<a href="index.php?location=login">Login</a> <br/>
 			<a href="index.php?location=projectPage">Projects</a> <br/>
 			<a href="index.php?location=aboutPage">About</a> <br/>
 			<a href="index.php?location=contactPage">Contact Us</a> <br/>
+		</p>
 	<?php
-		}else{
+		}else{// if you are logged in
 	?>
-	<a href="index.php?location=indexPage">Home Page</a> <br/>
-	<a href="index.php?location=projectPage">Projects</a> <br/>
-	<a href="index.php?location=aboutPage">About</a> <br/>
-	<a href="index.php?location=contactPage">Contact Us</a> <br/>
-	
-	<a href="index.php?location=timesheetPage">Task</a> <br/>
-	<a href="index.php?location=adminPage">Admin</a> <br/>
+	<p>
+		Public pages:
+	</p>
+	<p>
+		<a href="index.php?location=indexPage">Home Page</a> <br/>
+		<a href="index.php?location=projectPage">Projects</a> <br/>
+		<a href="index.php?location=aboutPage">About</a> <br/>
+		<a href="index.php?location=contactPage">Contact Us</a> <br/>
+	</p>
+	<p>
+		Administrative Pages: <br/>
+		<a href="index.php?location=timesheetPage">Task</a> <br/>
+		<a href="index.php?location=adminPage">Admin</a> <br/>
+	</p>
 	<?php }?>
 </section>
