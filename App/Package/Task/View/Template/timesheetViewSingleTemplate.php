@@ -37,6 +37,10 @@
 				class="btn btn-primary btn-sm form-control">Add Hours</a>
 		</div>
 		<div class="form-group inline col-xs-12 col-sm-4 col-lg-3">
+			<a data-toggle="modal" href="#modal_wipeHours"
+				class="btn btn-primary btn-sm form-control">Wipe Hours</a>
+		</div>
+		<div class="form-group inline col-xs-12 col-sm-4 col-lg-3">
 			<a data-toggle="modal" href="#modal_editTask"
 				class="btn btn-primary btn-sm form-control">Edit Task</a>
 		</div>
@@ -44,6 +48,7 @@
 </div>
 <?php include_once 'modal_comment.php'; ?>
 <?php include_once 'modal_hours.php'; ?>
+<?php include_once 'modal_wipeHours.php'; ?>
 <?php include_once 'modal_editTask.php'; ?>
 <?php include_once 'modal_pickSearchMethod.php'; ?>
 
@@ -88,7 +93,7 @@
 <script>
 ajaxBase = "<?php echo SITE_ROOT.AppBaseSTRIPPED; ?>Package/Task/";
 
-
+/* CONFIG FOR TASK COMMENTS TABLE */
 mainTaskCommentsTable = {
 		'print_location'	:	'#commentsContainer',
 		'paginatorLocation'	:	"#taskCommentPaginator",
@@ -103,25 +108,49 @@ mainTaskCommentsTable = {
 /**
  * Create comment button
  * 
- * NEEDS TO BE REMOVED
+ * First checks if the form is valid, then submits the createComment() function which contacts the database through an AJAX call.
  */
 $(function() {
 	$("#createCommentButton").click(
-			function() {
+			
+		function() {
+			if( validateModalComment() )
+			{
 				createComment(mainTaskCommentsTable, $("#inputTaskTag").val(), $("#inputTaskTitle").val(), $("#inputTaskContent").val());
-			});
+			}
+		});		
 });
 
 /**
  * Add hours button
  * 
+ * First checks if the form is valid, then submits the addHours() function which contacts the database through an AJAX call.
  */
 $(function() {
 	$("#addHoursButton").click(
 			function() {
-				// run script to add hours through ajax
-				addHours(mainTaskCommentsTable, $("#addHoursDatePicker").val(), $(
-						"#addHoursHours").val(), $("#addHoursComment").val());
+				if( validateModalHours() )
+				{
+					// run script to add hours through ajax
+					addHours(mainTaskCommentsTable, $("#addHoursDatePicker").val(), $(
+							"#addHoursHours").val(), $("#addHoursComment").val());
+				}
+			});
+});
+
+/**
+ * Wipe hours button
+ * 
+ * First checks if the form is valid, then submits the addHours() function which contacts the database through an AJAX call.
+ */
+$(function() {
+	$("#wipeHoursButton").click(
+			function() {
+				if( validateModalWipeHours() )
+				{
+					// run script to wipe hours through ajax
+					wipeHours(mainTaskCommentsTable, $("#wipeHoursDatePicker").val(), $("#wipeHoursComment").val());
+				}
 			});
 });
 
@@ -162,17 +191,35 @@ $(function() {
 			'memberFirstName'	: 	"<?php echo unserialize($_SESSION['accountObject'])->getFirstName(); ?>",
 			'taskId'			:	<?php echo $data['task']->getId(); ?>,
 	};
+
+ /**
+  * Edit Task Submit Button
+  * 
+  * First checks if the form is valid, then calls the form's submit function
+  */
  $(function() {
 		$("#editTaskSubmitButton").click(function() {
-			$("#editTaskForm").submit();
+			if( validateModalEditTask() )
+			{
+				$("#editTaskForm").submit();
+			}
 		});
 	});
+
+ /**
+  * Edit Task Form submit() override
+  * 
+  * First checks if the form is valid, then submits the editTask() function which contacts the database through an AJAX call.
+  */
 $(function() {
 	$("#editTaskForm").submit(
 			function(event) {
-				editTask(editTaskArray, mainTaskCommentsTable['taskId'], $("#modal_taskTitle").val(), $("#modal_taskDscr")
-						.val(), $("#modal_taskStatus option:selected").text());
-				event.preventDefault();
+				if( validateModalEditTask() )
+				{
+					editTask(editTaskArray, mainTaskCommentsTable['taskId'], $("#modal_taskTitle").val(), $("#modal_taskDscr")
+							.val(), $("#modal_taskStatus option:selected").text());
+					event.preventDefault();
+				}
 			});
 });
 
@@ -181,14 +228,15 @@ $(function() {
  * Page on load
  */
 $(document).ready(function() {
-	loadComments(mainTaskCommentsTable, 1);
+	loadComments(mainTaskCommentsTable, 1); // Load initial page of comments
 
-	$("#addHoursDatePicker").datepicker();
-	$("#addHoursDatePicker").datepicker('setDate', new Date());
-    $( "#addHoursDatePicker" ).datepicker( "option", "dateFormat", "dd-M-yy" );
+	$("#addHoursDatePicker").datepicker(); // Initialize the DatePicker
+	$("#addHoursDatePicker").datepicker('setDate', new Date()); // Set the date to today's date
+    $( "#addHoursDatePicker" ).datepicker( "option", "dateFormat", "dd-M-yy" ); // Set the formatting for the date
 
-	
-    
-    
+    $("#wipeHoursDatePicker").datepicker(); // Initialize the DatePicker
+	$("#wipeHoursDatePicker").datepicker('setDate', new Date()); // Set the date to today's date
+    $( "#wipeHoursDatePicker" ).datepicker( "option", "dateFormat", "dd-M-yy" ); // Set the formatting for the date
+
 });
 </script>

@@ -9,9 +9,13 @@ class TaskHoursDA
 		$this->database = $database;
 	}
 
-	/*
-	 * THIS IS A TEMP FUNCTION, PLEASE FIX UP LATER
-	*/
+	/**
+	 * Accepts a TaskHours object to be passed in instead of sending the data individually.
+	 * 
+	 * Extracts the data from the object and calls the addHours() function with the correct data.
+	 * 
+	 * @param TaskHours $tempTask
+	 */
 	function addHoursFromObject($tempTask)
 	{
 		$taskId = $tempTask->getTask();
@@ -19,6 +23,22 @@ class TaskHoursDA
 		$memberId = $tempTask->getMember();
 		$memberId = $memberId['id'];
 		return $this->addHours($taskId, $memberId, $tempTask->getDate(), $tempTask->getHours());
+	}
+	
+	/**
+	 * Accepts a TaskHours object to be passed in instead of sending the data individually.
+	 * 
+	 * Extracts the data from the object and calls the wipeHours() function with the correct data.
+	 *
+	 * @param TaskHours $tempTask
+	 */
+	function wipeHoursFromObject($tempTask)
+	{
+		$taskId = $tempTask->getTask();
+		$taskId = $taskId['id'];
+		$memberId = $tempTask->getMember();
+		$memberId = $memberId['id'];
+		return $this->wipeHours($taskId, $memberId, $tempTask->getDate());
 	}
 
 	/**
@@ -61,6 +81,46 @@ class TaskHoursDA
 			return createError($e);
 		}
 	}
+	
+	/**
+	 * Set's the hours for a specific date for a member to 0
+	 *
+	 * @param int $taskId
+	 * @param int $memberId
+	 * @param date $workedDate
+	 * @param int $workedHours
+	 */
+	function wipeHours($taskId, $memberId, $workedDate)
+	{
+		try {
+	
+			$statement = 'INSERT INTO `work`
+					(taskId, memberId, hours, date)
+					VALUES
+					(:taskId, :memberId, 0, :date)
+					ON DUPLICATE KEY UPDATE hours = 0';
+	
+			$query = $this->database->prepare($statement);
+	
+			$workedDate = date("Y-m-d", strtotime($workedDate));
+	
+			$query->bindParam(':taskId'   , $taskId , \PDO::PARAM_INT);
+			$query->bindParam(':memberId'   , $memberId , \PDO::PARAM_INT);
+			$query->bindParam(':date'   , $workedDate , \PDO::PARAM_STR);
+	
+			if($query->execute())
+			{
+				return array('success' => true);
+			}else
+			{
+				return createError("Something went wrong while adding the hours into the database");
+			}
+	
+	
+		} catch (\PDOException $e) {
+			return createError($e);
+		}
+	}
 
 	public function loadHours($taskId, $memberId, $startDate, $endDate)
 	{
@@ -78,11 +138,12 @@ class TaskHoursDA
 		try {
 			$statement = "SELECT * FROM `work` workTable
 					INNER JOIN `task` taskTable ON workTable.taskId = taskTable.taskId
-					INNER JOIN `member` memberTable ON workTable.memberId = memberTable.memberId ";
+					INNER JOIN `member` memberTable ON workTable.memberId = memberTable.memberId 
+					WHERE workTable.hours > 0 ";
 
 			if($taskId || $memberId || $startDate || $endDate)
 			{
-				$statement .= " WHERE";
+				$statement .= " AND";
 				$needAndWhere = false;
 				if($taskId)
 				{

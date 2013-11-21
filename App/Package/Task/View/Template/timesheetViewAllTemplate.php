@@ -141,8 +141,11 @@ mainTaskTable = {
 $(function() {
 	$("#createTaskButton").click(
 			function() {
-				createTask(mainTaskTable, $("#modal_taskTitle").val(), $("#modal_taskDscr")
-						.val(), $("#modal_taskStatus option:selected").text());
+				if( validateModalEditTask() )
+				{
+					createTask(mainTaskTable, $("#modal_taskTitle").val(), $("#modal_taskDscr")
+							.val(), $("#modal_taskStatus option:selected").text());
+				}
 			});
 });
 

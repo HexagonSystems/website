@@ -16,11 +16,12 @@
 					include 'modal_TaskFields.php';
 					?>
 				</form>
+				<div id="editTaskErrorMessage"></div>
+				<!-- end error -->
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button id="editTaskSubmitButton" type="submit" class="btn btn-primary"
-					data-dismiss="modal">Update Task</button>
+				<button id="editTaskSubmitButton" type="submit" class="btn btn-primary">Update Task</button>
 			</div>
 
 			
@@ -30,3 +31,13 @@
 	<!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<script>
+function validateModalEditTask() {
+	return validateModalTaskFields("modal_editTask", "editTaskForm");
+}
+
+$(document).ready(function(){
+	setUpTaskValidation("editTaskForm", "editTaskErrorMessage", "div.editTaskErrorMessage");
+});
+</script>

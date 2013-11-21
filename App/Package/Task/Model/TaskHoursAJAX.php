@@ -40,6 +40,21 @@ if(!isset($_POST['request']))
 				$returnValue = produceError("Missing attributes for adding hours request");
 			}
 			break;
+		case "wipeHours":
+			if(commonAttributesExist() && wipeHoursAttributesExists())
+			{
+				$returnValue = $taskHandler->wipeHoursForDate($_POST['taskId'], $_POST['memberId'], $_POST['memberFirstName'], $_POST['workedDate'], $_POST['workedComment']);
+					
+				if($returnValue['success'] == true)
+				{
+					$tempTaskComment = $returnValue['comment']['data'];
+					$returnValue['comment']['data'] = $tempTaskComment->toArray();
+				}
+			}else
+			{
+				$returnValue = produceError("Missing attributes for wiping hours request");
+			}
+			break;
 		case "hoursContribution":
 			if(commonAttributesExist() && hoursContributionAttributesExists())
 			{
@@ -75,15 +90,83 @@ function commonAttributesExist()
 /**
  * Checks for the required post data for adding hours
  *
+ * If statements are nested to assist with debugging if the need should arise
+ *
  * @return boolean
  */
 function addHoursAttributesExists()
 {
-	if(isset($_POST['workedDate']))
+	if(isset($_POST['taskId']))
 	{
-		if(isset($_POST['workedHours']))
+		if(isset($_POST['workedDate']))
 		{
-			return true;
+			if(isset($_POST['workedHours']))
+			{
+				if(isset($_POST['memberFirstName']))
+				{
+					if(isset($_POST['memberId']))
+					{
+						if(isset($_POST['workedComment']))
+						{
+							return true;
+						}else
+						{
+							return false;
+						}
+					}else
+					{
+						return false;
+					}
+				}
+				{
+					return false;
+				}
+			}else
+			{
+				return false;
+			}
+		}else
+		{
+			return false;
+		}
+	}else
+	{
+		return false;
+	}
+}
+
+/**
+ * Checks for the required post data for wiping hours
+ *
+ * If statements are nested to assist with debugging if the need should arise
+ *
+ * @return boolean
+ */
+function wipeHoursAttributesExists()
+{
+	if(isset($_POST['taskId']))
+	{
+		if(isset($_POST['workedDate']))
+		{
+			if(isset($_POST['memberFirstName']))
+			{
+				if(isset($_POST['memberId']))
+				{
+					if(isset($_POST['workedComment']))
+					{
+						return true;
+					}else
+					{
+						return false;
+					}
+				}else
+				{
+					return false;
+				}
+			}
+			{
+				return false;
+			}
 		}else
 		{
 			return false;
