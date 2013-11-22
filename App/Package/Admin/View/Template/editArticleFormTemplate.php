@@ -1,7 +1,6 @@
 <section>
 	<h1>Edit Article</h1>
 	<form action="index.php?location=adminPage&&action=saveChanges" method="post" class="col-sm-12 col-lg-12 form-horizontal" id="editArticleForm" > 
-		
 		<div class="form-group">
 			<label for="title" class="col-sm-2 control-label">Title</label> 
 			<div class="col-sm-10">
@@ -80,13 +79,10 @@
 		} //end if files
 		?>
 		<div class="form-group">
-			<div class="col-lg-offset-2">
-				<div class="pull-left">
-					<input class="btn btn-default btn-group" name="action" type="submit" value="Cancel" />
-				</div>
+			<div class="col-lg-12">
 				<div class="pull-right">
 					<input name="articleId" type="hidden" value="<?php echo $data['proj']->getArticleId();?>" />
-					<input class="btn btn-default btn-group" name="action" type="submit" value="Save" />
+					<input class="btn btn-primary btn-lg" name="action" type="submit" value="Save" />
 				</div>
 			</div>
 		</div>
@@ -99,6 +95,7 @@
 /**
 *
 * Validate the editArticleForm
+* @author Tara Stevenson
 */
 var container = $('div.error');
 
@@ -120,10 +117,12 @@ $(document).ready(function(){
 			category: {
 				required: true,
 				digits: true
-			}
+			},
+			tag: {
+				required: true
+			},
 			date: {
-				required: true,
-				digits: true
+				required: true
 			}
 		},
 		messages: {
@@ -137,13 +136,12 @@ $(document).ready(function(){
 			category: {
 				required: 'Please enter the category this article belongs to.',
 				digits: 'Please enter numbers only.'
-			}
+			},
 			tag: {
-				letterswithbasicpunc: 'Please enter letters only.'
-			}
+				required: 'Please enter a tag for the article.'
+			},
 			date: {
-				required: 'Please enter the date published.',
-				digits: 'Please enter numbers only.'
+				required: 'Please enter the date published.'
 			}
 		}
 	});
