@@ -10,7 +10,7 @@
 				<h4 class="modal-title" id="modal_createTaskTitle">Create Task</h4>
 			</div>
 			<div class="modal-body">
-				<form class="form-horizontal" role="form">
+				<form class="form-horizontal" role="form" id="createTaskForm">
 				<?php 
 				$taskTitle = "";
 				$taskDescription = "";
@@ -19,11 +19,12 @@
 				
 				?>
 				</form>
+				<div id="createTaskErrorMessage"></div>
+				<!-- end error -->
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button id="createTaskButton" type="button" class="btn btn-primary"
-					data-dismiss="modal">Create Task</button>
+				<button id="createTaskButton" type="button" class="btn btn-primary">Create Task</button>
 			</div>
 		</div>
 		<!-- /.modal-content -->
@@ -31,3 +32,13 @@
 	<!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<script>
+function validateModalEditTask() {
+	return validateModalTaskFields("modal_createTask", "createTaskForm");
+}
+
+$(document).ready(function(){
+	setUpTaskValidation("createTaskForm", "createTaskErrorMessage", "div.createTaskErrorMessage");
+});
+</script>

@@ -5,6 +5,7 @@ class Router
 {
     private function __construct()
     {
+    	
     }
     public static function route(PDO $database)
     {

@@ -1,4 +1,5 @@
 <?php
+
 namespace Task;
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
@@ -9,10 +10,19 @@ $ERROR_MISSING_ATTRIBUTES = "Required attributes not found";
  */
 
 /**
- * The request will be either:
- * 	- create
- *  - load
+ * Task AJAX
+ * 
+ * This class at the moment is designed to be used by the javascript functions for Task and TaskComments.
+ * 
+ * The functions that this class supports are:
+ * 	- Creating Tasks
+ * 	- Editing Tasks
+ * 	- Loading Tasks
+ * 	- Counting how many Tasks exist (with the ability to count for a certain status as well)
+ * 
+ * @author Alex Robinson <alex-robinson@live.com>
  */
+
 if(!isset($_POST['request']))
 {
 	echo "Error: Please submit a request";

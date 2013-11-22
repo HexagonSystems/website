@@ -1,10 +1,18 @@
 <?php
 namespace Task;
+/**
+ * Task Comment
+ * 
+ * Houses all of the data for Task Comments.
+ * 
+ * @author Alex Robinson <alex-robinson@live.com>
+ */
 class TaskComment
 {
 	private $commentArray = array();
 	private $errorArray = array();
 	
+	/* SETS */
 	public function setId($id)
 	{
 		$this->commentArray['id'] = $id;	
@@ -45,6 +53,7 @@ class TaskComment
 		$this->commentArray['date'] = $date;
 	}
 	
+	/* GETS */
 	public function getId()
 	{
 		return $this->commentArray['id'];
@@ -80,11 +89,27 @@ class TaskComment
 		return $this->commentArray['date'];
 	}
 	
+	/**
+	 * Returns the array all of the Task's data is stored in
+	 *
+	 * @return array
+	 *
+	 * @author Alex Robinson <alex-robinson@live.com>
+	 */
 	public function toArray()
 	{
 		return $this->commentArray;
 	}
 	
+	/**
+	 * Was originally made to check if the TaskComment was valid, however was never implemented and isn't a neccessary
+	 * feature at the moment.
+	 * 
+	 * @return boolean
+	 * @deprecated
+	 *
+	 * @author Alex Robinson <alex-robinson@live.com>
+	 */
 	public function isValid()
 	{
 		return true;
@@ -96,6 +121,8 @@ class TaskComment
 	 * This is a hacked method, if anyone can come up with some better, please let me know.
 	 * 
 	 * @param array $row
+	 *
+	 * @author Alex Robinson <alex-robinson@live.com>
 	 */
 	public function buildFromQueryRow($row)
 	{

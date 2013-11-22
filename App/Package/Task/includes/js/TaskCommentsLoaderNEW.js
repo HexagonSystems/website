@@ -288,10 +288,32 @@ function addHours(tableConfig, workedDate, workedHours, workedComment) {
 	});
 }
 
+/**
+ * Adds hours into the database
+ */
+function wipeHours(tableConfig, workedDate, workedComment) {
+	$.post(ajaxBase + "Model/TaskHoursAJAX.php", {
+		request : "wipeHours",
+		taskId : tableConfig['taskId'],
+		memberId : tableConfig['memberId'],
+		memberFirstName : tableConfig['memberFirstName'],
+		workedDate : workedDate,
+		workedComment : workedComment
+	}, function(data) {
+		console.log(data);
+		data = $.parseJSON(data);
+		response = data.success;
+		if (response == true) {
+			loadNewestComments(tableConfig);
+		} else {
+			alert(data);
+		}
+	});
+}
+
 function assignCommentTagClick() {
 	/**
 	 * Add hours button
-	 * 
 	 */
 	$(function() {
 		$(".commentTag").click(function() {

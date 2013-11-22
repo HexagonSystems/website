@@ -1,6 +1,6 @@
 <section>
 	<h1>Edit Article</h1>
-	<form action="index.php?location=adminPage&&action=saveChanges" method="post" class="col-sm-12 col-lg-12 form-horizontal"> 
+	<form action="index.php?location=adminPage&&action=saveChanges" method="post" class="col-sm-12 col-lg-12 form-horizontal" id="editArticleForm" > 
 		
 		<div class="form-group">
 			<label for="title" class="col-sm-2 control-label">Title</label> 
@@ -90,5 +90,63 @@
 				</div>
 			</div>
 		</div>
+		<div id="errors">
+		</div><!-- end error -->
 	</form><!-- end form -->
 </section>
+
+<script>
+/**
+*
+* Validate the editArticleForm
+*/
+var container = $('div.error');
+
+$(document).ready(function(){
+	errorLabelContainer: $("#editArticleForm div.error")
+	$("#editArticleForm").validate({
+		
+		errorContainer: container,
+		errorLabelContainer: $("div", container),
+		wrapper: 'p',
+		rules: {
+			title: {
+				required: true,
+				letterswithbasicpunc: true 
+			},
+			content: {
+				required: true
+			},
+			category: {
+				required: true,
+				digits: true
+			}
+			date: {
+				required: true,
+				digits: true
+			}
+		},
+		messages: {
+			title: {
+				required: 'Please enter the title.',
+				letterswithbasicpunc: 'Please enter letters only.'
+			},
+			content: {
+				required: 'Please enter your description.'
+			},
+			category: {
+				required: 'Please enter the category this article belongs to.',
+				digits: 'Please enter numbers only.'
+			}
+			tag: {
+				letterswithbasicpunc: 'Please enter letters only.'
+			}
+			date: {
+				required: 'Please enter the date published.',
+				digits: 'Please enter numbers only.'
+			}
+		}
+	});
+});
+
+</script>

@@ -92,9 +92,9 @@
 	</ul>
 </div>
 <script
-	src="//<?php echo SITE_ROOT.AppBaseSTRIPPED; ?>Package/Task/includes/js/TaskLoaderNEW.js"></script>
+	src="<?php echo SITE_ROOT.AppBaseSTRIPPED; ?>Package/Task/includes/js/TaskLoaderNEW.js"></script>
 <script
-	src="//<?php echo SITE_ROOT.AppBaseSTRIPPED; ?>Package/Task/includes/js/TableLoaderNEW.js"></script>
+	src="<?php echo SITE_ROOT.AppBaseSTRIPPED; ?>Package/Task/includes/js/TableLoaderNEW.js"></script>
 <script>
 ajaxBase = "<?php echo SITE_ROOT.AppBaseSTRIPPED; ?>Package/Task/";
 
@@ -113,7 +113,7 @@ mainTaskTable = {
 /**
  * Comment section paginator on click event
  */
- $(document).on('click', ".pagination li a", function () {
+ $(document).on('click', ".pagination li a", function ( event ) {
 		event.preventDefault();
 
 		
@@ -141,8 +141,11 @@ mainTaskTable = {
 $(function() {
 	$("#createTaskButton").click(
 			function() {
-				createTask(mainTaskTable, $("#modal_taskTitle").val(), $("#modal_taskDscr")
-						.val(), $("#modal_taskStatus option:selected").text());
+				if( validateModalEditTask() )
+				{
+					createTask(mainTaskTable, $("#modal_taskTitle").val(), $("#modal_taskDscr")
+							.val(), $("#modal_taskStatus option:selected").text());
+				}
 			});
 });
 

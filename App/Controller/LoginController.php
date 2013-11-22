@@ -12,10 +12,10 @@ class LoginController extends Controller
 		if(!isset($get['action'])){
 			$get['action'] = null;
 		}
-		
+
 		//as the form isn't outputting an action we will just check for the POST data
 		if(isset($_POST['username']) && isset($_POST['pass'])){
-			
+				
 			$user = new User($this->database);
 
 			$user = $user->loginUser($_POST["username"], $_POST["pass"]);
@@ -24,42 +24,58 @@ class LoginController extends Controller
 			if(!is_a($user, 'User')){
 				//Alert with the error
 				echo '<div class="alert alert-warning alert-dismissable">
-  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-  <strong>Error Logging In!</strong> '.$user.'</div>';
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<strong>Error Logging In!</strong> '.$user.'</div>';
 
-  				//Return to Login Page
+				//Return to Login Page
 				$this->template = 'LoginTemplate';
 
 				//create a new view and pass it our template
 				$view = new LoginView($this->template,$this->footer);
-				
+
 			}else{ //Success
 				//Serialize the user
 				$user->sessionCreate();
+				header('Location: '.$_SERVER['REQUEST_URI'].'&action=loginSuccess');
+			}
+
+		}else if($get['action'] == 'loginSuccess') {
+			if(isset($_SESSION['accountObject']) || isset($_SESSION['account'])){
+				//Destroy the session for the user
+				$user = unserialize($_SESSION['accountObject']);
+				
 				//var_dump($user);
 				//Success message
 				echo '<div class="alert alert-info alert-dismissable">
-  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-  <strong>Logged In!</strong> '.$user->getFirstName().' '.$user->getLastName().' logged in.</div>';
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					<strong>Logged In!</strong> '.$user->getFirstName().' '.$user->getLastName().' logged in.</div>';
 				
 				//Return to index
 				$this->template = 'IndexTemplate';
-
+				
+				//create a new view and pass it our template
+				$view = new LoginView($this->template,$this->footer);
+			}else
+			{
+				$this->template = 'LoginTemplate';
+				
 				//create a new view and pass it our template
 				$view = new LoginView($this->template,$this->footer);
 			}
-
+			
+				
 		}else if($get['action'] == 'logout'){
 
 			if(isset($_SESSION['accountObject']) || isset($_SESSION['account'])){
 				//Destroy the session for the user
 				unserialize($_SESSION['accountObject'])->sessionDestroy();
+				header('Location: '.$_SERVER['REQUEST_URI']);
 			}
 
 			//Alert about log out
 			echo '<div class="alert alert-info alert-dismissable">
-  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-  <strong>Logged Out!</strong> User logged out.</div>';
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					<strong>Logged Out!</strong> User logged out.</div>';
 			$this->template = 'LoginTemplate';
 
 			//create a new view and pass it our template
@@ -75,7 +91,7 @@ class LoginController extends Controller
 					//NOt logged In
 					echo $user;
 					$this->template = 'IndexTemplate';
-					
+						
 					//create a new view and pass it our template
 					$view = new LoginView($this->template,$this->footer);
 
@@ -85,14 +101,14 @@ class LoginController extends Controller
 
 				}
 			}
-		/*
-		 * Forgot Password Screen
-		*/
+			/*
+			 * Forgot Password Screen
+			*/
 		}else if($get['action'] == 'forgotPassword'){
 
 			if(!isset($_POST['action']) && !isset($_POST['email'])){
 				$this->template = 'ResetPasswordTemplate';
-				
+
 				$view = new LoginView($this->template,$this->footer);
 
 			}else{

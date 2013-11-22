@@ -87,13 +87,6 @@ body {
 }
 
 /* TARA CSS*/
-/*INDEX PAGE*/
-.cats {
-	background-image:
-		url('http://localhost/smartgithg/HEXAGONwebsite/Includes/Media/business-cat.jpg');
-	background-color: #40236b;
-}
-
 /* CONTACT PAGE */
 textarea.form-control {
 	resize: none;
@@ -121,12 +114,12 @@ textarea.form-control {
 }
 
 .snakes {
-	background-image: url('https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/s&l.png');
+	background-image: url('Media/s&l.png');
 	background-color: black;
 }
 
 .dosmon {
-	background-image: url('https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/dosmon.png');
+	background-image: url('../Media/dosmon.png');
 	background-color: black;
 }
 
