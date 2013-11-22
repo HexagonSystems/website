@@ -1,6 +1,6 @@
 <?php
 /**
-*	
+*	This file is used to access the database and return the data selected
 *
 *@ author:	Sam Imeneo
 *@author:	Alex Robinson
