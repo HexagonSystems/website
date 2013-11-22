@@ -238,5 +238,18 @@ $(document).ready(function() {
 	$("#wipeHoursDatePicker").datepicker('setDate', new Date()); // Set the date to today's date
     $( "#wipeHoursDatePicker" ).datepicker( "option", "dateFormat", "dd-M-yy" ); // Set the formatting for the date
 
+	/*
+	The following code was taken from http://stackoverflow.com/questions/18426225/jquery-validation-plugin-validate-date-like-20-august-2013-safari-bug
+		From the user Nifty
+		On Aug 26 at 6:05
+	*/
+    /*Override the validator's Date Validation */
+    $.validator.methods.date=
+    function(value, element) {  
+	    try{
+	    var _appleDates=$.datepicker.formatDate("mm/dd/yy",$.datepicker.parseDate("dd-M-yy",value));
+	    	return (!/Invalid|NaN/.test(new Date(_appleDates).toString()));
+	    }catch(e){return false;};
+    };
 });
 </script>
