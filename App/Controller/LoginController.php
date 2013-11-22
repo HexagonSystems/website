@@ -43,7 +43,6 @@ class LoginController extends Controller
 			if(isset($_SESSION['accountObject']) || isset($_SESSION['account'])){
 				//Destroy the session for the user
 				$user = unserialize($_SESSION['accountObject']);
-				$user->sessionDestroy();
 				
 				//var_dump($user);
 				//Success message
