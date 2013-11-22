@@ -21,7 +21,8 @@ if(isset($_SESSION['fileMsg']))
 			</tr>
 		</thead>
 		<tbody>
-		<?php foreach( $data['proj'] as $no => $content)
+		<?php 
+		foreach( $data['proj'] as $no => $content)
 		{
 			$date = $data['proj'][$no]->getDate();
 			$finishDate = date('d M Y', strtotime($date));
