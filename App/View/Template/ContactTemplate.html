@@ -53,8 +53,8 @@
 	{
 		?>
 		<div class="col-xs-12 col-sm-6 col-lg-4">
+			<b><p class="text-center"><?php echo $content->getFirstName()." ".$content->getLastName();?></p></b>
 			<a href="mailto:<?php echo $content->getEmail();?>">
-				<p class="text-center"><?php echo $content->getFirstName()." ".$content->getLastName();?></p>
 				<p class="text-center"><?php echo $content->getEmail();?></p>
 			</a>
 		</div>
