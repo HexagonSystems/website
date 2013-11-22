@@ -35,7 +35,7 @@
   </div><!-- /.modal -->
   
   <script>
-var container = $('div.wipeTaskHoursErrorMessage');
+
 
 function validateModalWipeHours() {
 	if( $("#wipeHoursDate").valid() )
@@ -49,11 +49,13 @@ function validateModalWipeHours() {
 }
 
 $(document).ready(function(){
+	var wipeHoursContainer = $('div.wipeTaskHoursErrorMessage');
+	
 	errorLabelContainer: $("#wipeHoursDate div.wipeTaskHoursErrorMessage")
 	$("#wipeHoursDate").validate({
 		
 		errorContainer: container,
-		errorLabelContainer: $("div", container),
+		errorLabelContainer: $("div", wipeHoursContainer),
 		wrapper: 'p',
 		rules: {
 			wipeHoursDatePicker: {
