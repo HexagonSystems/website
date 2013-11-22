@@ -1,8 +1,23 @@
 <?php
-
+/**
+ * This is the controller that handles the projects 
+ * Hexagon has worked on.
+ * 
+ * @author Tara Stevenson <tara.stevenson@hotmail.com>
+ * @version 1.0
+ * @package app
+ *
+ */
 class ProjectController extends Controller
 {
 
+	/*
+	* If the user has clicked a project to view
+	* this method will discoved which project and 
+	* load the project data, the files associated
+	* and the template for that project. If there is no
+	* action the page will load all projects.
+	*/
     public function invoke()
     {
         parent::invoke();
@@ -12,9 +27,7 @@ class ProjectController extends Controller
 		if (isset($_GET['action']))
 		{
 			$article = new ArticleEntity($this->database);
-			//$user = new User($this->database);
-			
-			//pages are article ids
+			//param = $page String ID of the article that was presssed
 			$userData = array();
 			switch ($page) {
 				case "6":
@@ -34,7 +47,6 @@ class ProjectController extends Controller
 					$page = null;
 			}//end switch
 			
-			
 			$this->template = 'IndividualProjectTemplate';
             $view = new ProjectView($this->template,$this->footer);
 			$content =  $userData;
@@ -47,9 +59,10 @@ class ProjectController extends Controller
 		else if (!isset($_get['action'])) {
 
 			$article = new ArticleEntity($this->database);
+			//finds all projects
 			$resultSet = $article->getProjectData();
-			
 			$project = array();
+			//creates object
 			foreach($resultSet as $row){
 				$project[] = $article->getIndividualProjectObject($row['articleId'], $row['title'], $row['content'], $row['tag'], $row['date'], $row['firstName'], $row['lastName']);
 			}

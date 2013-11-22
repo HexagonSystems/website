@@ -3,10 +3,11 @@
 	<h3><?php echo $data['proj']->getTitle(); ?></h3>
 	<p><?php echo $data['proj']->getContent(); ?></p>
 	
-	<?php 	
+	<?php 
+	// loops through the $data['files'] array to output the names of associated files
 	if (!empty($data['files'][0])) {
 	?>
-		<label for="files" class="col-sm-2 control-label">Files</label>
+		<label class="col-sm-2 text-right">Files</label>
 		<div class="col-sm-10">
 			<?php 	
 			foreach($data['files'][0] as $index=>$file)
@@ -21,7 +22,6 @@
 		?>
 	
 	<form action="index.php?location=adminPage&&action=saveChanges" method="post" class="col-sm-12 col-lg-12 form-horizontal" enctype="multipart/form-data"> 
-		
 		<div class="form-group">
 			<label for="title" class="col-sm-2 control-label">Title</label> 
 			<div class="col-sm-10 col-lg-10">
@@ -38,15 +38,12 @@
 		</div><!-- end file group -->
 		
 		<div class="form-group">
-			<div class="col-lg-offset-2">
-				<div class="pull-left">
-					<input class="btn btn-default btn-block" name="action" type="submit" value="Cancel" />
-				</div>
-				<div class="pull-right">
+			<div class="col-lg-12">
+				<div class="col-lg-2 pull-right">
 					<input name="articleId" type="hidden" value="<?php echo $data['proj']->getArticleId();?>" />
 					<input name="memberId" type="hidden" value="<?php echo unserialize($_SESSION['accountObject'])->getMemberId();?>" />
 					<input name="projectName" type="hidden" value="<?php echo $data['proj']->getTitle();?>" />
-					<input class="btn btn-default btn-block" name="action" type="submit" value="Upload" />
+					<input class="btn btn-primary btn-lg btn-block" name="action" type="submit" value="Upload" />
 				</div>
 			</div>
 		</div><!-- end button group -->
