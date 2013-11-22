@@ -54,7 +54,7 @@ $(document).ready(function(){
 	errorLabelContainer: $("#wipeHoursDate div.wipeTaskHoursErrorMessage")
 	$("#wipeHoursDate").validate({
 		
-		errorContainer: container,
+		errorContainer: wipeHoursContainer,
 		errorLabelContainer: $("div", wipeHoursContainer),
 		wrapper: 'p',
 		rules: {
