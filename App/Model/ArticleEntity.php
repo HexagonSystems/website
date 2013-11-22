@@ -207,10 +207,10 @@ class ArticleEntity
 	* @param String $tag
 	* @param String $date
 	* @param String $firstName
-	* @param String $firstName
+	* @param String $lastName
 	* @return Object|String Return this object or an error string
 	*/
-	public function getIndividualProjectObject($articleId, $title, $content, $tag, $date, $firstName, $firstName)
+	public function getIndividualProjectObject($articleId, $title, $content, $tag, $date, $firstName, $lastName)
 	{
 		$obj = new ArticleEntity($this->database);
 		
