@@ -1,7 +1,15 @@
 <section>
 	
-	
 	<?php
+	/**
+	 * Outputs the data received from the database into the page in a foreach loop.
+	 * The foreach loop generates generates two columns which it will place the articles into.
+	 * Each article has a title and its content.
+	 * When the screen size drops down to small the columns will adjust in size and down to 1 column if appropriate.
+	 *
+	 * @author Sam Imeneo
+	 */
+	
 		$i=0;
 		echo "<div class='row'>";
 		foreach($data['resultSet'] as $row => $column)

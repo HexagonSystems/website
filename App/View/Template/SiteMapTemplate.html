@@ -1,8 +1,18 @@
 <section>
 
-	
 
 	<?php
+	
+		/**
+		 * This page has relative links to all other pages on the site.
+		 * If the user is logged in then they can see all links.
+		 * If the user is not logged in then they can only view public pages. This is to prevent them trying to navigate to pages they cannot access.
+		 * 
+		 * @author Sam Imeneo
+		 */
+	
+	
+	
 		if(! isset($_SESSION['account'])){ // if you are logged out
 	?>
 		<p>

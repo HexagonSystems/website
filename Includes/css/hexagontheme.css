@@ -101,17 +101,17 @@ textarea.form-control {
 
 /*PROJECT PAGE*/
 .indiImage {
-	background-image: url('https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/test1.png');
+	background-image: url('https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/header.png');
 	background-color: black;
 	height: 150px;
 }
 .edsl{
-	background-image: url('https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/poker.png');
+	background-image: url('https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/edsl.png');
 	background-color: black;
 }
 
 .battle{
-	background-image: url('https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/poker.png');
+	background-image: url('https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/dosmon.png');
 	background-color: black;
 }
 

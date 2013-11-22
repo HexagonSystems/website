@@ -1,6 +1,17 @@
 
 <?php
 
+	/**
+	 * This file assigns the database that will be used as a variable
+	 * the template that will be used to another variable 
+	 * and the function getAllBios() is called to get the content from 
+	 * the database and asign it to a variable
+	 * 
+	 *
+	 * @author Sam Imeneo
+	 * @package
+	 */
+
 class AboutController extends Controller
 {
 
