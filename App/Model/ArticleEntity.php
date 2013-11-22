@@ -5,6 +5,7 @@
  *
  * @author Stephen McMahon <stephentmcm@gmail.com>
  * @author Alex Robinson
+ * @author Tara Stevenson <tara.stevenson@hotmail.com>
  */
 class ArticleEntity
 {
@@ -102,19 +103,39 @@ class ArticleEntity
     }//end articleNamedParams
 
 	/*****************************************************************************************************/
-	
+	/*
+	* When this function is called htmlspecialchars() will remove the 
+	* meaning of any html code and convert it to a flat string
+	*
+	* @param 	$text	String of text
+	* @return	$char	String sanitised
+	*/
 	function html($text)
 	{	
 		$char = htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
 		return $char;
 	}
 	
+	/*
+	* When this function is called it will do the opposite of 
+	* htmlspecialchars() and retun meaning to any html characters 
+	*
+	* @param 	$text	String of text
+	* @return	$char	String sanitised
+	*/
 	function htmlOut($text)
 	{
 		$char = htmlspecialchars_decode($text, ENT_NOQUOTES);
 		return $char;
 	}
 	
+	/*
+	* When this function is called it will return all the projects 
+	* we have worked on this is classed by the caragory of 2
+	*
+	* @return	$sql		String array
+	* @throws	Exception
+	*/
 	public function getProjectData(){
 		try {
 			$sql = $this->database->query("SELECT a.title, a.articleId, a.content, a.tag, a.date, m.firstName, m.lastName FROM article a 
@@ -132,7 +153,15 @@ class ArticleEntity
 		}
 	}
 	
-/**/	public function getIndividualProjectData($id){
+	/*
+	* The query will search for the project data and the 
+	* all people who worked on it via the article id
+	*
+	* @param 	$articleId	string number of an article
+	* @return	$sql		String array
+	* @throws	Exception
+	*/
+	public function getIndividualProjectData($id){
 		try {
 			$sql = $this->database->query("SELECT a.title, a.articleId, a.content, a.tag, a.date, m.firstName, m.lastName FROM article a 
 											LEFT JOIN memberarticle ma ON a.articleId = ma.articleId 
@@ -148,7 +177,16 @@ class ArticleEntity
 		}
 	}
 
-/**/	public function getIndividualProjectFiles($titleName){
+	/*
+	* Gets all the file data associated with an individual project
+	* The title of the project is the tag for each file. This is how 
+	* it file how they're connected
+	*
+	* @param 	$titleName	string title of an article is the 
+	* @return	$sql		String array
+	* @throws	Exception
+	*/
+	public function getIndividualProjectFiles($titleName){
 		try {
 			$sql = $this->database->query("SELECT a.title, a.content, a.date FROM article a WHERE category = '3' AND tag = '$titleName';")->fetchAll();
 			return $sql;
@@ -160,7 +198,19 @@ class ArticleEntity
 		}
 	}
 	
-	public function getIndividualProjectObject($articleId, $title, $content, $tag, $date, $firstName, $lastName)
+	/**
+	* Turns the Individual Project data into objects
+	*
+	* @param String $articleId
+	* @param String $title
+	* @param String $content
+	* @param String $tag
+	* @param String $date
+	* @param String $firstName
+	* @param String $firstName
+	* @return Object|String Return this object or an error string
+	*/
+	public function getIndividualProjectObject($articleId, $title, $content, $tag, $date, $firstName, $firstName)
 	{
 		$obj = new ArticleEntity($this->database);
 		
@@ -174,6 +224,17 @@ class ArticleEntity
 		return($obj);
 	}
 	
+	/**
+	* Turns the article data into objects
+	*
+	* @param String $articleId
+	* @param String $category
+	* @param String $title
+	* @param String $content
+	* @param String $tag
+	* @param String $status
+	* @return Object|String Return this object or an error string
+	*/
 	public function getArticleObject($articleId, $category, $title, $content, $tag, $date, $status)
 	{
 		$obj = new ArticleEntity($this->database);
@@ -188,6 +249,12 @@ class ArticleEntity
 		return($obj);
 	}
 	
+	/**
+	* Gets all the the article data that are either Bio(1) or Projects(2)
+	* 
+	* @return	$sql	String array
+	* @throws	Exception
+	*/
 	public function getAllArticles(){
 		try {
 			$sql = $this->database->prepare("SELECT * FROM `article` WHERE category = '1' OR category = '2' ORDER BY category, title;");
@@ -202,7 +269,14 @@ class ArticleEntity
 		}
 	}
 	
-/**/	public function getProjectDataToEdit($id){
+	/**
+	* Gets all the the article data where the id is passed thrugh
+	* 
+	* @param	$id		String article number
+	* @return	$sql	String array
+	* @throws	Exception
+	*/
+	public function getProjectDataToEdit($id){
 		try {
 			$sql = $this->database->query("SELECT * FROM article WHERE articleId = '$id';")->fetchAll();
 			return $sql;
@@ -214,30 +288,13 @@ class ArticleEntity
 		}
 	}
 	
-	/* php manual
-	function downloadFile($file) 
-	{ 
-		$filename = $file;
-		$file_path = realpath("Media/".$filename);
-	
-		if(file_exists($file_path)) {
-            header('Content-Description: File Transfer');
-            header('Content-Type: application/octet-stream');
-           // header('Content-Disposition: attachment; filename='.basename($file_path));
-            header('Content-Disposition: attachment; filename='.urlencode($file_path));
-            header('Content-Transfer-Encoding: binary');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate');
-            header('Pragma: public');
-            header('Content-Length: ' . filesize($file_path));
-            ob_clean();
-            flush();
-            readfile($file_path);
-            exit;
-        }
-    }
+	/**
+	* Saves the data sent through the param into the database
+	* 
+	* @param	$formData	String array 
+	* @return	nil
+	* @throws	Exception
 	*/
-	
 	public function saveChanges($formData)
 	{
 		try
@@ -268,6 +325,14 @@ class ArticleEntity
 		}
 	}
 
+	/**
+	* Validates if the file type is accepted and changed the file name 
+	* if spaces are found. If ok moves the file to the media folder 
+	* 
+	* @param	$file		String array 
+	* @return	$filename	String
+	* @throws	Exception
+	*/
 	public function uploadFile($file)
 	{
 		/*
@@ -281,11 +346,10 @@ class ArticleEntity
 		* 7 Cannot write file to disk												
 		* 8 Upload stopped by an unspecified PHP extension							
 		*/
-		
-		
+
 		$destination = "Media/";
 		
-		//any size
+		//no limit on size
 		$typeOK = false;
 		$permitted = array('image/gif','image/jpeg', 'image/pjpeg', 'image/png', 'application/pdf', 'application/zip', 'application/x-zip', 'application/x-zip-compressed', 'application/x-rar-compressed', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/plain');
 		foreach ($permitted as $type) 
@@ -295,7 +359,7 @@ class ArticleEntity
 				$typeOK = true;
 				break;
 			}
-		}
+		}//end foreach
 		
 		if ($typeOK)
 		{
@@ -310,14 +374,19 @@ class ArticleEntity
 				{
 					return;
 				}
-			}
+			}//end statement
 		}
 		else{
 			return;
-		}
+		}//end statement
 		return $fileName;
 	}
 	
+	/*
+	* saves the file that has been uploaded into the database then
+	* creates a new memberarticle entry
+	*
+	*/
 	public function createArticle($post, $fileName)
 	{
 		$date = date('Y-m-d', time());
@@ -344,10 +413,9 @@ class ArticleEntity
 		catch (PDOException $e) {
 			echo $e->getMessage();
 			return;
-		}
+		}//end statment
 		
 		$lastArticleId = $this->database->lastInsertId();
-		echo $lastArticleId;
 		
 		try
 		{
@@ -367,12 +435,12 @@ class ArticleEntity
 		catch (PDOException $e) {
 			echo $e->getMessage();
 			return;
-		}
-		
-	}
+		}//end statment
+	}// end function
 	
 	/**
 	 * Gets all possible Task status'
+	 * @param nil
 	 * @author Alex
 	 * @author Tara
 	 * @return array
@@ -414,7 +482,6 @@ class ArticleEntity
 			return $this->createError($e);
 		} //end of try/catch statement;
 	}
-	/****************************************************************************************************************************************************/
 	
     //*********SETTERS----------------------
     public function setStatus($param)

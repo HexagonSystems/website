@@ -1,4 +1,13 @@
 <?php
+/**
+* User Model for Hexagon
+*
+* @author Alex Robinson
+* @author Tara Stevenson <tara.stevenson@hotmail.com>
+* @version 1.0
+* @package app
+*
+*/
 class User
 {
 	private $database;
@@ -78,13 +87,13 @@ class User
 	} //end createUser
 
 	/**
-	 * Tests if username exists in Database
-	 * Can be used to check the user has the right username or check the user isn't trying to
-	 * register a username that already exists
-	 * @param  String    $username
-	 * @return String
-	 * @throws Exception
-	 */
+	* Tests if username exists in Database
+	* Can be used to check the user has the right username or check the user isn't trying to
+	* register a username that already exists
+	* @param  String    $username
+	* @return String
+	* @throws Exception
+	*/
 	public function checkUsername($email)
 	{
 
@@ -329,12 +338,17 @@ class User
 		return("saved");
 	}
 
-	/**
-	* Retrive all the data in the member table
-	* @param 
+	/*
+	* When this function is called the details of a user are passed in and 
+	* returned as an object
+	*
+	* @param 	$memberId	String user data
+	* @param 	$firstName	String user data
+	* @param 	$lastName	String user data
+	* @param 	$email		String user data
+	* @return	$obj		an array of set objects
+	* @throws	Exception
 	*/
-	/*******TARA************** OBJECT*********************************************************************************************************/
-	
 	public function userDetails($memberId, $firstName, $lastName, $email)
 	{
 		$obj = new User($this->database);
@@ -347,7 +361,15 @@ class User
 		return($obj);
 		
 	}
-	
+
+	/*
+	* When this function is called the id of an article is passed through
+	* the query will search for all people who were associated with the project
+	*
+	* @param 	$articleId	string number of an article
+	* @return	$sql		String array name and email of people/person who was responsible for the article
+	* @throws	Exception
+	*/
 	public function getUserProjectData($articleId)
 	{
 		try {
@@ -364,7 +386,6 @@ class User
 			return false;
 		}
 	}
-	/****************************************************************************************************************************************************/
 	
 	/**
 	 * Set the username for the user
