@@ -2,7 +2,9 @@
 	<h3>
 		<span id="taskTitleLocation"><?php echo $data['task']->getTitle(); ?>
 		</span> <small id="taskStatusLocation"><?php echo $data['task']->getStatus(); ?>
-		</small>
+		</small> <a data-toggle="modal" href="#modal_help" class="btn btn-sm">
+			<span class="glyphicon glyphicon-question-sign"></span> Help
+		</a>
 	</h3>
 	<article>
 		Members
@@ -51,6 +53,10 @@
 <?php include_once 'modal_wipeHours.php'; ?>
 <?php include_once 'modal_editTask.php'; ?>
 <?php include_once 'modal_pickSearchMethod.php'; ?>
+<?php 
+$help_file = "help-viewSingleTask.php";
+include_once 'modal_help.php';
+?>
 
 <table id="testtable"
 	class="table table-rowBorder table-hover table-zebra table-responsive-dropLast2Col">

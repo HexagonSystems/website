@@ -1,7 +1,11 @@
 <header class="page-header relative">
 	<h3>
 		Project Tasks <small>Click 'Create Task' to create a new Task</small>
+		<a data-toggle="modal" href="#modal_help" class="btn btn-sm"> <span
+			class="glyphicon glyphicon-question-sign"></span> Help
+		</a>
 	</h3>
+
 </header>
 
 <div class="panel panel-default">
@@ -55,6 +59,11 @@
 
 
 <?php include_once 'modal_createTask.php'; ?>
+
+<?php 
+$help_file = "help-viewAllTasks.php";
+include_once 'modal_help.php';
+?>
 
 <table
 	class="table table-rowBorder table-hover table-zebra table-responsive-dropLast2Col">
