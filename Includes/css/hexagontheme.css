@@ -77,6 +77,13 @@ body {
 	color: #fff;
 }
 
+/*
+CSS Font Styles
+*/
+h1,h2 {
+	font-variant: small-caps !important;
+}
+
 .bs-header p {
 	font-weight: 300;
 	line-height: 1.5;
@@ -94,32 +101,39 @@ textarea.form-control {
 
 /*PROJECT PAGE*/
 .indiImage {
-	background-image: url('https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/header.png');
+	background-image:
+		url('https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/header.png');
 	background-color: black;
 	height: 150px;
 }
-.edsl{
-	background-image: url('https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/edsl.png');
+
+.edsl {
+	background-image:
+		url('https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/edsl.png');
 	background-color: black;
 }
 
-.battle{
-	background-image: url('https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/dosmon.png');
+.battle {
+	background-image:
+		url('https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/dosmon.png');
 	background-color: black;
 }
 
 .poker {
-	background-image: url('https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/poker.png');
+	background-image:
+		url('https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/poker.png');
 	background-color: black;
 }
 
 .snakes {
-	background-image: url('https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/s&l.png');
+	background-image:
+		url('https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/s&l.png');
 	background-color: black;
 }
 
 .dosmon {
-	background-image: url('https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/dosmon.png');
+	background-image:
+		url('https://mercury.ict.swin.edu.au/ccpmg501a/ccpmg501a_18/website/Media/dosmon.png');
 	background-color: black;
 }
 
@@ -346,7 +360,6 @@ h2.project-title {
 /**
  * Tables
  */
- 
 table,th,td,tr,thead {
 	word-wrap: break-word !important;
 }
@@ -418,7 +431,6 @@ table,th,td,tr,thead {
 	display: none;
 }
 
-
 .margin-left-m {
 	margin-left: 2em;
 }
@@ -431,7 +443,7 @@ table,th,td,tr,thead {
 /* BUTTON SELECTED STATE - used for paginators */
 .paginator-selected {
 	background-color: #eee !important;
-	background:#eee;
+	background: #eee;
 }
 
 /* MOBILE SCREENS */
@@ -450,7 +462,7 @@ table,th,td,tr,thead {
 	.mobile-100width>* {
 		width: 100%;
 	}
-	.table-responsive *{
+	.table-responsive * {
 		word-wrap: break-word !important;
 		white-space: normal !important;
 	}

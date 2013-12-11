@@ -1,0 +1,31 @@
+td:nth-of-type(7n + 1) {
+	background: #FF0000 !important;
+}
+
+td:nth-of-type(7n + 2) {
+	background: #FF7F00 !important;
+}
+
+td:nth-of-type(7n + 3) {
+	background: #FFFF00 !important;
+}
+
+td:nth-of-type(7n + 4) {
+	background: #00FF00 !important;
+}
+
+td:nth-of-type(7n + 5) {
+	background: #0000FF !important;
+}
+
+td:nth-of-type(7n + 6) {
+	background: #4B0082 !important;
+}
+
+td:nth-of-type(7n + 7) {
+	background: #8F00FF !important;
+}
+
+* p:nth-of-type(2n + 1)::selection {
+	background-color: green !important;
+}
