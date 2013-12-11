@@ -1,5 +1,13 @@
+<?php
+	$help_file = "helpAdminUpload.php";
+	include_once 'modal_help.php';
+?>
 <section>
-	<h1>Add A File</h1>
+	<h1>Add A File
+		<a data-toggle="modal" href="#modal_help" class="btn btn-sm">
+			<span class="glyphicon glyphicon-question-sign"></span> Help
+		</a>
+	</h1>
 	<h3><?php echo $data['proj']->getTitle(); ?></h3>
 	<p><?php echo $data['proj']->getContent(); ?></p>
 	

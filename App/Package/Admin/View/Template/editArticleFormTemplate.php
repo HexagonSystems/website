@@ -1,5 +1,13 @@
+<?php
+	$help_file = "helpAdminEdit.php";
+	include_once 'modal_help.php';
+?>
 <section>
-	<h1>Edit Article</h1>
+	<h1>Edit Article
+		<a data-toggle="modal" href="#modal_help" class="btn btn-sm">
+			<span class="glyphicon glyphicon-question-sign"></span> Help
+		</a>
+	</h1>
 	<form action="index.php?location=adminPage&&action=saveChanges" method="post" class="col-sm-12 col-lg-12 form-horizontal" id="editArticleForm" > 
 		<div class="form-group">
 			<label for="title" class="col-sm-2 control-label">Title</label> 
